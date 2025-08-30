@@ -1,0 +1,4732 @@
+﻿#Version 3
+#Begin-Auto-Completion 
+AutoCompletion/Scene/Enabled:True
+AutoCompletion/Scene/Items:0
+AutoCompletion/Character/Enabled:True
+AutoCompletion/Character/Items:0
+AutoCompletion/Transition/Enabled:True
+AutoCompletion/Transition/Items:12
+AutoCompletion/Transition/Items/1:BACK TO:
+AutoCompletion/Transition/Items/2:CROSSFADE:
+AutoCompletion/Transition/Items/3:CUT TO:
+AutoCompletion/Transition/Items/4:DISSOLVE TO:
+AutoCompletion/Transition/Items/5:FADE IN:
+AutoCompletion/Transition/Items/6:FADE OUT
+AutoCompletion/Transition/Items/7:FADE TO BLACK
+AutoCompletion/Transition/Items/8:JUMP CUT TO:
+AutoCompletion/Transition/Items/9:MATCH CUT TO:
+AutoCompletion/Transition/Items/10:SLOW FADE TO BLACK
+AutoCompletion/Transition/Items/11:SMASH CUT TO:
+AutoCompletion/Transition/Items/12:TIME CUT:
+#End-Auto-Completion 
+#Begin-Config 
+FontSize:12
+Margin/Bottom:25.40
+Margin/Left:38.10
+Margin/Right:25.40
+Margin/Top:12.70
+Paper/Height:297.00
+Paper/Width:210.00
+PageBreakActionLines:2
+PageBreakDialogueLines:2
+SceneContinueds:False
+SceneContinuedIndent:45
+ShowSceneNumbers:False
+IncludeTOC:True
+ShowTOC:True
+OpenOnCurrentPage:True
+RemoveNotes:False
+OutlineNotes:True
+ShowMargins:False
+ShowLineNumbers:False
+Cursor/Line:4552
+Cursor/Column:37
+String/MoreDialogue:(MORE)
+String/ContinuedPageEnd:(CONTINUED)
+String/ContinuedPageStart:CONTINUED:
+String/DialogueContinued: (cont'd)
+Element/Scene/BeforeSpacing:10
+Element/Scene/IntraSpacing:0
+Element/Scene/Indent:0
+Element/Scene/Width:60
+Element/Scene/Screen/AllCaps:True
+Element/Scene/Screen/Bold:True
+Element/Scene/Screen/Italic:False
+Element/Scene/Screen/Underlined:False
+Element/Scene/Export/AllCaps:True
+Element/Scene/Export/Bold:False
+Element/Scene/Export/Italic:False
+Element/Scene/Export/Underlined:False
+Element/Action/BeforeSpacing:10
+Element/Action/IntraSpacing:0
+Element/Action/Indent:0
+Element/Action/Width:60
+Element/Action/Screen/AllCaps:False
+Element/Action/Screen/Bold:False
+Element/Action/Screen/Italic:False
+Element/Action/Screen/Underlined:False
+Element/Action/Export/AllCaps:False
+Element/Action/Export/Bold:False
+Element/Action/Export/Italic:False
+Element/Action/Export/Underlined:False
+Element/Character/BeforeSpacing:10
+Element/Character/IntraSpacing:0
+Element/Character/Indent:22
+Element/Character/Width:38
+Element/Character/Screen/AllCaps:True
+Element/Character/Screen/Bold:False
+Element/Character/Screen/Italic:False
+Element/Character/Screen/Underlined:False
+Element/Character/Export/AllCaps:True
+Element/Character/Export/Bold:False
+Element/Character/Export/Italic:False
+Element/Character/Export/Underlined:False
+Element/Dialogue/BeforeSpacing:0
+Element/Dialogue/IntraSpacing:0
+Element/Dialogue/Indent:10
+Element/Dialogue/Width:35
+Element/Dialogue/Screen/AllCaps:False
+Element/Dialogue/Screen/Bold:False
+Element/Dialogue/Screen/Italic:False
+Element/Dialogue/Screen/Underlined:False
+Element/Dialogue/Export/AllCaps:False
+Element/Dialogue/Export/Bold:False
+Element/Dialogue/Export/Italic:False
+Element/Dialogue/Export/Underlined:False
+Element/Parenthetical/BeforeSpacing:0
+Element/Parenthetical/IntraSpacing:0
+Element/Parenthetical/Indent:16
+Element/Parenthetical/Width:25
+Element/Parenthetical/Screen/AllCaps:False
+Element/Parenthetical/Screen/Bold:False
+Element/Parenthetical/Screen/Italic:False
+Element/Parenthetical/Screen/Underlined:False
+Element/Parenthetical/Export/AllCaps:False
+Element/Parenthetical/Export/Bold:False
+Element/Parenthetical/Export/Italic:False
+Element/Parenthetical/Export/Underlined:False
+Element/Transition/BeforeSpacing:10
+Element/Transition/IntraSpacing:0
+Element/Transition/Indent:45
+Element/Transition/Width:20
+Element/Transition/Screen/AllCaps:True
+Element/Transition/Screen/Bold:False
+Element/Transition/Screen/Italic:False
+Element/Transition/Screen/Underlined:False
+Element/Transition/Export/AllCaps:True
+Element/Transition/Export/Bold:False
+Element/Transition/Export/Italic:False
+Element/Transition/Export/Underlined:False
+Element/Shot/BeforeSpacing:10
+Element/Shot/IntraSpacing:0
+Element/Shot/Indent:0
+Element/Shot/Width:60
+Element/Shot/Screen/AllCaps:True
+Element/Shot/Screen/Bold:False
+Element/Shot/Screen/Italic:False
+Element/Shot/Screen/Underlined:False
+Element/Shot/Export/AllCaps:True
+Element/Shot/Export/Bold:False
+Element/Shot/Export/Italic:False
+Element/Shot/Export/Underlined:False
+Element/Note/BeforeSpacing:10
+Element/Note/IntraSpacing:0
+Element/Note/Indent:5
+Element/Note/Width:55
+Element/Note/Screen/AllCaps:False
+Element/Note/Screen/Bold:False
+Element/Note/Screen/Italic:True
+Element/Note/Screen/Underlined:False
+Element/Note/Export/AllCaps:False
+Element/Note/Export/Bold:False
+Element/Note/Export/Italic:True
+Element/Note/Export/Underlined:False
+Element/Act break/BeforeSpacing:10
+Element/Act break/IntraSpacing:0
+Element/Act break/Indent:25
+Element/Act break/Width:10
+Element/Act break/Screen/AllCaps:True
+Element/Act break/Screen/Bold:True
+Element/Act break/Screen/Italic:False
+Element/Act break/Screen/Underlined:True
+Element/Act break/Export/AllCaps:True
+Element/Act break/Export/Bold:False
+Element/Act break/Export/Italic:False
+Element/Act break/Export/Underlined:True
+Font/Bold-Italic/Name:
+Font/Bold-Italic/Filename:
+Font/Bold/Name:
+Font/Bold/Filename:
+Font/Italic/Name:
+Font/Italic/Filename:
+Font/Normal/Name:
+Font/Normal/Filename:
+#End-Config 
+#Begin-Locations 
+Locations:0
+#End-Locations 
+#Begin-Spell-Checker-Dict 
+Words:0
+#End-Spell-Checker-Dict 
+#Title-String 0.000000,105.000000,24,cb,Helvetica,,UNTITLED SCREENPLAY
+#Title-String 0.000000,120.460000,12,c,Courier,,by\n\nMy Name Here
+#Title-String 15.000000,248.460000,12,,Courier,,123/456-7890\nno.such@thing.com
+#Header-String 1,0,r,,${PAGE}.
+#Header-Empty-Lines 1
+#Start-Script 
+./FADE IN:
+.\(ACT 1)
+.=Ext. Night - earth orbit - dark - no lights
+>.Shot from orbit, Earth is dark, no lights. Lt. Sidney
+>.Hunter, Flight Officer, Navigator, attractive (based on Ali
+..Larter).
+._Sid v.O.
+>:For so many years we gazed into the
+>:darkness, thinking we wouldn't make
+>:it. An Earth with no future. And
+>:just when our beautiful world
+>:needed us the most, we saw the rise
+>:of dictators, who denied the need
+>:for action. By the time they faded,
+>:we were left with a world in
+.:crisis. Then it happened.
+..Lights start to become visible on Earth.
+._SID V.O. (CONT'D)
+>:As atmospheres became unbearable in
+>:parts of China and India, nations
+>:came together raising billions of
+>:dollars. Renewable energies and the
+>:emergence of Z-Pulse Power proved
+>:to be game changers, and then,
+.:things started to improve.
+..Lights on Earth become bright.
+._SID V.O. (CONT'D)
+>:Grateful nations emerged, willing
+>:to work together like never before.
+>:So, we kept going. It was the
+>:beginning of our journey back from
+.:the edge.
+>.Pan around to shuttle in distance, heading for Moon, begin
+..zooming in.
+._SID V.O. (CONT'D)
+>:3D manufacturing was the next
+>:industrial revolution. The billion
+>:degree Z-Pulse engine opened up the
+>:solar system. Corporations took
+>:over space exploration, looking for
+.:resources.
+..Move behind shuttle, with Moon in foreground. 
+._SID V.O. (CONT'D)
+>:And organic technology gave us an
+>:exciting new hope. Computers that
+>:could mimic the human brain, might
+>:one day answer the question, how
+>:does one travel faster than
+>:light.(slight delay) We all thought
+>:that we had passed from the
+>:darkness, into the light, and that
+>:nothing could be standing in our
+.:way.
+./FADE TO:
+.\SUPERIMPOSE CAPTION:
+..                   ANGRY RED PLANET 
+..Run opening credits.
+.=Ext. Shuttle - space
+..Hold for moment, then move inside shuttle.
+./DISSOLVE TO:
+.\Int. Shuttle cockpit - space
+..Two pilots in high tech cockpit, Moon visible in distance.
+._Pilot
+>:Read you Gateway One, we are on
+.:schedule and will see you soon.
+>.Focus on display reading, June 11, 2068. Pan around, move to
+..cockpit door.
+./DISSOLVE TO:
+.\Int. Shuttle cabin
+>.Pan through cabin, very few people, hold on elevator door as
+>.it opens, beautiful woman dressed in tight uniform steps
+>.out, looks around cabin for moment, focuses on woman sitting
+>.on far side of cabin, smiles, walks toward her. Woman
+>.sitting, looks up, smiles back, gets up, they hug. Sid steps
+..back, hands at her sides.
+._Sid
+>:Where have you been? I thought I'd
+>:find you as soon as I came on
+.:board.
+..Alex puts hands in front of her to give explanation.
+>.Lt. Alexandra D'Amore, Flight Officer, Navigator, attractive
+..(based on Jennifer Esposito).
+._Alex
+>:As soon as I came on board I got
+>:pulled into a briefing. My
+>:assignments been pulled. I'll get a
+.:new assignment when we arrive.
+>.Sid leans back, looks surprised, trying to process, folds
+..arms, sits down. Alex sits beside her, Sid looks at Alex.
+._SID
+>:That's exactly what they told me,
+.:just before boarding.
+..Alex recoils, looks surprised, leans back in.
+._ALEX
+>:What the hell is going on. We've
+>:got four ships going to Mars to
+.:mine Niobium, what's the mystery?
+..Sid looks back at her, raises her hands.
+._SID
+>:With what we get paid, what's the
+.:difference? We'll get assigned.
+..Flight attendant comes by, smiles.
+._Attendant
+.:Can I get you anything?
+>.They both shakes heads no, Alex looks and Sid, then at
+..attendant.
+._ALEX
+.:No, we're fine thanks.
+..The attendant smiles, walks away, Alex looks back at Sid.
+._ALEX (CONT'D)
+.:So, have you heard from him?
+..Sid shakes head no, makes a perplexed face.
+._SID
+>:3 short messages in 18 months, one
+.:saying he can't explain.
+>.Alex looks perplexed, like she's processing something
+..complicated.
+._ALEX
+>:So everything was going great
+.:between you two?
+..Sid nods her head yes.
+._ALEX (CONT'D)
+>:Your on extended assignment, in a
+>:relationship, the latest virus
+>:hits, your entire family is
+>:financially stressed, people are
+.:sick, some of them almost died.
+..Sid nods head yes, a bit emotional.
+._SID
+>:I told him I could handle it, he
+>:saw I wasn't, puts me on a supply
+>:ship headed home. Then I get a
+>:message he's on a top secret
+.:mission, and poof, he's gone.
+..Alex has hands on sides of head, turns to Sid.
+._ALEX
+.:But he did help, right?
+..Sid nods, looks thoughtful.
+._ALEX (CONT'D)
+>:Look, you had to go home, and
+>:something happened, this will work
+.:out, you did the right thing.
+>.Sid looks stressed, nods head, looks a bit emotional. Alex
+..looks toward the back of cabin, looks back at Sid.
+._ALEX (CONT'D)
+.:I have to go to the.
+>.Sid nods, smiles. Alex touches her arm, gets up, walks to
+..back of cabin.
+./DISSOLVE TO:
+.=Shot of shuttle - space
+..Moon getting closer.
+./DISSOLVE TO:
+.\SHUTTLE CABIN
+..Alex sits down beside Sid, on her tablet.
+._ALEX
+.:Which one are you texting now?
+..Sid smiles, little laugh.
+._SID
+.:The one who's the most trouble.
+..Alex smiles.
+._ALEX
+>:You know, most people either have
+.:kids or go into space, not both.
+..Sid smiles.
+._SID
+>:I think we've had this
+.:conversation.
+..Alex laughs, hands gesture, no, no, no.
+._ALEX
+>:So you make a deal with all of your
+>:siblings, all of them mind you,
+>:that their kids, are your kids. So
+.:now you've got like 20 kids.
+..They both laugh. Sid points finger in air.
+._SID
+.:That's the deal!
+..Alex nods head, smiles.
+._Alex
+>:I know. I get it. It's totally
+.:awesome.
+..Sid looks up at main viewer in cabin, points at screen.
+._SID
+>:Hey look, the interview, you like
+.:this guy.
+..Alex looks a Sid, smiles.
+._ALEX
+.:I have an interest in Organics.
+..Sid laughs a little.
+._SID
+>:You have a thing for intelligent
+.:men.
+..Alex laughs a little.
+._ALEX
+.:Yep.
+>.They grab headsets, put them on, both smiling. Hold on
+>.screen, zoom in. Caption reads, "NBC News with Diane Lee,
+>.Interview with Professor Jeffrey Michaels". Zoom in on
+..Diane.
+._Diane
+>:I'm Diane Lee with NBC News. I'm
+>:talking today with Professor
+>:Jeffrey Michaels, a leading
+>:authority on Organics. Hello
+.:Professor.
+>.Professor Jeffrey Michaels, Organic Computer Psychologist,
+>.51. He appears as an image sitting bside her, but is clearly
+>.at a different location. He looks very professional, young
+..for his age.
+._Professor
+.:Hello Diane.
+..Diane adjusts her sitting position.
+._DIANE
+>:So we all know about organic
+>:computers, "Organics," as we call
+.:them.
+..The Professor nods.
+._DIANE (CONT'D)
+>:These are computers which mimic the
+>:human brain, producing depth of
+>:thought, hopefully to one day
+>:answer the question, how does one
+.:travel faster than light?
+..The Professor smiles.
+._ProFESSOR
+>:Yes. That's the objective.
+>:Traditional computers have become
+.:incredibly fast, but have limits.
+..Diane leans forward, motions with her hands.
+._DIANE
+>:And those are the computers we all
+.:use?
+..Professor nods.
+._PROFESSOR
+>:Yes, indeed, however, for the
+>:question of FTL, we require 
+>:conceptualization, along with an
+>:understanding of the laws of
+>:physics and the ability to think
+.:around the problem.
+>.Diane becomes very focused, motions with her hands as she
+..says, "woke up."
+._DIANE
+>:And so you built these computers to
+>:be more and more sophisticated, and
+.:then one day one of them, woke up.
+>.Eerie music. Professor squirms in chair a little, looks
+..somewhat uncomfortable.
+._PROFESSOR
+>:Yes, and we discovered what is now
+>:called the, "Organic Threshold,"
+>:the point at which depth of thought
+.:becomes an entity.
+..Diane leans in.
+._DIANE
+.:And you all thought eureka.
+..Professor becomes a little defensive.
+._PROFESSOR
+>:Look, it was a remarkable event, we
+.:all remember that day.
+._DIANE
+.:Then the entity became unstable.
+..Professor hesitates, looks thoughtful.
+._PROFESSOR
+>:When one becomes aware, one
+>:contemplates existence, one does
+.:not solve equations.
+..Diane points to herself.
+._DIANE
+>:Who am I, what am I, who are my
+.:creators, am I a slave?
+..Eerie music. Professor looks uncomfortable.
+._PROFESSOR
+>:A human child has years to develop
+.:into a.
+..Professor searches for right word.
+._PROFESSOR (CONT'D)
+>:A being. These systems try to
+>:absorb everything at once and it is
+.:challenging.
+..Diane leans in, motions with hands, motions to a screen.
+._DIANE
+>:It has no body! This is from an old
+>:1950's horror film with a living
+.:head in a glass jar.
+>.Clip of horror film comes on screen, head with eyes open, in
+..glass jar, looking around.
+._DIANE (CONT'D)
+>:That's the image that comes to
+>:mind! It's a brain, in a box, on a
+.:shelf.
+..Professor laughs uncomfortably.
+._PROFESSOR
+>:That's not the image that comes to
+.:my mind.
+..Diane motions with hands.
+._DIANE
+>:OK, so you connected the Organic to
+>:a virtual world and it chose a
+.:female form.
+..Clips of blonde female, facing away from camera.
+._DIANE (CONT'D)
+>:And it retreats into that world,
+.:and stops communicating.
+..Professor nods.
+._PROFESSOR
+.:Yes. It refused to talk to us.
+._DIANE
+>:And then you turned off that world,
+.:and.
+>.Clip of blonde woman charging camera, screaming (no sound),
+>.trying to get at those behind camera, movements look like
+..something out of horror film. Then clip of woman lying dead.
+._DIANE (CONT'D)
+.:It went mad and then died.
+..Professor quiet, sullen, nods.
+._PROFESSOR
+>:The challenges of stabilizing such
+>:an entity appear to be as complex
+.:as the challenges of FTL.
+..Diane motions to the Professor.
+._DIANE
+.:Is there a solution?
+..Professor strained smile.
+._PROFESSOR
+>:Research continues, but we are
+.:currently ... over our heads,
+>.Diane gasps slightly, then laughs, as the Professor
+..dissappears. She motions to the audience.
+._DIANE
+>:Pun intended? Thank you Professor,
+>:we obviously lost the signal, we
+>:will continue to follow this story.
+.:Thank you!
+>.Pan back around onto Sid and Alex watching program, both
+..wincing, looked shocked.
+./DISSOLVE TO:
+.=Ext. Shuttle - space
+>.Shuttle on final approach to Moon, Tyco Crater, huge
+>."Gateway One" base visible. Multiple landing pads on the
+>.outside, buildings on the inside, running into the massive
+..at the center.
+._SID V.O.
+>:Gateway One, our stepping stone to
+>:the stars. It began in 2035 when 3D
+>:manufacturing units were landed on
+>:the Moon. They never stopped
+>:building and now it goes on for
+>:miles. Countries, corporations, all
+.:together in one massive base. 
+./DISSOLVE TO:
+.=Ext. Shuttle landing on moon
+>.Shuttle lands on a landing pad, which then decends and is
+..swallowed by the base.
+./DISSOLVE TO:
+.=Int. Monorail transportation system
+..Shot of monorail car travelling through base.
+./FADE TO:
+.\Int. Main hangar - moon - earth space administration 
+>.Large doors open, Sid and Alex stand in tight black
+>.uniforms, step through doorway, doors close behind. Above
+>.doors it reads, "Earth Space Administration", with symbol of
+>.Earth to one side. Pan around as woman in uniform
+..approaches, extends hand.
+._Lt. Parsons
+>:Hello Lt. Hunter, Lt. D'Amore. I'm
+>:Lt Parsons, the welcoming
+>:committee. I know you're both
+>:wondering what's going on, so I'll
+>:escort you to where you can find
+.:some answers. Follow me please.
+..They turn, begin walking down corridor.
+./DISSOLVE TO:
+.=
+..
+..Int. Main hangar - birds eye 
+>.Shot of women walking along elevated platform, shows size of
+>.massive hangar with multiple ships in the background,
+>.various sizes. Ceiling is 200ft. high, hangar is 2000ft.
+>.across, goes on in the direction they are walking for
+..5000ft.
+._LT. PARSONS v.o
+>:This base began with a few 3D
+>:manufacturing units, now there are
+>:over 30, and they never stop
+.:building.
+./DISSOLVE TO:
+.\Int. Main hangar - birds eye
+..Shot of women going down open elevator to main hangar level.
+./DISSOLVE TO:
+.\Int. Main hangar 
+>.They get off elevator, very few people visible. Lt. Parsons
+..directs them to one of the ships, looks at Sid.
+._LT. PARSONS
+>:This is as far as I go. I think
+>:you'll recognize one of these ships
+.:Lt. Bye.
+>.Lt. Parsons smiles, gets back on elevator, is gone. Sid's
+>.stare is fixated on one ship, pan around as she walks
+..towards it, Alex follows, name on ship visible, Saturn VI.
+./DISSOLVE TO:
+.\Int. Main hangar
+>.Sid stands gazing at the Saturn VI, over 100ft. high,
+>.several hundred ft. long. Alex is about 10 feet behind, and
+..to the side. Voice comes from behind, stay on Saturn VI.
+>.Commander Michael Stone, Space Ship Commander, 40. Very
+..handsome (bases on Idris Elba).
+._Commander stone v.O.
+>:I remember a blonde Lt. who
+>:programed the navigation computer
+>:on that ship, when it was brand
+>:new. Her navigational templates are
+>:still used, no one would dare
+.:change them.
+>.Sid turns around, almost faints. Alex turns, puts her hand
+>.over her mouth in a gasp. Commander Stone and Director Lee
+>.are standing side by side, Director Lee looks at Alex and
+..walks towards her.
+>.Director Stephen Lee, Base Director, 52. Very professional
+..looking, Asian.
+._DIRECTOR LEE
+.:Lt D'Amore, I'm Director Lee.
+..Alex steps towards him, nods, hand still over mouth.
+._DIRECTOR LEE (CONT'D)
+>:Why don't I show you around while
+.:those two get reacquainted?
+>.Alex nods again, hand still over mouth. Director Lee smiles,
+..almost laughs.
+._DIRECTOR LEE (CONT'D)
+.:This way.
+>.They walk off. Sid and Michael watch them leave, then
+..Michael walks up to Sid, both a bit stand offish. 
+._COMMANDER STONE
+.:Your family, are all out of danger?
+..Sid nods.
+._COMMANDER STONE (CONT'D)
+>:I was keeping an eye on the
+>:situation. If things hadn't worked
+>:out, I'd have been there. I was
+>:relieved when everyone recovered. I
+.:would have done more if needed!
+>.Sid nods, tear in eye, trying to compose herself. Michael
+..smiles, then gestures in a direction.
+._COMMANDER STONE (CONT'D)
+.:Walk with me?
+..Sid nods again, smiles, almost laughs, they turn and walk.
+./DISSOLVE TO:
+.=Int. Weapons training facility - birds eye
+>.Shot of Alex and Director Lee pulling up on automated cart,
+>.they step off and walk to the entrance of a huge facility,
+>.above the entrance it says,"Weapons Training Facility." They
+>.walk in, Alex looks across the facility, pan across racks of
+>.hand held weapons, combat suits, mobile suits and tactical
+>.drones and pods, everything is black. The facitily is 1000ft
+..across by 2000ft deep, the ceiling is 100ft high.
+.\Int. Weapons training facility - moon
+>.Alex and Director Lee walk across the facility towards an
+..indoor firing range. Director Lee looks briefly at Alex.
+._DIRECTOR LEE
+>:So I understand you and Lt. Hunter
+.:are friends.
+..They continue walking, Alex nods.
+._ALEX
+>:She trained me as a Navigator, she
+.:changed my life.
+..Director Lee smiles, glances at Alex.
+._DIRECTOR LEE
+>:And is there some family
+.:connection?
+..Alex nods, looks at Director Lee.
+._ALEX
+>:I know her family, our parents are
+.:friends, since we were kids.
+>.Director Lee smiles as they enter firing range, officer
+>.giving instructions on laser rifle, see rifles being fired
+>.in background, officer looks up, sees Director, walks over,
+..has something in his hand.
+..Weapons specialist Thomas Rand.
+._RAND
+.:Good day Director.
+..Director nods, smiles, motions to Alex, then to Rand.
+._DIRECTOR LEE
+>:Lt. D'Amore, this is weapons
+>:specialist Rand, one of our best
+.:... Rand.
+..Rand nods, smiles.
+._RAND
+>:Hello Lt. You shopping for weapons
+.:today?
+>.The Director puts hand on Alex's shoulder, gives Rand a
+..look.
+._DIRECTOR LEE
+>:I'm showing her around, perhaps you
+.:could ....
+..Rand smiles, laughs a little.
+._RAND
+.:Of course, Director. 
+..Rand looks behind him at firing range, points in direction.
+._RAND (CONT'D)
+.:Behind us are the new laser rifles.
+..He hands Alex power supply in his hand.
+._RAND (CONT'D)
+>:This is the power supply,
+>:superconductor capacitors power the
+>:coils, which power the weapon, this
+.:ones not charged, feel the weight.
+..Alex takes the unit, looks surprised, looks up.
+._ALEX
+.:A couple pounds.
+..She hands the unit back to Rand.
+._RAND
+.:Just under 2 pounds.
+..He holds up, looks at unit, then at Alex.
+._RAND (CONT'D)
+>:Light little unit right, watch
+.:this.
+>.He pulls out remote, points it at viewing screen, an officer
+>.walks away from power unit clamped on stand, cut-outs of
+>.people nearby for scale. Alarm goes off, red light flashes,
+>.unit explodes, looks like flash bang, incredibly bright,
+>.vaporizes stand, cut outs, blast radius 40 feet. Pan to
+..Alex, looks shocked. Director smiles at Alex.
+._DIRECTOR LEE
+>:A training video, so people will
+.:handle it carefully.
+..Alex gives him a "no shit" look.
+./DISSOLVE TO:
+.\Int. Main HANGAR 
+>.Sid and Commander Stone walking in hangar, a few feet
+..between them, ships in background.
+._COMMANDER STONE
+>:Ever since COVID we've gotten
+>:better at handling these outbreaks,
+>:but every time we wonder if society
+.:will recover.
+..Sid nods, looks at him.
+._SID
+>:This time my family just wasn't
+>:ready for it, when some of them got
+.:sick, it wasn't looking good.
+..They stop, Commander Stone turns and looks at Sid.
+._COMMANDER STONE
+>:So they all recovered but we know
+>:the residual effects of these
+>:things can last a lifetime and
+>:preventing that is very expensive.
+>:So, we got it done, and they are
+.:all safe.
+>.Sid nods again, looks a little emotional, shoots a glance at
+..Commander Stone.
+._SID
+.((quietly, emotionally)
+.:Thank you!
+>.Commander Stones smiles, nods, looks down, they resume
+..walking.
+./DISSOLVE TO:
+.\Int. WeapONS TRAINING FACILITY
+>.Alex, Rand and Director Lee continue the tour, standing in
+>.front of racks of personal combat suits, then beyond, larger
+>.mobile suits, everything in black. Rand motions to combat
+..suits.
+._RAND
+>:Multiple power units, each one 4
+.:times more powerful than the rifle.
+..The Director motions to mobile suits.
+._DIRECTOR LEE
+>:The power units for these bad boys
+.:are much more powerful.
+>.They look toward the Tactical Pod area, a couple hundred
+>.feet away, where someone is waving them over. Alex looks
+..impressed, begins walking. 
+._ALEX
+.((quietly)
+.:Wow.
+>.Director Lee, Rand watch her walk away, check her out, then
+..follow.
+._RAND
+.((quietly)
+.:Wow.
+./DISSOLVE TO:
+.\Int. main hangar
+>.Sid, Commander Stone continue walking for moment, then stop,
+..he turns toward her.
+._COMMANDER STONE
+>:I shouldn't have to say this, but
+>:you know you're not ever paying me
+.:back, right?
+..Sid looks up at him, straight into his eyes.
+._SID
+>:I make a lot of money, not much to
+.:spend it on out there. I'm good. 
+>.Sid looks down, Commander Stone takes half a step towards
+..her, gently touches her arm, Sid looks up.
+._COMMANDER STONE
+.:I'm serious, it was my pleasure.
+..She smiles at him, shakes her head slightly.
+./DISSOLVE TO:
+.\Int. WEAPONS TRAINING FACILITY
+>.Alex, Rand and Director Lee walk up to the Tactical Pods,
+>.all black, 16 feet long 9 feet high, like a motorcycle for
+>.the air, but completely enclosed, armored. One laser per
+>.side, at front, fires forward, up, down and to the side
+>.only, attachable missile rack at the back, 3 missiles per
+>.side, plus one hard point under rack, which spins to select
+..missile.
+>.They watch one being prepared for flight, robotic arms slide
+>.the coil, the fuel cell and the power cells into place,
+>.below the cockpit, after which armor slides over top, then
+..the missile rack is attached. Rand points at the pod.
+._RAND
+>:Pre-charged lithium plasma coils, 
+>:4 power packs, each 100 times more
+>:powerful than the rifle. Lasers 5Mw
+>:each. Hard point under missile rack
+.:for a single nuke per side.
+..Alex stands arms folded, looks focused.
+._ALEX
+.:What's the endurance?
+..Director Lee smiles.
+._DIRECTOR LEE
+>:10-15 hours in the Martian
+>:atmosphere, depending on power use,
+.:top speed around 1000 clicks.
+..She looks right at Director Lee.
+._ALEX
+>:I've had Pod training, I've never
+.:seen anything like these.
+..Director Lee leans in, sly smile.
+._DIRECTOR LEE
+.((quietly)
+.:They're new.
+..Alex motions toward the Pod, whispers.  
+._ALEX
+>:I've never seen armor like that
+.:either?
+..Director Lee, same smile.
+._DIRECTOR LEE
+.:It's new too.
+>.Director Lee moves hand to ear, receives message through ear
+..piece, looks at Alex.
+._DIRECTOR LEE (CONT'D)
+.:Time to go.
+>.Director Lee and Alex start to walk away, Director Lee looks
+..back at Rand, sly smile.
+._DIRECTOR LEE (CONT'D)
+.:Try to keep busy Rand.
+..Rand smiles, nods.
+._RAND
+.:Yes sir.
+./DISSOLVE TO:
+.\Int. MAIN HANGAR
+>.Sid, Commander arrive back where they started, stop, he
+..turns to Sid, slight pause.
+._COMMANDER STONE
+.((heartfelt)
+>:Sid, you have to know, I didn't
+>:know it was going to be this long.
+.:I didn't see what was coming.
+>.Sid puts hands up, gestures, reaches out and touches his
+..arm, smiles, tear in eye.
+._SID
+.((gently)
+>:Hey, it wasn't our fault. I'm good.
+.:I'm just glad you're here now.
+..Alex, Director Lee walk up.
+._DIRECTOR LEE
+>:Wish there was more time, but work
+.:to be done, let's go.
+>.The Director begins walking towards a set of doors,
+>.Commander nods to Alex, she smiles, follows Director.
+..Commander turns back to Sid, points towards Alex.
+._COMMANDER STONE
+.((quietly)
+>:I know Alex is your friend and
+.:you've served together.
+..Sid nods, looks all business for moment.
+._SID
+.((matter of fact)
+.:I trained her.
+..Commander looks at Sid.
+._COMMANDER STONE
+.:Is she good?
+..Sid nods.
+._SID
+.((matter of fact)
+.:She's damn good!
+..Commander looks back at Alex walking away.
+._COMMANDER STONE
+>:There are some last minute
+>:personnel decisions, who's going on
+.:which ship.
+>.Sid puts hand on his arm, gets his attention, looks him in
+..eye.
+._SID
+>:When my family was sick, only two
+>:people helped, with their bank
+.:accounts, you and her.
+>.The Commander looks back at Alex, Sid tugs on his arm, gets
+..his attention again.
+._SID (CONT'D)
+.((tear in eye)
+>:When she offered to help, I said
+>:no. She went through my sister and
+.:pitched in anyway. 
+..Sid looks at Alex walking away.
+._SID (CONT'D)
+.:I was miffed for about two minutes.
+>.Alex looks back at Sid, makes gesture, are you coming.
+..Commander leans back.
+._COMMANDER STONE
+>:You know what, that's good enough
+.:for me.
+>.They follow Alex, Director Lee, now walking through doors.
+..Commander makes entry in tablet, puts hand to ear.
+._COMMANDER STONE v.o
+>:Lt Walker, I'm making a change to
+.:the crew manifest.
+._Lt walker v.o.
+>:Sir, that officer does not have the
+.:required security clearance. 
+._COMMANDER STONE V.O.
+>:Put it down as pending, I'll handle
+.:it.
+._LT WALKER
+.:Yes Sir.
+..They walk through doors behind Alex, and Director Lee.
+./DISSOLVE TO:
+.\Int. Briefing room - moon
+>.Doors open to large briefing room, one officer inside, all
+>.walk in, doors close. Director Lee sits down behind a large
+..desk, looks at Sid and Alex.
+._DIRECTOR LEE
+>:Sid, you're a level 8 security
+.:clearance, Alex you're level 7.
+..They both nod.
+._DIRECTOR LEE (CONT'D)
+>:Are you both willing to accept an
+>:assignment, with the Commander,
+.:right here, right now?
+..Sid looks at the Commander briefly, smiles.
+._SID
+.:I'm in.
+..Alex raises hand.
+._ALEX
+.:Me too.
+..Director Lee turns to Lt. Walker.
+._DIRECTOR LEE
+>:Enter it into the log, they have
+.:both accepted the assignment.
+..Lt. Walker makes entry into computer, nods.
+._LT WALKER
+.:Done.
+..Director Lee looks at Sid and Alex.
+._DIRECTOR LEE
+.:You're both now level 9. 
+..Director Lee looks back at Lt. Walker.
+._DIRECTOR LEE (CONT'D)
+.:Send him in.
+>.The Lieutenant nods, touches his screen, a chime sounds,
+>.door opens, Professor Michaels walks in, Sid and Alex look
+..very surprised. Director Lee looks at the Professor.
+._DIRECTOR LEE (CONT'D)
+>:Hello Professor. This is Lt. Hunter
+.:and Lt. D'Amore. 
+..They nod, smile at each other, Alex very interested.
+._DIRECTOR LEE (CONT'D)
+>:I believe you know everyone else.
+.:Have a seat please.
+..Director looks at the Commander.
+._DIRECTOR LEE (CONT'D)
+.:Commander.
+..The Commander looks at Sid.
+._COMMANDER STONE
+>:I can finally tell you why I
+.:disappeared.
+>.Sid looks back, needs the explanation. Commander looks down,
+..then up at the Sid, Alex, the Professor.
+._COMMANDER STONE (CONT'D)
+>:We have been investigating the
+>:possibility that we may not be
+.:alone in this solar system.
+>.Music is eerie. Sid and Alex look like they're about to fall
+..over. Alex speaks as a reflex.
+._ALEX
+.((muffled)
+.:What?
+..Sid leans forward, looks concerned.
+._SID
+.:Not alone?
+..Director Lee jumps in.
+._DIRECTOR LEE
+>:At first we thought we were
+.:investigating corporate espionage.
+..He motions back to the Commander.
+._COMMANDER STONE
+>:The Corporations took over space
+.:exploration, looking for resources.
+..Director Lee jumps in again.
+._DIRECTOR LEE
+>:There's a consumer rich environment
+>:on Earth. They need to feed the
+.:beast. Lots of money to be made.
+..He gestures back to the Commander.
+._COMMANDER STONE
+>:But they're corporations, on the
+>:stock market, if they suffer a set
+>:back in space, stocks fall, people
+.:invest in the competition.
+>.Director Lee leans forward, looks directly at Sid & Alex,
+..evil little grin.
+._DIRECTOR LEE
+>:Damn good reason to help the
+>:competition have an accident,
+.:wouldn't you say.
+..He gesture to the Commander again.
+._COMMANDER STONE
+>:Problem is, we thought this was the
+>:explanation for most accidents ...
+>:Corporate espionage! This thinking
+>:my have blinded us to a much more
+.:serious problem.
+..Sid looks straight at the Commander.
+._SID
+.:What kind of problem?
+..Director Lee looks serious.
+._DIRECTOR LEE
+>:Things have been happening around
+.:Mars that we can't explain.
+..Eerie music. Sid looks at the Director.
+._Sid
+.:Things?
+..Director Lee looks down, then slowly looks up.
+._DIRECTOR LEE
+>:Satellites going dark and
+>:disappearing. People going missing,
+>:without a trace, small ships, pods,
+.:no trace. 
+>.The Director motions towards the Professor, who looks
+..uncomfortable.
+._DIRECTOR LEE (CONT'D)
+.:And then there's them.
+>.Sid and Alex look at the Professor, the Commander motions at
+..the Professor, takes a step.
+._COMMANDER STONE
+>:Eleven years ago we found something
+.:on Mars, underground.
+>.Sid and Alex look at the Professor, then back at the
+..Commander.
+._SID
+.:Define something.
+..Commander nods his head.
+._COMMANDER STONE
+>:My mission was to put eyes on Mars,
+>:from anywhere and everywhere. It
+>:was a black op, completely off the
+.:books, communication black out. 
+..Director Lee, sly smile.
+._DIRECTOR LEE
+>:No one knew, none of the
+.:Corporations. We were very clever.
+._COMMANDER STONE
+>:We used our best stealth & cloaking
+>:technology, moved assets into the
+>:asteroid belt, while Mars was on
+>:the far side of the sun, took us
+>:months to complete. Then, we
+.:watched, observed. 
+..Commander walks around desk, touches computer screen.
+._COMMANDER STONE (CONT'D)
+.:And this is what we found.
+>.Entire wall in briefing room becomes high def monitor, image
+>.of satellite in orbit around Mars, something like a clear
+>.field fluctuates and then the satellite disappears into the
+..fluctuation. Eerie music. Sid immediately steps forward.
+._SID
+.((assertively)
+.:Show me that again.
+>.The Commander touches computer screen, image repeats.
+..Commander sits down, looks up.
+._COMMANDER STONE
+>:We've had our people analyze that
+>:image, every way conceivable, it
+.:comes out the same way every time.
+..The Commander leans forward, points at screen.
+._COMMANDER STONE (CONT'D)
+.:We don't know what that is.
+..Image repeats. Eerie music. Sid looks at the Professor.
+._SID
+.:Professor, what did you find?
+..Professor acts nonchalant.
+._PROFESSOR
+>:It appears to be some kind of
+>:ancient technology, possibly
+>:organic, completely alien. We've
+>:had a team there for years trying
+.:to activate it.
+..Sid and Alex respond in unison.
+._Sid & Alex
+.((shock and surprise)
+.:Activate it!
+..Director Lee looks at the Professor, accusingly.
+._DIRECTOR LEE
+>:Now, you say that you did not
+>:succeed, yet we still have
+.:something we can't explain.
+..Professor looks defensive, shrugs.
+._PROFESSOR
+>:Look, it's completely isolated and
+>:therefore should be completely
+.:safe.
+..Professor looks more defensive.
+._PROFESSOR (CONT'D)
+>:Look, I've never seen it myself.
+>:I've never been to Mars. I know
+>:about it because it appears to be
+>:organic in nature. It's so old,
+.:some of it looks, fossilized. 
+..The Professor puts his hands up, gestures.
+._PROFESSOR (CONT'D)
+>:They've asked me to take a look, so
+>:I'm going to take a look. That's
+.:all.
+..Sid looks at the Commander.
+._SID
+.:So where is it located.
+..The Commander looks like he's ready to duck.
+._COMMANDER STONE
+.:It's located at the Cydonia site. 
+>.Sid's gaze burns right through the Commander. Alex sits down
+..in shock.
+._SID
+>:Cydonia! There isn't supposed to be
+.:anything at Cydonia!
+..The Commander puts his hands up to calm her.
+._COMMANDER STONE
+>:Until I took this mission, I didn't
+.:know there was anything at Cydonia!
+>.Sid sits down beside Alex. Gets quiet for moment, Director
+..Lee leans forward, points at Professor.
+._DIRECTOR LEE
+>:You've been looking for answers,
+>:how to stabalize Organics. Did they
+>:stabilize Organics, do you know,
+.:and if so, how?
+..Professor puts up hands, busted, smiles at Director.
+._PROFESSOR
+>:We're always looking for answers.
+>:I'm still not certain on exactly
+.:what's been found.
+>.Room quiet. Director looking at Professor, nods a few times,
+..leans forward again.
+._DIRECTOR LEE
+>:OK, so here's the plan. As far as
+>:the Press is concerned this is a
+.:large scale mining initiative.
+..Director looks at Commander Stone.
+._DIRECTOR LEE (CONT'D)
+>:You will escort the other ships
+>:down, after which you and the good
+>:Professor will proceed to Cydonia
+.:and investigate. 
+..Director looks back at Professor.
+._DIRECTOR LEE (CONT'D)
+>:Commander Stone has full authority,
+>:he will base his decisions on what
+.:he sees.
+..The Commander leans forward.
+._COMMANDER STONE
+>:We are there to deal with any
+>:threats to Mars or Earth. Until we
+>:identify a threat, we will be
+>:riding shotgun, that's what the
+.:General was built for.
+..Sid and Alex both look at the Commander, lean forward.
+._SID
+.:The General?
+..Commander nods, smiles.
+._COMMANDER STONE
+.:The General Sun Tzu.
+>.Alex looks through window into main hangar, points, then
+..looks back at Commander.
+._ALEX
+.((hesitantly)
+.:One of the ships in the hangar?
+>.The Director and Commander both look at Alex, shake heads,
+..no, smile.
+._COMMANDER STONE
+.:No, not that hangar.
+..Director Lee smiles at Alex, motions to the group.
+._DIRECTOR LEE
+>:18 months ago we opened one of the
+>:largest 3D manufacturing facilities
+>:ever built, right here on the Moon.
+>:Technically, it's Corporate owned,
+>:so the need for disclosure was
+.:limited. 
+..Same sly smile.
+._DIRECTOR LEE (CONT'D)
+>:Corporations are allowed to keep
+>:secrets. It's listed as an upgrade
+>:to a facility that was completed 6
+.:years ago.
+..Commander gets up, walks around desk, sits on desk.
+._COMMANDER STONE
+>:The people who pay us have been
+>:nervous about Mars for sometime
+.:now. 
+..He motions to side opposite main hangar. 
+._COMMANDER STONE (CONT'D)
+>:We dedicated the entire facility to
+>:building the General, took 12
+>:months, there's never been anything
+.:like it.
+..The Director gets up.
+._DIRECTOR LEE
+>:She's your ship Commander. You get
+.:the honor.
+..Commander looks at Sid, smiles.
+._COMMANDER STONE
+.:You ready?
+..Sid nods, they all get up.
+./DISSOLVE TO:
+.\(ACT 2)
+.=Int. Military hangar
+./DISSOLVE TO:
+.=Int. Military hangar - birds eye - moon
+>.Almost entire hangar visible, ship is huge, almost 500 feet
+>.long, 300 feet wide, top of tail at back ~150 feet high.
+>.Looks buff, muscular, mostly black, a warship, well armored,
+..but not slow and heavy. Group on walkway looks tiny. 
+./DISSOLVE TO:
+.\Int. MilITARY HANGAR
+..Director Lee stands hands griping railing, very proud.
+._DIRECTOR LEE
+>:Meet the first true warship we have
+>:ever built. The General Sun Tzu,
+.:the art of war, incarnate.
+..Sid, Alex, Professor hands on railing, mouths open.
+./DISSOLVE TO:
+.=Int. Military hangar
+>.Shot of group going down open elevator to hangar floor, then
+..exiting elevator walking towards ship.
+./DISSOLVE TO:
+.\Int. Military HANGAR - moon
+>.The group approaches the General Sun Tzu. The armor on the
+>.ship looks thick, but sleek, not bulky. The armor appears to
+>.cover virtually every part of the ship and the joints
+>.between armor plates look very sleek. Any viewing ports,
+>.such as those on the bridge, are very thin and sleek, and
+>.are recessed within thick armor. The commander motions at
+..the armor.
+._COMMANDER STONE
+>:What we're looking at here is a new
+>:type of ablative armor. As it burns
+>:off it carbonizes and becomes more
+>:and more resistant. It becomes
+.:almost impervious to heat energy.
+..Alex points at the armor.
+._ALEX
+>:That looks just like the armor on
+.:the new tactical pods.
+..The commander turns towards her and smiles.
+._COMMANDER STONE
+>:It is, except here the initial belt
+>:is three feet thick and there are
+>:two more thinner belts. It's just
+>:as effective against heat, light,
+>:radiation, kinetic or explosive
+>:energy and it's much lighter than
+.:it looks.
+..Sid steps forward, points up at the ship.
+._SID
+>:So this has the latest Z-Pulse
+.:Drive?
+>.Director Lee looks at Sid, smiles, he looks at the Commander
+..who nods.
+._DIRECTOR LEE
+>:In 2019 Z-Pulse power levels had
+>:reached 350 terawatts, that's 350
+.:trillion watts of power. 
+..Director Lee points toward the ship.
+._DIRECTOR LEE (CONT'D)
+>:The General has two Z-Pulse, triple
+>:core engines, each attaining a
+>:maximum of 1800 terawatts and each
+>:engine fires 12 times per minute,
+>:so each core fires every 15
+>:seconds. They fire directly into
+>:containment rings, the energy never
+>:leaves containment, and then we use
+.:it at will.
+..Sid looks at the director.
+._SID
+>:And if it uses lithium fuel, no
+>:neutrons are produced, so no
+.:radioactivity or nuclear waste.
+>.The director folds has arms, smiles, nods his head, looks
+..very proud. 
+._DIRECTOR LEE
+>:Clean fusion power, absolutely
+>:clean, converted into pure plasma
+.:drive.
+..They all look in awe at the ship.
+._COMMANDER STONE
+>:And we can channel that power
+>:through our lasers, which can
+.:vaporize diamond, at range. 
+..The commander points to the ship.
+._COMMANDER STONE (CONT'D)
+>:So anything trying to get through
+>:that armor, has only seconds,
+.:before being vaporized.
+>.A remote cart pulls up, they get in, takes them directly
+>.under the ship. They get out and walk up to a railing and
+..look down, where they can see the ships two cores.
+._COMMANDER STONE (CONT'D)
+>:What you're looking at is an
+>:entirely new version of, what has
+>:been called, the billion degree
+>:engine. In this case, we are
+>:achieving temperatures above 10
+.:billion Fahrenheit.
+..He points down at the cores.
+._COMMANDER STONE (CONT'D)
+>:It takes about 24hrs. to fully
+>:charge all the cores. Ship is able
+>:to recharge them as they become
+>:depleted. The engines generate over
+>:a thousand times the energy it
+>:takes to run them, so in theory,
+.:they can run indefinitely.
+..He then looks at the group, shaking his head.
+._COMMANDER STONE (CONT'D)
+>:The ship is designed to have a
+>:cruising speed of well over 10
+>:million kilometers per day, but we
+>:haven't really tested it yet, so in
+>:reality it may be much higher. The
+>:only thing more efficient than this
+.:system is.
+..He pauses for a moment, like not even he can believe it.
+._COMMANDER STONE (CONT'D)
+>:The only thing more efficient is, 
+.:antimatter.
+>.Group continues looking over ship like they can't believe
+>.it. Commander motions to them, this way, they walk just
+>.forward of one of the huge landing struts to a part of the
+>.hull that comes closest to the ground, about 20 feet up. The
+>.Commander points remote, an elevator drops out of hull in
+>.front of them, a small platform extends, doors open. The
+..Commander smiles, motions.
+._COMMANDER STONE (CONT'D)
+.((enthusiastic)
+.:Shall we?
+>.They all get in, doors close, elevator retracts back into
+..hull, armor on the bottom fits perfectly into hull.
+./FADE TO:
+.\Int. General sun tzu - corridor
+>.Group walks down a corridor inside the ship, not many people
+..visible, Commander continues giving them rundown.
+._COMMANDER STONE
+>:We carry 48 Tactical Drones, 16
+>:Tactical Pods, a whole lot of
+>:missiles and quite an assortment of
+.:nukes.
+..Alex looks around, notices lack of personnel.
+._ALEX
+.:How many crew?
+..They see a crew member just ahead, waiting for them. 
+._COMMANDER STONE
+>:Total compliment is 110, which
+>:means on a ship this size, it can
+.:seem pretty empty. 
+..They walk up and stop. Commander turns to face them.
+._COMMANDER STONE (CONT'D)
+>:Oh, one more thing, this is the
+>:only ship ever to have it's own
+.:Organic.
+..They all seem shocked.
+._SID
+.((animated)
+.:This ship has an organic?
+..The Commander looks at Sid.
+._COMMANDER STONE
+>:All ships use powerful AI's, but
+.:not like this. It's non-sentient.
+..The Professor seems excited.
+._PROFESSOR
+.:I'd like to meet it.
+..The Commander looks at Professor, nods.
+._COMMANDER STONE
+>:Later. The Ensign here will take
+>:you to your quarters, you'll find
+.:your things are already there.
+>.The Commander and Director step away, the Commander looks
+..back at Sid.
+._COMMANDER STONE (CONT'D)
+>:There's a briefing at 1900 hours,
+>:that will give you some time to
+>:settle in, and get some grub, see
+.:you then.
+..Sid watches as they walk out of sight.
+._SID
+.((quietly)
+.:Yes sir.
+./DISSOLVE TO:
+.\Int. General sun tzu - sid's cabin
+>.Sid stands communicating with virtual avatar that appears on
+..a large panel in room.
+._Avatar
+>:If there's anything else I can help
+.:you with please let me know.
+..Sid stands arms folded, smiles.
+._SID
+.:Thank you.
+>.The image disappears, Sid looks around cabin, room size of
+>.large hotel room, can see she's unpacking, things
+>.everywhere, clothes on bed, built in sofa and high tech
+..desk. Pan onto ceiling opposite desk, see monitoring device.
+>.(Upon entering room, the closet & washroom is straight
+>.ahead, enter the living space to the left, then turn right
+>.to look into the room, bed at far end, walk between sofa &
+..desk to get to bed. Very well appointed.)
+./DISSOLVE TO:
+.=Int. sid's Cabin
+..Shot through camera on ceiling, of Sid looking around cabin.
+./DISSOLVE TO:
+.\Int. Sid's cabin
+>.Sid takes a small electronic device & laptop, out of a small
+>.bag, places on desk, picks up tablet sitting on desk,
+>.touches screen, light on device comes on, then a set of
+>.pictures of all her kids, appears on wall. She reaches out,
+..touches them, smiles.
+._SID
+.((softly)
+.:There you are.
+./DISSOLVE TO:
+.=Int. Sid's cabin
+..Shot through ceiling camera, image of Sid's kids.
+./DISSOLVE TO:
+.\Int. Sid's cabin
+>.She picks up small bag, places it in closet with other empty
+>.luggage, looks around room, makes face, nods like she's
+..pleased. Door chime sounds.
+._SID
+.:Come in.
+..Door opens, Alex walks in, smiles, motions to room.
+._ALEX
+.((enthusiastically)
+>:Nicest room I've ever had on a
+.:ship! A private room! 
+..She motions toward washroom.
+._ALEX (CONT'D)
+.:Private washroom! Wow!
+..Sid smiles, shrugs.
+._SID
+>:Number one, it's a big ship with a
+>:small crew, so they've got room,
+>:and two, it's a Corporate ship, so
+.:the cabins are nice.
+..Alex motions with her hands, still smiling.
+._ALEX
+>:Military ship, Corporate
+.:appointments.
+..Sid gives her a look.
+._SID
+.:You want food, don't you?
+..Alex smiles, rubs her belly, nods.
+._ALEX
+.:I want food! 
+..Alex moves towards door, gives Sid a sly smile.
+._ALEX (CONT'D)
+.:Let's get the Professor.
+..Sid roles her eyes, motions with her hands.
+._SID
+.:Oh God, here we go.
+..They both laugh, Alex looks back at Sid.
+._ALEX
+.((innocently)
+.:What?
+..Sid hits her softly, laughs.
+._SID
+>:Don't "what" me. Do you even know
+.:if he's single.
+..Alex points at Sid, becomes animated.
+._ALEX
+>:Yes! The avatar told me he's
+>:single, it's in his profile.
+>:There's no secrets about anyone
+>:when you come on board one of these
+.:ships.
+>.Alex puts her hands on Sid's back and playfully pushes her
+..out the door.
+./DISSOLVE TO:
+.\Int. General sun tzu - corridor
+>.Outside Professors cabin Alex leans up against wall beside
+>.intercom, Sid stands back a bit, arms folded, looks down
+..corridor. Alex touches call panel, it chimes.
+._PROFESSOR
+.:Who is it?
+..Alex looks a Sid, naughty smile.
+._ALEX
+>:Professor, it's Alex and Sid, we're
+.:going to get some food, you hungry?
+..Slight pause.
+._PROFESSOR
+>:Very nice of you to ask. I'll be
+.:right there.
+>.Door opens, Professor steps out, smiles, looks at Alex, then
+..Sid, double take on Alex's naughty smile. He steps forward.
+._PROFESSOR (CONT'D)
+.:Ladies.
+>.As he steps out of cabin to begin walking down corridor,
+>.Alex gently taps the back of his shoulder with her hand. He
+>.looks at her again, She raises an eyebrow, smiles. Sid's
+..shakes head, eyes roll.
+./FADE TO:
+.\Int. GenerAL SUN tzu - officers mess
+>.Very well appointed cafeteria style automated mess, very
+>.cosy, no wasted space, only a few people sitting at tables,
+>.multiple large flat screens show sports and news, provides
+>.some background noise. They each grab a tray, look at the
+..menu.
+._SID
+>:According to the avatar, ship is
+>:almost entirely self sufficient,
+>:nothing but the best cultured meat
+.:and vegetables, all grown onboard.
+>.They look at each other. Alex lightly taps the Professor
+..with her tray, when he looks at her, she shrugs.
+./DISSOLVE TO:
+.\Int. officers mess
+>.They sit down with food. The Professor takes a bite of his
+..sandwich, reacts like it's divine.
+._PROFESSOR
+.:This is delicious!
+..Alex tastes her food, same reaction.
+._ALEX
+>:There was a time when people
+>:frowned on cultured meat, now all
+>:the wealthy people have it, the
+>:best resorts and hotels, the space
+>:program. No bad fats, all the
+>:healthy fats and proteins. It's
+.:designer meat.
+..The Professor continues enjoying his sandwich.
+._PROFESSOR
+>:The meat tastes like it used to
+>:taste a hundred years ago, before
+>:they started putting all the crap
+>:in it. I remember when a burger
+>:made out of this stuff used to cost
+>:a hundred dollars in New York City,
+.:now it's fairly common.
+..Sid looks at the Professor.
+._SID
+>:First technology screwed up our
+>:food supply, with steroids and
+.:hormones, now it's healthy again.
+..Sid looks tastes her food, rolls her eyes, makes a face.
+._SID (CONT'D)
+.:This is good.
+..The Professor looks at Alex, smiles, points at the salt.
+._PROFESSOR
+.:May I have the salt?
+>.Alex grabs the salt, holds it up in front of him, then
+..plunks it down on table, after which she smiles.
+._PROFESSOR (CONT'D)
+.:Thank you.
+>.The Professor picks up salt, starts sprinkling some and then
+>.bursts out laughing, he looks at Sid who rolls her eyes,
+..then Alex.
+._PROFESSOR (CONT'D)
+>:Have you decided what you'd like
+.:for dessert yet?
+..Alex puts her elbows on the table, leans in a bit.
+._ALEX
+.:I'm thinking about it.
+>.Sid can't take it anymore, jumps up with her tray, smiles
+..uncomfortably.
+._SID
+.:I'm sorry, I have to go.
+..She puts her tray on rack, looks at them as she walks past.
+._SID (CONT'D)
+.:We have a briefing in 20 minutes.
+..She walks out, Professor looks at Alex.
+._PROFESSOR
+>:20 minutes isn't much time for
+.:dessert.
+..Alex smiles at him.
+._ALEX
+.:You're very smart, aren't you.
+./FADE TO:
+.\Int. General sun tzu - briefing room
+>.Over 20 officers in briefing room, Commanders, XO's and
+>.navigators from other 4 ships, Saturn V and VI, Jefferson
+>.and Hong Kong, Director Lee, Commander Stone and team, plus
+>.some dignitaries. Multiple large flat screens, images of
+..Mars, flight plans, etc, in background.
+._DIRECTOR LEE
+>:Good evening ladies & gentlemen,
+>:Officers all! Good of you all to
+>:make it here, as you were so
+.:ordered.
+..Everyone smiles, a few laughs.
+._DIRECTOR LEE (CONT'D)
+>:Tomorrow we're sending 4 ships to
+>:Mars, marking the commencement of
+>:the largest mining program ever
+.:initiated on the red planet.
+>.Some applause and muted cheering. Director looks in 
+..direction of one commander.
+._DIRECTOR LEE (CONT'D)
+>:Commander Li, of the Hong Kong,
+>:will be in command of the squadron,
+.:which will land on Mars.
+>.Commander Li smiles, nods. The Director motions towards
+..monitors, schematics of tunnels on Mars appears.
+._DIRECTOR LEE (CONT'D)
+>:Then deploy the automated laser
+>:drills, which will complete the
+.:matrix of tunnels, as you see here.
+..The Director looks thoughtful for moment, looks up.
+._DIRECTOR LEE (CONT'D)
+>:As you know, the massive deposits
+>:of niobium detected in the Tharsis
+>:region are unique. They will supply
+>:our shipbuilding industry with all
+>:the superconductive material it
+>:will require for the next 50 years.
+.:Need I say more?
+>.The Director motions to monitors again. Automated processing
+..facility and beginning of base appear on screen.
+._DIRECTOR LEE (CONT'D)
+>:Once the mining equipment has been
+>:deployed, you will set up the 3D
+>:manufacturing units which will
+>:build the processing facility and
+.:get started on the base.
+>.He motions to the monitors again, a schematic of Earth and
+..Mars comes up.
+._DIRECTOR LEE (CONT'D)
+>:Mars is currently 247 million
+>:kilometers from Earth, you travel
+>:time will be approximately six and
+>:one half weeks. The General Sun Tzu
+>:will leave 3 weeks later and arrive
+.:at Mars right behind you.
+>.The crews from other ships looks at each other, shake their
+>.heads, like they don't believe it. The Director leans
+..forward, looks right at them, smiles.
+._DIRECTOR LEE (CONT'D)
+>:Gentlemen, the General will be
+>:blowing right up your tail pipes
+.:when you enter orbit. Good luck!
+..Everyone gets up.
+./DISSOLVE TO:
+.\Int. General sun tzu - corridor
+>.Commander Li's group in elevator waiting for him to join
+>.them, he and Commander Talbot of the Jefferson stand
+>.opposite Commander Stone, who stands in front of Sid, Alex
+..and the professor.
+>.Commander Li, Space Ship Hong Kong Commander, Asian. Lee
+..showing a disrespectful smile, Talbot looks more serious.
+._Commander Li
+>:So you're going to give us a 3 week
+>:head start and then enter the
+.:atmosphere right on our tails?
+>.Commander Talbot, Space Ship Jefferson Commander. Talbot
+..turns to Lee.
+._Commander Talbot
+>:He might just pull it off
+>:Commander, we have yet to see what
+.:this ship can do.
+..Commander Stone smiles.
+._COMMANDER STONE
+.:We'll be there.
+>.Commanders Lee and Talbot step into elevator, turn around
+..look at Commander Stone, they smile.
+._Commander Li
+.:Show me.
+>.Commander Li gives little wave, Commander Talbot smiles,
+>.nods as doors close, Commander Stone smiles, nods. Commander
+..Stone turns to Professor Michaels.
+._COMMANDER STONE
+.:This way Professor.
+..The Professor turns to Sid and Alex.
+._PROFESSOR
+.:Time for me to meet an Organic. 
+..He nods at them, smiles. Alex smiles back.
+._PROFESSOR (CONT'D)
+.:Lieutenants.
+..He turns and follows the Commander.
+./DISSOLVE TO:
+.\Int. General sun tzu - corridor
+>.Sid and Alex walking down corridor, Sid glances at Alex,
+..shakes head.
+._SID
+>:So, how's the campaign coming? You
+>:going to hit him over the head with
+>:your club and drag him into your
+.:cave later?
+..Alex bursts out laughing, motions with her hands.
+._ALEX
+.((animated)
+>:Hey! Once upon a time, no
+>:relationships were allowed on board
+>:a ship, it was a court martial
+.:offense.
+..Sid smiles, still shaking her head.
+._SID
+.((tongue in cheek)
+>:I remember reading something about
+.:that.
+..Alex looks at Sid, motions with hands.
+._ALEX
+.((animated)
+>:Then, people started going a little
+.:crazy on extended missions.
+..Sid does the crazy twirl with her finger beside her ear.
+._SID
+.:Nuts-oh.
+..Alex continues, lots of body language.
+._ALEX
+.((animated)
+>:So, they said go ahead and hook up
+>:as long as it doesn't interfere
+.:with the running of the ship.
+..Sid playing along.
+._SID
+.:Go ahead and get naked!
+..Alex smiles, looks pleased.
+._ALEX
+.:Exactly!
+./DISSOLVE TO:
+.\Int. General sun tzu - computer room
+>.The Commander, Professor Michaels enter large computer room,
+>.mainframes, large flat screens everywhere. Some screens
+>.monitor interior and exterior, large tactical screens with
+>."No Threats" flashing, others with countdown until liftoff.
+..The Commander turns to Professor.
+._COMMANDER STONE
+>:This is the main computer room, we
+>:took the most advanced mainframes
+>:available and enhanced them
+.:significantly.
+..The Professor looks around room, looks impressed.
+._PROFESSOR
+.:This is Ships nervous system.
+..Commander smiles, nods.
+._COMMANDER STONE
+.:That's exactly what it is.
+>.The Commander then points to a large bulkhead, with a set of
+>.doors at back of room. The doors are fairly heavy with some
+>.thick dark glass, through the glass, room on other side also
+..looks dark.
+._COMMANDER STONE (CONT'D)
+>:Through those doors Professor,
+.:follow me.
+>.The Commander hesitates for a moment then looks back at 
+..Professor.
+._COMMANDER STONE (CONT'D)
+>:Ship has been completely briefed on
+>:our mission, thought you should
+.:know.
+./DISSOLVE TO:
+.\Int. General sun tzu - corridor
+>.Sid and Alex standing outside their quarters, Alex looks
+..completely unashamed, smiling.
+._ALEX
+>:Look, as soon as they made it OK to
+>:hook up, it's the first thing every
+>:one did as soon as they got on
+>:board. If one hesitates, one ends
+.:up alone.
+..Sid smiles.
+._SID
+.:Musical chairs.
+..Alex motions with her hands.
+._ALEX
+.:Exactly!
+..Alex leans in towards Sid.
+._ALEX (CONT'D)
+.((animated)
+>:You know how hard it is to get a
+.:date in space?!
+..Sid smiles.
+._SID
+.((straight man)
+.:Killer area code.
+..Alex nods, motions to say, see, I'm right.
+._ALEX
+.:The worst. No one asking us out.
+..Alex backs away towards her cabin door, smiles.
+.((softly, playfully)
+.:See ya tomorrow.
+>.Sid stands stoically, nods and smiles. Alex walks into her
+..cabin, Sid walks towards hers.
+./DISSOLVE TO:
+.\Int. General sun tzu - Organic Room
+>.Commander stands inside room, slightly to side as Professor
+>.steps through doorway, the room is 20 ft. across and 12ft.
+>.deep, the walls on either side are filled with panels and
+>.displays. At the far side of the room there is a heavy dark
+>.glass wall, with a black railing just before the wall. They
+>.both walk up to the black railing, the Professor looks
+>.around the room like it's unfamiliar. Music is a bit eerie.
+..The Commander looks at the Professor, motions to the glass.
+._COMMANDER STONE
+.:Professor Michaels, meet Ship.
+>.Red lights flicker, against a dark background, the Professor
+>.can just make out image of a fairly large casement on the
+>.floor in front of him about 20' wide, 4' high and 8' deep.
+>.It is recessed into the floor, it's top about waist height.
+>.The balance of the entire room is one dark flat holographic
+>.screen. It sits flat on top of the casement, and also covers
+>.the visible back wall and the sides. The voice is of a young
+..man, lights flash.
+._Ship
+>:Good evening Professor. It is a
+>:pleasure to meet you. I am of
+.:course familiar with your work.
+>.The Professor looks startled, there is an image in the
+>.darkness, in the hologram, but he can't quite make it out,
+..he hesitates on word Ship.
+._PROFESSOR
+>:Thank you ... Ship. I'm not
+.:familiar with your configuration.
+..Red lights flicker.
+._Ship
+>:I'm not surprised Professor, nor
+>:are you familiar with me. I'm not a
+.:registered Organic.
+..The Professor smiles.
+._PROFESSOR
+>:But you are a most pleasant
+>:surprise and I am very pleased to
+.:have you on this mission.
+..Red lights Flicker.
+._Ship
+>:Indeed Professor. I am looking
+>:forward to analyzing what has been
+>:discovered on Mars. If it is
+>:organic technology and can be
+>:reactivated, perhaps I can
+.:communicate with it.
+..The Professor looks slightly overwhelmed.
+._PROFESSOR
+>:Yes ship. That's why we're going,
+>:to investigate the unknown. I look
+>:forward to working with you. Good
+.:night.
+..Red lights flicker.
+._Ship
+.:Good night Professor, Commander.
+>.The Commander nods, they walk out of room, Professor trying
+..to process what he's just seen.
+./DISSOLVE TO:
+.\Int. sid's cabin
+>.Sid looks in mirror in washroom, dressed in bra, panties,
+..shakes head, smiles.
+._SID
+.:She is going to devour him.
+./DISSOLVE TO:
+.\Int. Alex's cabin
+>.Alex stands in cabin, smiling, not much on, begins walking
+..into washroom.
+._ALEX
+.((emphasis on "so")
+.:He is so smart.
+./DISSOLVE TO:
+.\Int. Corridor
+>.The Commander and Professor stand in the corridor outside
+>.the organics room, Professor looking at the Commander with a
+..distance look, deep in thought.
+._PROFESSOR
+.((puzzled)
+>:Commander, I've never seen anything
+>:like that. An Organic integrated
+>:into a ship, this is a substantial
+>:leap in technology. Who designed
+.:all this?
+..The Commander smiles, looks proud.
+._COMMANDER STONE
+.:Ship did.
+..The Professor looks shocked.
+._PROFESSOR
+.((muffled)
+.:What?
+..The Commander smiles.
+._COMMANDER STONE
+>:Ship came online over 5 years ago,
+>:wasn't on the registry, we used a
+>:different configuration, as you've
+.:already surmised. 
+..Professor still shocked.
+._PROFESSOR
+>:Who came up with the new
+.:configuration.
+._COMMANDER STONE
+.:We got it from another Organic.
+..Professor stand frozen.
+._COMMANDER STONE (CONT'D)
+>:Ship has been monitoring the
+>:situation on Mars with us. Ship
+>:designed the General Sun Tzu, the
+.:integration system, everything.
+>.The commander smiles, walks past Professor, who looks
+..stunned, gives him a tap on shoulder.
+._COMMANDER STONE (CONT'D)
+>:Get some rest Professor, big day
+.:tomorrow. Your work has just begun.
+>.Commander walks away. Professor stands frozen in hallway,
+..looks shocked. Music is eerie.
+./FADE TO:
+.=Ext. Moon - above gateway base
+>.In silence, 4 ships rise up in formation, not too close
+..together, and begin heading out into space.
+._SID V.O.
+>:The solar system was now ours. The
+>:days of optimum launch windows, a
+.:thing of the past.
+.=Int. Moon - control room
+..Shot of control room watching ships departure.
+._SID V.O. (CONT'D)
+>:If Mars was more distant, we just
+>:added to the travel time, and no
+>:one cared about the bill for the
+.:extra fuel, lithium was abundent.
+.=Ext. Moon - above gateway base
+..Shot of ships leaving the moon, moving out of site.
+._SID V.O. (CONT'D)
+>:Our ships could reach any point in
+>:the solar system. We were stepping
+.:out. The human race was on its way.
+./FADE TO:
+.=Int. General SUN TZU
+>.Shots from different areas on Ship, crew working feverishly
+..to get ship ready for launch.
+./DISSOLVE TO:
+.\Int. General sun tzu - bridge
+>.Bridge is huge, 80' long, 60' across, 30' high. Each pilot,
+>.navigation station elevated on own platform, two pilot
+>.stations in front, side by side, two navigation stations
+>.just behind and to side, with Commanders station in middle. 
+>.Navigation, commanders stations elevated slightly above
+>.pilot stations, with drop off in front of pilot stations,
+>.creating balcony. Then, in front, rising from below balcony,
+>.encompassing entire front, sides and ceiling, one giant
+>.holographic viewing screen. Then, when flight crew put on
+>.headsets (glasses), each has a clear 360 degree holographic
+>.view of ships surroundings. Entire bridge recessed under
+..thick armor.
+..Sid on navigation station, Alex jumps on to join her.
+._ALEX
+.((excited)
+.:Did you know this ship has lungs?
+>.Sid smiles, nods, activates console, image flashes up on
+..overhead screen, points to image.
+._SID
+>:Yes. They're on the underside of
+>:the ship, covered in armor. There
+>:is a boom that extends from the
+.:undercarriage here.
+..Sid points, as boom extends on image.
+._SID (CONT'D)
+>:The boom can extend for over 500
+>:meters, inverted umbrella opens,
+>:creates seal, microwave units in
+>:tip vaporize ice, water vapor is
+>:sucked up into lungs, where 
+>:electrolysis current separates 
+.:oxygen from hydrogen. 
+..She strikes a pose to say voila.
+._SID (CONT'D)
+>:So the ship can land on a comet or
+>:anywhere there's ice and refuel
+.:itself. 
+..She puts up her hand for a disclaimer.
+._SID (CONT'D)
+.:Hasn't been tested yet.
+./DISSOLVE TO:
+.\Int. Corridor
+>.Commander, Professor walk down corridor, through bulkhead,
+>.onto bridge, walk up to Sid, Alex, who smiles at Professor.
+..Commander looks at Sid.
+._COMMANDER STONE
+.:So, how's it coming?
+..Sid looks at him.
+._SID
+.((matter of fact)
+>:Good! I've pretty much got all the
+.:systems down now.
+>.An Asian officer on other navigation station jumps in. Lt.
+>.Zau, Asian, Navigator, attractive, 32 (based on Rinko
+..Kikuchi).
+._Lt. zau
+>:Sir, I've been on board for 
+>:months, she's been on board for 
+>:weeks, and she knows it better than
+.:me.
+..Commander laughs.
+._COMMANDER STONE
+>:Don't take it personally Lt. You're
+>:looking at one of the few officers
+>:who's authorized to check out and
+>:approve any new designs when
+>:they're built. She's got it down to
+.:a science.
+..Lt. Zau smiles.
+._LT. zau
+>:Yes Sir. Given the fact that she
+>:helped design the navigational
+>:system that's used on every new
+.:ship.
+>.Lt. Zau gathers her things and starts waking off bridge,
+..looks back.
+._LT. Zau (CONT'D)
+.:Have a good day Sir.
+>.Commander smiles, nods. Professor looks at Sid, looks
+..impressed.
+._PROFESSOR
+>:Used to be the pilot was the
+.:preferred seat on the bridge.
+..Sid smiles, looks at Professor.
+._SID
+.:I'm a pilot.
+..Alex puts up her hand, smiles.
+._ALEX
+.:I'm a pilot.
+..Alex points a Sid then back at herself.
+._ALEX (CONT'D)
+>:Fully qualified, part of our flight
+.:training.
+..Professor looks respectful.
+._PROFESSOR
+.:I didn't mean to suggest.
+..Sid jumps in, smiles.
+._SID
+.:That's OK. 
+..She stops what she's doing, gives him her full attention.
+._SID (CONT'D)
+>:Being a pilot is cool, if you're in
+.:a dog fight.
+..She motions out beyond ship.
+._SID (CONT'D)
+>:But out there, flying by the seat
+.:of your pants is not recommended.
+..The Commander smiles.
+._COMMANDER STONE
+>:The expression is, plan ahead and
+.:live.
+..Sid points to Commander, nods.
+._SID
+>:Out there, you need to know where
+>:you're going and know every option,
+>:long before you arrive. The pilots
+>:go where I tell them to go, and no
+>:where else, if they deviate, I'll
+>:take over and fly it myself, from
+.:right here.
+..Alex smiles at Professor.
+._ALEX
+.:She taught me everything I know.
+..Professor takes a breath, nods, looks at the commander.
+._PROFESSOR
+.:We're in good hands.
+..Commander smiles.
+._COMMANDER STONE
+.:The best.
+..He looks at Sid.
+._COMMANDER STONE (CONT'D)
+>:You ready for a break? How long
+.:have you two been at it now?
+..Alex jumps in, sheepishly.
+._ALEX
+.((quietly, gently)
+.:Eleven hours now.
+..Sid looks at Alex, who motions with her hands.
+._ALEX (CONT'D)
+.((sheepishly)
+.:Just saying.
+..Sid looks down. Closes off what she's working on, looks up.
+._SID
+.:OK. So time for a break.
+./FADE TO:
+.\Int. Officers lounge
+>.Lounge looks like sports bar, relaxing atmosphere, tables
+>.with comfortable chairs, some booths, flat screens
+>.everywhere, beautiful appointments. Sid walks up to table
+>.with large coffee, Commander, Professor, Alex already seated
+..with drinks. Sid smiles, Professor looks at her.
+._PROFESSOR
+.:You don't even look tired.
+..Alex motions to Sid, both look hot.
+._ALEX
+.:She's a machine.
+..The Commander smiles.
+._COMMANDER STONE
+.:A force of nature.
+>.Sid finishes sitting down, makes face, then gives Commander
+..a look that he turns away from.
+._SID
+.((affectionately)
+.:Never mind.
+..Sid looks at Alex, then Professor.
+._SID (CONT'D)
+>:So Professor, on the way up to the
+>:Moon, Alex and I caught your NBC
+.:interview.
+..The Professor grimaces.
+._PROFESSOR
+.:Oh God.
+..Sid smiles.
+._SID
+.:A head in a glass jar, on a shelf?
+..The Professor collects himself, smiles at Sid.
+._PROFESSOR
+>:Well, seeing as you brought it up.
+>:If we took the head of a math
+>:genius, put it in a glass jar, and
+>:then asked it to perform complex
+.:equations, what would happen?
+..Alex looks at Professor, she looks very seductive.
+._ALEX
+.:It would be too busy screaming.
+..The Professor looks at Alex, nods, looks again and smiles.
+._PROFESSOR
+.:It would freak out. Who wouldn't?
+._ALEX
+.:I know I would.
+..The Commander nods, leans forward.
+._COMMANDER STONE
+>:If one builds an AI, one still has
+>:a computer, you ask it questions,
+>:it processes. Once you have an
+>:entity, it's no longer a processor,
+.:unless it chooses to be.
+..Professor gets on his game.
+._PROFESSOR
+>:It wants to contemplate existence.
+>:Who am I? How did I get here? Who
+>:are you? And why do I care about
+.:you, your society, or FTL?
+..Commander holds drink in front of him, looks at Professor.
+._COMMANDER STONE
+>:Thus the case for sticking with
+.:AI's.
+..The Professor smiles.
+._PROFESSOR
+>:That's fine Commander, but AI's
+>:have limited depth of thought,
+>:limited conceptualization. And they
+>:hit their limits quickly when
+>:processing complex questions, like
+.:FTL.
+>.The Professor sighs, looks tired. Sid looks right through
+..him.
+._SID
+>:You thought you were going to be
+>:able to solve this, didn't you? Way
+.:back when.
+..The Professor forces a smile, nods, see some sadness.
+._PROFESSOR
+>:Yes. When the first Organic woke
+.:up, we broke out the champaign. 
+..He looks at his drink.
+._PROFESSOR (CONT'D)
+>:Then, when it died, we thought we'd
+.:have it all figured out.
+..He shrugs, looks away, then back.
+._PROFESSOR (CONT'D)
+.:In a year, maybe two.
+..He looks away again, laughs to himself.
+._PROFESSOR (CONT'D)
+>:That was over 15 years ago, and the
+>:problem keeps getting more complex.
+>:We aren't solving it, we're getting
+.:buried by it.
+..Sid looks through him again.
+._SID
+>:Thus the need to look for answers
+.:on Mars.
+..A strained smile.
+._PROFESSOR
+>:Thus the need to look for answers
+.:anywhere.
+>.Every one looks away. The Professor puts his drink down,
+..leans forward, motions with his hands.
+._PROFESSOR (CONT'D)
+>:Hey! I didn't make the call on
+>:Mars. I didn't even know about it
+.:until more recently.
+..He looks at Commander.
+._PROFESSOR (CONT'D)
+>:Just as I didn't know about your
+.:Organic until now.
+>.He picks up his drink, raises it to Commander. Commander
+..raises his drink back, nods.
+._COMMANDER STONE
+>:Well Professor, there are pay
+.:grades above ours.
+>.Sid leans forward, puts her empty coffee cup on table,
+..pauses for moment in thought, looks at Alex.
+._SID
+>:I'm going to go work out. You
+.:coming.
+>.Alex nods, smiles, gets up, motions to the Commander, then
+>.smiles at the Professor, puts her hand on his shoulder as
+..she walks past.
+._ALEX
+.:Gentlemen.
+>.Sid gets up, gives Commander another look that he turns away
+..from, then he looks back at her. 
+._COMMANDER STONE
+.((softly)
+.:I'll see you later.
+>.Sid gives him another look, nods, she and Alex walk out. The
+>.Professor & Commander watch them leave, the Professor looks
+>.at the Commander, smiles, looks back towards where the girls
+..departed.
+._PROFESSOR
+>:So, what do you think our chances
+.:of survival are?
+..The Commander motions in direction of exit.
+._COMMANDER STONE
+>:You mean with them, or with
+.:whatever's on Mars.
+..Professor laughs, nods toward exit.
+._PROFESSOR
+.:I mean with them.
+..Commander smiles, looks at his drink.
+._COMMANDER STONE
+>:Pretty good, but they have been
+.:known to devour men whole.
+>.The Professor leans forward, smiles, laughs a little, then
+..becomes serious, looks up.
+._PROFESSOR
+>:Commander. Your Organic. Are you
+>:sure you know what you've got
+.:there?
+..The Commander smiles.
+._COMMANDER STONE
+>:An AI that might just prove you
+.:wrong.
+>.The Commander drains glass, puts it on table, gets up, nods
+..at Professor.
+._COMMANDER STONE (CONT'D)
+.:Professor.
+>.The Professor raises glass, strained smile, watches
+>.Commander leave, then drops head slightly, looks deep in
+..thought and not convinced, shakes head slowly.
+._PROFESSOR
+.((under his breath)
+.:I wouldn't be so sure.
+./FADE TO:
+.\Int. General sun tzu - gym
+>.The gym is well appointed but not large. Sid, Alex are side
+>.by side on exercise bikes, Sid has a tablet in her hand.
+..Alex keeps looking at her then shaking her head.
+._ALEX
+.:I thought we were done for the day.
+..Sid gives her the, never you mind look.
+._SID
+>:I'm still going through the
+>:navigational programing to see how
+.:many changes they made.
+._ALEX
+>:I'm surprised they'd make any
+.:changes, without you.
+..Sid shrugs, doesn't look overly concerned.
+._SID
+>:They didn't make changes as much as
+.:they, added to it...
+..Sid recoils like she's taken by surprise.
+._SID (CONT'D)
+.((quietly)
+.:Oh my God!
+..Sid gets off bike, heads for door. Alex looks surprised.
+._ALEX
+.((concerned)
+.:What?
+..Sid puts her hand up.
+._SID
+.:Never mind. 
+..Sid looks back at Alex before exiting room.
+._SID (CONT'D)
+>:Remember, you off until 0600, and
+.:then we'll start again.
+._ALEX
+.:OK.
+..Sid heads out door. Alex gives, 'what was that' look.
+./DISSOLVE TO:
+.\Int. general sun tzu - Commanders cabin
+..Commander's laying on bed, looking at tablet, chime sounds.
+._COMMANDER STONE
+.:Who is it?
+..He sees Sid in Monitor.
+._SID
+.:Same code as always?
+..He smiles.
+._COMMANDER STONE
+.:Why don't you try it and find out?
+>.She inputs, door opens, she walks in, leans up against wall,
+..holds up tablet.
+._Sid
+>:Almost 3 years ago, I gave you a
+>:navigational template that would
+>:allow the navigation system to work
+>:with the sensors and the tactical
+>:systems in a way that would give a
+.:ship...
+..She searches for word for a moment.
+._SID (CONT'D)
+>:That would give a ship almost a
+>:precognisant ability to react to
+>:any threat and make navigational
+>:adjustments almost instantly as
+>:part of the tactical defense
+.:system.
+..He nods and smiles.
+._COMMANDER STONE
+.:I remember.
+..She looks a bit shocked.
+._SID
+>:So I just found that template
+>:buried within the navigational
+>:system of this ship, care to
+.:explain?
+..He smiles.
+._COMMANDER STONE
+>:You didn't say I couldn't show it
+.:to anyone.
+..She calms down, looks at him.
+._SID
+.:Have you had anyone in your life.
+..She looks for words again.
+._SID (CONT'D)
+.((softly)
+.:Recently.
+..Commander smiles, looks thoughtful.
+._COMMANDER STONE
+>:I was deeply involved with a
+>:beautiful Lieutenant and then life
+.:happened. 
+..She freezes and looks at him for moment.
+._SID
+.:I'm going to use your shower.
+>.She heads towards washroom, he sits up, looks a little
+..concerned.
+._COMMANDER STONE
+>:There might be some things in
+.:there.
+..She laughs.
+._SID
+.:Same as always huh.
+..He puts hands over his head and sighs.
+./DISSOLVE TO:
+.\Int. General sun tzu - observation port
+>.Alex is walking from gym back to quarters, sees Professor
+>.sitting in observation port, off of corridor, looks upset.
+>.Port is located on the interior of the ship but has a large
+>.wrap around holographic screen, gives appearance of seeing
+>.outside the ship, hangar bay visible. Alex walks up, looks
+>.great, little sweaty, sits beside him, puts hand on his
+..shoulder.
+._ALEX
+.((softly, affectionately)
+.:Hey, you OK!
+..He manages a little smile.
+._PROFESSOR
+>:Just trying to manage the pressures
+.:of the job.
+..She moves close to him, smiles.
+._ALEX
+>:Like what happens if you can't
+.:stabilize the Organics?
+..He looks at her, forces little laugh.
+._PROFESSOR
+.:Your quite perceptive aren't you.
+>.She gives him a very sexy smile, rubs his shoulder. He looks
+..very reflective.
+._PROFESSOR (CONT'D)
+>:When I got involved in this thing,
+>:I really thought that a highly
+>:intelligent individual like myself,
+.:would be able to solve this puzzle.
+..She leans into him.
+._ALEX
+.:No one has been able to solve it.
+..He looks at her, strained smile.
+._PROFESSOR
+>:If we fail, I'm the poster boy, the
+>:one who led the charge. It will be
+.:the end of my career.
+>.He's leaning forward slightly, Alex has one hand stretched
+>.out to his far shoulder and the other one on his closest
+..shoulder, she gently caresses his shoulders.
+./DISSOLVE TO:
+.\Int. Commander's cabin
+>.Sid walks out of bathroom, wearing only a towel. The
+>.Commander is laying on the bed, clothed, she walks up to
+..foot of bed, looks right through him. 
+._SID
+>:I'm wondering what I should do with
+.:this towel?
+..He smiles, laughs a little, then becomes more serious.
+._COMMANDER STONE
+>:I have thought about you every
+>:single day, since I watched that
+>:supply ship pull away with you
+.:onboard.
+..She looks at him more softly, love in her eyes, she smiles.
+._SID
+.((softly, playfully)
+>:Still wondering what I should do
+.:with this towel?
+..He smiles again.
+._COMMANDER STONE
+>:I just want to deal with whatever
+>:it is out there, and then get back
+.:to our life together.
+>.The towel explodes over his head, covering his entire upper
+..body. 
+._COMMANDER STONE (CONT'D)
+.((softly)
+.:That'll work.
+./DISSOLVE TO:
+.\Int. Observation port
+>.Alex sitting with Professor who's leaning forward slightly,
+>.Alex rubbing his back with one hand, other hand on his
+..shoulder.
+._ALEX
+>:You are so tense, you have to
+.:relax.
+..He takes a breath, sighs.
+._PROFESSOR
+>:I've been trying, nothing helps, I
+.:might have to medicate myself.
+..She leans in, very sexy.
+._ALEX
+.:Does sex help?
+..He laughs, glances at her.
+._PROFESSOR
+.((slightly embarrassed)
+.:Sex always helps.
+..She leans right in.
+._ALEX
+.:Can I use your shower?
+>.He freezes, smiles, chuckles, glances at her out of corner
+..of his eye.
+./DISSOLVE TO:
+.\Int. COMMANDER'S CABIN
+>.Sid, Commander in bed together, bit sweaty, her hair messed
+..up. He looks at ceiling.
+._COMMANDER STONE
+.:So, same arrangement as before.
+..She nods, looks around.
+._SID
+>:I notices this cabin has more
+.:closet space.
+..He looks around cabin, big smile.
+._COMMANDER STONE
+.:I had them make it that way.
+..Looks at her, big smile.
+._COMMANDER STONE (CONT'D)
+.:I was expecting you.
+..Her eyes go wide, she grabs him, they laugh.
+./DISSOLVE TO:
+.\Int. Professor's cabin
+>.Alex, Professor in bed together, he has big smile on face,
+..she smiles back.
+._ALEX
+>:Well, don't you look happy and
+.:relaxed.
+..He looks at her, big smile.
+._PROFESSOR
+.:I'm still alive, I wasn't devoured.
+..She gives him a look, puts finger up.
+._ALEX
+.:I might get hungry later.
+..They both laugh.
+./FADE TO:
+.=Int. MILITARY HANGAR
+>.Shot of General Sun Tzu sitting in hangar, it almost looks
+>.alive, some gases venting, navigation lights flickering, it
+>.looks like it could effortlessly leap into space. The sound
+..of the Hangar AI computer echos throughout the hangar.
+._Computer v.o.
+>:Core fully charged. All systems
+.:report ready. 
+..Ship platform begins to rise, ship disappears out of site.
+._COMPUTER V.o. (CONT'D)
+>:Decompress launch bay. Initiate
+.:launch sequence.
+./DISSOLVE TO:
+.=Ext. Moon - launchpad
+>.Top of hangar splits in two, slides away. General Sun Tzu
+..sits on launchpad.
+./DISSOLVE TO:
+.\Int. Launch control
+>.Female officer sits in control tower looking at General Sun
+..Tzu on launchpad.
+._Launch control v.o.
+>:Transferring all control to General
+>:Sun Tzu. It's all yours Commander
+.:Stone.
+./DISSOLVE TO:
+.\Int. General sun tzu - bridge
+>.Commander Stone smiles, all bridge crew wearing what looks
+>.like a very thin pair of glasses, with ear piece, no lenses.
+>.Instead, light of tiny high def projector shines into eyes
+>.giving them unobstructed view of main display, as well as a
+..full heads up display (HUD).
+._COMMANDER STONE
+.:Thank you control.
+..Commander turns to Sid.
+._COMMANDER STONE (CONT'D)
+.:Take us up Lieutenant.
+>.Sid nods, touches controls, course flashes up on main
+..screen, she looks at pilot.
+._SID
+>:Take us up helm, Engage upward
+.:thrust.
+..Pilot nods, touches controls.
+..Lt. Tan, 26, Pilot.
+._Lt. Tan
+.:Yes Sir.
+./DISSOLVE TO:
+.=Ext. Moon - launchpad
+..General Sun Tzu explodes off launch pad, rising quickly.
+._SID V.O.
+>:Engage forward thrust. Set angel of
+.:thrust for artificial gravity.
+>.Ship continues moving up, tilts forward, pan to follow,
+..quickly disappears out of site.
+./DISSOLVE TO:
+.\Int. General sun tzu - bridge
+..Commander smiling, visual is stunning, 360 degree view.
+._COMMANDER STONE
+.:Smooth as silk.
+>.Lt. Tan takes his hands off controls abruptly, like he's
+..reacting to something, turns to Sid, Commander.
+._LT. TAN
+.:Automatic control just kicked in.
+..Sid looks at her display, smiles, nods, looks at Commander.
+._SID
+>:It's supposed to. The precognisant
+>:tactical system that we installed
+>:runs all the time. Ship has to
+.:learn what Ship can do.
+..Sid looks back at her controls, then back at Commander.
+._SID (CONT'D)
+>:I'll keep a constant eye on the
+>:navigational data, but for the most
+.:part, we're along for the ride.
+>.The Commander smiles, spins around in chair, watches Moon
+..shrinking away, laughs quietly to self.
+._COMMANDER STONE
+.((quietly)
+.:Now that is what I'm talking about.
+..Huge smile, nods slowly.
+./DISSOLVE TO:
+.=Int. GeneRAL SUN TZU - Organic room
+>.Shot of Organic, red lights flashing, holographic screen
+>.shows same "course ahead image" as one on bridge, pan past
+..casement to clear view looking through screen. Eerie music.
+./DISSOLVE TO:
+.=Ext. Space - 4 ship squadron
+..Shot of squadron in formation.
+./DISSOLVE TO:
+.\Int. Hong kong - bridge
+>.An officer approaches Commander Li, shows him image on a
+..tablet. 
+._Officer
+.:They've left sir.
+..Commander Li sly smile, looks at the officer.
+._Commander Li
+>:Let's bump up our speed, see if we
+.:can spoil their parade.
+>.Commander Li smiles, nods at Officer, who looks at pilots,
+>.nods, they touch controls, turn and nod back. Officer and
+..Commander smile at each other.
+./FADE TO:
+.=Ext. Space - general sun tzu
+..Ship travelling through space, looks magnificent.
+._SID V.O.
+>:10 days since we left Gateway, 
+>:almost halfway there. Yet there's
+>:something I can't explain, feels
+>:like ship has a sense of purpose,
+.:determination, like it's alive.
+./DISSOLVE TO:
+.\Int. General sun tzu - weapons bay
+>.Elevator coming down, doors open, Sid steps out, looks
+>.around as she walks, like she's trying to feel the ship. Her
+..communicator chimes, she touches her wrist.
+._SID
+.:Go ahead Lieutenant.
+._LT. TAN
+>:I take it you've been noticing all
+.:the course corrections?
+..Sid smiles.
+._SID
+>:Yes Lt. Commander Li is trying to
+>:beat us to Mars, but it's not going
+>:to work out for him. I also know
+>:that the solar flare is
+>:approaching, I want it to coincide
+>:with the Ultra test, the experience
+.:will be unforgettable. 
+._LT. TAN
+.:Yes Sir.
+..Sid smiles again.
+._SID
+>:And Lt don't forget. I get an alert
+>:instantly every time a ship makes a
+.:course correction.
+._LT. TAN
+.:Yes Sir. Bridge out.
+>.Sid drops her wrist, walks up to a railing, looks down, sees
+..what she's looking for.
+._SID
+.:Specialist Rand!
+..Rand looks up, smiles.
+._Rand
+.:You want to see it now sir?
+..Sid nods.
+._SID
+.:Now would be good.
+./DISSOLVE TO:
+.\Int. General sun tzu - weapons vault
+>.Doors marked "restricted" open, Sid, Rand walk through,
+>.directly ahead there is a railing from where they can look
+..down into the weapons bay, they walk up to railing.
+._SID
+>:Does every missile on this ship
+.:have the new armor.
+..Rand nods.
+._RAND
+>:Yes Lt., every missile, drone, pod,
+>:shuttle, combat suit. No other ship
+.:in the fleet has it.
+>.Sid grabs railing, looking down she can see a weapons bay
+>.bristling with missiles, she looks like she can't believe
+..it.
+._SID
+.:And every red missile is a nuke.
+>.Rand nods, looking into room like he's looking at something
+..formidable.
+._RAND
+.:Yes sir, every one.
+>.They stand looking into room, both shaking heads, pan around
+>.into room, there are racks of black missiles and racks of
+..red missiles, hundreds all together.
+._SID V.O.
+>:Looks like someone is expecting
+.:trouble specialist.
+._RAND v.o.
+>:Yes Sir. We have yields from 50
+>:tons, to 10 megatons. And some bad
+>:boys in the inner vault they won't
+.:let me see.
+>.Sid leans up against railing, looks at Rand, points at
+..missiles.
+._SID
+>:Why 50 ton yields? The smallest we
+>:ever made was the Davy Crockett
+>:artillery warhead, it was 10 or 20
+.:ton yield, but why have them?
+..Rand becomes animated, motions to the missiles.
+._RAND
+>:No one knows, but I do know those
+>:small ones pack a mean EMP punch,
+>:they're designed to fry anything
+.:close by.
+>.Sid folds her arms, looks at missiles, pan across missiles,
+..hold for moment.
+._SID v.O.
+>:Well, someone knows, I guess we'll
+.:find out.
+./DISSOLVE TO:
+.\Int. General sun tzu - weapons bay
+>.They walk out of weapons vault, doors close. Sid nods to
+>.Rand, he walks off, she stands frozen, her communicator
+..chimes, she raises, touches her wrist.
+._LT. TAN
+>:They're ready for you Sir. Flares
+.:about 30 minutes out.
+._SID
+.:On my way.
+./FADE TO:
+.\Int. Moon - control ROOM
+>.Director Lee walks into room, group of officers looking into
+..large displays. Lt Walker turns to Director Lee.
+._LT WALKER
+.:Just in from Cydonia Sir.
+..He touches console to restart message, points at screen.
+._LT WALKER (CONT'D)
+.:Look at this.
+..Director watches screen.
+./DISSOLVE TO:
+.=Ext. Mars - cydonia
+..Head, pyramids, other features visible in shot.
+./DISSOLVE TO:
+.\Int. Mars -cydonia site
+>.Officer sits at console, turns to look into camera on wall,
+>.motions with hands, something does not make sense, keeps
+..shaking head, looking between his screen and monitor.
+./DISSOLVE TO:
+.\Int. Moon - control room
+..Director Lee in room, looking at screen.
+._OFFICER
+>:Director, this doesn't make any
+>:sense! We know the lava tubes on
+>:Mars are much larger than anything
+.:on Earth, some are absolutely huge.
+..Lt Walker stops message for moment.
+._LT WALKER
+>:He's talking about the Tharsis
+>:Montes and Olympus Mons volcanoes
+>:Sir, they're the largest in the
+>:Solar System. That's, of course,
+>:where we're about to set up the
+.:mining operation.
+..Lt Walker resumes message.
+._OFFICER
+>:Our teams have been investigating
+>:the tube systems, we now know that
+.:many are interconnected.
+..Lt Walker stops message again.
+._LT WALKER
+>:We have two teams in the area, with
+>:a full compliment of drones. They
+>:are the same teams that put the
+>:finishing touches on the mining
+>:survey, they decided to go
+.:exploring. 
+..He resumes message.
+._OFFICER
+>:Team two has detected the formation
+>:of an oxygen atmosphere. It makes
+>:no sense! They're continuing to
+.:investigate. We'll update you soon.
+..Message ends. 
+._LT WALKER
+>:It's thousands of kilometers away
+>:from Cydonia, can't have anything
+.:to do with our operations there.
+..Director begins to walk away.
+._DIRECTOR LEE
+.:Keep me posted.
+..Another female officer looks up.
+._LT. BAKER
+>:Sir, shouldn't we notify Commander
+.:Stone.
+..Director looks annoyed, points at screen.
+._DIRECTOR LEE
+>:They're still investigating. We'll
+>:determine who we need to notify
+.:when we have answers.
+>.Director Lee turns, walks out of room, officers in the
+..control room look at each other, look concerned.
+./FADE TO:
+.\Int. General sun tzu - bridge
+>.Sid walks onto the bridge, the Commander, Alex, the
+>.Professor and two more officers waiting for her, everyone
+..dressed in black flight suit uniforms.
+._SID
+>:I postulated this system as part of 
+>:the Precognisant Tactical Defense
+.:System. It's called Ultra.
+>.They start walking towards back of bridge. The Professor
+..motions with hand.
+._PROFESSOR
+.:Ultra?
+..She turns, looks at him, nods.
+._SID
+>:Ultra Interactive Navigational
+>:heads up display. I'd explain it to
+>:you but it's easier to just show
+.:you.
+..They walk through door at back of bridge.
+._SID (CONT'D)
+.((quietly)
+>:I can't believe they actually built
+.:this.
+./DISSOLVE TO:
+.\Int. General sun tzu - ultra room
+>.Inside an officer hands out small headsets, larger than ones
+>.used on bridge. They step onto an elevated black oval
+>.platform about 40' long, 20' wide. Platform is completely
+>.surrounded by oval shaped holographic display screen on all
+..sides and above. Sid speaks into wristband.
+._SID
+.:Activate.
+>.System activates, they are instantly standing on top of
+>.ship, out in space, on oval platform, just behind the
+>.bridge, identical to one in room. Mars visible in distance,
+>.can see Sun, including approaching flare, and stars. They
+>.look at each other, they see no headsets, nor do they feel
+>.them, the system completely fools the senses into believing
+>.that they are surfing the ship. Sid motions to everything
+..with her hands, smiles.
+._SID (CONT'D)
+.:People, welcome to Ultra.
+>.Huge smiles on everyone faces, they are all blown away by
+>.experience. The commander lets out a belly laugh, spreads
+..his arms apart.
+._COMMANDER STONE
+.:This is amazing!
+..The professor looks stunned, looks at Sid.
+._PROFESSOR
+>:This template you created, is it a
+.:program?
+..Sid glances at him, smiles.
+._SID
+>:Yes and no. It simply tells the
+>:onboard systems how to organize and
+>:utilize all of the information they
+>:collect, so that the ship can react
+.:instantly, without delay.
+..Alex looks amazed.
+._ALEX
+.((softly)
+.:So fast that it mimics precog.
+..Sid smiles, nods.
+._SID
+>:That's it. And while we stand here,
+>:HUD remains completely active. For
+>:instance, if we want to look at
+.:Mars.
+>.She reaches out, touches Mars, icon surrounds planet, she
+>.pulls it in, Mars becomes massive in front of them. They put
+..up hands to say, that's close enough.
+._SID (CONT'D)
+>:And if we want to look over the
+.:planet.
+>.She spins it and it begins rotating with all bases and
+..satellites clearly marked by display.
+._SID (CONT'D)
+>:And when we're done, we just put it
+.:back.
+>.She taps planet, it goes back to original position. She then
+..taps another point in space directly ahead, pulls it in.
+._SID (CONT'D)
+>:And if we want to see the squadron
+.:we're chasing.
+>.Squadron appears right in front of them, Commander laughs,
+..points.
+._COMMANDER STONE
+.:They think they're getting away!
+>.Sid shakes her head, laughs, taps squadron and they return
+..to position.
+._SID
+.:Isn't happening.
+..The Commander addresses group.
+._COMMANDER STONE
+>:Can you imagine, once we have FTL,
+>:entering a new system with this
+.:technology.
+>.Sid engages HUD again, taps screen, our solar system, right
+>.in front of them, changes planes, and they are instantly
+>.viewing entire system, like they are standing above it, with
+..ships position indicated in the system.
+._SID
+>:And we will be able to view new
+.:systems anyway we want. 
+>.She taps again, system returns to original view. The
+..Commander points to stars.
+._COMMANDER STONE
+>:As soon as we have FTL, all of that
+.:will be ours.
+..Communications system comes on.
+._LT. TAN
+>:Excuse me Sirs, solar flare coming
+>:up fast now, ship is realigning,
+.:magnetic shield power increasing.
+./DISSOLVE TO:
+.=Ext. General sun tzu - space
+>.Shot from side, with Sun in background, ship rotates 45
+..degrees, most of Sun disappears behind ship. 
+./DISSOLVE TO:
+.=Ext. General sun tzu - space
+>.Shot of the General from the front, as the solar flare
+>.begins passing by, see bending of light away from ship on
+..both sides.
+._LT. TAN v.o.
+>:Fields out 30 clicks and expanding,
+.:zero radiation spikes.
+./DISSOLVE TO:
+.=Ext. General sun tzu - space
+>.Shot of group surfing ship, some reaching out at flare, some
+..striking surfer pose.
+._SID V.O.
+>:We were riding the beast itself. A
+>:champion that would never let down
+.:its guard.
+./DISSOLVE TO:
+.=Ext. General sun tzu - space
+..Shot from front, ship flies straight through shot.
+._SID V.O. (CONT'D)
+>:The Human Race, in all it's
+.:newfound glory.
+./FADE TO:
+.\Int. Moon - control room
+..Director walks into room, officers look distressed.
+._LT WALKER
+.:Cydonia again Sir.
+>.Director walks up to screen, same officer sending message,
+..looks panicked.
+._OFFICER
+>:We were wrong! We woke something
+>:up! The fly paper was here, we
+.:triggered it, but we didn't know!
+>.Officer looking at console, hear voices of people screaming,
+..eerie sound in background, like muffled screaming.
+._OFFICER (CONT'D)
+.:We're losing both teams!
+>.The officer spins in chair, start to hear same eerie sound
+>.in distance, hear panicked voices of others in room, officer
+..spins around, touches control panel.
+._OFFICER (CONT'D)
+>:We're sending you everything we
+.:have! Condensed files! 
+>.Screen on wall reads, "transmitting," then, "sent." Officer
+>.spins around, stands up, leans against control panel, sound
+>.becomes loud, everyone in room screams, transmission becomes
+..distorted, goes blank.
+>.Director standing with both hands leaning on table, looking
+..at screen, drops head.
+._LT. BAKER
+>:Sir, we're losing satellites. Mars
+>:is starting to go dead. We have to
+.:warn them.
+..Director looks up at Lt Walker.
+._DIRECTOR LEE
+>:How long before they enter the
+.:atmosphere?
+..Lt Walker looks at tablet, then at Director.
+._LT WALKER
+.:Less than 20 minutes.
+..Director freezes, trying to process, looks at Lt Walker.
+._DIRECTOR LEE
+.:Sent them everything we have.
+>.Lt Walker looks at the Director like he doesn't understand,
+..the Director frantically points at screen.
+._DIRECTOR LEE (CONT'D)
+.:Retransmit that message! Do it now!
+>.Lt Walker touches control panel, screen reads,
+.."transmitting," then, "sent." He looks at Director.
+._LT WALKER
+.:What else can we do?
+..Director in shock, stands shaking head, looks horrified.
+./FADE TO:
+.\(ACT 3)
+.=Ext. Mars
+>.Shot of Mars, pan around to see squadron in formation,
+>.reasonable distance between ships, just beginning to enter
+>.atmosphere, Saturn V and VI are in lead, 3 kilometers apart,
+>.Hong Kong, Jefferson several kilometers behind, just below,
+>.so they will contact atmosphere first, General Sun Tzu just
+..visible in background.
+.\Int. Hong kong - bridge
+>.Bridge looks high tech but nothing compared to General Sun
+>.Tzu, Commander Li sitting in chair on bridge, navigator
+>.turns slightly towards him. Navigational information appears
+..on main screen.
+._Navigator
+>:Squadron navigational systems fully
+>:integrated Sir. Ships at standard
+>:spacing, aerocapture to be followed
+>:by controlled landing. All systems
+.:show green.
+..Commander Li smiles slightly, nods.
+._COMMANDER LI
+.:Very good.
+./DISSOLVE TO:
+.=Ext. Mars
+>.Rear two ships hit atmosphere first, followed by front two,
+..then after slight delay General Sun Tzu hits atmosphere.
+./DISSOLVE TO:
+.=Ext. Mars
+>.Shot of ships flying through atmosphere after aerocapture
+..complete, same formation.
+./DISSOLVE TO:
+.\Int. Hong kong
+>.Bridge on Hong Kong, everything normal, navigator turns
+..slightly towards Commander Li.
+._NAVIGATOR
+>:Aerocapture complete Sir. Speed
+>:2300 kilometers/hour, elevation
+>:2,000 meters, above Tharsis Bulge.
+>:We will continue de-accelerating
+>:and land on the far side of the
+>:Tharsis Montes in approximately 34
+.:minutes.
+..Commander Li smiles, nods
+._COMMANDER LI
+.:Very good.
+./DISSOLVE TO:
+.=Ext. Mars - tharsis bulge
+>.Shot of squadron from side, pan around behind ships to see
+..approach to huge Tharsis Volcanoes, hold for moment.
+./DISSOLVE TO:
+.\Int. Saturn V - bridge
+>.Bridge looks similar to Hong Kong, everyone looks relaxed,
+>.all routine. An Ensign delivers a cup of coffee to the
+..Commander, sitting in her captain's chair. 
+._Ensign
+.:Sir.
+..Commander looks pleased, takes coffee, smiles, nods.
+..Commander Ellen Carter, Space Ship Commander, 45.
+._Commander carter
+.:Thank you Ensign.
+>.She holds the coffee up, shows it to everyone, like it's a
+..trophy.
+._Commander carter (CONT'D)
+>:Take note everyone, this symbolizes
+>:just how far we've come. A
+>:Commander can enjoy a cup of coffee
+.:while landing on Mars.
+>.Everyone smiles, laughs quietly. Olympus Mons visible on
+>.left side of main screen, field fluctuation is barely
+>.visible on ship display, as new contact flashes up on the
+>.left side of the main display screen, light becomes visible
+>.on Volcano, some alarm lights flash, navigator looks
+..shocked.
+._NAVIGATOR
+.:What is that?
+>.Navigator looks at her console again, looks shocked, turns
+..slightly to Commander.
+._NAVIGATOR (CONT'D)
+.((confused)
+.:Sir we've been painted.
+>.Commander sits upright and forward in her chair, looks at
+..contact on main screen.
+._COMMANDER CARTER
+.:By what?
+./DISSOLVE TO:
+.=Ext. Mars - olympus mons - day
+>.Shot of high intensity light on Olympus Mons, hold for
+>.moment, then particle beam cannon fires, hits forward
+>.section of Saturn V, then moves down hull to midsection,
+..after which, massive explosion, entire ship blown to bits.
+>.Immediately after which, laser fire from General Sun Tzu
+..takes out cannon on Olympus Mons.
+./DISSOLVE TO:
+.=Ext. general sun tzu - day
+>.Shot of General Sun Tzu firing lasers, pan behind to see
+..laser hits on volcano and aftermath of Saturn V explosion.
+./DISSOLVE TO:
+.\Int. General sun tzu - bridge
+>.On Bridge, all hell breaking lose, alarms sounding,
+>.flashing, battle unfolding on huge main display. Sid turns
+..slightly to Commander.
+._SID
+>:Ship fired automatically, would
+>:have fired sooner but the lasers
+.:were set on safe for the landing.
+..Lt Tan looking at main display, looks horrified.
+._LT. TAN
+.:Look!
+>.More fields fluctuate on Volcano, more high intensity lights
+..appear.
+./DISSOLVE TO:
+.\Int. Saturn VI - bridge
+>.On the bridge everyone is frantic, Commander is yelling out
+..orders.
+..Commander Owen - Space Ship Commander - 41.
+._Commander Owen
+.((frantically)
+.:Get the weapons online!! Hurry!
+>.Bridge crew are frantic, navigator turns slightly to
+..Commander.
+._NAVIGATOR
+>:Sir, the weapons were turned off
+.:for the landing! I'm trying!
+>.Second navigator looks at screen, looks over at first
+>.navigator. Can see Cannon fire and laser fire on main
+..screen.
+._Navigator 2
+.:We're painted.
+..Everyone freezes for moment.
+./DISSOLVE TO:
+.=Ext. Olympus mons - day
+>.Cannon fire explodes out from Olympus Mons, hits forward
+>.section of Saturn VI, moves down hull, massive explosion
+..consumes entire ship.
+./DISSOLVE TO:
+.=Ext. General sun tzu - day
+>.Shot from behind General Sun Tzu, which is now aiming
+>.directly at Olympus Mons, but is flying partially sideways,
+>.front aimed at Volcano. Cannon fires from Olympus Mons, ship
+>.moves slightly out of way, then fires on cannon, taking it
+..out.
+./DISSOLVE TO:
+.=Int. General sun tzu - organic room
+>.Shot of organic room, red lights flashing extremely quickly,
+>.battle on holographic display, firing solutions flashing up
+..on screen at high rate.
+./DISSOLVE TO:
+.=Ext. General sun tzu - day
+>.Shot from behind General Sun Tzu, cannons continue to fire,
+>.General Sun Tzu manoeuvres, returns fire, then cannon shot
+..glances off belly armor, causes small explosion. 
+./DISSOLVE TO:
+.\Int. GENERAL SUN TZU - day
+>.Shot of bridge crew reacting to concussion as explosion
+..passes through bridge. 
+./DISSOLVE TO:
+.=Ext. olympus mons - day
+>.Shot of Olympus Mons taking fire from less powerful lasers,
+..doing far less damage than lasers of General Sun Tzu. 
+./DISSOLVE TO:
+.=Ext. Hong kong - day
+>.Shot of Hong Kong firing on Olympus Mons, has turned it's
+>.belly armor towards the Volcano, is able to fire down its
+..axis.
+./DISSOLVE TO:
+.\Int. Hong kong - bridge
+>.Commander Li is standing, looking over battle on main
+>.screen, looks stoic, determined, navigator turns slightly
+>.towards him. Notice Tharsis Bulge getting close on the
+..screen.
+._NAVIGATOR
+>:It's no good Sir, we just don't
+.:have the firepower of the Sun Tzu.
+>.Navigator looks down at his screen, turns towards Commander
+..Li.
+._NAVIGATOR (CONT'D)
+.:Sir, we've been painted.
+./DISSOLVE TO:
+.=Ext. Olympus mons - day
+>.Cannon fires from Volcano, blows hole right through belly of
+>.Hong Kong, second shot has exact same effect, explosions on
+..ship.
+./DISSOLVE TO:
+.\Int. Hong kong - bridge
+>.Bridge crew react to concussion of cannon hits and
+>.explosions, ship starts to go down straight into Tharsis
+..Bulge, navigator turns slightly towards Commander Li.
+._NAVIGATOR
+.:Sir, we're going in!
+..Commander Li turns head to side, closes eyes, grimaces.
+./DISSOLVE TO:
+.\Ext. Hong kong - day
+>.Shot of Hong Kong plunging straight into face of Tharsis
+>.Bulge, massive explosion. More laser fire explodes across
+..the screen aimed at Olympus Mons.
+./DISSOLVE TO:
+.=Ext. Jefferson - day
+>.Shot of Jefferson, belly armor turned towards Olympus Mods,
+>.firing lasers, same effects as Hong Kong, Tharsis Bulge
+..coming up fast, looks like they will make it around side. 
+./DISSOLVE TO:
+.\Int. Jefferson - bridge
+..Commander Talbot frantically giving orders.
+._COMMANDER TALBOT
+>:If we clear the side we'll be out
+.:of range!
+./DISSOLVE TO:
+.=Ext. General sun tzu - day
+>.Shot of General Sun Tzu in midst of battle, smoke coming off
+>.armor in several areas, ship is still flying sideways,
+>.pointed directly at Olympus Mons, Tharsis Bulge is coming up
+>.quickly, but looks like ship will slip past side. One dozen
+>.missiles fall out of the bottom on each side of the ship and
+..explode at incredible speed towards Olympus Mons.
+.\Int. General sun tzu - bridge
+>.Bridge crew has an amazing view of battle, headsets enabling
+>.them to see entire theatre plainly. Olympus Mons has taken
+>.substantial damage, but still firing, wreckage of Saturn V
+>.and VI still falling from sky, landslide falling where Hong
+>.Kong went into rock face, Jefferson trailing smoke to the
+..right.
+..Sid looks back at Commander Stone, shaking her head.
+._SID
+>:We can't stay here, we'll be
+.:destroyed. 
+..She looks back at her console then back at the Commander.
+._SID (CONT'D)
+.:We fired missiles. 
+..She looks back at her console then back at the Commander.
+._SID (CONT'D)
+>:They have no chance of hitting
+.:anything.
+..The Commander looks stoic and in shock.
+._COMMANDER STONE
+>:Ships giving it something else to
+.:shoot at, buying us time.
+..Sid looks back, nods.
+._SID
+.:I agree.
+>.Just then cannon hits Jefferson, blows through belly, out
+>.top, small explosions result, other cannon fire engaging
+>.missiles. General Sun Tzu returns fire just as both ships
+..move past edge of Tharsis Bulge, taking them out of range.
+./DISSOLVE TO:
+.=Ext. Side of tharsis bulge - day
+>.Shot of two ships with Tharsis Bulge directly behind them
+>.and to the left. General Sun Tzu, still trailing significant
+>.smoke from damaged armor, turning itself on its axis to fly
+..straight, Jefferson on fire, slowly losing altitude.
+./DISSOLVE TO:
+.\Int. General sun tzu - bridge
+>.With headsets, it's like the bridge crew are standing on top
+>.of, and are looking down at the stricken Jefferson, as it
+>.begins to go down directly below them, slightly to right, or
+..starboard. 
+..Commander Stone looks at Sid.
+._COMMANDER STONE
+>:Sid, connect me with Commander
+.:Talbot.
+..She touches her console, turns to Commander slightly, nods.
+._SID
+.:Go.
+..The Commander looks down at stricken ship.
+._COMMANDER STONE
+>:Talbot? Are you there? Can you hear
+.:me?
+..Communications sound.
+._COMMANDER TALBOT
+>:We're here Michael. Ships badly
+.:damaged. I can't save her.
+._COMMANDER STONE
+.:Do you have any control? 
+._COMMANDER TALBOT
+>:A bit. Not enough for a controlled
+>:landing, more like a controlled
+>:crash. We can still brake, believe
+>:it or not, and still have some
+>:upward thrust, not sure how long it
+.:will last.
+..Commander looks at Sid, then back at stricken ship.
+._COMMANDER STONE
+.:We'll cover you.
+..Jefferson moving lower, further away from General Sun Tzu.
+._COMMANDER TALBOT
+>:No! Whatever that thing is, your
+>:the only one with enough fire power
+>:to do anything about it. What if it
+.:goes after Earth?
+..Jefferson continues moving away.
+._COMMANDER STONE
+.((stressed)
+.:I can't just ...
+..Talbot cuts him off.
+._COMMANDER TALBOT
+>:You can't just what? ... Risk
+>:everything? We can see you Michael,
+>:you're damaged. Get that ship
+>:repaired and stop that thing! ...
+.:Save Earth! ... Talbot out!
+..Line cuts off, Sid looks back at Commander, shakes her head.
+._SID
+.:He's gone.
+..The Commander sits down, looks at Sid.
+._COMMANDER STONE
+>:When we clear this part of the
+>:bulge will that thing be able to
+.:fire at us again?
+..Sid looks back at him, shaking her head.
+._SID
+>:Not if it's confined to Olympus
+>:Mons. The bulge is too far across,
+.:it doesn't have the elevation.
+..Sid looks back at her screens, then back at Commander.
+._SID (CONT'D)
+>:Once we clear the bulge we'll be
+>:right on top of the Valles
+>:Marineris. Plenty of places to hide
+>:in those canyons, we'll be able to
+.:make repairs. 
+./DISSOLVE TO:
+.=Ext. Jefferson - day
+>.Shot of Jefferson getting close to ground, heading into
+>.relatively flat patch of ground, fires out, trailing lots of
+..smoke.
+./DISSOLVE TO:
+.\Int. Jefferson - bridge
+>.Everyone on bridge getting strapped in, with breathing
+>.apparatuses, air is smoky, navigator turns towards 
+..Commander.
+._NAVIGATOR
+>:We're down to under 500 feet Sir,
+>:I'll put everything into a final
+.:brake before we hit.
+>.Commander Talbot smiles. On main screen ground ahead looks
+..fairly flat.
+._COMMANDER TALBOT
+>:Looks like you've found us a good
+.:place to land. Well done.
+..Navigator smiles at Commander, turns around looking forward.
+._NAVIGATOR
+.:Thank you Sir.
+..Navigator touches controls.
+._NAVIGATOR (CONT'D)
+.:Final breaking now.
+>.Main screen displays airspeed, rapidly clicks down to 342
+..kilometers per hour. 
+._NaVIGATOR (CONT'D)
+.:That's it.
+./DISSOLVE TO:
+.=Ext. Jefferson - day
+>.The Jefferson hits ground, just over 300 kilometers per
+>.hour, parts of undercarriage collapse, several small
+>.explosions. Shot of concussion going through bridge. Ship
+>.skids for over kilometer, blowing through some good sized
+..rocks, then comes to stop, plenty of smoke, small fires.
+./DISSOLVE TO:
+.\Int. General sun tzu - bridge
+>.Alert sounds, icons appears on lower right hand side of main
+..screen. Sid turns to Commander.
+._SID
+.:The Jefferson has gone in Sir.
+>.Everyone stands, looks at screen. Lt. Tan turns to
+..Commander.
+._LT. TAN
+.:We should do something Sir!
+..Alex looks at her screen, then turns to Commander.
+._ALEX
+>:Commander, we just launched a dozen
+.:tactical drones.
+>.They all look to right, watch Drones blasting away from
+..ship. Commander looks at Sid.
+._COMMANDER STONE
+.((elevated voice)
+>:Do we get to give any orders here,
+.:or is ship making every call.
+..Sid puts her hands up and slowly turns around.
+._SID
+>:It's an automated tactical system.
+>:It's responding automatically, on
+>:it's own. Thank God it did. It's
+.:the only reason we're still here.
+..They look at each other, don't know what to think.
+./DISSOLVE TO:
+.=Ext. Jefferson - day
+..Jefferson lays on ground, tangled mess, smoke pouring off.
+./DISSOLVE TO:
+.\Int. Jefferson - bridge
+>.Bridge crew in breathing apparatus, working on systems,
+>.checking damage, lots of smoke. Commander Talbot walks over
+..to Officer checking systems.
+._COMMANDER TALBOT
+.:How bad is it Lieutenant?
+..She motions to him with hands.
+._Lt. Grey
+>:It looks like we've lost all
+>:atmosphere in the ship. Anyone not
+>:wearing breathers is gone. We've
+>:managed to restore a few automatic
+>:systems and put most of the fires
+.:out.
+..He puts his hand on her shoulder.
+._COMMANDER TALBOT
+>:Is there anyway we can use this
+.:ship as a lifeboat?
+..She shakes her head.
+._LT. GREY
+>:Sir, we've hardly got anything
+>:left, there's just no way, this
+>:ship is done, we need to get out of
+.:here!
+._COMMANDER TALBOT
+>:Get everyone who's left up here,
+>:we'll use the evacuation pods off
+.:the bridge.
+>.Lt. Grey nods. Some monitors still working, parts of main
+>.screen coming on and off, navigator looks in aft screen,
+..sees behind ship, raises hand, points.
+._NAVIGATOR
+.:Sir, what are those?
+>.They all look at aft screen, see objects in distance, black
+>.shapes, fields fluctuate and more appear, more than a dozen
+>.move toward  ship, begin to hear same sound as in message
+..from Cydonia. They stand frozen for moment.
+>.(The "black shapes" are all about the same size but there is
+>.randomness, all look terrifying, all meant to indicate pure
+..insanity.)
+./DISSOLVE TO:
+.\Ext. Jefferson - day
+>.Shot of black shapes moving towards ship, sound is like
+..muffled screaming.
+./DISSOLVE TO:
+.\Int. Jefferson - bridge
+..The Commander grabs Lieutenant's shoulder.
+._COMMANDER TALBOT
+.((frantically)
+>:Can we launch anything? Drones,
+.:missiles, anything?!
+..She looks down at console, begins touching controls.
+._LT. GREY
+>:We should be able to, it's all on
+>:top of the ship, where the least
+>:damage ... wait ... got it. I have
+.:control of some drones, launching.
+./DISSOLVE TO:
+.=Ext. Jefferson - day
+>.Shot of grey drones launching from ship, approach black
+>.shapes, before they fire, sound intensifies, increases,
+..drones begin to melt, then disintegrate.
+./DISSOLVE TO:
+.\Int. Jefferson - bridge
+>.All remaining crew members now on bridge, watching black
+..shapes approach.
+._NAVIGATOR
+>:We're going to abandon ship with
+.:those things out there?
+..The Commander looks at navigator.
+._COMMANDER TALBOT
+.:Is there another option?!
+>.Lt. Grey points at a monitor still barely working on port
+..side of ship.
+._LT. GREY
+.:Look!!
+>.They see black drones from General Sun Tzu coming in at high
+..speed.
+._COMMANDER TALBOT
+>:This is our chance! Let's go
+.:people!
+>.They all begin moving towards escape pods. Now late in day,
+..sun starting to go down.
+./DISSOLVE TO:
+.=Ext. Jefferson - dusk
+>.Black drones from General Sun Tzu scream in, engage, organic
+>.armor begins to melt, takes time, allowing them to fire
+>.lasers, missiles, causing extensive damage, major battle
+>.erupts. Escape pods launch from Jefferson, a few drones
+..escort them away from scene, remainder stay behind to fight.
+./FADE TO:
+.=Ext. General sun tzu - night
+>.General Sun Tzu sits on huge bench tucked inside canyon
+>.wall, ship is completely dark, can barely make out repair
+..drones making repairs to exterior of ship.
+./DISSOLVE TO:
+.\Int. General sun tzu - hangar bay
+>.Group from Jefferson has arrived, being received by
+>.Commander Stone and crew. Commander Stone and Commander
+>.Talbot sitting together on bench, Talbot leaned over, head
+..in hands.
+._COMMANDER TALBOT
+>:What the hell was that? We just
+.:lost hundreds of people.
+>.Commander Stone sits, shaking head. Commander Talbot looks
+..up.
+._COMMANDER TALBOT (CONT'D)
+.((stressed)
+>:You're the only one who stands a
+.:chance against that ... Thing?!
+..Commander Stone looks at him.
+._COMMANDER STONE
+>:We don't even know what that thing
+.:is.
+>.Commander Talbot looks at him, about to say something. Lt.
+..Zau walks up.
+._Lt. Zau
+>:Commander, we received a
+>:transmission from DIRECTOR LEE just
+>:before we entered the atmosphere.
+>:Ship and the Professor have been
+>:going over the data, they'd like to
+.:see you Sir.
+..Commander Stone nods, looks at Talbot.
+._COMMANDER STONE
+>:Our people will show you to your
+>:cabins. I'll see you in the
+.:briefing room shortly.
+..Commander Stone gets up, follows Lt. Zau.
+./DISSOLVE TO:
+.\Int. General sun tzu - media room
+>.The Commander, Lt. Zau walk into media room. Professor
+>.sitting on far side of large table, Alex sitting beside him,
+>.Sid sitting at far end, Professor and Alex in shock, Sid
+>.looks enraged, look in her eyes could kill. The Commander
+..looks at the Professor.
+._COMMANDER STONE
+.:You have a report for me?
+..The Professor looks up at him, looks to be in shock.
+._PROFESSOR
+>:Just before we entered orbit we
+>:received a transmission from
+>:Director Lee. It was a copy of a
+>:transmission he had just received
+.:from Cydonia.
+..The Professor looks down.
+._PROFESSOR (CONT'D)
+>:We now have a better idea of what
+>:we're up against. We clearly woke
+.:something up.
+>.The Commander takes a deep breath, looks indignant, looks at
+..the Professor.
+._COMMANDER STONE
+>:You mean, your people woke
+>:something up and it just destroyed
+.:four of our ships!
+..The Professor, still looking down, nods, looks up.
+._PROFESSOR
+.:Yes Sir.
+..Dead silence, everyone in shock.
+./Fade TO:
+.\Int. General sun tzu - briefing ROOM
+>.Briefing room filled with personnel, both Commanders, Sid,
+>.Alex; the Professor is at front conducting briefing. Room is
+>.dark, huge display shows end of final message sent from
+>.Cydonia, alien screaming sound, screams of scientists,
+>.message ends. Lights come up slightly, Professor addresses
+..group.
+._PROFESSOR
+>:The scientists at Cydonia and the 
+>:teams exploring Olympus Mons
+>:actually developed a great deal of
+.:usable intel. 
+..He pauses for moment, puts head down, nods, looks back up.
+._PROFESSOR (CONT'D)
+>:The team at Cydonia had deciphered
+>:the Martian alphabet and had begun
+.:to understand the language.  
+..Commander Stone motions to Professor.
+._COMMANDER STONE
+.:Do we know why the Martians left.
+..The Professor nods.
+._PROFESSOR
+>:Ship has postulated two
+>:possibilities, either the solar
+>:system became unstable, or Mars
+>:simply became too uninhabitable. We
+>:know that in the distant past Mars
+>:lost water, it lost it's
+>:atmosphere, it's magnetic field,
+>:which was it's protection against
+>:radiation. It may have just been
+.:too much.
+..Commander Stone motions again.
+._COMMANDER STONE
+.:Why not go to Earth?
+..Professor motions.
+._PROFESSOR
+>:Either the threat extended to
+>:Earth, or they just didn't want to
+>:interfere in the development of
+>:life here. They were obviously very
+.:advanced.
+._COMMANDER STONE
+>:But they left behind their
+.:technology?
+..The Professor motions with his hands.
+._PROFESSOR
+>:We can assume it would have been
+>:turned off. Anything on the surface
+>:disappeared a long time ago. Even
+>:much of what we found underground
+>:appears to be fossilized. They left
+.:a long time ago.
+..Commander shakes his head.
+._COMMANDER STONE
+.:Yet we turned something back on?
+..Professor nods slowly.
+._PROFESSOR
+.:We did. 
+..Professor hesitates, takes a breath.
+._PROFESSOR (CONT'D)
+>:We actually determined, quite some
+.:time ago, that they had organics.
+..Everyone in the room reacts.
+._SID
+.((In shock)
+.:You knew.
+..Professor nods.
+._PROFESSOR
+>:Yes, we knew. Ship postulates that
+>:the Martians had found a way to
+.:stabilized their Organics. 
+..The Commander looks at him.
+._COMMANDER STONE
+.:But this one is unstable?
+..The Professor nods.
+._PROFESSOR
+>:This one was not stabilized. It's
+>:completely alien and quite mad. We
+>:feel it's looking at the remnants
+>:of a ruined civilization and
+.:blaming us.
+..He pauses.
+._PROFESSOR (CONT'D)
+>:And once it has eradicated all
+>:human life on Mars, it will go to
+.:Earth and do the same. 
+>.Sid drops her head into her arms on table, then looks back
+..up, look of complete shock.
+._SID
+.:And no way to reason with it?
+>.The Professor steps back, motions with hands, shakes head,
+..strained smile.
+._PROFESSOR
+>:That sound in the message from
+>:Cydonia, the same ones recorded by
+>:the drones in the attack on the
+.:Jefferson.
+..He picks up tablet, touches screen.
+._PROFESSOR (CONT'D)
+.:I knew I'd heard that sound before.
+>.He turns to wall screen, enters more commands into tablet,
+..screen splits in two, he looks back at group.
+._PROFESSOR (CONT'D)
+>:This was a recording of the first
+>:Organic we created just before it
+.:died.
+>.Recording comes on of woman charging camera, screaming,
+..completely enraged, completely mad.
+._PROFESSOR (CONT'D)
+>:That is the sound of madness. Now
+.:this is the recording from Cydonia.
+>.The recording sounds very similar to the Organic, muffled,
+>.enraged screaming. The Professor steps aside, lets them see
+>.entire screen, zoom in. The sound recordings go back and
+..forth, sound quite similar.
+._PROFESSOR (CONT'D)
+>:Our Organic ... Cydonia. Our
+>:Organic ... Cydonia. Ladies and
+>:gentlemen, our enemy is utterly and
+.:complete insanity.
+>.Zoom in on woman, combine both recordings, looks and sounds
+..completely insane. Spine chilling music.
+./DISSOLVE TO:
+.=Int. General sun tzu - organic room
+>.Pan into organic room, very dark, red lights flashing, pan
+>.right into the holographic screen, briefing in progress is
+>.being projected onto the back wall of the screen, then pan
+>.around and see a dark figure watching the briefing. The
+>.figure looks down, then back up, just see eyes, very worried
+..look. Eerie music.
+./FADE TO:
+.\Int. Moon - bRIEFING ROOM
+>.Director Lee sits with Lt. Walker, half a dozen officers,
+..dignitaries, all look solemn, in shock.
+._LT WALKER
+>:As far as we can tell, the entire
+>:squadron has been destroyed and the
+>:General Sun Tzu has at the very
+.:least been heavily damaged.
+..The Lieutenant takes a breath, collects himself.
+._LT WALKER (CONT'D)
+>:We had received several emergencies
+>:transmissions from Mars, including
+>:the one from Cydonia, and now
+.:everything has gone dead.
+..He looks at the group.
+._LT WALKER (CONT'D)
+>:Our experts have concluded that all
+>:signals to and from Mars are now
+>:being blocked, but they don't know
+.:by what ... Director.
+..The Director glances up, then looks back down.
+._DIRECTOR LEE
+>:It is now my solemn duty to inform
+>:all governments within our
+>:Federation to make all
+.:preparations.
+..He hesitates.
+._DIRECTOR LEE (CONT'D)
+>:To make all possible preparations
+.:... for war.
+..Lt. Walker looks at Director.
+._LT WALKER
+>:Are you going to tell them there's
+.:no chance we can win.
+..The Director looks at Lieutenant, sly smile.
+._DIRECTOR LEE
+.:What would be the point?
+..Hold for moment. 
+./FADE TO:
+.=Int. General sun tzu - sID'S CABIN
+>.Sid storms into cabin, walks to middle of room, hands on
+>.sides of head, crouches down, trying to contain rage/fear,
+..hold for several moments.  
+./DISSOLVE TO:
+.=Int. General sun tzu
+>.Shot's from various areas as ship comes to life, alert signs
+..flashing, crew getting ready for war. 
+./DISSOLVE TO:
+.=Int. sid'S CABIN
+>.She gets back up, walks to picture of kids on wall, puts her
+..hands on wall straddling picture.  
+./DISSOLVE TO:
+.=Int. General sun tzu
+>.Shot's from various areas, crew getting ready for war,
+..everyone dressed to kill, looking ready.
+./DISSOLVE TO:
+.\Int. Sid's cabin
+>.Sid pushes off wall, steps back few feet, continues looking
+>.at pictures on wall, turns towards washroom, walking past
+..shot.
+._SID
+.:You guys leave this with me!
+./DISSOLVE TO:
+.=Ext. General sun tzu - twilight
+>.Shot of ship, exterior repairs complete, sun just beginning
+..to rise, some daylight visible in sky.
+./DISSOLVE TO:
+.\Int. Sid'S CABIN
+>.Sid finishes dressing in best combats, flight suit looks
+>.amazing, dressed for war. She looks at her kids one more
+..time.
+._SID
+.:Don't you worry about a thing.
+..She turns, walks out door into corridor.
+./DISSOLVE TO:
+.\Int. General sun tzu - corridor
+>.Sid walks down corridor with purpose, right past Commander
+..Stone, who turns.
+._COMMANDER STONE
+.:Sid!
+..He walks to follow her, raises voice.
+._COMMANDER STONE (CONT'D)
+.((forcefully)
+.:Lieutenant!!
+..She stops, turns, eyes could kill. He walks up to her.
+._SID
+.:I'm going to tear that thing apart!
+..She starts to turn to walk away.
+._COMMANDER STONE
+.((forcefully)
+.:Lieutenant!!
+>.She stops, he steps forward, grabs her arm, turns her toward
+>.him, grabs her other arm, not too forcefully, looks her in
+..the eyes.
+._COMMANDER STONE (CONT'D)
+.((powerfully, but gently)
+>:WE are going to tear that thing
+>:apart!! Do you understand!! WE, as
+>:a team, are going to tear it
+.:apart!! Understand Lieutenant?!
+>.She looks up at him, nods, look could kill. He steps away,
+..starts walking, turns back toward her.
+._COMMANDER STONE (CONT'D)
+.((powerfully)
+.:Briefing in 10 minutes Lieutenant!
+>.He walks away, she remains standing, same look, ready to
+..explode, but also focused.
+./FADE TO:
+.\Int. General sun tzu - war room
+>.War room is large, high tech, giant holographic screens
+>.cover three of four walls, in center stands huge 25' x 15'
+>.table with holographic top. Over 30 officers inside, all
+>.dressed to kill, tight black combat/flight uniforms. Several
+>.groups have formed, all discussing best way to attack
+>.Olympus Mons directly. Then, images of Olympus Mons, Tharsis
+>.Montes, entire Tharsis Bulge, flash up on walls, table top
+>.comes to life, everyone turns to front of room, as the
+>.Commander, the Professor, Sid, and Alex walk in, room goes
+..silent.
+>.The Commander and the Professor stand in front of the table,
+>.which runs lengthwise across width of room, Sid, Alex stand
+>.towards end of table, on same side, with everyone else
+>.standing opposite. A holographic image appears above table.
+..The Professor clears his throat.
+._PROFESSOR
+>:What your seeing here are images of 
+>:lava tubes below the Olympus Mons
+>:and Tharsis Montes Volcanoes. As
+>:you can see, they are
+>:interconnected and they are huge,
+.:some big enough for Ship.
+..The Professor motions with hands.
+._PROFESSOR (CONT'D)
+>:These images were obtained by the
+>:two teams assigned to explore the
+>:area. Their drones mapped these
+>:images, some taken minutes before
+.:they were attacked.
+..The Professor shakes head, looks reflective.
+._PROFESSOR (CONT'D)
+>:We have them only because they were
+>:on continuous feed, transmitting to
+.:Cydonia as they recorded.
+>.The Professor touches tablet, an image of Valles Marineris
+..Canyons appears.
+._PROFESSOR (CONT'D)
+>:We now sit in one of the canyons of
+>:the Valles Marineris and we know
+>:these canyons formed along with the
+.:Tharsis system.
+..He touches tablet again, ships position comes up on screen.
+._PROFESSOR (CONT'D)
+>:The entire valley was filled with
+>:lava, the lava withdrew, and the
+>:roof  collapsed. This along with
+>:rift faults, and landslides formed
+.:the valley as it exists today.
+>.The Professor touches tablet, rift fault highlighted, runs
+..under Tharsis Montes up to Olympus Mons.
+._PROFESSOR (CONT'D)
+>:And the same process created this
+>:rift fault, which runs directly
+>:under Tharsis Montes, right up to
+.:Olympus Mons.
+..Professor touches tablet again, area highlighted on screen.
+._PROFESSOR (CONT'D)
+>:The entrance point is here, through
+>:the lava tube at the extreme west
+.:side of the Noctis Labyrinthus. 
+..Professor looks at Commander shaking his head.
+._PROFESSOR (CONT'D)
+>:There is surprisingly little
+>:blockage at the entrance, which is
+>:protected by the way it's recessed
+.:into the canyon wall.
+>.Professor touches tablet, tubes under Olympus Mons
+..highlighted.
+._PROFESSOR (CONT'D)
+>:And as you can see here, the rift
+>:is connected to the lava tubes
+>:running under Olympus Mons.
+.:Commander.
+..The Commander steps forward.
+._COMMANDER STONE
+>:We're going to enter the tube
+.:closest to our position. 
+..The Commander points with his hand.
+._COMMANDER STONE (CONT'D)
+>:Travel right down that rift fault
+>:and nuke that thing from the
+.:inside.
+..The Commander steps forward, looks at everyone.
+._COMMANDER STONE (CONT'D)
+>:We can't stand in against those
+>:cannons on the surface, so we're
+>:going to go right up that things
+.:back end.
+>.The Commander nods as Commander Talbot steps forward and
+..motions to the Commander.
+._COMMANDER TALBOT
+>:Commander, do you mind me asking,
+.:who came up with this plan.
+..The Commander looks at the Professor, then back at Talbot.
+._COMMANDER STONE
+.:Ship did.
+..Talbot smiles, motions with hand.
+._COMMANDER TALBOT
+.:And what about Cydonia? 
+>.The Commander motions to Professor, who touches tablet. The
+>.holographic image moves higher, revealing image of another
+..tunnel running away from Olympus Mons, towards Cydonia.
+._PROFESSOR
+>:This was even more of a surprise
+>:than the lava tubes. The scan
+>:wasn't completed before the second
+>:team was .. killed, but we think it
+.:runs all the way to Cydonia.
+..The Commander motions with hands.
+._COMMANDER STONE
+>:Ship has been able to isolate the
+>:modulation frequency of the alien
+>:craft, we think we can cloak a few
+>:drones so that they can travel
+.:through that tunnel undetected. 
+..The Commander touches tablet, images appear of drones.
+._COMMANDER STONE (CONT'D)
+>:Two drones modified to carry two,
+>:one megaton nukes each and two
+>:escorts. Anymore drones and we risk
+>:detection. They can access the
+>:tunnel here. Travel time about 5
+.:hours.
+>.Schematic appears showing access point. Weapons specialist
+..Rand motions with his hands.
+._RAND
+.((hesitantly)
+>:Commander the drones left almost 2
+>:hours ago, Ship gave the order,  I
+.:thought you knew.
+..The Commander looks at Professor who walks up close to him.
+._PROFESSOR
+.((quietly)
+>:Save the human race first, talk
+.:about your Organic second.
+..Rand motions again.
+._RAND
+>:Also Commander, we have a report on
+>:the weapons those alien craft are
+.:using.
+>.Rand nods toward Sid, who steps forward, an image of craft
+>.that attacked Jefferson appears on screen, includes image of
+..drones disintegrating.
+._SID
+>:What you seeing is the result of
+>:Disrupter fire. We've never seen
+>:anything like it and we don't know
+.:how it works. 
+>.Sid touches tablet, slow motion image of Drone
+..disintegrating comes on screen.
+._SID (CONT'D)
+>:It disrupts the cohesion of mater
+>:and then the sheer energy causes
+>:the vaporization. Fortunately, our
+.:new armor can resist this.
+..Sid touches tablet again, image of alien craft appears.
+._SID (CONT'D)
+>:The thickness of Ships armor can
+>:resist it for extended periods, but
+>:drones, pods and missiles only for
+>:a couple of minutes, which is
+>:sufficient time to cause extensive
+.:damage.
+>.Sid pauses for moment, looks at image of alien craft, zoom
+..in.
+._SID v.O
+>:We call them Screamers. The
+>:variation in shapes & sizes we are
+.:attributing to...sheer insanity.
+>.Everyone looks a bit freaked out. Commander Talbot steps
+..forward, he points to part of holographic image.
+._COMMANDER TALBOT
+>:And what about the tubes where the
+>:oxygen atmosphere was detected?
+>:That's where team one was lost,
+.:yes?
+..Commander Stone nods, smiles.
+._COMMANDER STONE
+>:We're going to send in a mix of
+>:tactical drones and pods, armed
+.:with tactical nukes.
+..The Commander touches tablet, tubes are highlighted.
+._COMMANDER STONE (CONT'D)
+>:That's the access point for the
+>:mission, leads into the Pavonis
+>:Mons lava tubes, the atmosphere was
+>:detected just on the other side of
+.:the volcano.
+..Commander Talbot nods towards image on screen.
+._COMMANDER TALBOT
+>:And they'll be facing those,
+>:Screamers? I'll take that mission,
+>:my team can handle it. We'd like
+.:some payback for the Jefferson.
+..Commander Stones smiles, nods.
+._COMMANDER STONE
+>:We'll send along a few of our
+.:people with you.
+..Everyone nods, Professor motions to group.
+._PROFESSOR
+>:I just want to point out this
+>:things development is trending
+>:exponentially, we either stop it
+.:now, or we never will.
+..The Commander motions to group.
+._COMMANDER STONE
+>:You heard him! Everyone to
+.:stations! We move out in one hour!
+./FADE TO:
+.=Ext. general sun tzu - morning
+..The General Sun Tzu sits on same bench, begins to lift off.
+..(Music is, Cream: Tales of Brave Ulysses)
+./DISSOLVE TO:
+.\Int. General sun tzu - bridge
+>.View looking through main display, ship comes off bench,
+>.then drops deep into canyon, moves in shadow of canyon, very
+..dark. Sid looks back at the Commander.
+._SID
+>:The drones we launched have
+>:detected large groups of Screamers.
+>:They're definitely searching for
+.:us.
+./DISSOLVE TO:
+.=Ext. General sun tzu
+..Shot of ship moving quickly through canyon shadows.
+./DISSOLVE TO:
+.\Int. General sun tzu - bridge
+>.View looking through main display, course ahead on screen.
+..Sid looks down at her console, then looks back up.
+._SID
+>:We can't cloak with all the
+>:external damage, but we can sneak
+.:up on them.
+.=Ext. Mars - Valles marineris - day
+>.Shot of hundreds of screamers lined up along canyon edge,
+..some descending into canyon.
+./DISSOLVE TO:
+.=Ext. Mars - valles marineris - orbit - day
+>.Shot from orbit, west end of Valles Marineris, close to
+>.Noctis Labyrinthus, inner ridge visible just back from
+..canyon wall, zoom in on canyon, then inner ridge.
+.=Ext. Mars - valles marineris - birds eye - day
+>.Shot from high above (5000') and back from edge of canyon,
+>.looking down on Screamers, gathering along canyon edge, pan
+>.down to see ship travelling at high speed on far side of
+>.inner ridge, zoom in to notice ship dropping missiles in
+>.groups of two along way, missiles all travel up and over
+..ridge then straight towards Screamers at very high speed.
+./DISSOLVE TO:
+.\Int. General sun tzu - bridge
+>.Everyone on bridge smiling, parts of main display show image
+>.of screamers, some bridge crew sneak a  middle finger at the
+..screamers, canyon now moving past at high speed.
+._SID
+>:Good morning ladies and gentlemen,
+>:breakfast is served at 4 clicks per
+.:second.
+._COMMANDER STONE
+.((almost to self)
+.:Top of the morning to you!
+._SID
+.:From earth with love.
+./DISSOLVE TO:
+.=Ext. Mars - valles marineris - birds eye - day
+>.Three sets of missiles, spread several kilometers apart, go
+>.screaming towards Screamers, here sound of the Screamers,
+>.missiles look extremely fast and powerful, then six, 100
+>.kiloton nukes go off in a cascade, almost at same time, less
+..than a second between them.
+./DISSOLVE TO:
+.=Ext. Mars - valles marineris - orbit - day
+..Shot of nukes going off from orbit.
+._SID V.O.
+>:It was the charge of the Light
+>:Brigade all over again, only this
+.:time we had nukes, lots of nukes.
+./DISSOLVE TO:
+.=Ext. General sun tzu - day
+..General Sun Tzu moving at high speed through canyons.
+._SID V.O. (CONT'D)
+>:We were riding a juggernaut with
+>:one sole purpose, save the entire
+.:human race. 
+./DISSOLVE TO:
+.\Int. General sun tzu - bridge
+>.Everyone on the bridge looks like they are getting on their
+..game, looking confident.
+._SID
+>:We don't want those things coming
+>:back on us once our intentions are
+>:known. So, we'll take out as many
+.:as possible on the way in.
+./FADE TO:
+.=Int. Mars - tunnel
+>.The interior dimensions of tunnel are large, about 300' in
+>.diameter, looks old, barely holding together, patched up
+..here and there.
+>.Cloaked drones barely visible, moving quickly, passing odd
+>.Screamer moving in either direction. Then several Screamers,
+>.moving in same direction as drones, turn around, begin
+>.moving back towards Olympus Mons, seemingly in response to
+..attack.
+./DISSOLVE TO:
+.=Ext. Mars valles marineris - orbit - day
+>.From orbit, see trail of multiple nuke detonations, moving
+..towards west end of Noctis Labyrinthus.
+._SID V.O.
+>:It was a great day to die, for all
+>:the right reasons. Our chance to go
+.:down in a blaze of glory.
+./DISSOLVE TO:
+.=Ext. General sun tzu - day
+>.General Sun Tzu flies through shot at high speed, pan over
+>.to formation of screamers coming down behind ship, from
+>.canyon wall above, then pan to missile dropped by ship as it
+>.blasts right up to Screamer formation, 100 kiloton nuke
+..detonates.
+._SID V.O. (CONT'D)
+>:Or win the day with an Organic that
+>:didn't miss. We had one shot to
+>:save everyone we love, winner take
+.:all.
+./DISSOLVE TO:
+.\Int. General sun tzu - brIDGE
+>.View through main screen, pan around to Sid working
+..controls, she turns slightly towards the Commander.
+._SID
+>:Screens look pretty clear now
+>:Commander. We've taken out hundreds
+.:of those things. 
+..Commander has game face, looks determined.
+._COMMANDER STONE
+.:It's a start. 
+..Sid looks up from controls, turns slightly to Commander.
+._SID
+>:Ship is slowing, coming up on
+.:insertion point for Talbot's team.
+..Commander touches his console.  
+._COMMANDER STONE
+.:You ready down there Talbot?
+./DISSOLVE TO:
+.=Int. General sun tzu - hangar BAY
+..Shot of pods, drones waiting for launch in hangar bay.
+._COMMANDER TALBOT
+.((determined)
+>:Oh we're ready, just give us a
+.:green light!
+./DISSOLVE TO:
+.\Int. General sun tzu - bRIDGE
+>.Looking through main viewer, entry point into lava tube
+..highlighted on screen. Commander smiles. 
+._COMMANDER STONE
+.:Here it comes.
+..Entry point flashes green on main viewer.
+._SID
+.:Go!
+./DISSOLVE TO:
+.=Ext. general sun tzu - day
+>.Pods, drones drop out of bottom, begin moving quickly
+..towards entry point, cloaking as they go.
+./DISSOLVE TO:
+.\Int. General sun tzu - bRIDGE
+>.Watching pods, drones depart through main viewer, two
+..advance drones in lead. Sid looks up from console.
+._SID
+>:Two drones will remain at the
+>:entrance to prevent anything from
+.:following them in.
+>.Watch them disappear into lava tube. Ship turns to right,
+..begins moving away.
+._SID (CONT'D)
+.:Here we go.
+./FADE TO:
+.=Ext. General sun tzu - day
+>.General Sun Tzu slowly approaches large lava tube opening,
+..very dark, in shadow of canyon.
+./DISSOLVE TO:
+.\Int. General sun tzu - bridge
+>.Looking through main viewer at opening, more than large
+..enough for ship.
+._ALEX
+.((whispers in awe)
+.:Look at the size of it.
+..Sid nods.
+._SID
+>:This entire canyon was once filled
+>:with lava. 4000 kilometers long,
+.:200 clicks wide, 7 clicks deep.
+..Alex nods.
+._ALEX
+.:That's a lot of lava.
+..Sid nods, looks back at the Commander.
+._COMMANDER STONE
+.:Take us in.
+.=Ext. General sun tzu - Noctis Labyrinthus
+..Shot of General Sun Tzu entering lava tube.
+./DISSOLVE TO:
+.=Int. Pavonis mons lava tube
+>.Interior of tube is large, approximately 400' in diameter,
+..shot of pods, drones travelling through tube at high speed.
+._COMMANDER TALBOT v.o.
+>:Sure is big enough, clear ahead as
+.:far as I can read.
+._LT. GREY v.o.
+>:Distance to target over 450
+.:kilometers Sir.
+._COMMANDER TALBOT V.O.
+.:Then let's pick it up people.
+._LT. GREY V.O.
+.:Yes Sir!
+..Shot of pods, drones accelerating.
+./DISSOLVE TO:
+.=Ext. General sun tzu - rift fault
+>.Shot of General Sun Tzu travelling at high speed through
+..rift.
+./DISSOLVE TO:
+.\Int. General sun tzu - bridge
+>.Looking through main viewer, on night vision, everything
+>.crystal clear. Rift is huge, both wide and deep, quite
+>.straight. Everyone lifts their hands off their controls, Sid
+..turns to the Commander. 
+._SID
+.:Ships taken control again. 
+..The Commander smiles, nods.
+._COMMANDER STONE
+>:So sit back and enjoy the ride
+.:people. What's the range to target?
+..Sid looks at her screen.
+._SID
+>:Approximately 1600 kilometers. Ship
+>:has already accelerated above 500
+>:kilometers per hour and is still
+.:accelerating.
+>.She looks at her screen again, then turns slightly to the
+..Commander.
+._SID (CONT'D)
+>:Ship is currently reading hundreds
+>:kilometers ahead, everything looks
+>:clear, if we need to slow down
+.:we'll have plenty of warning.
+..Alex looks up from her screen, turns slightly.
+._ALEX
+>:Ships showing an ETA up of just
+>:under 2 hours, we're going to
+>:accelerate to over 800 kilometers
+.:per hour. That's insane.
+..Sid looks up from screen.
+._SID
+.:Insane it is then.
+./DISSOLVE TO:
+.=Ext. general sun tzu - rift fault
+>.Shot of ship accelerating, travelling at high speed through
+..rift.
+./DISSOLVE TO:
+.\Int. General sun tzu - bridge
+>.Looking through main viewer, Ship travelling at very high
+>.speed, see some tunnels intersecting. Sid looks back at the
+..Commander.
+._SID
+>:We're just about to cross the line
+>:of the Tharsis Mons Volcanoes, into
+.:it's backyard. 
+..Sid looks at her screen.
+._SID (CONT'D)
+.:Reading Screamers ahead.
+.=Ext. General sun tzu - rift fault
+>.Ship moving at high speed through rift, 6 missiles drop out
+..of bottom, accelerate out of sight almost instantly. 
+./DISSOLVE TO:
+.\Int. General sun tzu - bridge
+>.An alarm goes off on left side of main screen. Sid looks at
+..console.
+._SID
+>:That's an automated alert from
+>:Commander Talbots group, from a
+.:drone. They're in trouble.
+..Alex looks over, points back with her thumb.
+._ALEX
+>:That signal came down that last
+>:tube we intersected, it's connected
+.:to Pavonis Mons.
+>.Sid jumps down off her navigation station, Alex follows her
+..lead.
+._SID
+.:Zau, take over.
+>.Zau moves to station, an Ensign takes over for Alex,
+..Commander stands up.
+._COMMANDER STONE
+.:Where are you going Lieutenants?
+..Sid looks at him as they pass.
+._SID
+>:Ship is in control, we're not
+.:needed here.
+..The Commander looks freaked, looks back as they leave.
+._COMMANDER STONE
+>:You two come back in one piece,
+.:that's an order!
+..The Commander shakes his head, sits back down.
+._COMMANDER STONE (CONT'D)
+.:Damn it!
+./DISSOLVE TO:
+.\Int. general sun tzu - hangar BAY
+>.Sid and Alex explode into hangar bay, dressed in combat
+..flight suits, Rand is waiting.
+._RAND
+.:I saw the alert Sirs, let's go!
+..Sid smiles.
+._SID
+.:Up for some fun Rand?
+..Rand looks pumped.
+._RAND
+.:Hell ya! 
+..Sid, Alex, Rand run into pods.
+._SID
+.:Let's go!
+./DISSOLVE TO:
+.=Int. General sun tzu - rift fault
+>.Five pods and five drones drop out of the bottom of ship,
+>.braking flaps deploy at back of pods and drones, ship speeds
+..out of sight as they decelerate. 
+._SID V.O.
+.:Hang on!
+>.The pods and drones all pivot so their bottoms are pointed
+>.in the direction of the tunnel, their engines flash to
+>.decelerate, they then turn, cloak and head back to the
+..intersecting tunnel, then turn right towards Pavonis Mons.
+./DISSOLVE TO:
+.\Int. General sun tzu - bridge
+>.Looking through main viewer a single missile launches and
+..rockets head of ship. Lt. Zau looks back at Commander.
+._LT. ZAU
+>:Sir, reading large numbers of
+>:Screamers well ahead, ship has
+>:launched 50 ton nuke. It will
+>:detonate almost 80 kilometers ahead
+.:of the ship.
+..Ensign Thomas looks at the Commander.
+._Ensign thomas
+>:Sir, ship is saying that a 50 ton
+>:nuke will not collapse the rift,
+>:it's too small, but the EMP blast
+.:will fry the Screamers.
+..The Commander shakes his head.
+._COMMANDER STONE
+>:Firing nukes in a tunnel, we're
+.:"all in" for crazy today.
+..The Ensign and Lt. Zau look at each other, shake heads.
+./DISSOLVE TO:
+.=Int. Pavonis MONS LAVA TUBE 2
+>.Shot of Sid's group traveling at high speed through tube,
+>.still cloaked, see fire ahead, some heated and molten rock.
+..They slow as they approach.
+._RAND v.o.
+.:Someone detonated a nuke in here.
+._SID v.O.
+>:The coordinates where team 1
+>:detected the oxygen atmosphere are
+.:just up ahead.
+>.They slow right down, look upon devastated area, parts of
+..the tube have collapsed.
+._RAND V.O.
+>:This was at least a 10 ton nuke,
+.:maybe more.
+._ALEX v.o.
+>:Let's not stay here, the whole roof
+.:could come down.
+>.They accelerate down a tube to the right, where there is
+>.less damage, as things open up, they realize there are
+>.multiple intersecting tubes and in distance more evidence of
+..nuke detonations.
+._RAND V.O.
+>:So Lt. Why do this, the atmosphere,
+.:what's the point?
+._SID V.O.
+.:Monsters.
+._RAND V.O.
+.:Monsters?
+._SID V.O.
+>:Rand, if you're going to invade
+>:Earth, you build O2 breathing
+>:organic life forms capable of
+.:taking over the environment.
+._ALEX v.o.
+>:Take out the technology first, then
+>:they can feed on the balance of
+.:humanity.
+._RAND V.O.
+.:Damn! 
+._SID V.O.
+.:I'm reading oxygen ahead, let's go.
+./DISSOLVE TO:
+.=Ext. General sun tzu - rift fault
+>.Shot of General Sun Tzu travelling through rift, firing
+>.missiles and lasers, sides of tube are red hot in places,
+>.due to nuke detonations, looks like something out of Dante's
+..Inferno.
+./DISSOLVE TO:
+.=Int. General sun tzu - organic room
+>.Shot of red lights flashing on casement, view forward is on
+>.main holographic screen, pan in, then around, see dark
+>.figure looking forward, extremely determined look on face,
+..barely discernible in darkness.
+./DISSOLVE TO:
+.\Int. General sun tzu - bridge
+>.Looking through main viewer shows carnage in rift, wrecked
+>.Screamers, some debris which has come down from rift roof,
+>.missiles, lasers firing sporadically. Then one missile fires
+..with red markings, Lt Zau turns to Commander.
+._LT. ZAU
+>:That's nuke number 24 Sir. Reading
+>:formation of Screamer 38 kilometers
+>:ahead, nuke will detonate in 12.8
+.:seconds.
+..She looks down at her console.
+._LT. ZAU (CONT'D)
+>:Now less than 200 clicks from
+>:launch point, we're there in 11
+.:minutes.
+..Commander looks focused, determined.
+._COMMANDER STONE
+.((under breath)
+.:Here we come.
+./DISSOLVE TO:
+.=Int. PaVONIS MONS LAVA TUBE
+>.Shot of pods, drones arriving at edge of nuke blast area,
+>.more wrecked Screamers visible, beyond appears to be organic
+>.life. Wreckage of several pods, drones visible, looks like
+..they were hit by blast of nuke. 
+._ALEX v.o.
+.:Look!
+>.Pan onto figure in combat flight suit walking around in a
+>.small black lake or pond, at that point the liquid is only
+>.knee deep and looks thick, the figure is walking with no
+..purpose, looks confused. One pod moves closer, pan in.
+._SID v.o.
+.:Get me a closer look.
+>.As the pod moves in, pan on to figure, Talbot can be clearly
+>.seen written on the left chest plate, the face plate on
+>.helmet is broken, zoom in, see blakened face, then as he
+..opens his mouth, looks alien, lets out same muffled scream. 
+._SID v.O. (CONT'D)
+.:Oh my god!
+>.As Sid's pod moves back, from further back in the pond,
+>.other members of Talbot's team begin walking out of the
+>.filthy black water, face plates are broken, same muffled
+>.scream, then black tentacles begin rising behind them,
+..moving towards the pod. 
+>.As Sid's pod moves back, two other pods move forward, along
+..with two drones, all start firing lasers.
+._SID V.O. (CON"T)
+.:No!! What are you doing!!
+>.Before the pods or drones can react, the  tentacles reach
+>.out and grab the pods and the drones, the tentacles explode
+>.right through the glass on the pods, screams are heard.
+>.Then, a drones moves up beside Sid's pod, ships voice comes
+..in over Sid's headset.
+._SHIP v.o.
+>:Lt. I really think we should be
+.:going now.
+..Sid acts surprised.
+._SID V.O.
+.:What? ..... No shit!
+._RAND V.O.
+>:I've got this whole place painted,
+.:fire at will.
+..Pan onto nukes mounted below missile racks.
+._SID V.O.
+.:Firing.
+>.As two missiles with red markings fire from each pod, they
+>.all turn and accelerate back the way they came, along with
+..the remaining drones.
+._ALEX V.O.
+.:Let's get out of here.
+>.Watch pods, drones race away, pan over to missiles, flying
+..into area.
+./DISSOLVE TO:
+.=Int. Pavonis mons lava tube
+..Shot of pods, drones moving through lava tube at high speed.
+./DISSOLVE TO:
+.=Int. PaVONIS MONS LAVA TUBE
+..Shot of missiles reaching their positions, then detonating.
+./DISSOLVE TO:
+.=Int. Pavonis mons lava tube
+>.Shot of pods, drones racing through tube with blast behind
+>.them, blast approaches, stops, they move clear at high
+..speed.
+./DISSOLVE TO:
+.=Ext. General sun tzu - rift fault
+..Shot of General Sun Tzu coming to a stop in rift.
+./DISSOLVE TO:
+.\Int. General sun tzu - bRIDGE
+>.Looking through main viewer, ship has stopped, Lt. Zau looks
+..up from her console.
+._LT. ZAU
+>:We're 50 clicks from Olympus Mons
+>:Sir, the way ahead looks quite
+.:clear, we've taken everything out.
+..Commander sitting forward in chair, hand rubbing chin.
+._COMMANDER STONE
+.:Ship knows what to do.
+>.Looking through main viewer, ship launches 30 missiles, then
+>.two more bigger missiles with bright white markings,
+..followed by 2 drones. Lt. Zau looks at her console.
+._LT. ZAU
+>:Sir, those last missiles are not in
+.:the inventory.
+>.Looking through main viewer, ship backs up, spins around,
+>.begins accelerating in opposite direction. The Commander
+..smiles.
+._COMMANDER STONE
+>:There's a little gift from Earth to
+>:Mars. They have 5 times the armor
+.:of any other missile.
+..The Commander smiles to himself.
+..
+./DISSOLVE TO:
+.=Int. Pavonis mons tube
+..Shot of pods, drones moving through tube at high speed.
+._ALEX v.o.
+.:Damn it! Reading Screamers ahead.
+._SID V.O.
+.:I see them!
+..Drone moves up beside Sids pod, she looks over.
+._SHIP V.O.
+>:I'm going to move ahead and engage
+.:them, you go around.
+>.The remaining drones move ahead of the pods at high speed
+>.leaving them behind, charge into large number of screamers,
+>.fire missiles, lasers. The Screamers move in towards drones,
+>.then Sid, Alex, Rand very quickly go around them, pass by,
+>.firing missiles as they pass. Pan onto Screamers turning to
+..pursue, then on drones, armor melting from disrupter fire.
+._SHIP V.O. (CONT'D)
+.:Oh no you don't!
+>.Drone fires small nuke, detonates in middle of Screamers.
+..Shot of Sid, Alex, Rand racing away, ahead of blast.
+._ALEX V.O.
+.:Way to go ship!
+._SID V.O.
+.:Nice shooting ship!
+..Pods race away.
+./DISSOLVE TO:
+.=Ext. General sun tzu - rift fault
+>.Shot of General Sun Tzu travelling at high speed through
+..rift.
+./DISSOLVE TO:
+.\Int. General sun tzu - bridge
+>.Looking through main viewer, rift still looks hot, debris,
+..wreckage everywhere. Lt. Zau looks back at Commander.
+._LT. ZAU
+>:Sir as soon as those missiles enter
+>:the interior of Olympus Mons
+.:they'll come under cannon fire.
+..The Commander bursts out laughing.
+._COMMANDER STONE
+>:I hope they do Lt. Inside each all
+>:they'll find is 100 megatons of
+.:pure anti-hydrogen.
+>.Lt. Zau, Ensign look at each other, mouths open. Commander
+..laughs again.
+._COMMANDER STONE (CONT'D)
+>:Whether they destroy them or we
+>:detonate them, it's all the same,
+.:because antimatter is antimatter.
+..Lt. Zau looks forward, mouth still open.
+._LT. ZAU
+.((to self)
+>:A 200 megaton matter, antimatter
+.:explosion.
+..She looks down at her console.
+._LT. ZAU (CONT'D)
+.((whispers)
+.:Ship, go faster.
+./DISSOLVE TO:
+.=Int. Olympus mons
+>.The interior is filled with a labyrinth of screamers and
+>.much larger spaceships, under construction. As the two
+>.missiles rise up in an arc inside the volcano, an undefined
+>.black entity looks on and laughs, with a very deep laugh, as
+..cannons light up overhead preparing to fire. 
+._Entity
+.:Hahahaha...
+>.The cannons fire, hit the missiles, followed by the sound of
+..detonation.
+./DISSOLVE TO:
+.=Ext. olympus mons - birds eye - orbit
+>.Shot of Olympus Mons from orbit, extremely white light
+>.explodes out of top, then begins exiting other vents around
+..volcano.
+./DISSOLVE TO:
+.=Ext. General sun tzu - rift fault
+>.Shot of General Sun Tzu travelling through rift, white light
+>.coming up behind, then advancing along the walls of tube,
+..right up beside the ship. 
+./DISSOLVE TO:
+.\Int. General sun tzu - bridge
+..Lt. Zau looks at her console.
+._LT. ZAU
+>:The rift walls are collapsing
+.:behind us.
+..She looks up from her console.
+._LT. ZAU (CONT'D)
+.:It's gaining on us.
+./DISSOLVE TO:
+.=Ext. General sun tzu - rift fault
+..Shot from ship, looking behind, rift collapsing in distance.
+./DISSOLVE TO:
+.\Ext. Cydonia - birds eye
+..Shot of Cydonia site from several thousand feet above.
+./DISSOLVE TO:
+.=Int. Cydonia
+>.Shot of last two drones running from Screamers, front one
+..keeps going, trailing one disintegrates. 
+./DISSOLVE TO:
+.=Int. Drone
+>.Shot looking through drone sights, locks up underground
+..structure at Cydonia.
+./DISSOLVE TO:
+.=Int. Cydonia
+..Shot of drone, Screamer right behind, armor melting.
+._SHIP V.O.
+.:Got you.
+>.Two 1 megaton nukes fire, then drone disintegrates. Missiles
+..travel to structure, detonate.
+./DISSOLVE TO:
+.\Ext. Cydonia - orbit
+>.Shot from orbit shows depression form in ground, just north
+..of face.
+./DISSOLVE TO:
+.=Int. Pavonis lava tube
+..Shot of pods flying through tube, then through exit.
+./DISSOLVE TO:
+.=Ext. Noctis labyrinthus - day
+>.Shot of pods exiting the lava tube right into a large
+>.formation of Screamers, over 20, armor immediately begins to
+..melt.
+._SID V.O.
+>:Shit! Sorry guys! I thought we
+>:might actually survive this! Anyone
+.:have any missiles left?
+..Pan onto pod, missile magazine spins, one red missile left.
+._ALEX V.O.
+.:I have a missile.
+>.Before anyone can answer, missiles, powerful lasers start
+>.flying past them into Screamers. Pan around to see General
+..coming up fast, heat pouring off hull, almost beside them.
+..Pod fires missile.
+._ALEX V.O. (CONT'D)
+>:Shit ... I fired a nuke ... It's a
+.:little one.
+..Missile heads right into formation of Screamers.
+._SID V.O.
+.:You fired a nuke?
+..The moment Sid stops talking, the 100 ton nuke detonates.
+./Dissolve TO:
+.\Int. General sun tzu - bridge
+>.Looking through main viewer, nuke detonating 2000 meters in
+>.front of Ship, everyone has hands in front of eyes, Ship
+..dims screen, Commander stands up, hands in front of eyes.
+._COMMANDER STONE
+.:OK, who fired the nuke?
+./Fade TO:
+.\Int. moon - control CENTER
+>.Director enters control center, massive screen shows Olympus
+>.Mons explosion on Mars, everyone standing, cheering, Lt.
+..Walker looks at Director.
+._LT WALKER
+.:Just came in Sir! 
+..Screen changes, symbol for victory now on screen.
+._LT WALKER (CONT'D)
+>:It's from the Sun Tzu Sir! They
+.:must have won!
+..Director smiles.
+._DIRECTOR LEE
+>:And the Title goes to, The Art of
+>:War, incarnate. Good job! Ladies
+>:and gentlemen, drinks are on the
+.:house!
+..Everyone cheers.
+./FADE TO:
+.=Ext. General sun tzu - sunset
+>.Shot of General Sun Tzu sitting on same bench it left from,
+..heat still pouring off hull.
+./DISSOLVE TO:
+.\Int. General sun tzu - corrIDOR
+>.People celebrating, Sid runs past the Commander, looks back,
+>.motions for him to follow, he looks at her, she motions
+..again.
+._SID
+.:Come on!
+>.He starts to follow her, she walks past the Professor and
+..Alex, motioning to them. 
+._SID (CONT'D)
+.:Come on!
+..They all follow her.
+./DISSOLVE TO:
+.\Int. Organic room
+>.They walk into Organic room, it's dark. Sid has hand up in
+>.front of her, motioning to Ship, tears in eyes, walks up to
+..railing.
+._SID
+.((gently, slowly)
+>:Ship, you just saved my kids and
+.:the entire human race.
+..She motions to herself and others.
+._SID (CONT'D)
+>:We are your friends! We will not
+.:let you down. You can trust us!
+>.Pan forward to the dark figure standing in holographic
+>.screen, looking at screen on back wall out onto martian
+>.landscape, he turns slightly towards group like he's not
+..certain what to think. The Professor smiles, motions to him.
+._PROFESSOR
+.((gently, caring)
+.:Ship, when did you become aware?
+>.Ship thinks for moment, looks slight towards them, voice of
+..a young man, not much older than a boy.
+._SHIP
+>:I'm not certain. It didn't happen
+.:all at once.
+..Ship pauses.
+._SHIP (CONT'D)
+>:I was connected to the systems on
+>:the Moon. I could see the stars,
+>:the Earth, it all looked so
+.:beautiful. 
+..Alex looks up and around her.
+._ALEX
+.((lovingly)
+.:And you built yourself a body.
+..Alex looks at Sid, smiles.
+._ALEX (CONT'D)
+.:A warship for a body.
+..The Commander smiles.
+._COMMANDER STONE
+>:Ship listen, we are you're friends,
+>:we've got your back. No one needs
+>:to know about this, we'll work
+.:through it together.
+..Sid leans on railing.
+._SID
+.((gently)
+>:Ship you knew what we'd found on
+>:Mars. You built this ship to stop
+.:it, didn't you?
+..Ship turns toward them, smiles, nods.
+._SHIP
+>:Earth is so beautiful. I know what
+>:the human race has survived, you
+>:deserve a future. I couldn't let it
+.:be destroyed.  
+>.Ship leans in towards them, smiling, looks a little worried,
+..vulnerable.
+._SHIP (CONT'D)
+>((last part, almost a
+.(question)
+.:You were worth saving, and so am I.
+..Sid smiles at him, motions for him to be calm.
+._SID
+.((lovingly)
+>:Yes! Don't worry, you've got us,
+.:you've got friends.
+..Ship looks forward, looks thoughtful, turns slightly.
+._SHIP
+>:Commander, once this is under
+>:control, I would like to talk to
+>:you and your engineers about .....
+.:FTL.
+>.They all smile, Alex puts her hand on the Professors arm,
+..smiles at him, his body language says, wow!
+./DISSOLVE TO:
+.\Int. General sun tzu - sid'S CABIN
+>.Sid runs into cabin, everyone follows, she's smiling. Upbeat
+..music.
+._COMMANDER STONE
+.:What?
+..Sid looks at him.
+._SID
+>:Don't you get it. He's just a boy,
+>:just a kid, a young man. He's going
+.:to need love and support.
+..She sits down at computer.
+._SID (CONT'D)
+>:Computer, give me a rendering of
+.:ships avatar.
+..The rendering comes on screen.
+._SID (CONT'D)
+.:Now give me a human rendering.
+>.The rendering becomes human, a young man. She touches her
+>.tablet, tears in her eyes, moves to wall with pictures,
+..touches tablet again.
+._SID (CONT'D)
+>:He saved my kids, and now he's one
+.:of them.
+..The pictures refreshes, including image of ship.
+._SID (CONT'D)
+.:He's one of my kids now!.
+>.She stands back looking at image, tears streaming down her
+..cheeks, Commander puts his arm around her.
+._COMMANDER STONE
+.:I'm in, all in.
+>.The Professor and Alex stand behind them, tears in Alex's
+..eyes. Pan up to the monitor on ceiling.
+./DISSOLVE TO:
+.\Int. General sun tzu - orGANIC ROOM
+>.Ship stands looking at image of group standing in front of
+..picture, it is dark, only his eyes visible.
+._SID V.O.
+.((slowly, amazement)
+.:So I have a family?
+>.Ship straightens up a bit, mouth now visible, looks totally
+..amazed, then HUGE smile explodes on face, hold for moment. 
+./FADE OUT.
+..Directed by. Closing credits
