@@ -3,8 +3,9 @@ import { useFilePicker } from 'use-file-picker'
 
 import { parseFileName } from '@/services/io/parseFileName'
 import { useIO } from '@/services/io/useIO'
+import { importFdxTrelby } from '@/utils/importFdxTrelby'
 
-const defaultSupportedExtensions = ['clap', 'txt', 'mp4', 'mp3']
+const defaultSupportedExtensions = ['clap', 'txt', 'mp4', 'mp3', 'fdx.trelby']
 
 export function useOpenFilePicker(
   {
@@ -19,6 +20,7 @@ export function useOpenFilePicker(
   const openClapBlob = useIO((s) => s.openClapBlob)
   const openScreenplay = useIO((s) => s.openScreenplay)
   const openVideo = useIO((s) => s.openVideo)
+  const setClap = useIO((s) => s.setClap) // Add this if setClap is available in your store
 
   const { openFilePicker, filesContent, loading } = useFilePicker({
     accept: supportedExtensions.map((ext) => `.${ext}`),
@@ -72,6 +74,21 @@ export function useOpenFilePicker(
         }
       } else if (extension === 'mp3') {
         alert('Initializing a project from a mp3 is not supported yet')
+      } else if (extension === 'fdx.trelby') {
+        try {
+          setIsLoading(true)
+          // Convert ArrayBuffer to string
+          const text = new TextDecoder().decode(fileData.content)
+          const parsed = importFdxTrelby(text)
+          if (setClap) {
+            setClap(parsed)
+          }
+          console.log(parsed)
+        } catch (err) {
+          console.error('failed to load the fdx.trelby file:', err)
+        } finally {
+          setIsLoading(false)
+        }
       }
     }
     fn()
@@ -81,6 +98,7 @@ export function useOpenFilePicker(
     openClapBlob,
     openScreenplay,
     openVideo,
+    setClap,
   ])
 
   return {
