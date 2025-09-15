@@ -84,6 +84,7 @@ export function useOpenFilePicker(
             setClap(parsed)
           }
           console.log(parsed)
+          
         } catch (err) {
           console.error('failed to load the fdx.trelby file:', err)
         } finally {
