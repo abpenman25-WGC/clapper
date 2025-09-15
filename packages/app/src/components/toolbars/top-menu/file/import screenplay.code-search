@@ -1,0 +1,26 @@
+# Query: import screenplay
+# ContextLines: 1
+
+import { importFdxTrelby } from '@/utils/importFdxTrelby'
+
+<MenubarItem
+  onClick={() => {
+    openFilePicker((file: File) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const content = event.target?.result as string;
+        if (file.name.endsWith('.fdx.trelby')) {
+          const parsed = importFdxTrelby(content);
+          // TODO: Use parsed data in Clapper (e.g., setClap(parsed))
+          console.log(parsed);
+        } else {
+          // Existing logic for .txt files
+          // TODO: Handle .txt import as before
+        }
+      };
+      reader.readAsText(file);
+    });
+  }}
+>
+  Import screenplay (.txt)
+</MenubarItem>
