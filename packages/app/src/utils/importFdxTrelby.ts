@@ -1,5 +1,5 @@
 export function importFdxTrelby(fileContent: string) {
-  try {    
+  try {
     return { raw: fileContent }
   } catch (err) {
     console.error('importFdxTrelby error:', err)
