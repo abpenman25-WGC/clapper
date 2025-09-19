@@ -100,7 +100,7 @@ export function useOpenFilePicker(
       }
     }
     fn()
-    }, [
+  }, [
     fileData,
     fileData?.name,
     fileData?.content,
