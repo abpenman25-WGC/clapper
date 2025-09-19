@@ -79,7 +79,11 @@ export function useOpenFilePicker(
           // Convert ArrayBuffer to string
           const text = new TextDecoder().decode(fileData.content)
           const parsed = importFdxTrelby(text)
-          await openScreenplay(projectName, fileName, new Blob([JSON.stringify(parsed)]))
+          await openScreenplay(
+            projectName,
+            fileName,
+            new Blob([JSON.stringify(parsed)])
+          )
           console.log(parsed)
         } catch (err) {
           console.error('failed to load the fdx.trelby file:', err)
