@@ -5,7 +5,14 @@ import { parseFileName } from '@/services/io/parseFileName'
 import { useIO } from '@/services/io/useIO'
 import { importFdxTrelby } from '@/utils/importFdxTrelby'
 
-const defaultSupportedExtensions = ['clap', 'txt', 'mp4', 'mp3', 'fdx.trelby', 'trelby']
+const defaultSupportedExtensions = [
+  'clap',
+  'txt',
+  'mp4',
+  'mp3',
+  'fdx.trelby',
+  'trelby',
+]
 
 export function useOpenFilePicker(
   {
