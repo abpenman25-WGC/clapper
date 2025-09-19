@@ -5,7 +5,7 @@ import { parseFileName } from '@/services/io/parseFileName'
 import { useIO } from '@/services/io/useIO'
 import { importFdxTrelby } from '@/utils/importFdxTrelby'
 
-const defaultSupportedExtensions = ['clap', 'txt', 'mp4', 'mp3', 'fdx.trelby']
+const defaultSupportedExtensions = ['clap', 'txt', 'mp4', 'mp3', 'fdx.trelby', 'trelby']
 
 export function useOpenFilePicker(
   {
@@ -30,10 +30,10 @@ export function useOpenFilePicker(
 
   useEffect(() => {
     const fn = async () => {
-      const input = `${fileData?.name || ''}`
-      if (!input) {
+      if (!fileData || !fileData.name) {
         return
       }
+      const input = fileData.name
 
       const { fileName, projectName, extension } = parseFileName(input)
 
@@ -73,7 +73,7 @@ export function useOpenFilePicker(
         }
       } else if (extension === 'mp3') {
         alert('Initializing a project from a mp3 is not supported yet')
-      } else if (extension === 'fdx.trelby') {
+      } else if (extension === 'fdx.trelby' || extension === 'trelby') {
         try {
           setIsLoading(true)
           // Convert ArrayBuffer to string
@@ -86,7 +86,7 @@ export function useOpenFilePicker(
           )
           console.log(parsed)
         } catch (err) {
-          console.error('failed to load the fdx.trelby file:', err)
+          console.error(`failed to load the ${extension} file:`, err)
         } finally {
           setIsLoading(false)
         }
