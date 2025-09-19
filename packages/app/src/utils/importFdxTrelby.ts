@@ -5,11 +5,11 @@ export function importFdxTrelby(fileContent: string) {
     const transitions: string[] = []
 
     for (const line of lines) {
-      // Example: Extract scene headings (starts with INT. or EXT.)
+      // Extract scene headings (starts with INT. or EXT.)
       if (line.trim().match(/^(INT\.|EXT\.)/)) {
         scenes.push(line.trim())
       }
-      // Example: Extract transitions (ends with TO:)
+      // Extract transitions (ends with TO:)
       if (line.trim().endsWith('TO:')) {
         transitions.push(line.trim())
       }

@@ -20,7 +20,6 @@ export function useOpenFilePicker(
   const openClapBlob = useIO((s) => s.openClapBlob)
   const openScreenplay = useIO((s) => s.openScreenplay)
   const openVideo = useIO((s) => s.openVideo)
-  const setClap = useIO((s) => s.setClap) // Add this if setClap is available in your store
 
   const { openFilePicker, filesContent, loading } = useFilePicker({
     accept: supportedExtensions.map((ext) => `.${ext}`),
@@ -59,7 +58,7 @@ export function useOpenFilePicker(
           setIsLoading(true)
           await openScreenplay(projectName, fileName, blob)
         } catch (err) {
-          console.error('failed to load the Clap file:', err)
+          console.error('failed to load the txt file:', err)
         } finally {
           setIsLoading(false)
         }
@@ -68,7 +67,7 @@ export function useOpenFilePicker(
           setIsLoading(true)
           await openVideo(projectName, fileName, blob)
         } catch (err) {
-          console.error('failed to load the Clap file:', err)
+          console.error('failed to load the mp4 file:', err)
         } finally {
           setIsLoading(false)
         }
@@ -80,9 +79,7 @@ export function useOpenFilePicker(
           // Convert ArrayBuffer to string
           const text = new TextDecoder().decode(fileData.content)
           const parsed = importFdxTrelby(text)
-          if (setClap) {
-            setClap(parsed)
-          }
+          await openScreenplay(projectName, fileName, new Blob([JSON.stringify(parsed)]))
           console.log(parsed)
         } catch (err) {
           console.error('failed to load the fdx.trelby file:', err)
@@ -98,7 +95,6 @@ export function useOpenFilePicker(
     openClapBlob,
     openScreenplay,
     openVideo,
-    setClap,
   ])
 
   return {
