@@ -7,6 +7,7 @@
   },
   "packageManager": "bun@1.0.25",
   "private": true,
+  "main": "index.js",
   "scripts": {
     "dev": "bun run --cwd packages/app dev",
     "start": "bun run --cwd packages/app start",
