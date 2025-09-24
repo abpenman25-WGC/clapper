@@ -29,7 +29,6 @@
     },
     "types": [
       "@types/fluent-ffmpeg",
-      "@webgpu/types",
       "@types/dom-speech-recognition"
     ],
     "target": "ES2017"
