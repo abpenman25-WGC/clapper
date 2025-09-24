@@ -25,7 +25,7 @@
     "build:app": "bun run --cwd packages/app build",
     "test": "bun run test:all",
     "test:all": "bun run --cwd packages/clap test && bun run --cwd packages/timeline test && bun run --cwd packages/client test && bun run --cwd packages/io test && bun run --cwd packages/colors test && bun run --cwd packages/engine test && bun run --cwd packages/broadway test && bun run --cwd packages/clapper-services test && bun run --cwd packages/app test",
-    "format": "bun run --cwd packages/app format"
+    "format": "prettier --write ."
   },
   "trustedDependencies": [
     "@aitube/clapper",
