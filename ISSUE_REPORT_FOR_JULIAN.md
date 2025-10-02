@@ -2,7 +2,7 @@
 
 **Date**: October 2, 2025  
 **Reporter**: @abpenman25-WGC  
-**Repository**: https://github.com/jbilcke-hf/clapper  
+**Repository**: <https://github.com/jbilcke-hf/clapper>  
 **Commit Tested**: `4dceaec` - "Update dependencies and package configuration"
 
 ## Summary
@@ -12,25 +12,33 @@ The Clapper repository has persistent dependency management issues that prevent 
 ## Critical Issues Identified
 
 ### 1. styled-jsx Module Resolution Failure
+
 **Error**: `Cannot find module 'styled-jsx/style'`
+
 - Occurs when running `bun run dev`
 - Next.js dev server fails to start
 - Issue persists across clean installs and reverts
 
 ### 2. pure-uuid Dependency Missing
+
 **Error**: `Cannot find module 'pure-uuid' or its corresponding type declarations`
+
 - Located in: `packages/clap/src/utils/uuid.ts`
 - Prevents clap package from building
 - **Status**: ✅ FIXED - Replaced with native JavaScript UUID generator
 
 ### 3. Corrupted Package Installations
+
 **Symptoms**:
+
 - styled-jsx packages install with missing `index.js` files
 - mediainfo.js missing required WASM files
 - Package.json files with empty `main` field
 
 ### 4. TypeScript Declaration Generation Failure
+
 **Error**: `Cannot find module '../compiler/tsc'`
+
 - ts-patch tool fails to find TypeScript compiler
 - Prevents declaration file generation
 - Impacts package publishing
@@ -53,6 +61,7 @@ The Clapper repository has persistent dependency management issues that prevent 
 ## Investigation Findings
 
 ### Extensive Troubleshooting Performed
+
 - ✅ Clean dependency installations (multiple attempts)
 - ✅ Manual package installations and path fixes
 - ✅ Workspace configuration verification
@@ -60,6 +69,7 @@ The Clapper repository has persistent dependency management issues that prevent 
 - ✅ Fresh git clone testing
 
 ### Root Cause Analysis
+
 1. **Workspace hoisting issues**: Dependencies not resolving correctly in monorepo structure
 2. **Package corruption**: Multiple packages installing with incomplete file structures
 3. **Version conflicts**: Next.js 15.5.4 with styled-jsx compatibility issues
@@ -68,8 +78,10 @@ The Clapper repository has persistent dependency management issues that prevent 
 ## Working Solutions Implemented
 
 ### UUID Dependency Fix ✅
+
 **File**: `packages/clap/src/utils/uuid.ts`
 **Solution**: Replaced `pure-uuid` import with native JavaScript UUID v4 generator
+
 ```typescript
 // Before (broken)
 import PureUUID from "pure-uuid"
@@ -86,21 +98,25 @@ export function UUID() {
   });
 }
 ```
+
 **Result**: Clap package now builds successfully (49 modules, 53.0 KB)
 
 ## Recommended Actions
 
 ### Immediate Fixes
+
 1. **Apply UUID fix**: Merge the native JavaScript UUID implementation
 2. **styled-jsx resolution**: Add proper styled-jsx dependency configuration
 3. **Package.json audit**: Verify all package installations have complete file structures
 
 ### Structural Improvements
+
 1. **Dependency audit**: Review all package.json files for missing/incorrect dependencies
 2. **Workspace configuration**: Validate bun workspace setup and hoisting behavior
 3. **CI/CD verification**: Ensure automated builds catch these dependency issues
 
 ### Documentation Updates
+
 1. **Setup instructions**: Add troubleshooting section for common dependency issues
 2. **Development guide**: Document known limitations and workarounds
 3. **Contribution guide**: Include dependency management best practices
@@ -108,12 +124,14 @@ export function UUID() {
 ## Impact Assessment
 
 ### Current State
+
 - 🔴 **Development server**: Non-functional due to styled-jsx issues
 - 🟡 **Core packages**: Partially functional (clap package builds with UUID fix)
 - 🔴 **TypeScript tooling**: Declaration generation fails
 - 🟡 **Overall development**: Severely impacted
 
 ### Post-Fix State (Estimated)
+
 - 🟢 **Development server**: Should work with proper styled-jsx configuration
 - 🟢 **Core packages**: Fully functional with UUID fix applied
 - 🟡 **TypeScript tooling**: May need ts-patch configuration updates
@@ -125,7 +143,7 @@ export function UUID() {
 
 ## Available Resources
 
-- **Fork with fixes**: https://github.com/abpenman25-WGC/clapper
+- **Fork with fixes**: <https://github.com/abpenman25-WGC/clapper>
 - **Working commit**: `8603361` - Contains UUID fix and clean baseline
 - **Test environment**: Available for validation and further testing
 
