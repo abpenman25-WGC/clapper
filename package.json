@@ -45,11 +45,13 @@
   ],
   "dependencies": {
     "@swc/helpers": "^0.5.17",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
     "caniuse-lite": "^1.0.30001743",
-    "mediainfo.js": "0.3.6",
-    "next": "^15.5.2",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
+    "mediainfo.js": "^0.3.6",
+    "next": "14.2.10",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
     "styled-jsx": "5.1.6"
   },
   "devDependencies": {
