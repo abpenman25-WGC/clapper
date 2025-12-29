@@ -9,7 +9,7 @@
 
 Continued investigation into getting the Clapper development server operational on Windows. Significant progress has been made in resolving core dependency issues, but React module resolution remains problematic. **Note: I currently have GitHub Copilot for 1 month and hope to hear back soon for collaboration.**
 
-# Clapper Development Server Issues - December 24, 2025
+## Clapper Development Server Issues - December 24, 2025
 
 **Reporter**: Alex (I currently have GitHub Copilot for 1 month and hope to hear back soon)
 
@@ -29,6 +29,7 @@ Continued investigation into getting the Clapper development server operational 
 **Primary Issue**: Next.js 14.2.10 package structure corruption in Bun workspace environment
 
 **Symptoms**:
+
 - Next.js package installs with only `node_modules` subdirectory
 - Missing `dist/bin/next` binary and all core Next.js files
 - Occurs consistently across clean installs when using Bun with workspace configuration
@@ -38,6 +39,7 @@ Continued investigation into getting the Clapper development server operational 
 ### 🎯 Near-Success Status  
 
 The development server startup sequence now **successfully progresses through**:
+
 - ✅ Next.js initialization  
 - ✅ styled-jsx module resolution
 - ✅ @swc/helpers dependency loading
@@ -50,6 +52,7 @@ The development server startup sequence now **successfully progresses through**:
 ### Working Solutions Identified
 
 1. **Module Resolution Fixes**:
+
    ```bash
    # styled-jsx structure (successful)
    node_modules/styled-jsx/index.js
@@ -60,6 +63,7 @@ The development server startup sequence now **successfully progresses through**:
    ```
 
 2. **Dependency Path Resolution**:
+
    ```bash
    # @swc/helpers fix (successful)
    Copy-Item "node_modules\@swc\helpers\*" "node_modules\next\node_modules\@swc\helpers\" -Recurse -Force
@@ -68,7 +72,7 @@ The development server startup sequence now **successfully progresses through**:
 ### Failed Attempts
 
 1. **Next.js Binary Execution**: All approaches to run Next.js fail due to corrupted package structure
-2. **Package Manager Solutions**: 
+2. **Package Manager Solutions**:
    - `bun install next@14.2.10` - creates empty package
    - `bun install --ignore-scripts` - same issue
    - `bunx next@14.2.10` - cannot determine executable
@@ -76,19 +80,24 @@ The development server startup sequence now **successfully progresses through**:
 ## 💡 Recommended Solutions
 
 ### Option 1: **Switch to npm/pnpm** (Recommended)
+
 The issue appears to be Bun-specific. Using npm or pnpm would likely resolve the Next.js package corruption:
+
 ```bash
 npm install
 npm run dev
 ```
 
 ### Option 2: **Upgrade to Next.js 15**
+
 Update package.json to use Next.js 15.x which may have better Bun compatibility:
+
 ```json
 "next": "15.5.9"
 ```
 
 ### Option 3: **Manual Next.js Installation**
+
 Copy a working Next.js 14.2.10 installation from a different environment.
 
 ## 🚀 Current State
