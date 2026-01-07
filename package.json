@@ -49,7 +49,7 @@
     "@types/react-dom": "^19.2.3",
     "caniuse-lite": "^1.0.30001743",
     "mediainfo.js": "^0.3.6",
-    "next": "14.2.10",
+    "next": "15.5.9",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "styled-jsx": "5.1.6"
