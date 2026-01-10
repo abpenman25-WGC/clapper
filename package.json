@@ -44,15 +44,15 @@
     "packages/app"
   ],
   "dependencies": {
-    "@swc/helpers": "^0.5.17",
-    "@types/react": "^19.2.7",
+    "@swc/helpers": "^0.5.18",
+    "@types/react": "^19.2.8",
     "@types/react-dom": "^19.2.3",
-    "caniuse-lite": "^1.0.30001743",
+    "caniuse-lite": "^1.0.30001763",
     "mediainfo.js": "^0.3.6",
     "next": "15.5.9",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "styled-jsx": "5.1.6"
+    "styled-jsx": "^5.1.7"
   },
   "devDependencies": {
     "@playwright/test": "^1.55.1",
