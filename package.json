@@ -52,6 +52,7 @@
     "next": "15.5.9",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
+    "resolve": "^1.22.11",
     "styled-jsx": "^5.1.7"
   },
   "devDependencies": {
