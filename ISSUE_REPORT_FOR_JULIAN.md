@@ -39,7 +39,7 @@
 #### **Development Server Execution**
 
 - **Status**: All dependencies resolved, waiting for final execution
-- **Target**: Development server on **http://localhost:3000**
+- **Target**: Development server on **<http://localhost:3000>**
 - **Remaining Issue**: Terminal session management in VS Code affecting execution
 - **Next Steps**: Direct execution from correct working directory
 
@@ -67,9 +67,9 @@
 
 1. **Environment**: OneDrive → C: drive migration eliminated all path/sync issues
 2. **Dependencies**: Mixed approach (Bun for workspace, npm for problematic packages)
-3. **styled-jsx**: Properly installed using `npm install styled-jsx@5.1.7` 
+3. **styled-jsx**: Properly installed using `npm install styled-jsx@5.1.7`
 4. **Project Structure**: Confirmed correct Next.js App Router setup (src/app)
-5. **Development Server**: Ready to run on http://localhost:3000
+5. **Development Server**: Ready to run on <http://localhost:3000>
 
 ## 🔍 Investigation Summary
 
@@ -108,6 +108,7 @@
 ### **For Complete Resolution**
 
 1. **Update Documentation**: Add environment requirements to README
+
    ```markdown
    ## Development Environment Requirements
    - ⚠️ **IMPORTANT**: Do not develop in OneDrive, Google Drive, or cloud-synced folders
@@ -116,6 +117,7 @@
    ```
 
 2. **Repository Setup Script**: Create automated setup script
+
    ```bash
    # setup-dev.bat or setup-dev.ps1
    git clone https://github.com/jbilcke-hf/clapper.git C:\dev\clapper
@@ -141,7 +143,7 @@
 - **Dependencies**: ✅ All resolved with hybrid package management
 - **Security**: ✅ System and packages updated to latest versions
 - **Git State**: ✅ Clean with all changes committed and pushed
-- **Development Server**: ✅ Ready to start on http://localhost:3000
+- **Development Server**: ✅ Ready to start on <http://localhost:3000>
 - **Documentation**: ✅ Complete troubleshooting and setup guide
 
 ## 📊 Update Summary Statistics
@@ -172,15 +174,16 @@
 
 **Solution Implemented**: Complete migration to C: drive + hybrid package management approach has resolved 95% of previous issues.
 
-**Current Status**: 
-- ✅ **Environment**: Clean, optimized setup
+**Current Status**:
+
 - ✅ **Dependencies**: All properly installed and configured  
 - ✅ **Development Server**: Ready for final execution
 - ✅ **Documentation**: Complete setup guide created
 
 **Impact**: This discovery will help other contributors avoid the same environment-related issues that caused weeks of troubleshooting.
 
-**Ready For**: 
+**Ready For**:
+
 - Immediate development work
 - Community contributions (with proper setup guide)
 - Production deployment pipeline setup
@@ -197,7 +200,7 @@
 3. **System Modernization**: All development tools updated to latest versions
 4. **Git Synchronization**: Repository clean and ready for collaboration
 5. **Documentation Complete**: Full troubleshooting guide and setup instructions
-6. **Development Server**: All prerequisites met for http://localhost:3000
+6. **Development Server**: All prerequisites met for <http://localhost:3000>
 
 ### **Final Status Summary**
 
@@ -208,9 +211,9 @@
 - **Maintainability**: Excellent foundation for ongoing development
 - **Community Impact**: Setup guide will prevent others from experiencing same issues
 
-**The Clapper project is now ready for active development! 🎬**
+### The Clapper project is now ready for active development! 🎬
 
-## 🚀 Current State - January 13, 2026
+## 🎯 Development Status - January 13, 2026
 
 **Status**: **NEARLY COMPLETE** - Environment migrated, dependencies resolved, development server 95% functional
 
@@ -233,7 +236,7 @@
 
 ### **Development Server Status**
 
-- **Target**: http://localhost:3000
+- **Target**: <http://localhost:3000>
 - **Command**: `cd C:\dev\clapper\packages\app && npx next dev` (or equivalent)
 - **Dependencies**: ✅ All resolved and properly installed
 - **Configuration**: ✅ Next.js config verified and compatible
@@ -260,6 +263,7 @@
 ## Reproduction Steps (UPDATED - January 13, 2026)
 
 ### ❌ Previous Steps (OneDrive - DO NOT USE)
+
 1. ~~Clone repository: `git clone https://github.com/jbilcke-hf/clapper.git`~~ *(OneDrive conflicts)*
 2. ~~Navigate to directory: `cd clapper`~~ *(Path/sync issues)*
 3. ~~Install dependencies: `bun install`~~ *(Corrupted installations)*
@@ -267,16 +271,18 @@
 5. ~~**Result**: styled-jsx module resolution error~~ *(Environment issue)*
 
 ### ✅ New Working Steps (C: Drive - RECOMMENDED)
+
 1. **Clone to C: drive**: `git clone https://github.com/abpenman25-WGC/clapper.git C:\dev\clapper`
 2. **Navigate to project**: `cd C:\dev\clapper`
 3. **Install workspace dependencies**: `bun install`
 4. **Navigate to app**: `cd packages\app`
 5. **Install additional packages**: `npm install styled-jsx@5.1.7 --no-package-lock`
 6. **Start development server**: `npx next dev`
-7. **Access application**: http://localhost:3000
+7. **Access application**: <http://localhost:3000>
 8. **Expected Result**: ✅ Development server starts successfully
 
 ### 🎯 Key Success Factors
+
 - **Location**: Must be on C: drive, NOT in OneDrive
 - **Dependencies**: Hybrid Bun/npm installation approach
 - **styled-jsx**: Must use npm for this specific package
@@ -371,7 +377,7 @@ export function UUID() {
 - **Working commit**: `010c9c2` - "Fix styled-jsx dependency installation and update packages"
 - **Optimized environment**: C:\dev\clapper (clean installation)
 - **Complete setup guide**: Detailed reproduction steps and troubleshooting
-- **Development server**: Ready to start on http://localhost:3000
+- **Development server**: Ready to start on <http://localhost:3000>
 
 ---
 
