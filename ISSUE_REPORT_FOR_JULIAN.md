@@ -30,14 +30,16 @@ After extensive testing and troubleshooting, the fundamental issue has been conc
    - Direct execution via `bunx next` also fails with module resolution errors
 
 3. **styled-jsx Resolution Failure**:
-   ```
+
+   ```text
    Error: Cannot find module 'styled-jsx/style'
    Require stack:
    - C:\dev\clapper\packages\app\node_modules\next\dist\server\require-hook.js
    ```
+
    - styled-jsx IS installed in multiple locations:
-     * C:\dev\clapper\node_modules\styled-jsx (root)
-     * packages\app\node_modules\next\node_modules\styled-jsx (nested)
+     - C:\dev\clapper\node_modules\styled-jsx (root)
+     - packages\app\node_modules\next\node_modules\styled-jsx (nested)
    - Next.js's custom require hook cannot resolve the module through Bun's symlink structure
    - Module resolution path does not match Bun's hoisting strategy
 
@@ -49,6 +51,7 @@ After extensive testing and troubleshooting, the fundamental issue has been conc
 #### **Evidence from Testing**
 
 All execution methods consistently fail:
+
 - ✗ `bun run dev` → Cannot find module 'styled-jsx/style'
 - ✗ `bunx next dev` → Cannot find module 'styled-jsx/style'  
 - ✗ `node C:\dev\clapper\node_modules\next\dist\bin\next.js` → File not found
@@ -114,6 +117,7 @@ pnpm dev
 ```
 
 **Advantages**:
+
 - ✅ Full Next.js compatibility
 - ✅ Proper bin link creation
 - ✅ Efficient disk usage (like Bun)
@@ -139,13 +143,15 @@ yarn dev
 #### **Option 3: Wait for Bun Workspace Improvements**
 
 Monitor Bun releases for workspace compatibility improvements:
-- Track: https://github.com/oven-sh/bun/issues
+
+- Track: [Bun GitHub Issues](https://github.com/oven-sh/bun/issues)
 - Current limitation affects many Next.js monorepos
 - Bun team is actively improving workspace support
 
 ### 🟡 **Previous Environment Work**
 
 The OneDrive → C: drive migration was helpful but did not resolve the core issue:
+
 - ✅ Eliminated path length problems
 - ✅ Removed file sync conflicts
 - ✅ Improved installation reliability
@@ -186,6 +192,7 @@ The OneDrive → C: drive migration was helpful but did not resolve the core iss
 Exhaustive testing was performed over multiple sessions:
 
 **Execution Methods Tested** (all failed):
+
 - `bun run dev` from packages/app
 - `bunx next dev` from packages/app
 - `bun x next dev` from packages/app
@@ -194,6 +201,7 @@ Exhaustive testing was performed over multiple sessions:
 - npm installation attempts (failed on workspace protocol)
 
 **Installation Strategies Tested** (all failed):
+
 - Clean `bun install` at root
 - Targeted `bun install` in packages/app
 - `npm install styled-jsx` in various directories
@@ -202,9 +210,10 @@ Exhaustive testing was performed over multiple sessions:
 - Reinstalling with `--ignore-scripts` flag
 
 **File Structure Verification**:
+
 - styled-jsx confirmed present in:
-  * C:\dev\clapper\node_modules\styled-jsx (43 KB)
-  * packages\app\node_modules\next\node_modules\styled-jsx (symlink)
+  - C:\dev\clapper\node_modules\styled-jsx (43 KB)
+  - packages\app\node_modules\next\node_modules\styled-jsx (symlink)
 - styled-jsx/style/index.js confirmed exists
 - Module still cannot be resolved by Next.js require hook
 
@@ -217,6 +226,7 @@ Exhaustive testing was performed over multiple sessions:
 ### **Tertiary Issues: Optional Dependencies (NON-BLOCKING)**
 
 Multiple packages fail to install but are optional:
+
 - onnxruntime-node: GPU-accelerated ML runtime (not required for basic functionality)
 - protobufjs: Protocol buffers (alternative methods available)
 
@@ -287,7 +297,7 @@ cd packages/app
 pnpm dev
 ```
 
-**Expected Outcome**: Development server starts successfully on http://localhost:3000
+**Expected Outcome**: Development server starts successfully on [http://localhost:3000](http://localhost:3000)
 
 #### **2. Alternative: Yarn 4 Modern Workspaces**
 
@@ -345,6 +355,7 @@ Document this incompatibility for Bun developers:
 **Title**: "Workspace mode incompatible with Next.js 14 - styled-jsx module resolution fails"
 
 **Details**:
+
 - Bun version: 1.2.21
 - Next.js version: 14.2.10
 - Error: Cannot find module 'styled-jsx/style'
@@ -358,6 +369,7 @@ While not recommended, if you must continue with Bun temporarily:
 #### **Option A: Remove Workspace Protocol**
 
 Convert all `workspace:*` dependencies to explicit versions:
+
 - High maintenance burden
 - Loses monorepo benefits
 - Not sustainable long-term
@@ -365,6 +377,7 @@ Convert all `workspace:*` dependencies to explicit versions:
 #### **Option B: Use Bun Only for Non-Next.js Packages**
 
 Hybrid approach:
+
 - Use Bun for packages: broadway, clap, timeline, engine, etc.
 - Use npm/pnpm specifically for the app package
 - Requires complex build orchestration
@@ -372,6 +385,7 @@ Hybrid approach:
 ### **Optional Improvements**
 
 1. **CI/CD Updates**: Update GitHub Actions to use pnpm:
+
    ```yaml
    - uses: pnpm/action-setup@v2
      with:
@@ -381,11 +395,12 @@ Hybrid approach:
 2. **Development Container**: Add .devcontainer with pnpm pre-installed
 
 3. **VS Code Settings**: Add pnpm-specific settings:
-   ```json
-   {
-     "npm.packageManager": "pnpm"
-   }
-   ```
+
+```json
+{
+  "npm.packageManager": "pnpm"
+}
+```
 
 ## 📊 Update Summary Statistics
 
@@ -412,30 +427,35 @@ Hybrid approach:
 **Critical Discovery**: The development server issues are caused by **Bun workspace implementation incompatibility with Next.js**, not code defects.
 
 **Root Cause**: Bun's workspace mode (v1.2.21):
+
 - ✗ Does not create `.bin` executable links for packages
 - ✗ Uses symlink structure incompatible with Next.js's custom require hooks
 - ✗ Cannot resolve `styled-jsx/style` despite package being installed
 - ✗ Prevents fallback to npm/yarn due to `workspace:*` protocol
 
 **Fixes Applied** (pending commit):
+
 - ✅ React downgraded from 19.x to 18.2.0 for Next.js 14.2.10 compatibility
 - ✅ Moved Next.js to devDependencies in app package
 - ✅ Added styled-jsx as explicit dependency
 - ❌ These fixes alone cannot overcome Bun workspace limitations
 
 **Recommended Solution**: **Migrate to pnpm** (or Yarn 4)
+
 - pnpm has mature, stable workspace implementation
 - Full Next.js compatibility verified across ecosystem
 - Similar performance benefits to Bun (hard links, efficient storage)
 - Simple migration: `npm i -g pnpm && pnpm install`
 
 **Impact Assessment**:
+
 - **Code Quality**: ✅ Excellent - no code defects found
 - **Project Structure**: ✅ Well-designed monorepo architecture
 - **Package Manager**: ❌ Bun workspace not production-ready for Next.js projects
 - **Developer Experience**: Currently blocked, will be excellent with pnpm
 
 **Timeline Estimate**:
+
 - pnpm migration: 15-30 minutes
 - Testing and verification: 1 hour
 - Documentation updates: 30 minutes
@@ -478,7 +498,7 @@ Hybrid approach:
 This is **not a bug in Clapper** - it's a fundamental limitation of Bun's workspace implementation:
 
 | Feature | pnpm | Yarn | npm | Bun |
-|---------|------|------|-----|-----|
+| ------- | ---- | ---- | --- | --- |
 | Workspace Protocol | ✅ | ✅ | ✅ (7+) | ✅ |
 | Bin Link Creation | ✅ | ✅ | ✅ | ❌ |
 | Next.js Compatibility | ✅ | ✅ | ✅ | ❌ |
@@ -494,6 +514,7 @@ This is **not a bug in Clapper** - it's a fundamental limitation of Bun's worksp
 **Risk**: Minimal - same workspace structure, different implementation
 
 **Commands**:
+
 ```bash
 npm install -g pnpm
 Remove-Item node_modules -Recurse -Force
@@ -503,7 +524,7 @@ cd packages\app
 pnpm dev
 ```
 
-**Expected Result**: Development server starts successfully on http://localhost:3000
+**Expected Result**: Development server starts successfully on [http://localhost:3000](http://localhost:3000)
 
 ## 🎯 Development Status - January 13, 2026
 
@@ -525,7 +546,7 @@ Over multiple troubleshooting sessions, exhaustive testing confirms:
 All Next.js execution methods fail identically:
 
 | Method | Command | Result |
-|--------|---------|--------|
+| ------ | ------- | ------ |
 | Bun run script | `bun run dev` | Cannot find module 'styled-jsx/style' |
 | Bun executor | `bunx next dev` | Cannot find module 'styled-jsx/style' |
 | Direct node | `node ...next.js` | File not found (bin not created) |
@@ -543,6 +564,7 @@ Three files modified documenting fixes and findings:
 3. **packages/app/package.json**: Next.js moved to devDependencies, styled-jsx pinned
 
 These changes represent:
+
 - ✅ Correct React version for Next.js 14.2.10
 - ✅ Proper dependency organization
 - ❌ Insufficient to overcome Bun workspace limitations
@@ -552,12 +574,14 @@ These changes represent:
 **Immediate Next Step**: Switch to pnpm for workspace management
 
 **Why pnpm**:
+
 - Proven Next.js compatibility in production monorepos
 - Similar efficiency to Bun (hard links, content-addressable storage)
 - Mature workspace implementation (used by Turbo, Nx, etc.)
 - Active maintenance and large ecosystem
 
 **Migration Checklist**:
+
 - [ ] Install pnpm globally
 - [ ] Update packageManager field in root package.json
 - [ ] Remove node_modules and bun.lock
@@ -598,6 +622,7 @@ These changes represent:
 6. **Result**: ❌ `Error: Cannot find module 'styled-jsx/style'`
 
 **Why it fails**:
+
 - Bun workspace creates symlinks incompatible with Next.js require hooks
 - No `.bin` executables created, preventing npx/bunx execution
 - styled-jsx IS installed but cannot be resolved through Bun's module path
@@ -607,15 +632,17 @@ These changes represent:
 1. **Install pnpm**: `npm install -g pnpm@latest`
 2. **Clone repository**: `git clone https://github.com/jbilcke-hf/clapper.git C:\dev\clapper`
 3. **Navigate to project**: `cd C:\dev\clapper`
-4. **Remove Bun artifacts**: 
+4. **Remove Bun artifacts**:
+
    ```powershell
    Remove-Item node_modules -Recurse -Force
    Remove-Item bun.lock -Force
    ```
+
 5. **Install with pnpm**: `pnpm install`
 6. **Navigate to app**: `cd packages\app`
 7. **Start development server**: `pnpm dev`
-8. **Access application**: http://localhost:3000
+8. **Access application**: [http://localhost:3000](http://localhost:3000)
 9. **Expected Result**: ✅ Development server starts successfully
 
 ### 🔍 Verification Steps
@@ -668,9 +695,10 @@ Over multiple sessions, comprehensive testing eliminated all other potential cau
 
 ### Root Cause Definitively Identified ✅
 
-**Bun Workspace Mode Incompatibility with Next.js 14.2.10**
+### Bun Workspace Mode Incompatibility with Next.js 14.2.10
 
 **Evidence**:
+
 1. **Consistent Failure Point**: `next\dist\server\require-hook.js:40`
    - This is Next.js's custom require hook for styled-jsx
    - Fails to resolve `styled-jsx/style` despite package being installed
@@ -683,7 +711,8 @@ Over multiple sessions, comprehensive testing eliminated all other potential cau
    - Actual package files not accessible
    - Cannot execute: `node C:\dev\clapper\node_modules\next\dist\bin\next.js`
 
-4. **Module Resolution Path**: 
+4. **Module Resolution Path**:
+
    - styled-jsx exists at: `node_modules\styled-jsx\style\index.js` (43 KB)
    - Next.js cannot resolve through Bun's symlink hoisting
    - require.resolve('styled-jsx/style') fails from Next.js context
@@ -695,7 +724,7 @@ Over multiple sessions, comprehensive testing eliminated all other potential cau
 ### Comparison Testing Results
 
 | Package Manager | Workspace Support | Next.js Compatible | Bin Links | Status |
-|----------------|-------------------|-------------------|-----------|---------|
+| --------------- | ----------------- | ------------------ | --------- | ------- |
 | **pnpm** | ✅ Mature | ✅ Yes | ✅ Yes | ✅ Recommended |
 | **Yarn 4** | ✅ Mature | ✅ Yes | ✅ Yes | ✅ Alternative |
 | **npm 10** | ✅ Limited | ✅ Yes | ✅ Yes | ⚠️ Workspaces basic |
@@ -704,11 +733,13 @@ Over multiple sessions, comprehensive testing eliminated all other potential cau
 ### Verification of Fixes Applied
 
 **React Version Compatibility** (resolved in pending commit):
+
 - ❌ **Before**: React 19.2.3 with Next.js 14.2.10 → Version conflict
 - ✅ **After**: React 18.2.0 with Next.js 14.2.10 → Compatible
 - **Status**: Correctly downgraded in package.json (uncommitted)
 
 **Dependency Organization** (attempted, insufficient):
+
 - Moved Next.js to devDependencies in packages/app/package.json
 - Added styled-jsx@5.1.7 as explicit dependency
 - **Result**: Correct configuration, but doesn't solve Bun workspace issue
@@ -769,7 +800,7 @@ cd packages\app
 pnpm dev
 ```
 
-**Expected Outcome**: Development server starts on http://localhost:3000
+**Expected Outcome**: Development server starts on [http://localhost:3000](http://localhost:3000)
 
 #### **2. Update Documentation**
 
@@ -813,17 +844,18 @@ A: Bun workspace mode is currently incompatible with Next.js 14 due to module re
 **Priority**: P2 - Benefits ecosystem  
 **Effort**: 20 minutes
 
-Create issue at https://github.com/oven-sh/bun/issues:
+Create issue at [Bun Issues](https://github.com/oven-sh/bun/issues):
 
 **Title**: "Workspace mode incompatible with Next.js 14 - module resolution and bin link failures"
 
 **Details**:
+
 - Bun version: 1.2.21
 - Next.js version: 14.2.10  
 - Issue: Cannot find module 'styled-jsx/style' at require-hook.js:40
 - Bin links not created in workspace mode
 - Symlink structure breaks Next.js custom require hooks
-- Reproduction: Available at https://github.com/jbilcke-hf/clapper
+- Reproduction: Available at [GitHub clapper repository](https://github.com/jbilcke-hf/clapper)
 
 ### Optional Improvements
 
@@ -882,7 +914,7 @@ Create `.devcontainer/devcontainer.json`:
 
 ### Post-Migration State - pnpm (Estimated)
 
-- 🟢 **Development Server**: Fully functional on http://localhost:3000
+- 🟢 **Development Server**: Fully functional on [http://localhost:3000](http://localhost:3000)
 - 🟢 **Binary Execution**: Proper bin links for all packages  
 - 🟢 **Core Packages**: No changes needed
 - 🟢 **Dependency Installation**: Standard pnpm workflow
@@ -893,12 +925,14 @@ Create `.devcontainer/devcontainer.json`:
 ### Risk Analysis
 
 **Migration Risks**: ⬇️ Low
+
 - pnpm is battle-tested in large monorepos
 - Existing workspace structure is compatible
 - Lock file regeneration is automatic
 - Rollback is simple (restore bun.lock, run bun install)
 
 **Staying with Bun Risks**: ⬆️ High
+
 - No known workaround for Next.js incompatibility
 - Blocks all development work
 - No timeline for Bun workspace improvements
@@ -907,6 +941,7 @@ Create `.devcontainer/devcontainer.json`:
 ### Time Investment vs. Return
 
 **Migration Effort**: ~2-3 hours total
+
 - Package manager installation: 5 minutes
 - Dependency installation: 15-20 minutes
 - Testing and verification: 30-60 minutes
@@ -914,6 +949,7 @@ Create `.devcontainer/devcontainer.json`:
 - CI/CD configuration: 30 minutes
 
 **Return on Investment**:
+
 - ✅ Unblocks all development work immediately
 - ✅ Enables contributor onboarding
 - ✅ Proven stability for production deployments
@@ -926,8 +962,8 @@ Create `.devcontainer/devcontainer.json`:
 
 ## Repository Information
 
-- **Original Repository**: https://github.com/jbilcke-hf/clapper
-- **Fork with Investigation**: https://github.com/abpenman25-WCG/clapper
+- **Original Repository**: [jbilcke-hf/clapper](https://github.com/jbilcke-hf/clapper)
+- **Fork with Investigation**: [abpenman25-WCG/clapper](https://github.com/abpenman25-WCG/clapper)
 - **Branch**: main
 - **Known Working Commit** (with pnpm): To be determined post-migration
 - **Current Environment**: C:\dev\clapper (local, not cloud-synced)
@@ -962,8 +998,9 @@ These changes are correct and should be retained even after pnpm migration.
 **This comprehensive investigation conclusively identifies Bun workspace mode as incompatible with Next.js 14.2.10. The Clapper codebase itself is excellent - the issue is purely a package manager limitation. Migration to pnpm will immediately restore full functionality.**
 
 **For Questions or Discussion**:
-- GitHub Issues: https://github.com/jbilcke-hf/clapper/issues
-- Investigation Fork: https://github.com/abpenman25-WCG/clapper
+
+- GitHub Issues: [Clapper Issues](https://github.com/jbilcke-hf/clapper/issues)
+- Investigation Fork: [abpenman25-WCG/clapper](https://github.com/abpenman25-WCG/clapper)
 
 **Acknowledgments**: Thank you for creating such a well-architected project. The monorepo structure is sound, the code quality is high, and once migrated to pnpm, the development experience will be excellent.
 
