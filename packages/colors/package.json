@@ -14,10 +14,13 @@
     "update": "rm -Rf node_modules && rm pnpm-lock.yaml && pnpm i && pnpm run build"
   },
   "devDependencies": {
-    "bun-types": "latest",
+    "@types/node": "^20.0.0",
     "prettier": "^3.3.3",
     "rimraf": "^6.0.1",
     "typescript": "5.5.2"
+  },
+  "peerDependencies": {
+    "@aitube/clap": "workspace:*"
   },
   "repository": {
     "type": "git",
