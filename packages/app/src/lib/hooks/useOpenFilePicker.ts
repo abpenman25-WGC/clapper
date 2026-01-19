@@ -8,6 +8,11 @@ import { importFdxTrelby } from '@/utils/importFdxTrelby'
 const defaultSupportedExtensions = [
   'clap',
   'txt',
+  'fdx',
+  'fountain',
+  'fade',
+  'spx',
+  'celtx',
   'mp4',
   'mp3',
   'fdx.trelby',
@@ -60,12 +65,12 @@ export function useOpenFilePicker(
         } finally {
           setIsLoading(false)
         }
-      } else if (extension === 'txt') {
+      } else if (extension === 'txt' || extension === 'fdx' || extension === 'fountain' || extension === 'fade' || extension === 'spx' || extension === 'celtx') {
         try {
           setIsLoading(true)
           await openScreenplay(projectName, fileName, blob)
         } catch (err) {
-          console.error('failed to load the txt file:', err)
+          console.error(`failed to load the ${extension} file:`, err)
         } finally {
           setIsLoading(false)
         }
@@ -89,7 +94,7 @@ export function useOpenFilePicker(
           await openScreenplay(
             projectName,
             fileName,
-            new Blob([JSON.stringify(parsed)])
+            new Blob([parsed])
           )
           console.log(parsed)
         } catch (err) {

@@ -8,8 +8,8 @@
   "description": "Convert a script to a clap file",
   "scripts": {
     "test": "vitest run",
-    "build": "tsc && pnpm run build:declaration",
-    "build:declaration": "tsc --emitDeclarationOnly --project tsconfig.types.json",
+    "build": "tsc && tsc-alias -p tsconfig.json",
+    "build:declaration": "tsc --emitDeclarationOnly --project tsconfig.types.json && tsc-alias -p tsconfig.types.json",
     "postbuild": "rimraf tsconfig.types.tsbuildinfo && pnpm run build:declaration",
     "publish": "npm publish --access public",
     "update": "rm -Rf node_modules && rm pnpm-lock.yaml && pnpm i && pnpm run build"
@@ -17,9 +17,11 @@
   "devDependencies": {
     "@aitube/clap": "workspace:*",
     "@aitube/io": "workspace:*",
+    "@types/bun": "latest",
     "bun-types": "latest",
     "prettier": "^3.3.3",
     "rimraf": "^6.0.1",
+    "tsc-alias": "^1.8.10",
     "typescript": "5.5.2",
     "vitest": "^1.6.0"
   },
@@ -42,8 +44,10 @@
     "dist/**/*.d.ts"
   ],
   "dependencies": {
+    "@aitube/colors": "workspace:*",
     "@datagica/parse-entities": "^0.3.0",
     "@datagica/parse-names": "^0.0.8",
-    "indexeddb-fs": "^2.1.5"
+    "indexeddb-fs": "^2.1.5",
+    "yaml": "^2.3.4"
   }
 }
