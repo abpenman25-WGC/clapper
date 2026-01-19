@@ -8,9 +8,9 @@
   "version": "0.2.4",
   "description": "Types and helpers to manipulate .clap files",
   "scripts": {
-    "build": "bun build ./src/index.ts --outfile=dist/index.js --external=yaml && bun run build:declaration",
+    "build": "tsc && pnpm run build:declaration",
     "build:declaration": "tsc --emitDeclarationOnly --project tsconfig.types.json",
-    "postbuild": "rimraf tsconfig.types.tsbuildinfo && bun run build:declaration",
+    "postbuild": "rimraf tsconfig.types.tsbuildinfo && pnpm run build:declaration",
     "publish": "npm publish --access public"
   },
   "devDependencies": {

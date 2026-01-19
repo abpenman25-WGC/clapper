@@ -7,12 +7,12 @@
   "version": "0.2.4-2",
   "description": "Convert a script to a clap file",
   "scripts": {
-    "test": "bun test --preload ./src/tests/setup.js",
-    "build": "bun build ./src/index.ts --outfile=dist/index.js --external=@aitube/clap --external=@aitube/colors && bun run build:declaration",
+    "test": "vitest run",
+    "build": "tsc && pnpm run build:declaration",
     "build:declaration": "tsc --emitDeclarationOnly --project tsconfig.types.json",
-    "postbuild": "rimraf tsconfig.types.tsbuildinfo && bun run build:declaration",
+    "postbuild": "rimraf tsconfig.types.tsbuildinfo && pnpm run build:declaration",
     "publish": "npm publish --access public",
-    "update": "rm -Rf node_modules && rm bun.lockb && bun i && bun run build"
+    "update": "rm -Rf node_modules && rm pnpm-lock.yaml && pnpm i && pnpm run build"
   },
   "devDependencies": {
     "@aitube/clap": "workspace:*",
@@ -20,7 +20,8 @@
     "bun-types": "latest",
     "prettier": "^3.3.3",
     "rimraf": "^6.0.1",
-    "typescript": "5.5.2"
+    "typescript": "5.5.2",
+    "vitest": "^1.6.0"
   },
   "repository": {
     "type": "git",
