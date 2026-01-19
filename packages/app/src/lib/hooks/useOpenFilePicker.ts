@@ -4,6 +4,7 @@ import { useFilePicker } from 'use-file-picker'
 import { parseFileName } from '@/services/io/parseFileName'
 import { useIO } from '@/services/io/useIO'
 import { importFdxTrelby } from '@/utils/importFdxTrelby'
+import { importFdx } from '@/utils/importFdx'
 
 const defaultSupportedExtensions = [
   'clap',
@@ -65,7 +66,24 @@ export function useOpenFilePicker(
         } finally {
           setIsLoading(false)
         }
-      } else if (extension === 'txt' || extension === 'fdx' || extension === 'fountain' || extension === 'fade' || extension === 'spx' || extension === 'celtx') {
+      } else if (extension === 'fdx') {
+        try {
+          setIsLoading(true)
+          // Convert ArrayBuffer to string and parse FDX XML
+          const text = new TextDecoder().decode(fileData.content)
+          const parsed = importFdx(text)
+          await openScreenplay(
+            projectName,
+            fileName,
+            new Blob([parsed])
+          )
+          console.log('FDX parsed:', parsed)
+        } catch (err) {
+          console.error('failed to load the FDX file:', err)
+        } finally {
+          setIsLoading(false)
+        }
+      } else if (extension === 'txt' || extension === 'fountain' || extension === 'fade' || extension === 'spx' || extension === 'celtx') {
         try {
           setIsLoading(true)
           await openScreenplay(projectName, fileName, blob)
