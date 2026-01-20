@@ -23,7 +23,7 @@ import {
 // ------------------------------------------------------------------------------
 export const groqWorkflows: ClapWorkflow[] = [
   {
-    id: 'groq://Mixtral-8x7b-32768',
+    id: 'groq://mixtral-8x7b-32768',
     label: 'Mixtral 8x7b (32768)',
     description: '',
     tags: ['Mixtral'],
@@ -33,7 +33,7 @@ export const groqWorkflows: ClapWorkflow[] = [
     engine: ClapWorkflowEngine.REST_API,
     category: ClapWorkflowCategory.ASSISTANT,
     provider: ClapWorkflowProvider.GROQ,
-    data: 'Mixtral-8x7b-32768',
+    data: 'mixtral-8x7b-32768',
     schema: '',
     inputFields: [genericPrompt],
     inputValues: {
@@ -41,8 +41,8 @@ export const groqWorkflows: ClapWorkflow[] = [
     },
   },
   {
-    id: 'groq://Gemma-7b-lt',
-    label: 'Gemma 7b lt',
+    id: 'groq://gemma-7b-it',
+    label: 'Gemma 7b it',
     description: '',
     tags: ['Gemma'],
     author: 'Google',
@@ -51,7 +51,7 @@ export const groqWorkflows: ClapWorkflow[] = [
     engine: ClapWorkflowEngine.REST_API,
     category: ClapWorkflowCategory.ASSISTANT,
     provider: ClapWorkflowProvider.GROQ,
-    data: 'Gemma-7b-lt',
+    data: 'gemma-7b-it',
     schema: '',
     inputFields: [genericPrompt],
     inputValues: {
@@ -59,7 +59,7 @@ export const groqWorkflows: ClapWorkflow[] = [
     },
   },
   {
-    id: 'groq://Llama3-70b-8192',
+    id: 'groq://llama3-70b-8192',
     label: 'Llama3 70b (8192)',
     description: '',
     tags: ['Llama3'],
@@ -69,7 +69,7 @@ export const groqWorkflows: ClapWorkflow[] = [
     engine: ClapWorkflowEngine.REST_API,
     category: ClapWorkflowCategory.ASSISTANT,
     provider: ClapWorkflowProvider.GROQ,
-    data: 'Llama3-70b-8192',
+    data: 'llama3-70b-8192',
     schema: '',
     inputFields: [genericPrompt],
     inputValues: {
@@ -77,17 +77,17 @@ export const groqWorkflows: ClapWorkflow[] = [
     },
   },
   {
-    id: 'groq://Llama3-8b-8192',
+    id: 'groq://llama3-8b-8192',
     label: 'Llama3 8b (8192)',
     description: '',
     tags: ['Llama3'],
-    author: 'Google',
+    author: 'Meta',
     thumbnailUrl: '',
     nonCommercial: false,
     engine: ClapWorkflowEngine.REST_API,
     category: ClapWorkflowCategory.ASSISTANT,
     provider: ClapWorkflowProvider.GROQ,
-    data: 'Llama3-8b-8192',
+    data: 'llama3-8b-8192',
     schema: '',
     inputFields: [genericPrompt],
     inputValues: {
