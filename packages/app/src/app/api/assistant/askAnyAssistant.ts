@@ -78,6 +78,9 @@ export async function askAnyAssistant({
   const provider = workflow.provider
   const modelName = workflow.data
 
+  console.log('askAnyAssistant: provider =', provider, 'model =', modelName)
+  console.log('askAnyAssistant: groqApiKey length =', settings.groqApiKey?.length || 0)
+
   if (!provider) {
     throw new Error(`Missing assistant provider`)
   }
@@ -86,15 +89,20 @@ export async function askAnyAssistant({
     | undefined
     | RunnableLike<ChatPromptValueInterface, AIMessageChunk> =
     provider === ClapWorkflowProvider.GROQ
-      ? new ChatGroq({
-          apiKey: getApiKey(
+      ? (() => {
+          const apiKey = getApiKey(
             settings.groqApiKey,
             builtinProviderCredentialsGroq,
             settings.clapperApiKey
-          ),
-          modelName,
-          // temperature: 0.7,
-        })
+          )
+          console.log('askAnyAssistant: final apiKey length =', apiKey?.length || 0)
+          console.log('askAnyAssistant: creating ChatGroq with model =', modelName)
+          return new ChatGroq({
+            apiKey,
+            modelName,
+            // temperature: 0.7,
+          })
+        })()
       : provider === ClapWorkflowProvider.OPENAI
         ? new ChatOpenAI({
             openAIApiKey: getApiKey(
