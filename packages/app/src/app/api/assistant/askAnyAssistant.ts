@@ -85,8 +85,6 @@ export async function askAnyAssistant({
     throw new Error(`Missing assistant provider`)
   }
 
-  let coerceable:
-    | undefined
   // Enhanced model selection with fallback options
   const coerceable: RunnableLike<ChatPromptValueInterface, AssistantMessage> =
     provider === ClapWorkflowProvider.GROQ
