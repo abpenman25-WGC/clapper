@@ -112,8 +112,6 @@ export async function askAnyAssistant({
             maxRetries: 2,
           })
         })()
-          })
-        })()
       : provider === ClapWorkflowProvider.OPENAI
         ? new ChatOpenAI({
             openAIApiKey: getApiKey(
