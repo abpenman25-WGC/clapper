@@ -15,8 +15,9 @@ export const useMic = create<MicStore>((set, get) => ({
 
     try {
       // Initialize webkitSpeechRecognition
-      const recognition: SpeechRecognition = new (window.SpeechRecognition ||
-        window.webkitSpeechRecognition)()
+      const recognition: SpeechRecognition = new (
+        window.SpeechRecognition || window.webkitSpeechRecognition
+      )()
 
       if (!recognition) {
         set({

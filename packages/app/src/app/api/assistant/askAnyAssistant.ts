@@ -79,7 +79,10 @@ export async function askAnyAssistant({
   const modelName = workflow.data
 
   console.log('askAnyAssistant: provider =', provider, 'model =', modelName)
-  console.log('askAnyAssistant: groqApiKey length =', settings.groqApiKey?.length || 0)
+  console.log(
+    'askAnyAssistant: groqApiKey length =',
+    settings.groqApiKey?.length || 0
+  )
 
   if (!provider) {
     throw new Error(`Missing assistant provider`)
@@ -94,13 +97,23 @@ export async function askAnyAssistant({
             builtinProviderCredentialsGroq,
             settings.clapperApiKey
           )
-          console.log('askAnyAssistant: final apiKey length =', apiKey?.length || 0)
-          
+          console.log(
+            'askAnyAssistant: final apiKey length =',
+            apiKey?.length || 0
+          )
+
           // Try alternative models if primary has issues
-          const models = ['mixtral-8x7b-32768', 'llama3-70b-8192', 'llama-3.1-70b-versatile']
+          const models = [
+            'mixtral-8x7b-32768',
+            'llama3-70b-8192',
+            'llama-3.1-70b-versatile',
+          ]
           const currentModel = modelName || models[0]
-          
-          console.log('askAnyAssistant: creating ChatGroq with model =', currentModel)
+
+          console.log(
+            'askAnyAssistant: creating ChatGroq with model =',
+            currentModel
+          )
           return new ChatGroq({
             apiKey,
             modelName: currentModel,
@@ -207,9 +220,8 @@ export async function askAnyAssistant({
 
   // console.log("INPUT:", JSON.stringify(inputData, null, 2))
 
-  const chain = chatPrompt
-    .pipe(coerceable)
-    // .pipe(assistantMessageParser)  // temporarily disable structured parsing
+  const chain = chatPrompt.pipe(coerceable)
+  // .pipe(assistantMessageParser)  // temporarily disable structured parsing
 
   let assistantMessage: AssistantMessage = {
     comment: '',
@@ -217,10 +229,12 @@ export async function askAnyAssistant({
     updatedStoryBlocks: [],
     updatedSceneSegments: [],
   }
-  
+
   // For simple greetings, return a friendly response without calling the LLM
   const simpleGreetings = ['hello', 'hi', 'hey', 'test']
-  if (simpleGreetings.some(greeting => prompt.toLowerCase().includes(greeting))) {
+  if (
+    simpleGreetings.some((greeting) => prompt.toLowerCase().includes(greeting))
+  ) {
     assistantMessage.comment = `Hello! I'm your AI assistant, ready to help with your video production! 🎬
 
 I can assist you with:
@@ -237,7 +251,12 @@ What would you like to work on? Try asking:
   }
 
   // Enhanced script-specific fallbacks with actionable guidance
-  if (prompt.toLowerCase().includes('script') || prompt.toLowerCase().includes('begin') || prompt.toLowerCase().includes('scene') || prompt.toLowerCase().includes('create')) {
+  if (
+    prompt.toLowerCase().includes('script') ||
+    prompt.toLowerCase().includes('begin') ||
+    prompt.toLowerCase().includes('scene') ||
+    prompt.toLowerCase().includes('create')
+  ) {
     assistantMessage.comment = `Perfect! Let's work on your script and video production. 📝
 
 **Here's how I can help you get started:**
@@ -259,7 +278,7 @@ What would you like to work on? Try asking:
 What part of your script should we tackle first?`
     return assistantMessage
   }
-  
+
   // Enhanced general fallback with helpful guidance for any complex request
   assistantMessage.comment = `I received your message and I'm ready to help with your video production! 🎬
 
@@ -316,12 +335,12 @@ What part of your script should we tackle first?`
           }
         ),
     })
-    console.log("askAnyAssistant: raw response from LLM:")
+    console.log('askAnyAssistant: raw response from LLM:')
     console.log(JSON.stringify(rawResponse, null, 2))
-    console.log("askAnyAssistant: attempting to parse response...")
+    console.log('askAnyAssistant: attempting to parse response...')
 
     assistantMessage = parseLangChainResponse(rawResponse as any)
-    console.log("askAnyAssistant: parsing successful!")
+    console.log('askAnyAssistant: parsing successful!')
     // console.log('assistantMessage:', assistantMessage)
   } catch (err) {
     // LangChain failure (this happens quite often, actually)
@@ -344,17 +363,21 @@ What part of your script should we tackle first?`
       console.log(
         `failed to parse the response from the LLM, trying to repair the output from LangChain..`
       )
-      console.log("Raw error response that failed to parse:")
+      console.log('Raw error response that failed to parse:')
       console.log(errorPlainText)
 
       try {
         assistantMessage = parseLangChainResponse(JSON.parse(errorPlainText))
       } catch (err) {
         console.log(`repairing the output failed!`, err)
-        console.log("Final parsed errorPlainText:", errorPlainText)
-        
+        console.log('Final parsed errorPlainText:', errorPlainText)
+
         // Enhanced fallback responses based on request type
-        if (prompt.toLowerCase().includes('script') || prompt.toLowerCase().includes('scene') || prompt.toLowerCase().includes('create')) {
+        if (
+          prompt.toLowerCase().includes('script') ||
+          prompt.toLowerCase().includes('scene') ||
+          prompt.toLowerCase().includes('create')
+        ) {
           assistantMessage.comment = `🎬 **Script & Scene Assistant Ready!**
 
 I received your request about scripts/scenes! While working around current formatting issues, I can guide you through:

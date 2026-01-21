@@ -1,6 +1,10 @@
 import { RenderingStrategy } from '@aitube/timeline'
 import { ComfyIcuAccelerator, SettingsState } from '@aitube/clapper-services'
-import { ClapWorkflowEngine, ClapWorkflowCategory, ClapWorkflowProvider } from '@aitube/clap'
+import {
+  ClapWorkflowEngine,
+  ClapWorkflowCategory,
+  ClapWorkflowProvider,
+} from '@aitube/clap'
 
 import { defaultWorkflowForImages } from './workflows/image'
 import { defaultWorkflowForVideos } from './workflows/video'

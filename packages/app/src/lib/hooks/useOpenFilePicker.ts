@@ -72,18 +72,20 @@ export function useOpenFilePicker(
           // Convert ArrayBuffer to string and parse FDX XML
           const text = new TextDecoder().decode(fileData.content)
           const parsed = importFdx(text)
-          await openScreenplay(
-            projectName,
-            fileName,
-            new Blob([parsed])
-          )
+          await openScreenplay(projectName, fileName, new Blob([parsed]))
           console.log('FDX parsed:', parsed)
         } catch (err) {
           console.error('failed to load the FDX file:', err)
         } finally {
           setIsLoading(false)
         }
-      } else if (extension === 'txt' || extension === 'fountain' || extension === 'fade' || extension === 'spx' || extension === 'celtx') {
+      } else if (
+        extension === 'txt' ||
+        extension === 'fountain' ||
+        extension === 'fade' ||
+        extension === 'spx' ||
+        extension === 'celtx'
+      ) {
         try {
           setIsLoading(true)
           await openScreenplay(projectName, fileName, blob)
@@ -109,11 +111,7 @@ export function useOpenFilePicker(
           // Convert ArrayBuffer to string
           const text = new TextDecoder().decode(fileData.content)
           const parsed = importFdxTrelby(text)
-          await openScreenplay(
-            projectName,
-            fileName,
-            new Blob([parsed])
-          )
+          await openScreenplay(projectName, fileName, new Blob([parsed]))
           console.log(parsed)
         } catch (err) {
           console.error(`failed to load the ${extension} file:`, err)
