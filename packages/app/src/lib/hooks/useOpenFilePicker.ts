@@ -43,6 +43,7 @@ export function useOpenFilePicker(
 
   useEffect(() => {
     const fn = async () => {
+      console.log('FILEPICKER DEBUG: useEffect called, fileData:', fileData?.name)
       if (!fileData || !fileData.name) {
         return
       }
@@ -109,12 +110,19 @@ export function useOpenFilePicker(
         try {
           setIsLoading(true)
           // Convert ArrayBuffer to string
+          console.log('🎬 Processing .fdx.trelby file:', fileName)
           const text = new TextDecoder().decode(fileData.content)
+          console.log('🎬 Raw Trelby file length:', text.length)
+          console.log('🎬 First 200 chars of raw Trelby:', text.substring(0, 200))
+          
           const parsed = importFdxTrelby(text)
+          console.log('🎬 Parsed Trelby length:', parsed.length)
+          console.log('🎬 First 200 chars of parsed:', parsed.substring(0, 200))
+          
           await openScreenplay(projectName, fileName, new Blob([parsed]))
-          console.log(parsed)
+          console.log('🎬 openScreenplay completed for Trelby file')
         } catch (err) {
-          console.error(`failed to load the ${extension} file:`, err)
+          console.error(`🎬 ERROR: failed to load the ${extension} file:`, err)
         } finally {
           setIsLoading(false)
         }

@@ -292,9 +292,13 @@ export const useIO = create<IOStore>((set, get) => ({
       // const clap = await parseClap(blob)
 
       // new way: we analyze the screenplay on browser side
+      console.log('🎬 Starting parseScriptToClap with text length:', plainText.length)
+      console.log('🎬 First 200 chars of text:', plainText.substring(0, 200))
+      
       const clap = await parseScriptToClap(
         plainText,
         async ({ value, sleepDelay, message }) => {
+          console.log(`🎬 Progress: ${value}% - ${message || 'Processing...'}`)
           const relativeProgressRatio = value / 100
           const totalProgress = 10 + relativeProgressRatio * 80
           task.setProgress({
@@ -304,6 +308,20 @@ export const useIO = create<IOStore>((set, get) => ({
           await sleep(sleepDelay || 25)
         }
       )
+
+      console.log('🎬 parseScriptToClap completed!')
+      console.log('🎬 Generated clap with:', {
+        scenesCount: clap.scenes?.length || 0,
+        segmentsCount: clap.segments?.length || 0,
+        entitiesCount: clap.entities?.length || 0
+      })
+      
+      // Debug first scene content
+      if (clap.scenes && clap.scenes.length > 0) {
+        console.log('🎬 First scene content:', clap.scenes[0]?.sequenceFullText?.substring(0, 200))
+      } else {
+        console.log('🎬 WARNING: No scenes were generated!')
+      }
 
       clap.meta.title = `${projectName || ''}`
 
