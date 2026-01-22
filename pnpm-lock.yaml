@@ -598,6 +598,9 @@ importers:
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
+      tsc-alias:
+        specifier: ^1.8.10
+        version: 1.8.16
       typescript:
         specifier: 5.5.2
         version: 5.5.2
@@ -704,6 +707,9 @@ importers:
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
+      tsc-alias:
+        specifier: ^1.8.10
+        version: 1.8.16
       typescript:
         specifier: 5.5.2
         version: 5.5.2
@@ -829,6 +835,9 @@ importers:
       three-stdlib:
         specifier: ^2.29.0
         version: 2.36.1(three@0.164.1)
+      tsc-alias:
+        specifier: ^1.8.10
+        version: 1.8.16
       typescript:
         specifier: 5.5.2
         version: 5.5.2

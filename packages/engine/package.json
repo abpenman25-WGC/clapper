@@ -7,7 +7,7 @@
   "version": "0.2.4",
   "description": "The engine powering AiTube.at and Clapper.app",
   "scripts": {
-    "build": "tsc && pnpm run build:declaration",
+    "build": "tsc && tsc-alias -p tsconfig.json && pnpm run build:declaration",
     "build:declaration": "tsc --emitDeclarationOnly --project tsconfig.types.json",
     "postbuild": "rimraf tsconfig.types.tsbuildinfo && pnpm run build:declaration",
     "publish": "npm publish --access public",
@@ -20,6 +20,7 @@
     "bun-types": "latest",
     "prettier": "^3.3.3",
     "rimraf": "^6.0.1",
+    "tsc-alias": "^1.8.10",
     "typescript": "5.5.2"
   },
   "repository": {
