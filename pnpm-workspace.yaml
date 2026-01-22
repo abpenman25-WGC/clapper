@@ -1,0 +1,10 @@
+packages:
+  - 'packages/clap'
+  - 'packages/timeline'
+  - 'packages/client'
+  - 'packages/io'
+  - 'packages/colors'
+  - 'packages/engine'
+  - 'packages/broadway'
+  - 'packages/clapper-services'
+  - 'packages/app'
