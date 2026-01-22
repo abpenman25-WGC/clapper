@@ -13,6 +13,9 @@
     "publish": "npm publish --access public",
     "update": "rm -Rf node_modules && rm pnpm-lock.yaml && pnpm i && pnpm run build"
   },
+  "dependencies": {
+    "@aitube/clap": "workspace:*"
+  },
   "devDependencies": {
     "bun-types": "latest",
     "prettier": "^3.3.3",
