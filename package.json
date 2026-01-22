@@ -8,6 +8,7 @@
   },
   "packageManager": "pnpm@8.15.0",
   "private": true,
+  "main": "index.js",
   "scripts": {
     "dev": "pnpm --filter @aitube/clapper dev",
     "start": "pnpm --filter @aitube/clapper start",
@@ -42,5 +43,23 @@
     "packages/broadway",
     "packages/clapper-services",
     "packages/app"
-  ]
+  ],
+  "dependencies": {
+    "@swc/helpers": "^0.5.18",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "caniuse-lite": "^1.0.30001764",
+    "mediainfo.js": "^0.3.6",
+    "next": "14.2.35",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "resolve": "^1.22.11",
+    "styled-jsx": "^5.1.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.1",
+    "@webgpu/types": "^0.1.65",
+    "playwright": "^1.55.1",
+    "prettier": "^3.6.2"
+  }
 }

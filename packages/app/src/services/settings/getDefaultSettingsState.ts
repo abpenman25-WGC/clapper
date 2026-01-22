@@ -1,5 +1,10 @@
 import { RenderingStrategy } from '@aitube/timeline'
 import { ComfyIcuAccelerator, SettingsState } from '@aitube/clapper-services'
+import {
+  ClapWorkflowEngine,
+  ClapWorkflowCategory,
+  ClapWorkflowProvider,
+} from '@aitube/clap'
 
 import { defaultWorkflowForImages } from './workflows/image'
 import { defaultWorkflowForVideos } from './workflows/video'
@@ -50,8 +55,38 @@ export function getDefaultSettingsState(): SettingsState {
     videoNegativePrompt:
       'black banding, ugly, imperfect, cropped, low resolution',
 
-    assistantWorkflow: '',
-    assistantTurboWorkflow: '',
+    assistantWorkflow: JSON.stringify({
+      id: 'groq://mixtral-8x7b-32768',
+      label: 'Mixtral 8x7b (32768)',
+      description: '',
+      tags: ['Mixtral'],
+      author: 'Mistral AI',
+      thumbnailUrl: '',
+      nonCommercial: false,
+      engine: ClapWorkflowEngine.REST_API,
+      category: ClapWorkflowCategory.ASSISTANT,
+      provider: ClapWorkflowProvider.GROQ,
+      data: 'mixtral-8x7b-32768',
+      schema: '',
+      inputFields: [],
+      inputValues: {},
+    }),
+    assistantTurboWorkflow: JSON.stringify({
+      id: 'groq://llama3-8b-8192',
+      label: 'Llama3 8b (8192)',
+      description: '',
+      tags: ['Llama3'],
+      author: 'Meta',
+      thumbnailUrl: '',
+      nonCommercial: false,
+      engine: ClapWorkflowEngine.REST_API,
+      category: ClapWorkflowCategory.ASSISTANT,
+      provider: ClapWorkflowProvider.GROQ,
+      data: 'llama3-8b-8192',
+      schema: '',
+      inputFields: [],
+      inputValues: {},
+    }),
     imageGenerationWorkflow: '',
     imageGenerationTurboWorkflow: '',
     imageFaceswapWorkflow: '',

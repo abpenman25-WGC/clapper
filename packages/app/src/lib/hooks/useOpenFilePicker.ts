@@ -3,8 +3,22 @@ import { useFilePicker } from 'use-file-picker'
 
 import { parseFileName } from '@/services/io/parseFileName'
 import { useIO } from '@/services/io/useIO'
+import { importFdxTrelby } from '@/utils/importFdxTrelby'
+import { importFdx } from '@/utils/importFdx'
 
-const defaultSupportedExtensions = ['clap', 'txt', 'mp4', 'mp3']
+const defaultSupportedExtensions = [
+  'clap',
+  'txt',
+  'fdx',
+  'fountain',
+  'fade',
+  'spx',
+  'celtx',
+  'mp4',
+  'mp3',
+  'fdx.trelby',
+  'trelby',
+]
 
 export function useOpenFilePicker(
   {
@@ -29,10 +43,11 @@ export function useOpenFilePicker(
 
   useEffect(() => {
     const fn = async () => {
-      const input = `${fileData?.name || ''}`
-      if (!input) {
+      console.log('FILEPICKER DEBUG: useEffect called, fileData:', fileData?.name)
+      if (!fileData || !fileData.name) {
         return
       }
+      const input = fileData.name
 
       const { fileName, projectName, extension } = parseFileName(input)
 
@@ -52,12 +67,31 @@ export function useOpenFilePicker(
         } finally {
           setIsLoading(false)
         }
-      } else if (extension === 'txt') {
+      } else if (extension === 'fdx') {
+        try {
+          setIsLoading(true)
+          // Convert ArrayBuffer to string and parse FDX XML
+          const text = new TextDecoder().decode(fileData.content)
+          const parsed = importFdx(text)
+          await openScreenplay(projectName, fileName, new Blob([parsed]))
+          console.log('FDX parsed:', parsed)
+        } catch (err) {
+          console.error('failed to load the FDX file:', err)
+        } finally {
+          setIsLoading(false)
+        }
+      } else if (
+        extension === 'txt' ||
+        extension === 'fountain' ||
+        extension === 'fade' ||
+        extension === 'spx' ||
+        extension === 'celtx'
+      ) {
         try {
           setIsLoading(true)
           await openScreenplay(projectName, fileName, blob)
         } catch (err) {
-          console.error('failed to load the Clap file:', err)
+          console.error(`failed to load the ${extension} file:`, err)
         } finally {
           setIsLoading(false)
         }
@@ -66,16 +100,37 @@ export function useOpenFilePicker(
           setIsLoading(true)
           await openVideo(projectName, fileName, blob)
         } catch (err) {
-          console.error('failed to load the Clap file:', err)
+          console.error('failed to load the mp4 file:', err)
         } finally {
           setIsLoading(false)
         }
       } else if (extension === 'mp3') {
         alert('Initializing a project from a mp3 is not supported yet')
+      } else if (extension === 'fdx.trelby' || extension === 'trelby') {
+        try {
+          setIsLoading(true)
+          // Convert ArrayBuffer to string
+          console.log('🎬 Processing .fdx.trelby file:', fileName)
+          const text = new TextDecoder().decode(fileData.content)
+          console.log('🎬 Raw Trelby file length:', text.length)
+          console.log('🎬 First 200 chars of raw Trelby:', text.substring(0, 200))
+          
+          const parsed = importFdxTrelby(text)
+          console.log('🎬 Parsed Trelby length:', parsed.length)
+          console.log('🎬 First 200 chars of parsed:', parsed.substring(0, 200))
+          
+          await openScreenplay(projectName, fileName, new Blob([parsed]))
+          console.log('🎬 openScreenplay completed for Trelby file')
+        } catch (err) {
+          console.error(`🎬 ERROR: failed to load the ${extension} file:`, err)
+        } finally {
+          setIsLoading(false)
+        }
       }
     }
     fn()
   }, [
+    fileData,
     fileData?.name,
     fileData?.content,
     openClapBlob,

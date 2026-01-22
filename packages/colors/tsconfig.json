@@ -9,10 +9,9 @@
     "lib": ["ESNext", "DOM"],
     "module": "esnext",
     "target": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "moduleDetection": "force",
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
+    "noEmit": false,
     "composite": true,
     "strict": true,
     "downlevelIteration": true,
@@ -21,9 +20,8 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,
-    "types": [
-      "bun-types"
-    ]
+    "esModuleInterop": true,
+    "types": ["node"]
   },
   "include": [
     "src/**/*.ts"

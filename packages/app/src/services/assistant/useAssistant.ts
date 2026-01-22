@@ -212,14 +212,72 @@ export const useAssistant = create<AssistantStore>((set, get) => ({
       return
     }
 
-    const referenceSegment: TimelineSegment | undefined = activeSegments.at(0)
+    // Find the current scene based on cursor position
+    const getCurrentSceneAtCursor = (): ClapScene | undefined => {
+      const { cursorTimestampAtInMs } = timeline
+      
+      console.log('🔍 Scene Detection Debug:')
+      console.log('- Total scenes available:', scenes.length)
+      console.log('- Cursor position (ms):', cursorTimestampAtInMs)
+      console.log('- Active segments:', activeSegments.length)
+      console.log('=== DEBUG: TIMELINE CLAP STATE ===')
+      console.log('- Timeline clap scenes:', timeline.clap.scenes?.length || 0)
+      console.log('- Timeline clap segments:', timeline.clap.segments?.length || 0)
+      if (timeline.clap.scenes?.length === 0) {
+        console.log('🚨 PROBLEM: No scenes in timeline.clap - this is why AI cannot see script!')
+      }
+      console.log('=================================')
 
-    console.log(
-      'uh oh.. where are the scene? TODO @julian add them back to useTimeline'
-    )
-    const scene: ClapScene | undefined = referenceSegment?.sceneId
-      ? scenes.find((s) => s.id === referenceSegment.sceneId)
-      : undefined
+      // Find segments that are active at the current cursor position
+      const segmentsAtCursor = activeSegments.filter(
+        (segment) =>
+          segment.startTimeInMs <= cursorTimestampAtInMs &&
+          segment.endTimeInMs >= cursorTimestampAtInMs
+      )
+      
+      console.log('- Segments at cursor:', segmentsAtCursor.length)
+
+      // Look for a segment with a scene ID at the cursor position
+      const segmentWithScene = segmentsAtCursor.find(
+        (segment) => segment.sceneId
+      )
+      
+      if (segmentWithScene?.sceneId) {
+        const foundScene = scenes.find((s) => s.id === segmentWithScene.sceneId)
+        console.log('- Found scene via segment:', foundScene?.sequenceFullText?.substring(0, 100))
+        return foundScene
+      }
+
+      // Fallback: if no scene found at cursor, check all scenes by timeline position
+      // Convert cursor time to approximate line number for scene matching
+      if (scenes.length > 0) {
+        console.log('- Using fallback scene selection...')
+        // Simple approach: find the scene that would be "closest" to this timeline position
+        const totalDurationInMs = timeline.durationInMs
+        const progressRatio =
+          totalDurationInMs > 0 ? cursorTimestampAtInMs / totalDurationInMs : 0
+        const estimatedSceneIndex = Math.min(
+          Math.floor(progressRatio * scenes.length),
+          scenes.length - 1
+        )
+        
+        const fallbackScene = scenes[estimatedSceneIndex]
+        console.log('- Estimated scene index:', estimatedSceneIndex)
+        console.log('- Fallback scene content:', fallbackScene?.sequenceFullText?.substring(0, 100))
+        return fallbackScene
+      }
+
+      console.log('- No scenes found!')
+      return undefined
+    }
+
+    const referenceSegment: TimelineSegment | undefined = activeSegments.at(0)
+    const scene: ClapScene | undefined = getCurrentSceneAtCursor()
+    
+    console.log('🎯 Final scene result:')
+    console.log('- Scene found:', !!scene)
+    console.log('- Scene content length:', scene?.sequenceFullText?.length || 0)
+    console.log('- Scene content preview:', scene?.sequenceFullText?.substring(0, 150))
 
     // we should be careful with how we filter and send the segments to the API
     //

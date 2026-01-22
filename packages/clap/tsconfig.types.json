@@ -6,6 +6,7 @@
     "declaration": true,
     "outDir": "./dist",
     "rootDir": "./src",
+    "skipLibCheck": true,
     "plugins": [{ "transform": "typescript-transform-paths", "afterDeclarations": true }]
   },
   "include": ["src/**/*.ts"]
