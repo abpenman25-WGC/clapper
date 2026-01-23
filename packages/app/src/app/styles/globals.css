@@ -25,3 +25,12 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.gtm-noscript-iframe {
+  display: none;
+  visibility: hidden;
+}
+
+.error-message {
+  color: red;
+}

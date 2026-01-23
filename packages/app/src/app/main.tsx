@@ -272,9 +272,12 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
     >
       <div
         className="flex h-full w-full items-center justify-center"
-        style={{
-          backgroundImage: theme.wallpaperBgImage,
-        }}
+
+        style={
+          {
+            '--bg-image': theme.wallpaperBgImage,
+          } as React.CSSProperties
+        }
       >
         <div
           className={cn(
@@ -305,9 +308,14 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
         <div className="flex flex-col items-center justify-center space-y-6">
           <h1 className="text-6xl font-bold">
             Welcome to{' '}
-            <span className="" style={{ color: theme.defaultPrimaryColor }}>
+            <span
+              style={
+                { '--primary-color': theme.defaultPrimaryColor } as React.CSSProperties
+              }
+            >
               Clapper
             </span>
+            .
             .
           </h1>
           <div className="flex flex-col items-center justify-center space-y-2 text-center text-2xl font-semibold">
@@ -337,9 +345,9 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
               : 'h-[calc(100svh-36px)]'
         )}
         style={
-          isIframe || windowLayout === UIWindowLayout.GRID
-            ? { backgroundColor: theme.defaultBgColor }
-            : { backgroundImage: theme.wallpaperBgImage }
+          (isIframe || windowLayout === UIWindowLayout.GRID
+            ? { '--bg-color': theme.defaultBgColor }
+            : { '--bg-image': theme.wallpaperBgImage }) as React.CSSProperties
         }
       >
         {isIframe
@@ -365,7 +373,7 @@ function fallbackRender({ error, resetErrorBoundary }: FallbackProps) {
   return (
     <div role="alert">
       <p>Something went wrong:</p>
-      <pre style={{ color: 'red' }}>{error.message}</pre>
+      <pre className="error-message">{error.message}</pre>
     </div>
   )
 }
