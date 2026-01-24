@@ -104,7 +104,6 @@ export async function askAnyAssistant({
 
           // Try alternative models if primary has issues
           const models = [
-            'mixtral-8x7b-32768',
             'llama3-70b-8192',
             'llama-3.1-70b-versatile',
           ]
@@ -255,12 +254,24 @@ What would you like to work on? Try asking:
   let rawLlmResponse: any = null
   let llmError: any = null
   try {
+    // Convert chat history to LangChain message objects
+    const lcChatHistory = Array.isArray(history)
+      ? history.map((msg) => {
+          if (!msg || typeof msg !== 'object' || !msg.senderId || !msg.message) return null
+          if (msg.senderId === 'director' || msg.isCurrentUser) {
+            return new HumanMessage(msg.message)
+          } else if (msg.senderId === 'assistant') {
+            return new AIMessage(msg.message)
+          }
+          return null
+        }).filter(Boolean)
+      : []
     // Log input data for debugging
     console.log('[askAnyAssistant] LLM inputData:', JSON.stringify(inputData, null, 2))
     // Run the LLM chain
     rawLlmResponse = await chain.invoke({
-      chatHistory: history,
-      ...inputData,
+      chatHistory: lcChatHistory,
+      inputData: JSON.stringify(inputData),
     })
     console.log('[askAnyAssistant] LLM raw response:', JSON.stringify(rawLlmResponse, null, 2))
     // Parse the LLM response
@@ -276,53 +287,10 @@ What would you like to work on? Try asking:
   }
   // --- End LLM call and logging ---
 
-  // Enhanced script-specific fallbacks with actionable guidance
-  if (
-    prompt.toLowerCase().includes('script') ||
-    prompt.toLowerCase().includes('begin') ||
-    prompt.toLowerCase().includes('scene') ||
-    prompt.toLowerCase().includes('create')
-  ) {
-    assistantMessage.comment = `Perfect! Let's work on your script and video production. 📝
-
-**Here's how I can help you get started:**
-
-🎬 **Scene Creation Process:**
-1. **Script Upload**: Share your script text or outline
-2. **Scene Breakdown**: I'll identify key visual moments  
-3. **Visual Enhancement**: Add camera angles, lighting, mood
-4. **Timeline Structure**: Organize scenes for production
-
-**Quick Start Options:**
-• "Break down this script: [paste your text]"
-• "Create a scene for [specific story moment]"  
-• "Add visual description to this dialogue"
-• "Help me plan the opening scene"
-
-**Current Status**: Working around some LLM formatting issues, but full functionality is ready once providers stabilize. All your scene data and progress will be preserved!
-
-What part of your script should we tackle first?`
-    return assistantMessage
-  }
-
-  // Enhanced general fallback with helpful guidance for any complex request
-  assistantMessage.comment = `I received your message and I'm ready to help with your video production! 🎬
-
-**Available Assistance:**
-• **Script Development**: Story structure, scene planning, dialogue enhancement
-• **Visual Creation**: Camera angles, lighting design, shot composition  
-• **Production Planning**: Timeline organization, scene ordering
-• **Creative Direction**: Mood, style, and cinematic guidance
-
-**Try These Approaches:**
-1. **Start Simple**: "Hello" or "Help me get started"
-2. **Be Specific**: "Create a scene where [describe action]"  
-3. **Share Content**: Paste script sections for breakdown
-4. **Ask Questions**: "How should I film [specific scenario]?"
-
-**Technical Note**: Currently using smart fallback responses while LLM providers resolve formatting issues. Your requests are being processed and functionality will seamlessly return once providers stabilize.
-
-**Ready to collaborate!** What's your creative vision? 🎯`
+  // Patch: If fallback is triggered, log and return the raw LLM output for debugging
+  console.warn('[askAnyAssistant] Fallback triggered. Returning raw LLM output for debugging:')
+  console.warn('[askAnyAssistant] rawLlmResponse:', JSON.stringify(rawLlmResponse, null, 2))
+  assistantMessage.comment = '[DEBUG] Fallback triggered. Raw LLM output below.\n' + JSON.stringify(rawLlmResponse, null, 2)
   return assistantMessage
 
   // The following LLM processing code will activate automatically once formatting issues resolve

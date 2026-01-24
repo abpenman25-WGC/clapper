@@ -56,17 +56,17 @@ export function getDefaultSettingsState(): SettingsState {
       'black banding, ugly, imperfect, cropped, low resolution',
 
     assistantWorkflow: JSON.stringify({
-      id: 'groq://mixtral-8x7b-32768',
-      label: 'Mixtral 8x7b (32768)',
+      id: 'groq://llama3-70b-8192',
+      label: 'Llama3 70b (8192)',
       description: '',
-      tags: ['Mixtral'],
-      author: 'Mistral AI',
+      tags: ['Llama3'],
+      author: 'Meta',
       thumbnailUrl: '',
       nonCommercial: false,
       engine: ClapWorkflowEngine.REST_API,
       category: ClapWorkflowCategory.ASSISTANT,
       provider: ClapWorkflowProvider.GROQ,
-      data: 'mixtral-8x7b-32768',
+      data: 'llama3-70b-8192',
       schema: '',
       inputFields: [],
       inputValues: {},
@@ -212,7 +212,7 @@ export function getDefaultSettingsState(): SettingsState {
     openaiModelForVideo: "sora",
     openaiModelForVoice: "v1",
 
-    groqModelForAssistant: "mixtral-8x7b-32768",
+    groqModelForAssistant: "llama3-70b-8192",
   
     googleModelForAssistant: "gemini-1.5-pro-001",
     googleModelForImage: "imagen",

@@ -23,24 +23,6 @@ import {
 // ------------------------------------------------------------------------------
 export const groqWorkflows: ClapWorkflow[] = [
   {
-    id: 'groq://mixtral-8x7b-32768',
-    label: 'Mixtral 8x7b (32768)',
-    description: '',
-    tags: ['Mixtral'],
-    author: 'Mistral AI',
-    thumbnailUrl: '',
-    nonCommercial: false,
-    engine: ClapWorkflowEngine.REST_API,
-    category: ClapWorkflowCategory.ASSISTANT,
-    provider: ClapWorkflowProvider.GROQ,
-    data: 'mixtral-8x7b-32768',
-    schema: '',
-    inputFields: [genericPrompt],
-    inputValues: {
-      prompt: genericPrompt.defaultValue,
-    },
-  },
-  {
     id: 'groq://gemma-7b-it',
     label: 'Gemma 7b it',
     description: '',

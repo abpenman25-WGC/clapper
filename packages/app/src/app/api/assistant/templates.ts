@@ -43,10 +43,7 @@ Each item describes a different property (or facet) of the scene, based on its c
 
 # Information about the current video
 
-## Meta-information about the current video
-\`\`\`
-{projectInfo}
-\`\`\`
+
 
 ## Final warning and guidelines
 - Always give responses related to the current user request, not the examples
