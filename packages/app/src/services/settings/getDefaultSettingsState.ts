@@ -45,8 +45,8 @@ export function getDefaultSettingsState(): SettingsState {
     broadcastObsServerPass: '',
 
     censorNotForAllAudiencesContent: false,
-
-    imagePromptPrefix: 'screencap',
+            id: 'groq://llama-3.3-70b-versatile',
+            label: 'Llama 3.3 70B Versatile',
     imagePromptSuffix: 'high quality, beautiful, amazing, intricate details',
     imageNegativePrompt:
       'black banding, ugly, imperfect, cropped, low resolution',
@@ -55,15 +55,15 @@ export function getDefaultSettingsState(): SettingsState {
     videoNegativePrompt:
       'black banding, ugly, imperfect, cropped, low resolution',
 
-    assistantWorkflow: JSON.stringify({
+            data: 'llama-3.3-70b-versatile',
       id: 'groq://llama3-70b-8192',
       label: 'Llama3 70b (8192)',
       description: '',
       tags: ['Llama3'],
       author: 'Meta',
       thumbnailUrl: '',
-      nonCommercial: false,
-      engine: ClapWorkflowEngine.REST_API,
+            id: 'groq://llama-3.3-70b-versatile',
+            label: 'Llama 3.3 70B Versatile',
       category: ClapWorkflowCategory.ASSISTANT,
       provider: ClapWorkflowProvider.GROQ,
       data: 'llama3-70b-8192',
@@ -72,7 +72,7 @@ export function getDefaultSettingsState(): SettingsState {
       inputValues: {},
     }),
     assistantTurboWorkflow: JSON.stringify({
-      id: 'groq://llama3-70b-8192',
+            data: 'llama-3.3-70b-versatile',
       label: 'Llama3 70b (8192)',
       description: '',
       tags: ['Llama3'],
@@ -80,7 +80,7 @@ export function getDefaultSettingsState(): SettingsState {
       thumbnailUrl: '',
       nonCommercial: false,
       engine: ClapWorkflowEngine.REST_API,
-      category: ClapWorkflowCategory.ASSISTANT,
+          groqModelForAssistant: "llama-3.3-70b-versatile",
       provider: ClapWorkflowProvider.GROQ,
       data: 'llama3-70b-8192',
       schema: '',
