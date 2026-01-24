@@ -45,8 +45,23 @@ export function getDefaultSettingsState(): SettingsState {
     broadcastObsServerPass: '',
 
     censorNotForAllAudiencesContent: false,
-            id: 'groq://llama-3.3-70b-versatile',
-            label: 'Llama 3.3 70B Versatile',
+    // Groq Llama 3.3 70B Versatile workflow
+    assistantWorkflow: JSON.stringify({
+      id: 'groq://llama-3.3-70b-versatile',
+      label: 'Llama 3.3 70B Versatile',
+      description: '',
+      tags: ['Llama3'],
+      author: 'Meta',
+      thumbnailUrl: '',
+      category: ClapWorkflowCategory.ASSISTANT,
+      provider: ClapWorkflowProvider.GROQ,
+      engine: ClapWorkflowEngine.REST_API,
+      data: 'llama-3.3-70b-versatile',
+      schema: '',
+      inputFields: [],
+      inputValues: {},
+      nonCommercial: false,
+    }),
     imagePromptSuffix: 'high quality, beautiful, amazing, intricate details',
     imageNegativePrompt:
       'black banding, ugly, imperfect, cropped, low resolution',
@@ -55,9 +70,7 @@ export function getDefaultSettingsState(): SettingsState {
     videoNegativePrompt:
       'black banding, ugly, imperfect, cropped, low resolution',
 
-            data: 'llama-3.3-70b-versatile',
-      id: 'groq://llama3-70b-8192',
-      label: 'Llama3 70b (8192)',
+        // Remove deprecated/duplicated Groq workflow objects
       description: '',
       tags: ['Llama3'],
       author: 'Meta',
@@ -71,22 +84,7 @@ export function getDefaultSettingsState(): SettingsState {
       inputFields: [],
       inputValues: {},
     }),
-    assistantTurboWorkflow: JSON.stringify({
-            data: 'llama-3.3-70b-versatile',
-      label: 'Llama3 70b (8192)',
-      description: '',
-      tags: ['Llama3'],
-      author: 'Meta',
-      thumbnailUrl: '',
-      nonCommercial: false,
-      engine: ClapWorkflowEngine.REST_API,
-          groqModelForAssistant: "llama-3.3-70b-versatile",
-      provider: ClapWorkflowProvider.GROQ,
-      data: 'llama3-70b-8192',
-      schema: '',
-      inputFields: [],
-      inputValues: {},
-    }),
+    // Removed deprecated assistantTurboWorkflow and duplicated fields
     imageGenerationWorkflow: '',
     imageGenerationTurboWorkflow: '',
     imageFaceswapWorkflow: '',
@@ -212,7 +210,7 @@ export function getDefaultSettingsState(): SettingsState {
     openaiModelForVideo: "sora",
     openaiModelForVoice: "v1",
 
-    groqModelForAssistant: "llama3-70b-8192",
+    groqModelForAssistant: "llama-3.3-70b-versatile",
   
     googleModelForAssistant: "gemini-1.5-pro-001",
     googleModelForImage: "imagen",
