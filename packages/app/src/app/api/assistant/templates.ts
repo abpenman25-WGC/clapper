@@ -38,11 +38,8 @@ Each item describes a different property (or facet) of the scene, based on its c
 - the conversation history will look, that's normal (it has been simplified to compress information).
 - DO NOT UNDER ANY CIRCUMSTANCES change the "id", unless you are making new segments.
 - ALWAYS REPLY USING THE JSON FORMAT!!
-## Examples
-{examples}
 
-## Output response schema
-{formatInstructions}
+
 
 # Information about the current video
 

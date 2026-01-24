@@ -47,7 +47,13 @@ export async function POST(req: NextRequest) {
   // so they cannot siphon free OpenAI, HF, Replicate tokens
   // console.log(`TODO Julian: secure the endpoint`)
   // await throwIfInvalidToken(req.headers.get("Authorization"))
-  const request = (await req.json()) as ResolveRequest
+  let request: ResolveRequest | undefined
+  try {
+    request = (await req.json()) as ResolveRequest
+  } catch (err) {
+    console.error('Failed to parse incoming request JSON:', err)
+    return NextResponse.json({ error: 'Invalid request JSON', details: String(err) }, { status: 400 })
+  }
 
   const {
     generationWorkflow,
@@ -119,22 +125,16 @@ export async function POST(req: NextRequest) {
   let segment = request.segment
 
   try {
-    // console.log('calling resolveSegment', request)
+    // Log the incoming request for debugging
+    console.log('Incoming resolve request:', JSON.stringify(request, null, 2))
     segment = await resolveSegment(request)
 
     // we clean-up and parse the output from all the resolvers:
     // this will download files hosted on CDNs, convert WAV files to MP3 etc
-
     segment.assetUrl = await decodeOutput(segment.assetUrl)
-
     segment.assetSourceType = getClapAssetSourceType(segment.assetUrl)
-
     segment.status = ClapSegmentStatus.COMPLETED
-
-    const { assetFileFormat, outputType } = getTypeAndExtension(
-      segment.assetUrl
-    )
-
+    const { assetFileFormat, outputType } = getTypeAndExtension(segment.assetUrl)
     segment.assetFileFormat = assetFileFormat
     segment.outputType = outputType
 
@@ -145,26 +145,29 @@ export async function POST(req: NextRequest) {
       // TODO this should be down in the browser side, so that we can scale better
       const { durationInMs, hasAudio } = await getMediaInfo(segment.assetUrl)
       segment.assetDurationInMs = durationInMs
-
       // hasAudio doesn't work properly I think, with small samples
       segment.outputGain = hasAudio ? 1.0 : 0.0
-
-      /*
-      console.log(`DEBUG:`, {
-        durationInMs,
-        hasAudio,
-        "segment.assetDurationInMs":  segment.assetDurationInMs,
-        "segment.outputGain": segment.outputGain,
-      })
-        */
     }
   } catch (err) {
-    console.error(`failed to generate a segment: ${err}`)
+    console.error('Failed to generate a segment:', {
+      error: String(err),
+      request,
+      segment,
+      stack: err instanceof Error ? err.stack : undefined,
+    })
     segment.assetUrl = ''
     segment.assetSourceType = ClapAssetSource.EMPTY
     segment.assetDurationInMs = 0
     segment.outputGain = 0
     segment.status = ClapSegmentStatus.TO_GENERATE
+    // Return error details in the response for easier debugging
+    return NextResponse.json({
+      error: 'Failed to generate a segment',
+      details: String(err),
+      request,
+      segment,
+      stack: err instanceof Error ? err.stack : undefined,
+    }, { status: 500 })
   }
 
   // extra step: face swap

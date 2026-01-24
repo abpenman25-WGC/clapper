@@ -223,6 +223,7 @@ export async function askAnyAssistant({
   const chain = chatPrompt.pipe(coerceable)
   // .pipe(assistantMessageParser)  // temporarily disable structured parsing
 
+
   let assistantMessage: AssistantMessage = {
     comment: '',
     action: AssistantAction.NONE,
@@ -249,6 +250,31 @@ What would you like to work on? Try asking:
 - "Add visual details to this dialogue"`
     return assistantMessage
   }
+
+  // --- LLM call and logging ---
+  let rawLlmResponse: any = null
+  let llmError: any = null
+  try {
+    // Log input data for debugging
+    console.log('[askAnyAssistant] LLM inputData:', JSON.stringify(inputData, null, 2))
+    // Run the LLM chain
+    rawLlmResponse = await chain.invoke({
+      chatHistory: history,
+      ...inputData,
+    })
+    console.log('[askAnyAssistant] LLM raw response:', JSON.stringify(rawLlmResponse, null, 2))
+    // Parse the LLM response
+    assistantMessage = parseLangChainResponse(rawLlmResponse)
+    console.log('[askAnyAssistant] Parsed assistantMessage:', JSON.stringify(assistantMessage, null, 2))
+    // If the response is valid, return it
+    if (assistantMessage && (assistantMessage.comment || assistantMessage.updatedSceneSegments?.length || assistantMessage.updatedStoryBlocks?.length)) {
+      return assistantMessage
+    }
+  } catch (err) {
+    llmError = err
+    console.error('[askAnyAssistant] LLM error:', err)
+  }
+  // --- End LLM call and logging ---
 
   // Enhanced script-specific fallbacks with actionable guidance
   if (
