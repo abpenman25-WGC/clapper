@@ -58,22 +58,4 @@ export const groqWorkflows: ClapWorkflow[] = [
       prompt: genericPrompt.defaultValue,
     },
   },
-  {
-    id: 'groq://llama3-8b-8192',
-    label: 'Llama3 8b (8192)',
-    description: '',
-    tags: ['Llama3'],
-    author: 'Meta',
-    thumbnailUrl: '',
-    nonCommercial: false,
-    engine: ClapWorkflowEngine.REST_API,
-    category: ClapWorkflowCategory.ASSISTANT,
-    provider: ClapWorkflowProvider.GROQ,
-    data: 'llama3-8b-8192',
-    schema: '',
-    inputFields: [genericPrompt],
-    inputValues: {
-      prompt: genericPrompt.defaultValue,
-    },
-  },
 ]

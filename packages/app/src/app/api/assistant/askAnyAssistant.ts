@@ -287,7 +287,12 @@ What would you like to work on? Try asking:
   }
   // --- End LLM call and logging ---
 
-  // Patch: If fallback is triggered, log and return the raw LLM output for debugging
+  // Patch: If fallback is triggered, log and return the raw LLM output or error for debugging
+  if (rawLlmResponse == null && llmError != null) {
+    console.error('[askAnyAssistant] Fallback triggered. LLM error object:', llmError)
+    assistantMessage.comment = '[DEBUG] Fallback triggered. LLM error object below.\n' + (typeof llmError === 'object' ? JSON.stringify(llmError, null, 2) : String(llmError))
+    return assistantMessage
+  }
   console.warn('[askAnyAssistant] Fallback triggered. Returning raw LLM output for debugging:')
   console.warn('[askAnyAssistant] rawLlmResponse:', JSON.stringify(rawLlmResponse, null, 2))
   assistantMessage.comment = '[DEBUG] Fallback triggered. Raw LLM output below.\n' + JSON.stringify(rawLlmResponse, null, 2)
