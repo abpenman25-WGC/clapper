@@ -1,0 +1,7 @@
+transformers
+accelerate
+torch
+diffusers
+sentencepiece
+git+https://github.com/openai/whisper.git
+scipy
