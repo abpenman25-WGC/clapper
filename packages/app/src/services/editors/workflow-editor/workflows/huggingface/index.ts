@@ -17,6 +17,24 @@ import {
 // -> we can create a ticket to fix this
 // ------------------------------------------------------------------------------
 export const huggingfaceWorkflows: ClapWorkflow[] = [
+    {
+      id: 'huggingface://spaces/hpcai-tech/open-sora',
+      label: 'Open-Sora (Video, Free)',
+      description: 'Text-to-video generation using the open-sora model (Hugging Face Spaces, free tier)',
+      tags: ['video', 'open-sora', 'free'],
+      author: 'hpcai-tech',
+      thumbnailUrl: '',
+      nonCommercial: false,
+      engine: ClapWorkflowEngine.REST_API,
+      provider: ClapWorkflowProvider.HUGGINGFACE,
+      category: ClapWorkflowCategory.VIDEO_GENERATION,
+      data: 'spaces/hpcai-tech/open-sora',
+      schema: '',
+      inputFields: [genericPrompt],
+      inputValues: {
+        prompt: genericPrompt.defaultValue,
+      },
+    },
   {
     id: 'huggingface://models/black-forest-labs/FLUX.1-schnell',
     label: 'FLUX.1 [schnell]',
@@ -272,12 +290,11 @@ export const huggingfaceWorkflows: ClapWorkflow[] = [
       prompt: genericPrompt.defaultValue,
     },
   },
-  /*
   {
     id: 'huggingface://models/cvssp/audioldm2-music',
-    label: 'CVSSP AudioLDM2 Music',
-    description: '',
-    tags: ['music'],
+    label: 'AudioLDM2 Music (Free)',
+    description: 'Text-to-music generation using AudioLDM2 (Hugging Face, free tier)',
+    tags: ['music', 'audioldm2', 'free'],
     author: 'CVSSP',
     thumbnailUrl: '',
     nonCommercial: false,
@@ -286,13 +303,47 @@ export const huggingfaceWorkflows: ClapWorkflow[] = [
     category: ClapWorkflowCategory.MUSIC_GENERATION,
     data: 'cvssp/audioldm2-music',
     schema: '',
-    // Inputs of the workflow (this is used to build an UI for the workflow automatically)
-    inputFields: [
-      genericPrompt,
-    ],
+    inputFields: [genericPrompt],
     inputValues: {
       prompt: genericPrompt.defaultValue,
     },
   },
-  */
+
+  {
+    id: 'huggingface://models/haoheliu/audio-ldm-s-full',
+    label: 'AudioLDM-S (Sound, Free)',
+    description: 'Text-to-sound generation using AudioLDM-S (Hugging Face, free tier)',
+    tags: ['sound', 'audioldm', 'free'],
+    author: 'haoheliu',
+    thumbnailUrl: '',
+    nonCommercial: false,
+    engine: ClapWorkflowEngine.REST_API,
+    provider: ClapWorkflowProvider.HUGGINGFACE,
+    category: ClapWorkflowCategory.SOUND_GENERATION,
+    data: 'haoheliu/audio-ldm-s-full',
+    schema: '',
+    inputFields: [genericPrompt],
+    inputValues: {
+      prompt: genericPrompt.defaultValue,
+    },
+  },
+
+  {
+    id: 'huggingface://models/rvencu/AudioLDM-sound-effect',
+    label: 'AudioLDM Sound Effect (Free)',
+    description: 'Text-to-sound effect generation using AudioLDM (Hugging Face, free tier)',
+    tags: ['sound', 'audioldm', 'free'],
+    author: 'rvencu',
+    thumbnailUrl: '',
+    nonCommercial: false,
+    engine: ClapWorkflowEngine.REST_API,
+    provider: ClapWorkflowProvider.HUGGINGFACE,
+    category: ClapWorkflowCategory.SOUND_GENERATION,
+    data: 'rvencu/AudioLDM-sound-effect',
+    schema: '',
+    inputFields: [genericPrompt],
+    inputValues: {
+      prompt: genericPrompt.defaultValue,
+    },
+  },
 ]

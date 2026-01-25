@@ -70,20 +70,7 @@ export function getDefaultSettingsState(): SettingsState {
     videoNegativePrompt:
       'black banding, ugly, imperfect, cropped, low resolution',
 
-        // Remove deprecated/duplicated Groq workflow objects
-      description: '',
-      tags: ['Llama3'],
-      author: 'Meta',
-      thumbnailUrl: '',
-            id: 'groq://llama-3.3-70b-versatile',
-            label: 'Llama 3.3 70B Versatile',
-      category: ClapWorkflowCategory.ASSISTANT,
-      provider: ClapWorkflowProvider.GROQ,
-      data: 'llama3-70b-8192',
-      schema: '',
-      inputFields: [],
-      inputValues: {},
-    }),
+    // ...existing code...
     // Removed deprecated assistantTurboWorkflow and duplicated fields
     imageGenerationWorkflow: '',
     imageGenerationTurboWorkflow: '',
