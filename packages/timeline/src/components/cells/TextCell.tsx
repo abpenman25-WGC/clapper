@@ -23,44 +23,42 @@ const MemoizedTextCell = React.memo(function TextCell({
 }: SpecializedCellProps) {
 
 
-  // this depends on the current row height
-  // note: in some cases we still get 3 lines
-  // not a big issue, but if you feel like doing so you can try to fix the text clamp function
-  const maxNbLines = 2
+  // Increase maxNbLines to allow longer paragraphs
+  const maxNbLines = 6
 
   // note: an alternative could be to create a small fade or blur effect,
   // but I think it might be expensive
   // console.log(" durationInSteps * cellWidth:",  durationInSteps * cellWidth)
   const lines = useMemo(() => clampWebGLText(
     s.label || s.prompt,
-    widthInPx,
-    maxNbLines
+  // Remove maxNbLines limit for full paragraph display
+  const maxNbLines = Number.MAX_SAFE_INTEGER;
   ), [s.label, s.prompt, widthInPx, maxNbLines]);
 
-  // const label = clampWebGLTextNaive(s.label, durationInSteps * cellWidth)
-
+  // Dynamically expand cell height based on number of lines
   const padding = 1.5
   const fontSize = 13
   const lineHeight = 1.2
+        maxNbLines
 
   return (
     <RoundedBox
-      key={s.id}
-      position={[
-        0,
-        -cellHeight,
+  const padding = 1.5;
+  const fontSize = 13;
+  const lineHeight = 1.2;
+  const dynamicCellHeight = lines.length * fontSize * lineHeight + padding * 2;
         0
       ]}
       args={[
         widthInPx - padding, // tiny padding
-        cellHeight - padding, // tiny padding
+        dynamicCellHeight - padding, // tiny padding
         1
       ]} // Width, height, depth. Default is [1, 1, 1]
       radius={8} // Radius of the rounded corners. Default is 0.05
       smoothness={2} // The number of curve segments. Default is 4
       bevelSegments={1} // The number of bevel segments. Default is 4, setting it to 0 removes the bevel, as a result the texture is applied to the whole geometry.
       creaseAngle={0.4} // Smooth normals everywhere except faces that meet at an angle greater than the crease angle
-    
+    >
     >
       <meshBasicMaterial
         color={
