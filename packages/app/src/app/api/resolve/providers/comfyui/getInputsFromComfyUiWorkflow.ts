@@ -84,13 +84,13 @@ export function getInputsFromComfyUiWorkflow(
                 description: '',
                 defaultValue: input.value,
                 metadata: {
-                  tooltip: MainClapWorkflowInputsLabels[mainInputKey as string]
-                    ? {
-                        type: 'warning',
-                        message: `This value will be overwritten by Clapper because it is
-                      used as "${MainClapWorkflowInputsLabels[mainInputKey as string]}".`,
-                      }
-                    : undefined,
+                  tooltip:
+                    mainInputKey && mainInputKey in MainClapWorkflowInputsLabels
+                      ? {
+                          type: 'warning',
+                          message: `This value will be overwritten by Clapper because it is\n                      used as "${MainClapWorkflowInputsLabels[mainInputKey as keyof typeof MainClapWorkflowInputsLabels]}".`,
+                        }
+                      : undefined,
                 },
               }
             }),

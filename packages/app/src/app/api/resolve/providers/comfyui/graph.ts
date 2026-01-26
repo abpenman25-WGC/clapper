@@ -225,7 +225,7 @@ export class ComfyUIWorkflowApiGraph {
    */
   getInputs(): Record<string, ComfyUiWorkflowApiNodeInput> {
     const nodesWithInputs = this.getNodesWithInputs()
-    const inputs = {}
+    const inputs: { [key: string]: ComfyUiWorkflowApiNodeInput } = {}
 
     for (const node of nodesWithInputs) {
       const inputSchemas = this.getInputsByNodeId(node.id)
@@ -330,7 +330,7 @@ export class ComfyUIWorkflowApiGraph {
     // name
     nodeOutputToNodeInput?: string | RegExp
     // By value
-    value?: (value) => boolean
+    value?: (value: any) => boolean
   }): ComfyUiWorkflowApiNodeInput[] {
     const inputs = this.getInputs()
 
@@ -382,7 +382,7 @@ export class ComfyUIWorkflowApiGraph {
 
   toJson(): Record<string, any> {
     const nodes = this.nodes
-    const nodesJson = {}
+    const nodesJson: { [key: string]: any } = {}
     for (const key of Object.keys(nodes)) {
       nodesJson[key] = nodes[key].toJson()
     }

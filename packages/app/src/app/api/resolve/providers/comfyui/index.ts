@@ -47,14 +47,14 @@ export async function resolveSegment(
   ).init()
 
   if (
-    [ClapSegmentCategory.IMAGE, ClapSegmentCategory.VIDEO].includes(
-      request.segment.category
-    )
+    request.segment.category === ClapSegmentCategory.IMAGE ||
+    request.segment.category === ClapSegmentCategory.VIDEO
   ) {
-    const clapWorkflow = {
+    const workflowMap = {
       [ClapSegmentCategory.IMAGE]: request.settings.imageGenerationWorkflow,
       [ClapSegmentCategory.VIDEO]: request.settings.videoGenerationWorkflow,
-    }[request.segment.category]
+    }
+    const clapWorkflow = workflowMap[request.segment.category]
 
     if (
       clapWorkflow.category === ClapWorkflowCategory.IMAGE_GENERATION &&
@@ -97,12 +97,15 @@ export async function resolveSegment(
     ]
 
     mainInputs.forEach((mainInput) => {
+      const value = inputValues[mainInput[0]]
       if (
-        inputValues[mainInput[0]]?.id &&
-        inputValues[mainInput[0]]?.id != ClapperComfyUiInputIds.NULL
+        value &&
+        typeof value === 'object' &&
+        'id' in value &&
+        (value as ClapInputValueObject).id !== ClapperComfyUiInputIds.NULL
       ) {
         comfyApiWorkflowPromptBuilder.input(
-          inputValues[mainInput[0]]?.id,
+          (value as ClapInputValueObject).id,
           mainInput[1]
         )
       }
@@ -133,7 +136,7 @@ export async function resolveSegment(
       throw new Error(`failed to run the pipeline (no output)`)
     }
 
-    const getAssetPaths = (rawOutput) => {
+    const getAssetPaths = (rawOutput: any) => {
       if (clapWorkflow.category == ClapWorkflowCategory.VIDEO_GENERATION) {
         return (
           rawOutput[ClapperComfyUiInputIds.OUTPUT]?.videos ||

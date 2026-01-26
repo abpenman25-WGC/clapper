@@ -12,10 +12,8 @@ export function EmbeddedPlayer() {
   const togglePlayback = useMonitor((s) => s.togglePlayback)
 
   const isInteractive = useTimeline((s) => s.isInteractive)
-  const isLive = useTimeline((s) => s.isLive)
 
   const [isOverlayVisible, setOverlayVisible] = useState(true)
-
   const overlayTimerRef = useRef<NodeJS.Timeout>()
   // const videoLayerRef = useRef<HTMLDivElement>(null)
   // const segmentationLayerRef = useRef<HTMLDivElement>(null)
@@ -66,7 +64,6 @@ export function EmbeddedPlayer() {
             <div
               className={cn(`flex h-full flex-row items-center`, {
                 'bg-yellow-500/100': isInteractive,
-                'bg-red-500/100': isLive,
               })}
               style={{
                 width: '100%', // <-- TODO: compute the % of progression within the experience
