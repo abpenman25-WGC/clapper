@@ -55,7 +55,7 @@ export function FormComfyUIWorkflowSettings({
     }
   }
 
-  const handleOnChangeInputValue = (inputId, inputValue) => {
+  const handleOnChangeInputValue = (inputId: string, inputValue: any) => {
     clapWorkflow.inputValues[inputId] = inputValue
     const workflowGraph = ComfyUIWorkflowApiGraph.fromString(clapWorkflow.data)
     // Apply same change to the graph
@@ -73,7 +73,10 @@ export function FormComfyUIWorkflowSettings({
     }
   }
 
-  const renderInputTooltip = (tooltip) => {
+  const renderInputTooltip = (tooltip: {
+    type: 'info' | 'warning'
+    message: string
+  }) => {
     return (
       <Tooltip delayDuration={0}>
         <TooltipTrigger asChild>

@@ -7,7 +7,7 @@ import { useSegmentEditor } from '@/services'
 import { ClapSegmentStatus } from '@aitube/clap'
 
 export function SegmentEditor() {
-  const segmentsChanged: number = useTimeline((s) => s.segmentsChanged)
+  const segmentsChanged: number = useTimeline((s) => s.allSegmentsChanged)
   const selectedSegments: TimelineSegment[] = useTimeline(
     (s) => s.selectedSegments
   )

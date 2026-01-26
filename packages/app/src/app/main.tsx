@@ -71,10 +71,7 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
   // also has to be done here
   useSetupIframeOnce(isIframe)
 
-          <div
-            className={cn("flex h-full w-full items-center justify-center", styles.welcomeScreenBg)}
-            style={{ '--bg-image': theme.wallpaperBgImage } as React.CSSProperties}
-          >
+  // (removed stray <div> that caused syntax error)
   const [{ isOver, canDrop }, connectFileDrop] = useDrop({
     accept: [NativeTypes.FILE],
     drop: (item: DroppableThing): void => {
@@ -117,7 +114,6 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
           >
             <ReflexContainer orientation="vertical">
               {showExplorer && (
-          </div>
                 <ReflexElement
                   size={showExplorer ? undefined : 1}
                   minSize={showExplorer ? 100 : 1}
