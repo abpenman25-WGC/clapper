@@ -1,0 +1,12 @@
+.welcomeScreenBg {
+  /* background image via CSS variable */
+  background-image: var(--bg-image);
+}
+
+.clapperPrimaryColor {
+  color: var(--primary-color);
+}
+
+.bgColor {
+  background-color: var(--bg-color);
+}

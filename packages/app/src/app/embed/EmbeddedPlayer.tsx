@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-
 import { cn } from '@/lib/utils'
-
 import { TogglePlayback } from './TogglePlayback'
 import { StaticOrInteractiveTag } from './StaticOrInteractive'
 import { useMonitor } from '@/services'
 import { useTimeline } from '@aitube/timeline'
+import styles from './EmbeddedPlayer.module.css'
 
 export function EmbeddedPlayer() {
   const isPlaying = useMonitor((s) => s.isPlaying)
@@ -37,16 +36,12 @@ export function EmbeddedPlayer() {
       <div
         className={cn(
           `pointer-events-none absolute mb-0 ml-0 mr-0 mt-0 flex flex-col items-center justify-end px-3 pb-1 pt-5 transition-opacity duration-300 ease-in-out`,
-          isOverlayVisible ? 'opacity-100' : 'opacity-0'
+          isOverlayVisible ? 'opacity-100' : 'opacity-0',
+          styles['embedded-player-overlay']
         )}
         onMouseMove={() => {
           setOverlayVisible(true)
           scheduleOverlayInvisibility()
-        }}
-        style={{
-          // width,
-          // height,
-          boxShadow: 'rgba(0, 0, 0, 1) 0px -77px 100px 15px inset',
         }}
       >
         {/* bottom slider and button bar */}
@@ -62,12 +57,11 @@ export function EmbeddedPlayer() {
             )}
           >
             <div
-              className={cn(`flex h-full flex-row items-center`, {
-                'bg-yellow-500/100': isInteractive,
-              })}
-              style={{
-                width: '100%', // <-- TODO: compute the % of progression within the experience
-              }}
+              className={cn(
+                `flex h-full flex-row items-center`,
+                { 'bg-yellow-500/100': isInteractive },
+                styles['embedded-player-progress']
+              )}
             ></div>
           </div>
 

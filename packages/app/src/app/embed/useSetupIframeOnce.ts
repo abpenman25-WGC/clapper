@@ -46,17 +46,17 @@ export function useSetupIframeOnce(isEnabled = false) {
       try {
         setHasLoadedBellhop(true)
 
-        onMessage('togglePlayback', function (event) {
+        onMessage('togglePlayback', function (event: MessageEvent) {
           const { isPlaying } = event.data as { isPlaying: boolean }
           togglePlayback(isPlaying)
         })
 
-        onMessage('loadPrompt', function (event) {
+        onMessage('loadPrompt', function (event: MessageEvent) {
           console.log('loadPrompt:', event)
           // generate the first scene of an OpenClap file from the prompt
         })
 
-        onMessage('loadClap', function (event) {
+        onMessage('loadClap', function (event: MessageEvent) {
           // we need to be careful here in how to transmit the ClapProject
           // to the iframe
           // we are going to want to encode it somehow, eg using:

@@ -71,6 +71,10 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
   // also has to be done here
   useSetupIframeOnce(isIframe)
 
+          <div
+            className={cn("flex h-full w-full items-center justify-center", styles.welcomeScreenBg)}
+            style={{ '--bg-image': theme.wallpaperBgImage } as React.CSSProperties}
+          >
   const [{ isOver, canDrop }, connectFileDrop] = useDrop({
     accept: [NativeTypes.FILE],
     drop: (item: DroppableThing): void => {
@@ -113,6 +117,7 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
           >
             <ReflexContainer orientation="vertical">
               {showExplorer && (
+          </div>
                 <ReflexElement
                   size={showExplorer ? undefined : 1}
                   minSize={showExplorer ? 100 : 1}
@@ -275,7 +280,7 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
         style={
           {
             '--bg-image': theme.wallpaperBgImage,
-          } as React.CSSProperties
+          } as unknown as React.CSSProperties
         }
       >
         <div
@@ -347,7 +352,9 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
         style={
           (isIframe || windowLayout === UIWindowLayout.GRID
             ? { '--bg-color': theme.defaultBgColor }
-            : { '--bg-image': theme.wallpaperBgImage }) as React.CSSProperties
+            : {
+                '--bg-image': theme.wallpaperBgImage,
+              }) as unknown as React.CSSProperties
         }
       >
         {isIframe

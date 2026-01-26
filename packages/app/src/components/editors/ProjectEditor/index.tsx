@@ -6,20 +6,20 @@ import { ClapProject } from '@aitube/clap'
 import { useTimeline } from '@aitube/timeline'
 
 export function ProjectEditor() {
-  const clap: ClapProject | undefined = useTimeline((s) => s.clap)
+  // const clap: ClapProject | undefined = useTimeline((s) => s.clap)
 
   /*
   // maybe we will use something like this to handle the sync
   // useSyncProjectEditor()
 
-  const current = useProjectEditor((s) => s.current)
-  const setCurrent = useProjectEditor((s) => s.setCurrent)
-  const undo = useProjectEditor((s) => s.undo)
-  const redo = useProjectEditor((s) => s.redo)
+  // const current = useProjectEditor((s) => s.current)
+  // const setCurrent = useProjectEditor((s) => s.setCurrent)
+  // const undo = useProjectEditor((s) => s.undo)
+  // const redo = useProjectEditor((s) => s.redo)
 
-  useEffect(() => {
-    setCurrent(clap?.meta)
-  }, [clap?.meta, setCurrent])
+  // useEffect(() => {
+  //   setCurrent(clap?.meta)
+  // }, [clap?.meta, setCurrent])
   */
 
   const title = useTimeline((s) => s.title)
