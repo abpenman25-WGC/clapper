@@ -1,8 +1,9 @@
 import queryString from "query-string"
 import { ClapProject, serializeClap, blobToDataUri } from "@aitube/clap"
 
-import { aitubeApiUrl } from "@/constants/config"
-import { defaultExportFormat, SupportedExportFormat } from "@/constants"
+import { aitubeApiUrl } from "../constants/config"
+import { defaultExportFormat } from "../constants/defaultValues"
+import { SupportedExportFormat } from "../constants/types"
 
 
 export async function exportClapToVideo({

@@ -138,6 +138,7 @@
     "uuid": "9.0.1",
     "web-audio-beat-detector": "8.2.12",
     "yaml": "2.6.1",
+    "zod": "^3.25.3",
     "zustand": "4.5.2",
     "zx": "8.1.4"
   },

@@ -189,17 +189,17 @@ export const useAssistant = create<AssistantStore>((set, get) => ({
       console.log('🟦 3. Getting state...')
       const { addEventToHistory, processActionOrMessage } = get()
       console.log('🟦 4. Got addEventToHistory and processActionOrMessage')
-      
+
       console.log('🟦 5. Getting renderer state...')
       const {
         bufferedSegments: { activeSegments },
       } = useRenderer.getState()
       console.log('🟦 6. Got activeSegments:', activeSegments?.length)
-      
+
       console.log('🟦 7. Getting timeline state...')
       const timeline: TimelineStore = useTimeline.getState()
       console.log('🟦 8. Got timeline')
-      
+
       const { description, scenes, entityIndex } = timeline
       console.log('🟦 9. Extracted timeline data, scenes:', scenes?.length)
 
@@ -209,7 +209,10 @@ export const useAssistant = create<AssistantStore>((set, get) => ({
       // when need that because we are going send those settings in HTTPS to our gateway
       console.log('🟦 10. Getting settings...')
       const settings = useSettings.getState().getRequestSettings()
-      console.log('🟦 11. Got settings, provider:', settings?.assistantWorkflow?.provider)
+      console.log(
+        '🟦 11. Got settings, provider:',
+        settings?.assistantWorkflow?.provider
+      )
 
       console.log('🟦 12. Adding to history...')
       addEventToHistory({
@@ -234,155 +237,182 @@ export const useAssistant = create<AssistantStore>((set, get) => ({
 
       // Find the current scene based on cursor position
       const getCurrentSceneAtCursor = (): ClapScene | undefined => {
-      const { cursorTimestampAtInMs } = timeline || { cursorTimestampAtInMs: 0 }
-      
-      console.log('🔍 Scene Detection Debug:')
-      console.log('- Total scenes available:', scenes?.length || 0)
-      console.log('- Cursor position (ms):', cursorTimestampAtInMs)
-      console.log('- Active segments:', activeSegments?.length || 0)
-      console.log('=== DEBUG: TIMELINE CLAP STATE ===')
-      console.log('- Timeline clap scenes:', timeline?.clap?.scenes?.length || 0)
-      console.log('- Timeline clap segments:', timeline?.clap?.segments?.length || 0)
-      if (timeline?.clap?.scenes?.length === 0) {
-        console.log('🚨 PROBLEM: No scenes in timeline.clap - this is why AI cannot see script!')
-      }
-      console.log('=================================')
+        const { cursorTimestampAtInMs } = timeline || {
+          cursorTimestampAtInMs: 0,
+        }
 
-      // Find segments that are active at the current cursor position
-      const segmentsAtCursor = (activeSegments || []).filter(
-        (segment) =>
-          segment.startTimeInMs <= cursorTimestampAtInMs &&
-          segment.endTimeInMs >= cursorTimestampAtInMs
-      )
-      
-      console.log('- Segments at cursor:', segmentsAtCursor.length)
-
-      // Look for a segment with a scene ID at the cursor position
-      const segmentWithScene = segmentsAtCursor.find(
-        (segment) => segment.sceneId
-      )
-      
-      if (segmentWithScene?.sceneId) {
-        const foundScene = (scenes || []).find((s) => s.id === segmentWithScene.sceneId)
-        console.log('- Found scene via segment:', foundScene?.sequenceFullText?.substring(0, 100))
-        return foundScene
-      }
-
-      // Fallback: if no scene found at cursor, check all scenes by timeline position
-      // Convert cursor time to approximate line number for scene matching
-      if (scenes && scenes.length > 0) {
-        console.log('- Using fallback scene selection...')
-        // Simple approach: find the scene that would be "closest" to this timeline position
-        const totalDurationInMs = timeline?.durationInMs || 0
-        const progressRatio =
-          totalDurationInMs > 0 ? cursorTimestampAtInMs / totalDurationInMs : 0
-        const estimatedSceneIndex = Math.min(
-          Math.floor(progressRatio * scenes.length),
-          scenes.length - 1
+        console.log('🔍 Scene Detection Debug:')
+        console.log('- Total scenes available:', scenes?.length || 0)
+        console.log('- Cursor position (ms):', cursorTimestampAtInMs)
+        console.log('- Active segments:', activeSegments?.length || 0)
+        console.log('=== DEBUG: TIMELINE CLAP STATE ===')
+        console.log(
+          '- Timeline clap scenes:',
+          timeline?.clap?.scenes?.length || 0
         )
-        
-        const fallbackScene = scenes[estimatedSceneIndex]
-        console.log('- Estimated scene index:', estimatedSceneIndex)
-        console.log('- Fallback scene content:', fallbackScene?.sequenceFullText?.substring(0, 100))
-        return fallbackScene
+        console.log(
+          '- Timeline clap segments:',
+          timeline?.clap?.segments?.length || 0
+        )
+        if (timeline?.clap?.scenes?.length === 0) {
+          console.log(
+            '🚨 PROBLEM: No scenes in timeline.clap - this is why AI cannot see script!'
+          )
+        }
+        console.log('=================================')
+
+        // Find segments that are active at the current cursor position
+        const segmentsAtCursor = (activeSegments || []).filter(
+          (segment) =>
+            segment.startTimeInMs <= cursorTimestampAtInMs &&
+            segment.endTimeInMs >= cursorTimestampAtInMs
+        )
+
+        console.log('- Segments at cursor:', segmentsAtCursor.length)
+
+        // Look for a segment with a scene ID at the cursor position
+        const segmentWithScene = segmentsAtCursor.find(
+          (segment) => segment.sceneId
+        )
+
+        if (segmentWithScene?.sceneId) {
+          const foundScene = (scenes || []).find(
+            (s) => s.id === segmentWithScene.sceneId
+          )
+          console.log(
+            '- Found scene via segment:',
+            foundScene?.sequenceFullText?.substring(0, 100)
+          )
+          return foundScene
+        }
+
+        // Fallback: if no scene found at cursor, check all scenes by timeline position
+        // Convert cursor time to approximate line number for scene matching
+        if (scenes && scenes.length > 0) {
+          console.log('- Using fallback scene selection...')
+          // Simple approach: find the scene that would be "closest" to this timeline position
+          const totalDurationInMs = timeline?.durationInMs || 0
+          const progressRatio =
+            totalDurationInMs > 0
+              ? cursorTimestampAtInMs / totalDurationInMs
+              : 0
+          const estimatedSceneIndex = Math.min(
+            Math.floor(progressRatio * scenes.length),
+            scenes.length - 1
+          )
+
+          const fallbackScene = scenes[estimatedSceneIndex]
+          console.log('- Estimated scene index:', estimatedSceneIndex)
+          console.log(
+            '- Fallback scene content:',
+            fallbackScene?.sequenceFullText?.substring(0, 100)
+          )
+          return fallbackScene
+        }
+
+        console.log('- No scenes found!')
+        return undefined
       }
 
-      console.log('- No scenes found!')
-      return undefined
-    }
+      const referenceSegment: TimelineSegment | undefined =
+        activeSegments?.at(0)
+      const scene: ClapScene | undefined = getCurrentSceneAtCursor()
 
-    const referenceSegment: TimelineSegment | undefined = activeSegments?.at(0)
-    const scene: ClapScene | undefined = getCurrentSceneAtCursor()
-    
-    // Get script from editor
-    const scriptEditor = useScriptEditor.getState()
-    const scriptFromEditor = scriptEditor.current || ''
-    
-    console.log('🎯 Script content check:')
-    console.log('- Script editor content length:', scriptFromEditor.length)
-    console.log('- Script editor content preview:', scriptFromEditor.substring(0, 150))
-    console.log('- Scene found:', !!scene)
-    console.log('- Scene content length:', scene?.sequenceFullText?.length || 0)
+      // Get script from editor
+      const scriptEditor = useScriptEditor.getState()
+      const scriptFromEditor = scriptEditor.current || ''
 
-    // we should be careful with how we filter and send the segments to the API
-    //
-    // - we need to remove elements that are specific to the browser (eg. audio context nodes)
-    // - we may need to remove binary files (base64 assets) like for sound and music,
-    //  although some AI models could support it
-    // - we don't want to keep all the kinds of segments
-    const existingSegments: TimelineSegment[] = (activeSegments || []).filter(
-      (s) =>
-        // we only keep the camera
-        s.category === ClapSegmentCategory.CAMERA ||
-        s.category === ClapSegmentCategory.LOCATION ||
-        s.category === ClapSegmentCategory.TIME ||
-        s.category === ClapSegmentCategory.LIGHTING ||
-        s.category === ClapSegmentCategory.ACTION ||
-        s.category === ClapSegmentCategory.CHARACTER ||
-        s.category === ClapSegmentCategory.DIALOGUE ||
-        s.category === ClapSegmentCategory.WEATHER ||
-        s.category === ClapSegmentCategory.ERA ||
-        s.category === ClapSegmentCategory.MUSIC ||
-        s.category === ClapSegmentCategory.SOUND ||
-        s.category === ClapSegmentCategory.STYLE ||
-        s.category === ClapSegmentCategory.GENERIC
-    )
+      console.log('🎯 Script content check:')
+      console.log('- Script editor content length:', scriptFromEditor.length)
+      console.log(
+        '- Script editor content preview:',
+        scriptFromEditor.substring(0, 150)
+      )
+      console.log('- Scene found:', !!scene)
+      console.log(
+        '- Scene content length:',
+        scene?.sequenceFullText?.length || 0
+      )
 
-    // this is where we filter out expensive or heavy binary elements
-    const serializableSegments: TimelineSegment[] = existingSegments.map(
-      (segment) => ({
-        ...segment,
+      // we should be careful with how we filter and send the segments to the API
+      //
+      // - we need to remove elements that are specific to the browser (eg. audio context nodes)
+      // - we may need to remove binary files (base64 assets) like for sound and music,
+      //  although some AI models could support it
+      // - we don't want to keep all the kinds of segments
+      const existingSegments: TimelineSegment[] = (activeSegments || []).filter(
+        (s) =>
+          // we only keep the camera
+          s.category === ClapSegmentCategory.CAMERA ||
+          s.category === ClapSegmentCategory.LOCATION ||
+          s.category === ClapSegmentCategory.TIME ||
+          s.category === ClapSegmentCategory.LIGHTING ||
+          s.category === ClapSegmentCategory.ACTION ||
+          s.category === ClapSegmentCategory.CHARACTER ||
+          s.category === ClapSegmentCategory.DIALOGUE ||
+          s.category === ClapSegmentCategory.WEATHER ||
+          s.category === ClapSegmentCategory.ERA ||
+          s.category === ClapSegmentCategory.MUSIC ||
+          s.category === ClapSegmentCategory.SOUND ||
+          s.category === ClapSegmentCategory.STYLE ||
+          s.category === ClapSegmentCategory.GENERIC
+      )
 
-        // we remove things that cannot be serialized easily
-        audioBuffer: undefined,
-        textures: {},
+      // this is where we filter out expensive or heavy binary elements
+      const serializableSegments: TimelineSegment[] = existingSegments.map(
+        (segment) => ({
+          ...segment,
 
-        // we also remove this since it might contain heavy information
-        // although at some point we will want to put it back for some types,
-        // as the most advanced LLMs can handle images and sound files
-        assetUrl: '',
-        assetSourceType: ClapAssetSource.EMPTY,
-      })
-    )
+          // we remove things that cannot be serialized easily
+          audioBuffer: undefined,
+          textures: {},
 
-    // Use script content from editor (already retrieved above)
-    const request: AssistantRequest = {
-      settings,
-      prompt: message,
-      segments: serializableSegments,
-      fullScene: scriptFromEditor,
-      actionLine: scene?.line || '',
-      entities: entityIndex,
-      projectInfo: description,
-      history: get().history,
-    }
+          // we also remove this since it might contain heavy information
+          // although at some point we will want to put it back for some types,
+          // as the most advanced LLMs can handle images and sound files
+          assetUrl: '',
+          assetSourceType: ClapAssetSource.EMPTY,
+        })
+      )
 
-    console.log('📤 SENDING TO AI:')
-    console.log('   Script length:', request.fullScene.length, 'characters')
-    console.log('   Script preview:', request.fullScene.substring(0, 200))
-    console.log('   Number of segments:', request.segments.length)
-    
-    console.log(`processUserMessage: calling askAssistant() with:`, request)
-    const assistantMessage = await askAssistant(request)
-    console.log(
-      `processUserMessage: result from askAssistant():`,
-      assistantMessage
-    )
+      // Use script content from editor (already retrieved above)
+      const request: AssistantRequest = {
+        settings,
+        prompt: message,
+        segments: serializableSegments,
+        fullScene: scriptFromEditor,
+        actionLine: scene?.line || '',
+        entities: entityIndex,
+        projectInfo: description,
+        history: get().history,
+      }
 
-    if (assistantMessage.action === AssistantAction.UPDATE_STORY_AND_SCENE) {
-      await updateStoryAndScene({
-        assistantMessage,
-        existingSegments,
-      })
-    } else {
-      await processActionOrMessage(assistantMessage)
-    }
+      console.log('📤 SENDING TO AI:')
+      console.log('   Script length:', request.fullScene.length, 'characters')
+      console.log('   Script preview:', request.fullScene.substring(0, 200))
+      console.log('   Number of segments:', request.segments.length)
+
+      console.log(`processUserMessage: calling askAssistant() with:`, request)
+      const assistantMessage = await askAssistant(request)
+      console.log(
+        `processUserMessage: result from askAssistant():`,
+        assistantMessage
+      )
+
+      if (assistantMessage.action === AssistantAction.UPDATE_STORY_AND_SCENE) {
+        await updateStoryAndScene({
+          assistantMessage,
+          existingSegments,
+        })
+      } else {
+        await processActionOrMessage(assistantMessage)
+      }
     } catch (error) {
       console.error('🔴 ERROR in processUserMessage:', error)
       console.error('🔴 Error details:', {
         name: error instanceof Error ? error.name : 'Unknown',
         message: error instanceof Error ? error.message : String(error),
-        stack: error instanceof Error ? error.stack : 'No stack'
+        stack: error instanceof Error ? error.stack : 'No stack',
       })
       // Don't throw - show error in chat instead
       const { addEventToHistory } = get()

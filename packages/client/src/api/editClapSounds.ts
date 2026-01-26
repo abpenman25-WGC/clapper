@@ -1,8 +1,8 @@
 import queryString from "query-string"
 import { ClapCompletionMode, ClapProject, fetchClap, serializeClap, removeGeneratedAssetUrls } from "@aitube/clap"
 
-import { aitubeApiUrl } from "@/constants/config"
-import { applyClapCompletion } from "@/utils"
+import { aitubeApiUrl } from "../constants/config"
+import { applyClapCompletion } from "../utils"
 
 export async function editClapSounds({
   clap,

@@ -31,7 +31,11 @@ export function importFdxTrelby(trelbyText: string): string {
     }
 
     // Skip empty lines and title strings outside of script
-    if (trimmedLine.length === 0 || trimmedLine.startsWith('#Title-String') || trimmedLine.startsWith('#Header-')) {
+    if (
+      trimmedLine.length === 0 ||
+      trimmedLine.startsWith('#Title-String') ||
+      trimmedLine.startsWith('#Header-')
+    ) {
       continue
     }
 

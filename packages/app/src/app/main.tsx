@@ -272,7 +272,6 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
     >
       <div
         className="flex h-full w-full items-center justify-center"
-
         style={
           {
             '--bg-image': theme.wallpaperBgImage,
@@ -310,13 +309,14 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
             Welcome to{' '}
             <span
               style={
-                { '--primary-color': theme.defaultPrimaryColor } as React.CSSProperties
+                {
+                  '--primary-color': theme.defaultPrimaryColor,
+                } as React.CSSProperties
               }
             >
               Clapper
             </span>
-            .
-            .
+            . .
           </h1>
           <div className="flex flex-col items-center justify-center space-y-2 text-center text-2xl font-semibold">
             <p>A free and open-source AI video editor,</p>

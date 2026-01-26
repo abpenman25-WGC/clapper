@@ -23,32 +23,22 @@ const MemoizedTextCell = React.memo(function TextCell({
 }: SpecializedCellProps) {
 
 
-  // Increase maxNbLines to allow longer paragraphs
-  const maxNbLines = 6
-
-  // note: an alternative could be to create a small fade or blur effect,
-  // but I think it might be expensive
-  // console.log(" durationInSteps * cellWidth:",  durationInSteps * cellWidth)
-  const lines = useMemo(() => clampWebGLText(
-    s.label || s.prompt,
   // Remove maxNbLines limit for full paragraph display
   const maxNbLines = Number.MAX_SAFE_INTEGER;
+  const lines = useMemo(() => clampWebGLText(
+    s.label || s.prompt,
+    widthInPx,
+    maxNbLines
   ), [s.label, s.prompt, widthInPx, maxNbLines]);
 
   // Dynamically expand cell height based on number of lines
-  const padding = 1.5
-  const fontSize = 13
-  const lineHeight = 1.2
-        maxNbLines
-
-  return (
-    <RoundedBox
   const padding = 1.5;
   const fontSize = 13;
   const lineHeight = 1.2;
   const dynamicCellHeight = lines.length * fontSize * lineHeight + padding * 2;
-        0
-      ]}
+
+  return (
+    <RoundedBox
       args={[
         widthInPx - padding, // tiny padding
         dynamicCellHeight - padding, // tiny padding
@@ -59,13 +49,12 @@ const MemoizedTextCell = React.memo(function TextCell({
       bevelSegments={1} // The number of bevel segments. Default is 4, setting it to 0 removes the bevel, as a result the texture is applied to the whole geometry.
       creaseAngle={0.4} // Smooth normals everywhere except faces that meet at an angle greater than the crease angle
     >
-    >
       <meshBasicMaterial
         color={
           track.visible ? (
             isHovered
-            ? colorScheme.backgroundColorHover
-            : colorScheme.backgroundColor
+              ? colorScheme.backgroundColorHover
+              : colorScheme.backgroundColor
           ) : colorScheme.backgroundColorDisabled
         }
         // transparent
@@ -109,53 +98,26 @@ const MemoizedTextCell = React.memo(function TextCell({
           */}
       <a.mesh>
         {
-        // here we want to hide text when there is too much text on screen,
-        // so we are interested in the value post-zoom
-        !track.visible || isResizing || widthInPxAfterZoom < 50 ? null : <Text
-          position={[
-            // by default we are centered in the middle,
-            // so we need to shift it back to the left
-             (-widthInPx / 2)
-
-             // but also add a lil padding
-             // note: this should be based on the horizontal zoom settings
-             + (cellWidth / 4),
-             0,
-             1
-          ]}
-
-          // this controls the font size (the first two 5)
-          // if you change this, you will have to modify `webglFontWidthFactor` as well
-          scale={[
-            fontSize,
-            fontSize,
-            1
-          ]}
-
-          lineHeight={lineHeight}
-          color={
-            isHovered
-            ? colorScheme.textColorHover
-            : colorScheme.textColor
-          }
-          // fillOpacity={0.7}
-          anchorX="left" // default
-          anchorY="middle" // default
-
-          // keep in mind this will impact the font width
-          // so you will have to change the "Arial" or "bold Arial"
-          // in the function which computes a character's width
-          fontWeight={400}
-          /*
-          onClick={(e) => {
-            // 'click on text in cell ' + s.id)
-            e.stopPropagation()
-            return false
-          }}
-            */
-        >
-          {lines.join("\n")}
-        </Text>}
+          // here we want to hide text when there is too much text on screen,
+          // so we are interested in the value post-zoom
+          !track.visible || isResizing || widthInPxAfterZoom < 50 ? null : (
+            <Text
+              position={[
+                (-widthInPx / 2) + (cellWidth / 4),
+                0,
+                1
+              ]}
+              scale={[fontSize, fontSize, 1]}
+              lineHeight={lineHeight}
+              color={isHovered ? colorScheme.textColorHover : colorScheme.textColor}
+              anchorX="left"
+              anchorY="middle"
+              fontWeight={400}
+            >
+              {lines.join("\n")}
+            </Text>
+          )
+        }
       </a.mesh>
     </RoundedBox>
   )

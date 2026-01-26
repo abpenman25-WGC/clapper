@@ -89,7 +89,7 @@ export async function askAnyAssistant({
   }
 
   // Enhanced model selection with fallback options
-  const coerceable: RunnableLike<ChatPromptValueInterface, AssistantMessage> =
+  const coerceable = (
     provider === ClapWorkflowProvider.GROQ
       ? (() => {
           const apiKey = getApiKey(
@@ -103,10 +103,7 @@ export async function askAnyAssistant({
           )
 
           // Try alternative models if primary has issues
-          const models = [
-            'llama3-70b-8192',
-            'llama-3.1-70b-versatile',
-          ]
+          const models = ['llama3-70b-8192', 'llama-3.1-70b-versatile']
           const currentModel = modelName || models[0]
 
           console.log(
@@ -173,6 +170,7 @@ export async function askAnyAssistant({
                     // temperature: 0.7,
                   })
                 : undefined
+  ) as RunnableLike<ChatPromptValueInterface, AssistantMessage> | undefined
 
   if (!coerceable) {
     throw new Error(
@@ -190,22 +188,28 @@ export async function askAnyAssistant({
   //})
 
   // Truncate fullScene and actionLine to 500 characters each to reduce token usage
-  const MAX_BLOCK_LENGTH = 500;
+  const MAX_BLOCK_LENGTH = 500
   const storyBlocks: AssistantStoryBlock[] = [
     {
       blockId: 0,
-      block: typeof fullScene === 'string' ? fullScene.slice(0, MAX_BLOCK_LENGTH) : '',
+      block:
+        typeof fullScene === 'string'
+          ? fullScene.slice(0, MAX_BLOCK_LENGTH)
+          : '',
     },
     {
       blockId: 1,
-      block: typeof actionLine === 'string' ? actionLine.slice(0, MAX_BLOCK_LENGTH) : '',
+      block:
+        typeof actionLine === 'string'
+          ? actionLine.slice(0, MAX_BLOCK_LENGTH)
+          : '',
     },
-  ];
+  ]
 
   // we don't give the whole thing to the LLM as to not confuse it,
   // and also to keep things tight and performant
   // Limit segments to the first 3 to reduce token usage
-  const MAX_SEGMENTS = 3;
+  const MAX_SEGMENTS = 3
   const sceneSegments: AssistantSceneSegment[] = Array.isArray(segments)
     ? segments.slice(0, MAX_SEGMENTS).map((segment, i) => ({
         segmentId: i,
@@ -214,7 +218,7 @@ export async function askAnyAssistant({
         endTimeInMs: segment.endTimeInMs,
         category: segment.category,
       }))
-    : [];
+    : []
 
   // TODO put this into a type
   const inputData: AssistantInput = {
@@ -227,7 +231,6 @@ export async function askAnyAssistant({
 
   const chain = chatPrompt.pipe(coerceable)
   // .pipe(assistantMessageParser)  // temporarily disable structured parsing
-
 
   let assistantMessage: AssistantMessage = {
     comment: '',
@@ -261,32 +264,49 @@ What would you like to work on? Try asking:
   let llmError: any = null
   try {
     // Limit chat history to the last 5 messages to avoid exceeding token limits
-    const MAX_HISTORY = 5;
-    const trimmedHistory = Array.isArray(history) ? history.slice(-MAX_HISTORY) : [];
+    const MAX_HISTORY = 5
+    const trimmedHistory = Array.isArray(history)
+      ? history.slice(-MAX_HISTORY)
+      : []
     const lcChatHistory = trimmedHistory
       .map((msg) => {
-        if (!msg || typeof msg !== 'object' || !msg.senderId || !msg.message) return null;
+        if (!msg || typeof msg !== 'object' || !msg.senderId || !msg.message)
+          return null
         if (msg.senderId === 'director' || msg.isCurrentUser) {
-          return new HumanMessage(msg.message);
+          return new HumanMessage(msg.message)
         } else if (msg.senderId === 'assistant') {
-          return new AIMessage(msg.message);
+          return new AIMessage(msg.message)
         }
-        return null;
+        return null
       })
-      .filter(Boolean);
+      .filter(Boolean)
     // Log input data for debugging
-    console.log('[askAnyAssistant] LLM inputData:', JSON.stringify(inputData, null, 2))
+    console.log(
+      '[askAnyAssistant] LLM inputData:',
+      JSON.stringify(inputData, null, 2)
+    )
     // Run the LLM chain
     rawLlmResponse = await chain.invoke({
       chatHistory: lcChatHistory,
       inputData: JSON.stringify(inputData),
     })
-    console.log('[askAnyAssistant] LLM raw response:', JSON.stringify(rawLlmResponse, null, 2))
+    console.log(
+      '[askAnyAssistant] LLM raw response:',
+      JSON.stringify(rawLlmResponse, null, 2)
+    )
     // Parse the LLM response
     assistantMessage = parseLangChainResponse(rawLlmResponse)
-    console.log('[askAnyAssistant] Parsed assistantMessage:', JSON.stringify(assistantMessage, null, 2))
+    console.log(
+      '[askAnyAssistant] Parsed assistantMessage:',
+      JSON.stringify(assistantMessage, null, 2)
+    )
     // If the response is valid, return it
-    if (assistantMessage && (assistantMessage.comment || assistantMessage.updatedSceneSegments?.length || assistantMessage.updatedStoryBlocks?.length)) {
+    if (
+      assistantMessage &&
+      (assistantMessage.comment ||
+        assistantMessage.updatedSceneSegments?.length ||
+        assistantMessage.updatedStoryBlocks?.length)
+    ) {
       return assistantMessage
     }
   } catch (err) {
@@ -297,17 +317,22 @@ What would you like to work on? Try asking:
 
   // If fallback is triggered, return a user-friendly error message
   if (rawLlmResponse == null && llmError != null) {
-    console.error('[askAnyAssistant] Fallback triggered. LLM error object:', llmError)
-    assistantMessage.comment = 'Sorry, I could not process your request due to a technical issue. Please try again or rephrase your input.';
-    return assistantMessage;
+    console.error(
+      '[askAnyAssistant] Fallback triggered. LLM error object:',
+      llmError
+    )
+    assistantMessage.comment =
+      'Sorry, I could not process your request due to a technical issue. Please try again or rephrase your input.'
+    return assistantMessage
   }
   // If the LLM output is not parseable, show the raw text response if available
   if (rawLlmResponse && typeof rawLlmResponse.content === 'string') {
-    assistantMessage.comment = rawLlmResponse.content;
-    return assistantMessage;
+    assistantMessage.comment = rawLlmResponse.content
+    return assistantMessage
   }
-  assistantMessage.comment = 'Sorry, I could not understand the response from the AI. Please try again.';
-  return assistantMessage;
+  assistantMessage.comment =
+    'Sorry, I could not understand the response from the AI. Please try again.'
+  return assistantMessage
 
   // The following LLM processing code will activate automatically once formatting issues resolve
 

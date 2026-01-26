@@ -43,7 +43,10 @@ export function useOpenFilePicker(
 
   useEffect(() => {
     const fn = async () => {
-      console.log('FILEPICKER DEBUG: useEffect called, fileData:', fileData?.name)
+      console.log(
+        'FILEPICKER DEBUG: useEffect called, fileData:',
+        fileData?.name
+      )
       if (!fileData || !fileData.name) {
         return
       }
@@ -113,12 +116,15 @@ export function useOpenFilePicker(
           console.log('🎬 Processing .fdx.trelby file:', fileName)
           const text = new TextDecoder().decode(fileData.content)
           console.log('🎬 Raw Trelby file length:', text.length)
-          console.log('🎬 First 200 chars of raw Trelby:', text.substring(0, 200))
-          
+          console.log(
+            '🎬 First 200 chars of raw Trelby:',
+            text.substring(0, 200)
+          )
+
           const parsed = importFdxTrelby(text)
           console.log('🎬 Parsed Trelby length:', parsed.length)
           console.log('🎬 First 200 chars of parsed:', parsed.substring(0, 200))
-          
+
           await openScreenplay(projectName, fileName, new Blob([parsed]))
           console.log('🎬 openScreenplay completed for Trelby file')
         } catch (err) {
