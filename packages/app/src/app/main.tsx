@@ -272,12 +272,13 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
       )}
     >
       <div
-        className="flex h-full w-full items-center justify-center"
-        style={
-          {
-            '--bg-image': theme.wallpaperBgImage,
-          } as unknown as React.CSSProperties
-        }
+        className={cn(
+          'flex h-full w-full items-center justify-center',
+          styles.welcomeScreenBg
+        )}
+        style={{
+          '--bg-image': theme.wallpaperBgImage,
+        } as React.CSSProperties}
       >
         <div
           className={cn(
@@ -309,11 +310,10 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
           <h1 className="text-6xl font-bold">
             Welcome to{' '}
             <span
-              style={
-                {
-                  '--primary-color': theme.defaultPrimaryColor,
-                } as React.CSSProperties
-              }
+              className={styles.clapperPrimaryColor}
+              style={{
+                '--primary-color': theme.defaultPrimaryColor,
+              } as React.CSSProperties}
             >
               Clapper
             </span>
@@ -343,14 +343,13 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
             ? 'h-svh'
             : windowLayout === UIWindowLayout.GRID
               ? 'h-[calc(100svh-48px)] md:h-[calc(100svh-64px)]'
-              : 'h-[calc(100svh-36px)]'
+              : 'h-[calc(100svh-36px)]',
+          styles.bgColor
         )}
         style={
           (isIframe || windowLayout === UIWindowLayout.GRID
             ? { '--bg-color': theme.defaultBgColor }
-            : {
-                '--bg-image': theme.wallpaperBgImage,
-              }) as unknown as React.CSSProperties
+            : { '--bg-image': theme.wallpaperBgImage }) as React.CSSProperties
         }
       >
         {isIframe

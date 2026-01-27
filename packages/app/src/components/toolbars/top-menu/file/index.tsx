@@ -22,7 +22,6 @@ import { getDemoGame } from '@/experiments/samples/demo'
 
 export function TopMenuFile() {
   const isTimelineLoading: boolean = useTimeline((s) => s.isLoading)
-  const clap = useTimeline((s) => s.clap)
   const setClap = useTimeline((s) => s.setClap)
   //const saveClapAs = useTimeline(s => s.saveClapAs)
   //const setFullVideo = useTimeline(s => s.fullVideo)
@@ -85,8 +84,9 @@ export function TopMenuFile() {
             <MenubarSubContent>
               {hasBetaAccess && (
                 <MenubarItem
-                  onClick={() => {
-                    setClap(getDemoGame())
+                  onClick={async () => {
+                    const demo = await getDemoGame()
+                    setClap(demo)
                   }}
                 >
                   (secret demo)

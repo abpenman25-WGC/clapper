@@ -40,7 +40,13 @@ export async function getSpaces({
       continue
     }
 
-    results.push(space)
+    // Ensure cardData is always present to satisfy HFSpace type
+    results.push({
+      ...space,
+      cardData: space.cardData ?? {},
+      runtime: space.runtime ?? { stage: 'NO_APP_FILE' },
+      models: space.models ?? [],
+    })
   }
 
   return results

@@ -58,6 +58,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.55.1",
+    "@types/three": "^0.182.0",
     "@webgpu/types": "^0.1.65",
     "playwright": "^1.55.1",
     "prettier": "^3.6.2"
