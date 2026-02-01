@@ -9,6 +9,8 @@ import { UIWindowLayout } from '@aitube/clapper-services'
 import { ErrorBoundary, FallbackProps } from 'react-error-boundary'
 import { Bellhop } from 'bellhop-iframe'
 
+import styles from './main.module.css'
+
 import { Toaster } from '@/components/ui/sonner'
 import { cn } from '@/lib/utils'
 import { TooltipProvider } from '@/components/ui/tooltip'
