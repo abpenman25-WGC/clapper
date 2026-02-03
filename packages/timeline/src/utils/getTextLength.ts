@@ -32,8 +32,8 @@ const charLength = characters.reduce((acc, char) => ({
 let defaultCharLength = 5.561523437
 
 // change this whenever you modify the font size
-// Reduced from 1.7 to 1.0 to fix text being cut off prematurely
-const webglFontWidthFactor = 1.0
+// Drastically reduced to prevent any truncation - characters are much narrower than estimated
+const webglFontWidthFactor = 0.3
 
 /**
  * Compute the text of a simple Arial text in a WebGL environmment
@@ -46,19 +46,19 @@ export function getWebGLCharWidth(char: string = ""): number {
 
   const cellWidthInPixels = useTimeline.getState().cellWidth
 
-  // Simplified responsive hack - use consistent lower multiplier to prevent truncation
-  let responsiveHack = 0.5
+  // Much lower multiplier to prevent truncation - actual character widths are smaller
+  let responsiveHack = 0.3
 
   if (cellWidthInPixels < 16) {
-    responsiveHack = 0.6
+    responsiveHack = 0.35
   } else if (cellWidthInPixels < 24) {
-    responsiveHack = 0.55
+    responsiveHack = 0.33
   } else if (cellWidthInPixels < 48) {
-    responsiveHack = 0.5
+    responsiveHack = 0.31
   } else if (cellWidthInPixels < 128) {
-    responsiveHack = 0.45
+    responsiveHack = 0.3
   } else {
-    responsiveHack = 0.4
+    responsiveHack = 0.28
   }
   return responsiveHack * webglFontWidthFactor * (charLength[char] || defaultCharLength)
 }
@@ -95,23 +95,18 @@ export function clampWebGLText(
     width += getWebGLCharWidth(c)
     buffer += c
     if (width >= maxWidthInPixels) {
-      if (lines.length >= (maxNbLines - 1)) {
-        buffer = buffer.trim() // to avoid writing "and .."
-        buffer += ".."
-        break
+      // Never truncate with "..", just wrap to next line
+      // TODO: we should do something smarter, which is to split the last sentence
+      const words = buffer.split(" ")
+      const lastWord = (words.at(-1) || "")
+      if (lastWord.length) {
+        lines.push(words.slice(0, -1).join(" "))
+        buffer = lastWord
+        width = getWebGLTextWidth(lastWord)
       } else {
-        // TODO: we should do something smarter, which is to split the last sentence
-        const words = buffer.split(" ")
-        const lastWord = (words.at(-1) || "")
-        if (lastWord.length) {
-          lines.push(words.slice(0, -1).join(" "))
-          buffer = lastWord
-          width = getWebGLTextWidth(lastWord)
-        } else {
-           lines.push(buffer)
-           buffer = ""
-           width = 0
-        }
+         lines.push(buffer)
+         buffer = ""
+         width = 0
       }
     }
   }

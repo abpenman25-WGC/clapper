@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import { GradientTexture, RoundedBox, Text } from "@react-three/drei"
 import { useSpring, a, animated, config } from "@react-spring/three"
@@ -23,30 +23,27 @@ const MemoizedTextCell = React.memo(function TextCell({
 }: SpecializedCellProps) {
 
 
-  // Remove maxNbLines limit for full paragraph display
-  const maxNbLines = Number.MAX_SAFE_INTEGER;
   const padding = 1.5;
-  
-  // Account for padding when calculating available text width
-  // Multiply by 5 to give much more room for text rendering - prevent any truncation
-  const availableTextWidth = (widthInPx - padding * 2) * 5;
-  
-  const lines = useMemo(() => clampWebGLText(
-    s.label || s.prompt,
-    availableTextWidth,
-    maxNbLines
-  ), [s.label, s.prompt, availableTextWidth, maxNbLines]);
-
-  // Dynamically expand cell height based on number of lines
   const fontSize = 13;
-  const lineHeight = 1.2;
-  const dynamicCellHeight = lines.length * fontSize * lineHeight + padding * 2;
+  const lineHeight = 2.2;  // Even larger line spacing
+  
+  // Use the raw text without any processing for display  
+  const text = s.label || s.prompt || "";
+  
+  // Use clamping just to calculate lines for height, with huge width
+  const lines = React.useMemo(() => {
+    return clampWebGLText(text, (widthInPx - padding * 2) * 100, Number.MAX_SAFE_INTEGER);
+  }, [text, widthInPx, padding]);
+  
+  // Calculate height with TRIPLE the needed space to ensure no clipping
+  const calculatedHeight = (lines.length * fontSize * lineHeight * 3) + (padding * 30);
+  const dynamicCellHeight = Math.max(cellHeight, calculatedHeight);
 
   return (
     <RoundedBox
       args={[
-        widthInPx - padding, // tiny padding
-        dynamicCellHeight - padding, // tiny padding
+        widthInPx - padding,
+        dynamicCellHeight, // Use full calculated height - no adjustment
         1
       ]} // Width, height, depth. Default is [1, 1, 1]
       radius={8} // Radius of the rounded corners. Default is 0.05
@@ -106,21 +103,28 @@ const MemoizedTextCell = React.memo(function TextCell({
           // here we want to hide text when there is too much text on screen,
           // so we are interested in the value post-zoom
           !track.visible || isResizing || widthInPxAfterZoom < 50 ? null : (
-            <Text
-              position={[
-                (-widthInPx / 2) + (cellWidth / 4),
-                0,
-                1
-              ]}
-              scale={[fontSize, fontSize, 1]}
-              lineHeight={lineHeight}
-              color={isHovered ? colorScheme.textColorHover : colorScheme.textColor}
-              anchorX="left"
-              anchorY="middle"
-              fontWeight={400}
-            >
-              {lines.join("\n")}
-            </Text>
+            <group>
+              {lines.map((line, index) => (
+                <Text
+                  key={index}
+                  position={[
+                    (-widthInPx / 2) + (cellWidth / 4),
+                    (dynamicCellHeight / 2) - (padding * 10) - (index * fontSize * lineHeight),
+                    1
+                  ]}
+                  fontSize={fontSize}
+                  color={isHovered ? colorScheme.textColorHover : colorScheme.textColor}
+                  anchorX="left"
+                  anchorY="top"
+                  fontWeight={400}
+                  depthTest={false}
+                  renderOrder={999}
+                  outlineWidth={0}
+                >
+                  {line}
+                </Text>
+              ))}
+            </group>
           )
         }
       </a.mesh>
