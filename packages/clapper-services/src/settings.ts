@@ -87,6 +87,99 @@ export type BaseSettings = {
   scriptEditorShowMinimap: boolean
 
   interfaceSnapWindowsToGrid: boolean
+
+  // ------------ PROVIDER-SPECIFIC MODEL SETTINGS -----------
+
+  // Hugging Face models
+  huggingFaceModelForAssistant: string
+  huggingFaceModelForImage: string
+  huggingFaceModelForImageDepth: string
+  huggingFaceModelForImageSegmentation: string
+  huggingFaceModelForImageUpscaling: string
+  huggingFaceModelForVideo: string
+  huggingFaceModelForVideoDepth: string
+  huggingFaceModelForVideoSegmentation: string
+  huggingFaceModelForVideoUpscaling: string
+  huggingFaceModelForVoice: string
+  huggingFaceModelForSound: string
+  huggingFaceModelForMusic: string
+
+  // Replicate models
+  replicateModelForImage: string
+  replicateModelForImageDepth: string
+  replicateModelForImageSegmentation: string
+  replicateModelForImageUpscaling: string
+  replicateModelForVideo: string
+  replicateModelForVideoDepth: string
+  replicateModelForVideoSegmentation: string
+  replicateModelForVideoUpscaling: string
+  replicateModelForVoice: string
+  replicateModelForSound: string
+  replicateModelForMusic: string
+
+  // Stability AI models
+  stabilityAiModelForImage: string
+  stabilityAiModelForVideo: string
+  stabilityAiModelForVoice: string
+  stabilityAiModelForSound: string
+  stabilityAiModelForMusic: string
+
+  // Fireworks AI models
+  fireworksAiModelForAssistant: string
+  fireworksAiModelForImage: string
+  fireworksAiModelForVideo: string
+  fireworksAiModelForVoice: string
+  fireworksAiModelForSound: string
+  fireworksAiModelForMusic: string
+
+  // Fal AI models
+  falAiModelForImage: string
+  falAiModelForImageDepth: string
+  falAiModelForImageSegmentation: string
+  falAiModelForImageUpscaling: string
+  falAiModelForVideo: string
+  falAiModelForVoice: string
+  falAiModelForSound: string
+  falAiModelForMusic: string
+
+  // ModelsLab models
+  modelsLabModelForImage: string
+  modelsLabModelForVideo: string
+  modelsLabModelForVoice: string
+  modelsLabModelForSound: string
+  modelsLabModelForMusic: string
+
+  // OpenAI models
+  openaiModelForAssistant: string
+  openaiModelForImage: string
+  openaiModelForVideo: string
+  openaiModelForVoice: string
+
+  // Groq models
+  groqModelForAssistant: string
+
+  // Google models
+  googleModelForAssistant: string
+  googleModelForImage: string
+  googleModelForVideo: string
+  googleModelForVoice: string
+  googleModelForMusic: string
+
+  // Anthropic models
+  anthropicModelForAssistant: string
+
+  // ElevenLabs models
+  elevenLabsModelForVoice: string
+  elevenLabsModelForSound: string
+
+  // Kits AI models
+  kitsAiModelForVoice: string
+
+  // Cohere models
+  cohereModelForAssistant: string
+
+  // Mistral AI models
+  mistralAiModelForAssistant: string
 }
 
 // Settings are serialized to the local storage,

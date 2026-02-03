@@ -125,9 +125,7 @@ export function getDefaultSettingsState(): SettingsState {
     scriptEditorShowMinimap: true,
     interfaceSnapWindowsToGrid: true,
 
-    /******** should we deprecated all of those? or convert to defaults? ******
-     * 
-    // now how we prefix everything with "models"
+    // Now how we prefix everything with "models"
     // that's because it will be possible at some point to also
     // call a space eg. spaces/openai/sora (this one is just a silly example, of course)
     // "models/HuggingFaceH4/zephyr-7b-beta"
@@ -205,8 +203,7 @@ export function getDefaultSettingsState(): SettingsState {
     googleModelForVoice: "v1",
     googleModelForMusic: "MusicLM",
 
-
-    // Claud 3 stats:
+    // Claude 3 stats:
     // Context window	200K*
     // *~150K words, ~680K unicode characters
     // Max output	4096 tokens
@@ -217,9 +214,7 @@ export function getDefaultSettingsState(): SettingsState {
 
     kitsAiModelForVoice: "",
     cohereModelForAssistant: "command-r-plus",
-    mistralAiModelForAssistant: "open-mixtral-8x22b"
-
-    */
+    mistralAiModelForAssistant: "open-mixtral-8x22b",
   }
   return state
 }
