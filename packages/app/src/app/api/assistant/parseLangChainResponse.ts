@@ -3,7 +3,7 @@ import { ClapSegmentCategory, isValidNumber } from '@aitube/clap'
 import { AssistantAction, AssistantMessage } from '@aitube/clapper-services'
 
 export function parseLangChainResponse(
-  langChainResponse?: AssistantMessage
+  langChainResponse?: AssistantMessage | string | any
 ): AssistantMessage {
   const assistantMessage: AssistantMessage = {
     comment: '',
@@ -11,21 +11,26 @@ export function parseLangChainResponse(
     updatedStoryBlocks: [],
     updatedSceneSegments: [],
   }
-  /*
-  console.log(
-    'LangChain replied this:',
-    JSON.stringify(langChainResponse, null, 2)
-  )
-    */
+  
+  console.log('[parseLangChainResponse] Input type:', typeof langChainResponse)
+  console.log('[parseLangChainResponse] Input value:', langChainResponse)
 
   // this is a fallback in case of langChain failure
   if (!langChainResponse) {
-    // complete failure
-    console.log(`error caused by LangChain`)
+    console.log('[parseLangChainResponse] Empty response')
+    return assistantMessage
   } else if (typeof langChainResponse === 'string') {
-    assistantMessage.action = parseRawInputToAction(langChainResponse)
+    console.log('[parseLangChainResponse] String response, length:', langChainResponse.length)
+    const trimmed = langChainResponse.trim()
+    if (!trimmed) {
+      console.log('[parseLangChainResponse] Empty string after trim')
+      return assistantMessage
+    }
+    assistantMessage.action = parseRawInputToAction(trimmed)
+    console.log('[parseLangChainResponse] Detected action:', assistantMessage.action)
     if (assistantMessage.action === AssistantAction.NONE) {
-      assistantMessage.comment = langChainResponse
+      assistantMessage.comment = trimmed
+      console.log('[parseLangChainResponse] Set comment to full response')
     }
   } else {
     assistantMessage.comment =

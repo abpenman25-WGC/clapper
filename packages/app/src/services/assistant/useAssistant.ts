@@ -387,10 +387,14 @@ export const useAssistant = create<AssistantStore>((set, get) => ({
         history: get().history,
       }
 
-      console.log('📤 SENDING TO AI:')
-      console.log('   Script length:', request.fullScene.length, 'characters')
-      console.log('   Script preview:', request.fullScene.substring(0, 200))
-      console.log('   Number of segments:', request.segments.length)
+      console.log('\n=========================================')
+      console.log('📤 REQUEST TO ASSISTANT API')
+      console.log('=========================================')
+      console.log('Script length:', request.fullScene.length, 'characters')
+      console.log('First 150 chars:', request.fullScene.substring(0, 150))
+      console.log('Last 150 chars:', request.fullScene.substring(Math.max(0, request.fullScene.length - 150)))
+      console.log('Total segments:', request.segments.length)
+      console.log('=========================================\n')
 
       console.log(`processUserMessage: calling askAssistant() with:`, request)
       const assistantMessage = await askAssistant(request)

@@ -55,32 +55,34 @@ export function SettingsDialog() {
         className={cn(
           `select-none`,
           // DialogContent comes with some hardcoded values so we need to override them
-          `max-w-8xl h-full w-full md:h-[80%] md:w-[95%] lg:w-[80%]`,
+          `max-w-8xl w-full md:w-[95%] lg:w-[80%]`,
           `flex flex-row`
         )}
       >
-        <ScrollArea className="md:w-26 lg:w-30 flex h-full w-24 flex-col">
-          <div className="flex flex-col items-end">
-            {Object.keys(panels)
-              .filter((key) => key !== 'NONE')
-              .map((key) => (
-                <Button
-                  key={key}
-                  variant="ghost"
-                  className="flex w-full flex-col items-end border-0 bg-transparent text-right text-base font-thin capitalize text-neutral-300 xl:text-lg"
-                  onClick={() => setShowSettings(key as SettingsCategory)}
-                >
-                  {panelLabels[key]}
-                </Button>
-              ))}
-          </div>
-        </ScrollArea>
+        <div className="md:w-26 lg:w-30 flex w-24 flex-col">
+          <ScrollArea className="h-full">
+            <div className="flex flex-col items-end">
+              {Object.keys(panels)
+                .filter((key) => key !== 'NONE')
+                .map((key) => (
+                  <Button
+                    key={key}
+                    variant="ghost"
+                    className="flex w-full flex-col items-end border-0 bg-transparent text-right text-base font-thin capitalize text-neutral-300 xl:text-lg"
+                    onClick={() => setShowSettings(key as SettingsCategory)}
+                  >
+                    {panelLabels[key]}
+                  </Button>
+                ))}
+            </div>
+          </ScrollArea>
+        </div>
 
-        <div className="flex h-full max-w-[calc(100%-150px)] flex-grow select-none flex-col justify-between border-l border-neutral-800 pl-8">
-          <ScrollArea className="flex h-full flex-row">
+        <div className="flex max-w-[calc(100%-150px)] flex-grow select-none flex-col border-l border-neutral-800 pl-8">
+          <ScrollArea className="flex-1 pr-4">
             {panels[showSettings]}
           </ScrollArea>
-          <DialogFooter>
+          <DialogFooter className="mt-4">
             <Button
               variant="outline"
               className="hidden text-sm font-light dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-400 md:flex"
