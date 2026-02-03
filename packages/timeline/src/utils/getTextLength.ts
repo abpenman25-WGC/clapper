@@ -46,26 +46,19 @@ export function getWebGLCharWidth(char: string = ""): number {
 
   const cellWidthInPixels = useTimeline.getState().cellWidth
 
-  let responsiveHack = 1.5
+  // Simplified responsive hack - use consistent lower multiplier to prevent truncation
+  let responsiveHack = 0.5
 
   if (cellWidthInPixels < 16) {
-    responsiveHack = 1.20
-  } else if (cellWidthInPixels < 20) {
-    responsiveHack = 1.10
+    responsiveHack = 0.6
   } else if (cellWidthInPixels < 24) {
-    responsiveHack = 1.05
-  } else if (cellWidthInPixels < 28) {
-    responsiveHack = 1
-  } else if (cellWidthInPixels < 32) {
-    responsiveHack = 1.0
+    responsiveHack = 0.55
   } else if (cellWidthInPixels < 48) {
-    responsiveHack = 0.9
-  } else if (cellWidthInPixels < 64) {
-    responsiveHack = 0.9
+    responsiveHack = 0.5
   } else if (cellWidthInPixels < 128) {
-    responsiveHack = 0.8
+    responsiveHack = 0.45
   } else {
-    responsiveHack = 0.7
+    responsiveHack = 0.4
   }
   return responsiveHack * webglFontWidthFactor * (charLength[char] || defaultCharLength)
 }

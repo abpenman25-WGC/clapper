@@ -28,8 +28,8 @@ const MemoizedTextCell = React.memo(function TextCell({
   const padding = 1.5;
   
   // Account for padding when calculating available text width
-  // Multiply by 2 to give more room for text rendering
-  const availableTextWidth = (widthInPx - padding * 2) * 2;
+  // Multiply by 5 to give much more room for text rendering - prevent any truncation
+  const availableTextWidth = (widthInPx - padding * 2) * 5;
   
   const lines = useMemo(() => clampWebGLText(
     s.label || s.prompt,
