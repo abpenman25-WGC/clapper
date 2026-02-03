@@ -32,7 +32,8 @@ const charLength = characters.reduce((acc, char) => ({
 let defaultCharLength = 5.561523437
 
 // change this whenever you modify the font size
-const webglFontWidthFactor = 1.7
+// Reduced from 1.7 to 1.0 to fix text being cut off prematurely
+const webglFontWidthFactor = 1.0
 
 /**
  * Compute the text of a simple Arial text in a WebGL environmment

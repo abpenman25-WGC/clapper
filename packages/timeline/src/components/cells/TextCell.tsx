@@ -25,14 +25,19 @@ const MemoizedTextCell = React.memo(function TextCell({
 
   // Remove maxNbLines limit for full paragraph display
   const maxNbLines = Number.MAX_SAFE_INTEGER;
+  const padding = 1.5;
+  
+  // Account for padding when calculating available text width
+  // Multiply by 2 to give more room for text rendering
+  const availableTextWidth = (widthInPx - padding * 2) * 2;
+  
   const lines = useMemo(() => clampWebGLText(
     s.label || s.prompt,
-    widthInPx,
+    availableTextWidth,
     maxNbLines
-  ), [s.label, s.prompt, widthInPx, maxNbLines]);
+  ), [s.label, s.prompt, availableTextWidth, maxNbLines]);
 
   // Dynamically expand cell height based on number of lines
-  const padding = 1.5;
   const fontSize = 13;
   const lineHeight = 1.2;
   const dynamicCellHeight = lines.length * fontSize * lineHeight + padding * 2;
