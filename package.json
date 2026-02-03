@@ -48,7 +48,7 @@
     "@swc/helpers": "^0.5.18",
     "@types/react": "^19.2.10",
     "@types/react-dom": "^19.2.3",
-    "caniuse-lite": "^1.0.30001766",
+    "caniuse-lite": "^1.0.30001767",
     "mediainfo.js": "^0.3.7",
     "next": "16.1.6",
     "react": "^19.2.4",
