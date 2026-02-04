@@ -44,26 +44,28 @@ import {
 //
 // ------------------------------------------------------------------------------
 export const huggingfaceWorkflows: ClapWorkflow[] = [
-  // VIDEO GENERATION - Commented out: Spaces are unreliable and often discontinued
-  // {
-  //   id: 'huggingface://spaces/hpcai-tech/open-sora',
-  //   label: 'Open-Sora (Video, Free) - DEPRECATED',
-  //   description:
-  //     'Text-to-video generation using the open-sora model (Hugging Face Spaces, free tier) - Often unavailable',
-  //   tags: ['video', 'open-sora', 'free', 'deprecated'],
-  //   author: 'hpcai-tech',
-  //   thumbnailUrl: '',
-  //   nonCommercial: false,
-  //   engine: ClapWorkflowEngine.REST_API,
-  //   provider: ClapWorkflowProvider.HUGGINGFACE,
-  //   category: ClapWorkflowCategory.VIDEO_GENERATION,
-  //   data: 'spaces/hpcai-tech/open-sora',
-  //   schema: '',
-  //   inputFields: [genericPrompt],
-  //   inputValues: {
-  //     prompt: genericPrompt.defaultValue,
-  //   },
-  // },
+  // ============================================================================
+  // VIDEO GENERATION - Note: Spaces may be unreliable at times
+  // ============================================================================
+  {
+    id: 'huggingface://spaces/hpcai-tech/open-sora',
+    label: 'Open-Sora (Video) ⚠️',
+    description:
+      'Text-to-video generation using the Open-Sora model (Hugging Face Spaces, free tier) - May be unavailable at times',
+    tags: ['video', 'open-sora', 'free'],
+    author: 'hpcai-tech',
+    thumbnailUrl: '',
+    nonCommercial: false,
+    engine: ClapWorkflowEngine.REST_API,
+    provider: ClapWorkflowProvider.HUGGINGFACE,
+    category: ClapWorkflowCategory.VIDEO_GENERATION,
+    data: 'spaces/hpcai-tech/open-sora',
+    schema: '',
+    inputFields: [genericPrompt],
+    inputValues: {
+      prompt: genericPrompt.defaultValue,
+    },
+  },
 
   // ============================================================================
   // IMAGE GENERATION - These models are verified and stable

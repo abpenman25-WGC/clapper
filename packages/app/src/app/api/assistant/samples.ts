@@ -41,9 +41,9 @@ export const storyCompletionInputExample: AssistantInput = {
   storyBlocks: [
     {
       blockId: 0,
-      block: `The scene is set at night.
-The character wears a jacket.
-He struggles to keep up with the van he is tailing, and tries to contact someone over the radio.
+      block: `INT. CAR - NIGHT
+
+The character wears a jacket. He struggles to keep up with the van he is tailing, and tries to contact someone over the radio.
 `,
     },
   ],
@@ -72,10 +72,19 @@ export const storyCompletionOutputExample: AssistantMessage = {
   updatedStoryBlocks: [
     {
       blockId: 0,
-      block: `The scene is set at night, and features ARCHER, a 38yo male.
-ARCHER has chestnut hair in slicked-undercut style, short-boxed beard, green eyes, diamond-shaped head with round metal glasses.
-ARCHER wears a weathered brown leather jacket over a white shirt, with faded blue jeans.
-ARCHER struggles to keep up with the van he is tailing, and tries to contact someone over the radio.
+      block: `INT. ARCHER'S SEDAN - NIGHT
+
+ARCHER (38), chestnut hair in a slicked-undercut style, short-boxed beard, green eyes, diamond-shaped face with round metal glasses, wears a weathered brown leather jacket over a white shirt and faded blue jeans.
+
+He slams his hands on the steering wheel, frustration etched into every line of his face.
+
+                    ARCHER
+    Shit--
+
+He frantically reaches for his radio again while eyeing the vanishing tail lights of the van.
+
+                    ARCHER
+    Come on.. where is it..
 `,
     },
   ],
@@ -291,7 +300,7 @@ export const redTruckInputExample: AssistantInput = {
     {
       blockId: 50,
       block:
-        'The camera is panning over a pick truck driving over the highway.',
+        'A pickup truck drives across the highway.',
     },
   ],
   sceneSegments: [
@@ -330,7 +339,7 @@ export const redTruckOutputExample: AssistantMessage = {
     {
       blockId: 50,
       block:
-        'The camera is panning over a red pickup truck driving over the highway.',
+        'A red pickup truck drives across the highway.',
     },
   ],
   updatedSceneSegments: [
@@ -378,15 +387,11 @@ export const clearSkyInputExample: AssistantInput = {
   storyBlocks: [
     {
       blockId: 72,
-      block: 'The scene is set during the day.',
+      block: 'EXT. HIGHWAY - DAY',
     },
     {
       blockId: 73,
-      block: 'Bright sun with clear sky.',
-    },
-    {
-      blockId: 74,
-      block: 'We can see a highway.',
+      block: 'Bright sun with clear sky. The highway stretches ahead.',
     },
   ],
   sceneSegments: [
@@ -421,19 +426,11 @@ export const lightRainOutputExample: AssistantMessage = {
   updatedStoryBlocks: [
     {
       blockId: 72,
-      block: 'The scene is set during the evening.',
+      block: 'EXT. HIGHWAY - EVENING',
     },
     {
       blockId: 73,
-      block: 'Cloudy sky, with light rain.',
-    },
-    {
-      blockId: 74,
-      block: 'We can see a highway.',
-    },
-    {
-      blockId: 75,
-      block: 'The road is wet.',
+      block: 'Light rain falls from a cloudy sky. The road glistens, wet with fresh rainfall.',
     },
   ],
   updatedSceneSegments: [
@@ -466,19 +463,11 @@ export const lightRainInputExample: AssistantInput = {
   storyBlocks: [
     {
       blockId: 72,
-      block: 'The scene is set during the evening.',
+      block: 'EXT. HIGHWAY - EVENING',
     },
     {
       blockId: 73,
-      block: 'Cloudy sky, with light rain.',
-    },
-    {
-      blockId: 74,
-      block: 'We can see a highway.',
-    },
-    {
-      blockId: 75,
-      block: 'The road is wet.',
+      block: 'Light rain falls from a cloudy sky. The road glistens, wet with fresh rainfall.',
     },
   ],
   sceneSegments: [
@@ -512,19 +501,11 @@ export const heavyRainOutputExample: AssistantMessage = {
   updatedStoryBlocks: [
     {
       blockId: 72,
-      block: 'The scene is set during the evening.',
+      block: 'EXT. HIGHWAY - EVENING',
     },
     {
       blockId: 73,
-      block: 'Stormy sky, with heavy rain.',
-    },
-    {
-      blockId: 74,
-      block: 'We can see a highway.',
-    },
-    {
-      blockId: 75,
-      block: 'Downpours of water fall on the road.',
+      block: 'A stormy sky unleashes heavy rain. Downpours of water hammer the road.',
     },
   ],
   updatedSceneSegments: [
