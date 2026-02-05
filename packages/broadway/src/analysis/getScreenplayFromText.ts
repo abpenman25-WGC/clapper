@@ -92,8 +92,14 @@ export async function getScreenplayFromText(fullText: string): Promise<Screenpla
 
   const lastSequence = sequences.at(-1)
   if (lastSequence) {
+    console.log('📝 getScreenplayFromText - Last sequence assignment:')
+    console.log('  textBuffer length:', textBuffer.length)
+    console.log('  textBuffer last 200 chars:', textBuffer.slice(-200))
+    console.log('  lineNumberBuffer:', lineNumberBuffer)
     lastSequence.fullText = `${textBuffer}\n`
     lastSequence.endAtLine = lineNumberBuffer
+    console.log('  lastSequence.fullText length:', lastSequence.fullText.length)
+    console.log('  lastSequence.fullText last 200 chars:', lastSequence.fullText.slice(-200))
   }
 
   // now we have clearly identified sequences, we need to extract the scenes

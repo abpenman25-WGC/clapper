@@ -322,6 +322,11 @@ export function parseScenes(screenplaySequence: ScreenplaySequence): Scene[] {
 
     if (currentScene) {
       if (currentEvent) {
+        console.log('📝 parseScenes - Pushing final event:')
+        console.log('  type:', currentEvent.type)
+        console.log('  character:', currentEvent.character)
+        console.log('  description:', currentEvent.description)
+        console.log('  startAtLine:', currentEvent.startAtLine, 'endAtLine:', currentEvent.endAtLine)
         // no, we don't update the line here, since this is a NEW line
         // currentEvent.endAtLine = lineNumber
         currentEvents.push(currentEvent)
@@ -330,6 +335,7 @@ export function parseScenes(screenplaySequence: ScreenplaySequence): Scene[] {
       currentScene.events = currentEvents
       // no, we don't update the line here, since this is a NEW line
       // currentScene.endAtLine = lineNumber
+      console.log('📝 parseScenes - Pushing final scene with', currentEvents.length, 'events')
       scenes.push(currentScene)
       currentEvents = []
       currentScene = undefined

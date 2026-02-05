@@ -1,5 +1,5 @@
 'use client'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useTimeline } from '@aitube/timeline'
 import { useHotkeys } from 'react-hotkeys-hook'
 
@@ -21,6 +21,12 @@ import { newClap } from '@aitube/clap'
 import { getDemoGame } from '@/experiments/samples/demo'
 import { exportToTrelby } from '@/utils/exportToTrelby'
 import { useScriptEditor } from '@/services/editors/script-editor/useScriptEditor'
+import {
+  getRecentProjects,
+  clearRecentProjects,
+  removeRecentProject,
+  type RecentProject,
+} from '@/lib/utils/recentProjects'
 
 export function TopMenuFile() {
   const isTimelineLoading: boolean = useTimeline((s) => s.isLoading)
@@ -40,6 +46,22 @@ export function TopMenuFile() {
   const saveKdenline = useIO((s) => s.saveKdenline)
 
   const hasBetaAccess = useUI((s) => s.hasBetaAccess)
+  
+  // State for recent projects
+  const [recentProjects, setRecentProjects] = useState<RecentProject[]>([])
+  
+  // Load recent projects on mount and when menu opens
+  useEffect(() => {
+    const projects = getRecentProjects()
+    setRecentProjects(projects)
+  }, [])
+  
+  const handleClearRecentProjects = () => {
+    if (confirm('Clear all recent projects from the list?')) {
+      clearRecentProjects()
+      setRecentProjects([])
+    }
+  }
 
   const copyScreenplayForTrelby = () => {
     const current = useScriptEditor.getState().current
@@ -110,6 +132,34 @@ export function TopMenuFile() {
             Save project (.clap)<MenubarShortcut>⌘S</MenubarShortcut>
           </MenubarItem>
           <MenubarSeparator />
+          {recentProjects.length > 0 && (
+            <>
+              <MenubarSub>
+                <MenubarSubTrigger>Recent Projects</MenubarSubTrigger>
+                <MenubarSubContent>
+                  {recentProjects.map((project) => (
+                    <MenubarItem
+                      key={project.fileName}
+                      onClick={() => {
+                        // Trigger file picker but suggest looking for this specific file
+                        alert(
+                          `Please locate and open:\n\n${project.fileName}\n\nThis file was last saved to your Downloads folder.`
+                        )
+                        openFilePicker()
+                      }}
+                    >
+                      {project.title}
+                    </MenubarItem>
+                  ))}
+                  <MenubarSeparator />
+                  <MenubarItem onClick={handleClearRecentProjects}>
+                    Clear Recent Projects
+                  </MenubarItem>
+                </MenubarSubContent>
+              </MenubarSub>
+              <MenubarSeparator />
+            </>
+          )}
           <MenubarSub>
             <MenubarSubTrigger>Import an example</MenubarSubTrigger>
             <MenubarSubContent>

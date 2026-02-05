@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { ReflexContainer, ReflexSplitter, ReflexElement } from 'react-reflex'
 import { useSearchParams } from 'next/navigation'
 import { DndProvider, useDrop } from 'react-dnd'
@@ -38,6 +38,8 @@ import { useQueryStringLoader } from '@/components/toolbars/top-menu/file/useQue
 import { useSetupIframeOnce } from './embed/useSetupIframeOnce'
 import { TimelineZoom } from '@/components/core/timeline/TimelineZoom'
 import { useBreakpoints } from '@/lib/hooks/useBreakpoints'
+import { getRecentProjects, type RecentProject } from '@/lib/utils/recentProjects'
+import { useOpenFilePicker } from '@/lib/hooks'
 
 export enum ClapperIntegrationMode {
   APP = 'APP',
@@ -49,6 +51,18 @@ export type DroppableThing = { files: File[] }
 function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
   const ref = useRef<HTMLDivElement>(null)
   const showWelcomeScreen = useUI((s) => s.showWelcomeScreen)
+  const { openFilePicker } = useOpenFilePicker()
+  
+  // State for recent projects
+  const [recentProjects, setRecentProjects] = useState<RecentProject[]>([])
+  
+  // Load recent projects when welcome screen is shown
+  useEffect(() => {
+    if (showWelcomeScreen) {
+      const projects = getRecentProjects()
+      setRecentProjects(projects)
+    }
+  }, [showWelcomeScreen])
   const showExplorer = useUI((s) => s.showExplorer)
   const showVideoPlayer = useUI((s) => s.showVideoPlayer)
   const showTimeline = useUI((s) => s.showTimeline)
@@ -325,6 +339,31 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
             <p>A free and open-source AI video editor,</p>
             <p>designed for the age of generative filmmaking.</p>
           </div>
+          
+          {recentProjects.length > 0 && (
+            <div className="mt-8 flex flex-col items-center space-y-4">
+              <h2 className="text-xl font-semibold">Recent Projects</h2>
+              <div className="flex flex-col space-y-2">
+                {recentProjects.slice(0, 5).map((project) => (
+                  <button
+                    key={project.fileName}
+                    onClick={() => {
+                      alert(
+                        `Please locate and open:\n\n${project.fileName}\n\nThis file was last saved to your Downloads folder.`
+                      )
+                      openFilePicker()
+                    }}
+                    className="rounded-md bg-neutral-800 px-6 py-3 text-left transition-colors hover:bg-neutral-700"
+                  >
+                    <div className="font-semibold">{project.title}</div>
+                    <div className="text-sm text-neutral-400">
+                      {new Date(project.lastAccessed).toLocaleDateString()}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

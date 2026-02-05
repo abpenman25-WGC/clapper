@@ -67,6 +67,10 @@ import {
   generateOTIO,
   generateOTIOZ,
 } from './formats'
+import {
+  addRecentProject,
+  getProjectFileName,
+} from '@/lib/utils/recentProjects'
 
 export const useIO = create<IOStore>((set, get) => ({
   ...getDefaultIOState(),
@@ -343,6 +347,12 @@ export const useIO = create<IOStore>((set, get) => ({
         message: 'Nearly there..',
         value: 98,
       })
+      
+      // Track this as a recent project
+      addRecentProject({
+        title: clap.meta.title || projectName,
+        fileName: fileName,
+      })
 
       task.success()
     } catch (err) {
@@ -403,6 +413,12 @@ export const useIO = create<IOStore>((set, get) => ({
       task.setProgress({
         message: 'Nearly there..',
         value: 98,
+      })
+      
+      // Track this as a recent project
+      addRecentProject({
+        title: clap.meta.title || projectName,
+        fileName: fileName,
       })
 
       task.success()
@@ -472,6 +488,12 @@ export const useIO = create<IOStore>((set, get) => ({
 
       await setClap(clap)
       scriptEditor.loadDraftFromClap(clap)
+      
+      // Track this as a recent project (for demo files, use the URL as filename)
+      addRecentProject({
+        title: clap.meta.title || projectName,
+        fileName: fileName,
+      })
 
       task.success()
     } catch (err) {
@@ -507,6 +529,12 @@ export const useIO = create<IOStore>((set, get) => ({
 
       await setClap(clap)
       scriptEditor.loadDraftFromClap(clap)
+      
+      // Track this as a recent project
+      addRecentProject({
+        title: clap.meta.title || projectName,
+        fileName,
+      })
 
       task.success()
     } catch (err) {
@@ -542,7 +570,16 @@ export const useIO = create<IOStore>((set, get) => ({
     // also, I'm 100% aware that at some point we will just want to use the
     // desktop version of Clapper, so that we can write the gzip stream directly to the disk
     const blob: Blob = await serializeClap(clap)
-    saveAnyFile(blob, `my_project.clap`) // <-- TODO use the project filename
+    
+    // Use the project title as the filename
+    const fileName = getProjectFileName(clap.meta.title || 'untitled_project')
+    saveAnyFile(blob, fileName)
+    
+    // Track this as a recent project
+    addRecentProject({
+      title: clap.meta.title || 'Untitled Project',
+      fileName,
+    })
 
     task.success()
   },
@@ -659,7 +696,10 @@ export const useIO = create<IOStore>((set, get) => ({
       )
 
       const videoBlob = new Blob([fullVideo], { type: 'video/mp4' })
-      saveAnyFile(videoBlob, 'my_project.mp4')
+      
+      // Use project title for filename
+      const fileName = getProjectFileName(clap.meta.title || 'untitled_project').replace('.clap', '.mp4')
+      saveAnyFile(videoBlob, fileName)
       task.success()
     } catch (err) {
       console.error(err)
@@ -823,7 +863,11 @@ export const useIO = create<IOStore>((set, get) => ({
             message: 'Saving to file..',
             value: 100,
           })
-          saveAnyFile(new Blob([zipFile]), 'my_project.zip')
+          
+          // Use project title for filename
+          const clap = timeline.clap
+          const fileName = getProjectFileName(clap?.meta?.title || 'untitled_project').replace('.clap', '.zip')
+          saveAnyFile(new Blob([zipFile]), fileName)
           task.success()
         }
       )
@@ -859,7 +903,12 @@ export const useIO = create<IOStore>((set, get) => ({
       })
 
       const blob = new Blob([otiozData], { type: 'application/octet-stream' })
-      saveAnyFile(blob, 'my_project.otioz')
+      
+      // Use project title for filename
+      const timeline: TimelineStore = useTimeline.getState()
+      const clap = await timeline.getClap()
+      const fileName = getProjectFileName(clap?.meta?.title || 'untitled_project').replace('.clap', '.otioz')
+      saveAnyFile(blob, fileName)
 
       task.success()
     } catch (err) {
