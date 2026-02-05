@@ -94,12 +94,19 @@ export function exportToTrelby(screenplayText: string): string {
     previousLineWasCharacter = false
   }
 
-  // Add Trelby file header
+  // Add Trelby file header and ensure trailing newline for last dialogue line
   const trelbyContent = `#Title-String
 #Start-Script
 
 ${trelbyLines.join('\n')}
+
 `
+
+  console.log('🎬 exportToTrelby stats:')
+  console.log('  Input lines:', lines.length)
+  console.log('  Output Trelby lines:', trelbyLines.length)  
+  console.log('  Last input line:', lines[lines.length - 1]?.trim())
+  console.log('  Last Trelby line:', trelbyLines[trelbyLines.length - 1])
 
   return trelbyContent
 }

@@ -21,11 +21,27 @@ export function parseLangChainResponse(
     return assistantMessage
   } else if (typeof langChainResponse === 'string') {
     console.log('[parseLangChainResponse] String response, length:', langChainResponse.length)
-    const trimmed = langChainResponse.trim()
+    let trimmed = langChainResponse.trim()
     if (!trimmed) {
       console.log('[parseLangChainResponse] Empty string after trim')
       return assistantMessage
     }
+    
+    // Try to extract JSON from markdown code blocks
+    const jsonMatch = trimmed.match(/```(?:json)?\s*\n?([\s\S]*?)\n?```/)
+    if (jsonMatch) {
+      console.log('[parseLangChainResponse] Found JSON in code block, extracting...')
+      try {
+        const parsed = JSON.parse(jsonMatch[1])
+        console.log('[parseLangChainResponse] Successfully parsed JSON from code block')
+        // Recursively process the parsed JSON object
+        return parseLangChainResponse(parsed)
+      } catch (err) {
+        console.log('[parseLangChainResponse] Failed to parse JSON from code block:', err)
+        // Fall through to use the original trimmed string
+      }
+    }
+    
     assistantMessage.action = parseRawInputToAction(trimmed)
     console.log('[parseLangChainResponse] Detected action:', assistantMessage.action)
     if (assistantMessage.action === AssistantAction.NONE) {

@@ -48,7 +48,16 @@ export function TopMenuFile() {
       return
     }
     
+    console.log('🎬 copyScreenplayForTrelby:')
+    console.log('  Screenplay length:', current.length, 'characters')
+    console.log('  First 150 chars:', current.substring(0, 150))
+    console.log('  Last 150 chars:', current.substring(Math.max(0, current.length - 150)))
+    
     const trelbyText = exportToTrelby(current)
+    
+    console.log('  Trelby output length:', trelbyText.length, 'characters')
+    console.log('  Trelby first 150 chars:', trelbyText.substring(0, 150))
+    console.log('  Trelby last 150 chars:', trelbyText.substring(Math.max(0, trelbyText.length - 150)))
     
     // Copy to clipboard
     navigator.clipboard.writeText(trelbyText)
