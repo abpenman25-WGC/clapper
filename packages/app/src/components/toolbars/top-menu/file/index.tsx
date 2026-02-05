@@ -19,6 +19,8 @@ import { IframeWarning } from '@/components/dialogs/iframe-warning'
 import { useIO, useUI } from '@/services'
 import { newClap } from '@aitube/clap'
 import { getDemoGame } from '@/experiments/samples/demo'
+import { exportToTrelby } from '@/utils/exportToTrelby'
+import { useScriptEditor } from '@/services/editors/script-editor/useScriptEditor'
 
 export function TopMenuFile() {
   const isTimelineLoading: boolean = useTimeline((s) => s.isLoading)
@@ -38,6 +40,26 @@ export function TopMenuFile() {
   const saveKdenline = useIO((s) => s.saveKdenline)
 
   const hasBetaAccess = useUI((s) => s.hasBetaAccess)
+
+  const copyScreenplayForTrelby = () => {
+    const current = useScriptEditor.getState().current
+    if (!current) {
+      alert('No screenplay text to export')
+      return
+    }
+    
+    const trelbyText = exportToTrelby(current)
+    
+    // Copy to clipboard
+    navigator.clipboard.writeText(trelbyText)
+      .then(() => {
+        alert('Screenplay copied in Trelby format! You can now paste it into Trelby.')
+      })
+      .catch(err => {
+        console.error('Failed to copy to clipboard:', err)
+        alert('Failed to copy to clipboard. Please try again.')
+      })
+  }
 
   const showWelcomeScreen = useUI((s) => s.showWelcomeScreen)
   const setShowWelcomeScreen = useUI((s) => s.setShowWelcomeScreen)
@@ -194,6 +216,12 @@ export function TopMenuFile() {
             }}
           >
             Export all assets (.zip)
+          </MenubarItem>
+          <MenubarSeparator />
+          <MenubarItem
+            onClick={copyScreenplayForTrelby}
+          >
+            Copy screenplay for Trelby
           </MenubarItem>
           {/*
         <MenubarItem onClick={() => {

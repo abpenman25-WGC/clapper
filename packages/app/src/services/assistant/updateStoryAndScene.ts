@@ -17,6 +17,7 @@ import {
 } from '@aitube/timeline'
 
 import { useAssistant } from './useAssistant'
+import { useScriptEditor } from '../editors/script-editor/useScriptEditor'
 
 export async function updateStoryAndScene({
   assistantMessage,
@@ -28,6 +29,7 @@ export async function updateStoryAndScene({
   console.log(`processActionOrMessage`)
   const { addEventToHistory } = useAssistant.getState()
   const timeline: TimelineStore = useTimeline.getState()
+  const scriptEditor = useScriptEditor.getState()
   const {
     addSegment,
     deleteSegments,
@@ -187,6 +189,23 @@ export async function updateStoryAndScene({
 
   for (const segment of segmentsToAdd) {
     await addSegment({ segment })
+  }
+
+  // Update the script editor with the screenplay text from updatedStoryBlocks
+  if (assistantMessage.updatedStoryBlocks && assistantMessage.updatedStoryBlocks.length > 0) {
+    const screenplayText = assistantMessage.updatedStoryBlocks
+      .map(block => block.block)
+      .join('\n')
+    
+    console.log('Updating script editor with screenplay text:', screenplayText.substring(0, 200))
+    
+    // Update both the current state and the text model
+    scriptEditor.setCurrent(screenplayText)
+    
+    // Also update the Monaco editor model if it exists
+    if (scriptEditor.textModel) {
+      scriptEditor.textModel.setValue(screenplayText)
+    }
   }
 
   addEventToHistory({
