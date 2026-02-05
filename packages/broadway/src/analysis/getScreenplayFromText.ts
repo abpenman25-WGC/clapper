@@ -12,10 +12,7 @@ import { parseScenes } from "@/analysis/parseScenes"
  * @returns 
  */
 export async function getScreenplayFromText(fullText: string): Promise<Screenplay> {
-  const lines = fullText.replaceAll("\n", "    ").split(/\n/gi)
-
-  // TODO: use this
-  // const lines = fullText.split(/\r?\n/)
+  const lines = fullText.split(/\r?\n/)
 
   const sequences: ScreenplaySequence[] = []
 
