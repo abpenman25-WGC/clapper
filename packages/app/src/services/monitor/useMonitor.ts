@@ -19,12 +19,17 @@ export const useMonitor = create<MonitorStore>((set, get) => ({
     document.addEventListener('keydown', (event) => {
       const element = event.target as unknown as HTMLElement
 
+      // Check if we're inside Monaco Editor
+      const isInMonacoEditor = element.classList?.contains('monaco-editor') ||
+        element.closest('.monaco-editor') !== null
+
       if (
         event.code === 'Space' &&
         // those exception are important, otherwise we won't be able to add spaces
         // in the search boxes, edit fields, or even the script editor
         element.nodeName !== 'INPUT' &&
-        element.nodeName !== 'TEXTAREA'
+        element.nodeName !== 'TEXTAREA' &&
+        !isInMonacoEditor
       ) {
         console.log(
           '[SHORTCUT DETECTED] User pressed space key outside a text input: toggling video playback'
