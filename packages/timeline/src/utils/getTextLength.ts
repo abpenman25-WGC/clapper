@@ -75,10 +75,11 @@ export function getWebGLTextWidth(text: string = ""): number {
 }
 
 /**
- * Clamp a text to a given
- * @param text 
- * @param maxWidthInPixels 
- * @returns 
+ * Clamp a text to a given width and maximum number of lines
+ * @param input - The text to wrap
+ * @param maxWidthInPixels - Maximum width in pixels per line
+ * @param maxNbLines - Maximum number of lines to allow
+ * @returns Array of wrapped text lines
  */
 export function clampWebGLText(
   input: string,
@@ -95,8 +96,19 @@ export function clampWebGLText(
     width += getWebGLCharWidth(c)
     buffer += c
     if (width >= maxWidthInPixels) {
+      // Check if we've reached max lines before adding more
+      if (lines.length >= maxNbLines - 1) {
+        // Last line - truncate with ellipsis if needed
+        const words = buffer.split(" ")
+        if (words.length > 1) {
+          lines.push(words.slice(0, -1).join(" ") + "...")
+        } else {
+          lines.push(buffer + "...")
+        }
+        return lines
+      }
+      
       // Never truncate with "..", just wrap to next line
-      // TODO: we should do something smarter, which is to split the last sentence
       const words = buffer.split(" ")
       const lastWord = (words.at(-1) || "")
       if (lastWord.length) {
@@ -112,8 +124,15 @@ export function clampWebGLText(
   }
 
   if (buffer.length) {
+    // Check if we've exceeded max lines
+    if (lines.length >= maxNbLines) {
+      // Replace last line with truncated version
+      lines[maxNbLines - 1] = lines[maxNbLines - 1] + "..."
+      return lines.slice(0, maxNbLines)
+    }
     lines.push(buffer)
   }
+  
   return lines
 }
 

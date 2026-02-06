@@ -65,7 +65,7 @@
     "styled-jsx": "^5.1.7"
   },
   "devDependencies": {
-    "@playwright/test": "^1.58.1",
+    "@playwright/test": "^1.58.2",
     "@types/three": "^0.182.0",
     "@webgpu/types": "^0.1.69",
     "playwright": "^1.58.1",
