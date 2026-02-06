@@ -8,6 +8,10 @@ const nextConfig = {
       bodySizeLimit: '32mb'
     }
   },
+  
+  // Acknowledge we're using webpack config - suppress turbopack migration warning
+  turbopack: {},
+  
   images: {
     // temporary fix for:
     //
