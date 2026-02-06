@@ -146,7 +146,7 @@ export const useScriptEditor = create<ScriptEditorStore>((set, get) => ({
       })
        */
 
-      if (useTimeline.getState().scrolX !== scrollX) {
+      if (useTimeline.getState().scrollX !== scrollX) {
         useTimeline.setState({ scrollX })
         timeline.timelineCamera.position.setX(scrollX)
         timeline.timelineControls.target.setX(scrollX)
