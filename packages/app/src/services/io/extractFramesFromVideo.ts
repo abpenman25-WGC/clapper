@@ -1,7 +1,8 @@
 'use client'
 
 import { FFmpeg } from '@ffmpeg/ffmpeg'
-import { FileData } from '@ffmpeg/ffmpeg/dist/esm/types'
+// import { FileData } from '@ffmpeg/ffmpeg/dist/esm/types'
+type FileData = any
 import { toBlobURL } from '@ffmpeg/util'
 import mediaInfoFactory, {
   Track,

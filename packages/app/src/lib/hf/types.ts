@@ -1,12 +1,18 @@
 import { SpaceEntry, SpaceRuntime } from '@huggingface/hub'
-import { ApiInfo, EndpointInfo, JsApiData } from '@gradio/client/dist/types'
+// import type { ApiInfo, EndpointInfo, JsApiData } from '@gradio/client/dist/types.js'
 
-  {
-    cardData: unknown;
-    runtime: SpaceRuntime;
-    tags: string[];
-    models: string[];
-  }
+// Using any for Gradio types to avoid import issues with React 19/Next.js 16
+type ApiInfo = any
+type EndpointInfo = any
+type JsApiData = any
+
+export interface HFSpace {
+  name?: string
+  cardData: unknown
+  runtime: SpaceRuntime
+  tags: string[]
+  models: string[]
+}
 
 export interface HFSpaceStatus {
   _id: string
@@ -28,7 +34,7 @@ export interface HFSpaceStatus {
 
 export type HFHubCategory = 'spaces' | 'models'
 
-export type GradioApiInfo = ApiInfo<JsApiData>
+export type GradioApiInfo = any
 
 export type SupportedFields = {
   inputPositiveTextPrompt: string
@@ -62,7 +68,7 @@ export type SupportedFields = {
 export type GradioEndpoint = {
   isNamed: boolean
   name: string
-  endpoint: EndpointInfo<JsApiData>
+  endpoint: any
   fields: Record<string, Partial<SupportedFields>>
   score: number
 }

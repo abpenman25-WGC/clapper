@@ -1,4 +1,5 @@
-import { FileData } from '@ffmpeg/ffmpeg/dist/esm/types'
+// import { FileData } from '@ffmpeg/ffmpeg/dist/esm/types'
+type FileData = any
 
 export function fileDataToBase64(fileData: FileData): string {
   // Convert Uint8Array to Base64 string without using btoa
