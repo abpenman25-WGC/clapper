@@ -1,13 +1,12 @@
 import AutoSizer, { Size } from "react-virtualized-auto-sizer"
-// TEMPORARILY DISABLED FOR REACT 19 MIGRATION
-// import { Canvas } from "@react-three/fiber"
-// import { Stats } from "@react-three/drei"
+import { Canvas } from "@react-three/fiber"
+import { Stats } from "@react-three/drei"
 
 import {
- // TimelineControls,
+  TimelineControls,
   HorizontalScroller,
-// Timeline
-} from "./components"
+  Timeline
+} from "@/components"
 import { ClapProject, isValidNumber } from "@aitube/clap"
 import {
   DEFAULT_FRAMELOOP,
@@ -123,21 +122,58 @@ export function ClapTimeline({
       <div className="flex flex-grow flex-row w-full h-full">
         <div className="flex flex-grow flex-col w-full h-full">
           <HorizontalScroller />
-          {/* TEMPORARILY DISABLED FOR REACT 19 MIGRATION - 3D TIMELINE RENDERING */}
-          <div style={{
-            width: isValidNumber(width) ? `${width}px` : "100%",
-            height: isValidNumber(height) ? `${height}px` : "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "14px",
-            color: "#666",
-            backgroundColor: theme.grid.backgroundColor
-          }}>
-            Timeline visualization temporarily disabled during React 19 migration
+          <Canvas
+            ref={(canvas) => {
+              setCanvas(canvas || undefined)
+            }}
+            id="clap-timeline"
+
+            // must be active when playing back a video
+            // UPDATE on 20240912: right now we have disabled video preview from the timeline
+            // we don't need it anymore since we are displaying split frames for a video segment
+            // so we can disable the always on frame loop -> this should help cooling down the GPU
+            // frameloop="always"
+            frameloop="demand"
+            // note: if you disable frameloop="demand" then you need to
+            // search in the code for places that reference if (eg. manual instanciations)
+            
+            // those must stay ON otherwise colors will be washed out
+            flat
+            linear
+
+            // doesn't work in our case since we need to display videos
+            // frameloop="demand"
+            
+
+            style={{
+              width: isValidNumber(width) ? `${width}px` : "100%",
+              height: isValidNumber(height) ? `${height}px` : "100%"
+            }}
+
+            onCreated={handleIsCreated}
+
+            onWheel={handleWheel}
+            onMouseMove={handleMouseMove}
+            onTouchMove={handleMouseMove}
+            >
+              <TimelineCamera />
+              <TimelineControls
+
+                // TODO: remove all those controls
+                minZoom={minZoom}
+                maxZoom={maxZoom}
+                zoomSpeed={zoomSpeed}
+                zoomDampingFactor={zoomDampingFactor}
+              />
+              <Timeline width={width} height={height} />
+              {showFPS && <Stats className={cn(`!left-auto right-0`)} />}
+            </Canvas>
+
           </div>
+          {
+          // <VerticalScroller />
+          }
         </div>
-      </div>
         )}
       </AutoSizer>
     </div>

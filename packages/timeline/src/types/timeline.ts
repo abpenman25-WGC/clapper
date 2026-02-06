@@ -1,6 +1,5 @@
 import * as THREE from "three"
-// import type { ThreeEvent } from "@react-three/fiber"
-type ThreeEvent<T> = any // Stubbed for React 19 migration
+import type { ThreeEvent } from "@react-three/fiber"
 import { ClapEntity, ClapImageRatio, ClapMeta, ClapProject, ClapScene, ClapSegment, ClapTracks } from "@aitube/clap"
 
 import { ClapSegmentColorScheme, ClapTimelineTheme } from "./theme"

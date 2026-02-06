@@ -1,7 +1,6 @@
 import { create } from "zustand"
 import * as THREE from "three"
-// import type { ThreeEvent } from "@react-three/fiber"
-type ThreeEvent<T> = any // Stubbed for React 19 migration
+import type { ThreeEvent } from "@react-three/fiber"
 import { ClapProject, ClapSegment, ClapSegmentCategory, isValidNumber, newClap, serializeClap, ClapTracks, ClapEntity, ClapMeta } from "@aitube/clap"
 
 import { TimelineSegment, SegmentEditionStatus, SegmentVisibility, TimelineStore, SegmentArea, SegmentPointerEvent, SegmentEventCallbackHandler, Invalidate } from "@/types/timeline"
