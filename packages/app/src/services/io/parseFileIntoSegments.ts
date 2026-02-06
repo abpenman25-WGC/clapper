@@ -101,7 +101,7 @@ export async function parseFileIntoSegments({
       const video = await clapSegmentToTimelineSegment(newSegment(partialVideo))
 
       if (isValidNumber(track)) {
-        video.track = track
+        video.track = track!
       }
 
       video.outputType = ClapOutputType.VIDEO
@@ -137,7 +137,7 @@ export async function parseFileIntoSegments({
       )
 
       if (isValidNumber(track)) {
-        storyboardImage.track = track
+        storyboardImage.track = track!
       }
 
       storyboardImage.outputType = ClapOutputType.IMAGE
@@ -211,7 +211,7 @@ export async function parseFileIntoSegments({
       )
 
       if (isValidNumber(track)) {
-        timelineSegment.track = track
+        timelineSegment.track = track!
       }
 
       timelineSegment.outputType = ClapOutputType.AUDIO

@@ -112,7 +112,7 @@ export const useAutocomplete = create<AutocompleteStore>((set, get) => ({
             value: progress,
           })
 
-          const caption = `${captions[0] || ''}`
+          const caption = `${(captions as any)?.[0] || ''}`
 
           // the model currently used is a browser-side model,
           // and isn't smart enough to give the result as a YAML with categories etc

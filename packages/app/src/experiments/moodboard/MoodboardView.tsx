@@ -14,7 +14,7 @@ import '@xyflow/react/dist/base.css'
 import { Node } from './Node'
 
 const nodeTypes = {
-  custom: Node,
+  custom: Node as any,
 }
 
 const initNodes = [

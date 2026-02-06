@@ -248,13 +248,13 @@ export const useAssistant = create<AssistantStore>((set, get) => ({
         console.log('=== DEBUG: TIMELINE CLAP STATE ===')
         console.log(
           '- Timeline clap scenes:',
-          timeline?.clap?.scenes?.length || 0
+          (timeline as any)?.clap?.scenes?.length || 0
         )
         console.log(
           '- Timeline clap segments:',
-          timeline?.clap?.segments?.length || 0
+          (timeline as any)?.clap?.segments?.length || 0
         )
-        if (timeline?.clap?.scenes?.length === 0) {
+        if ((timeline as any)?.clap?.scenes?.length === 0) {
           console.log(
             '🚨 PROBLEM: No scenes in timeline.clap - this is why AI cannot see script!'
           )
@@ -392,7 +392,10 @@ export const useAssistant = create<AssistantStore>((set, get) => ({
       console.log('=========================================')
       console.log('Script length:', request.fullScene.length, 'characters')
       console.log('First 150 chars:', request.fullScene.substring(0, 150))
-      console.log('Last 150 chars:', request.fullScene.substring(Math.max(0, request.fullScene.length - 150)))
+      console.log(
+        'Last 150 chars:',
+        request.fullScene.substring(Math.max(0, request.fullScene.length - 150))
+      )
       console.log('Total segments:', request.segments.length)
       console.log('=========================================\n')
 
