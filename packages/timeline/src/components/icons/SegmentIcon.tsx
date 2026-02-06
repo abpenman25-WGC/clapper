@@ -1,4 +1,4 @@
-import { GroupProps } from "@react-three/fiber";
+import { ThreeElements } from "@react-three/fiber";
 import { ClapSegmentCategory } from "@aitube/clap";
 
 import { useSvgShapes } from "./useSvgShapes";
@@ -10,7 +10,7 @@ export function SegmentIcon({
   groupProps = {}
 }: {
   category?: ClapSegmentCategory
-  groupProps?: GroupProps
+  groupProps?: ThreeElements['group']
 }) {
   const iconUrl = segmentCategoryToIconPath[category]
   const shapes = useSvgShapes(iconUrl)

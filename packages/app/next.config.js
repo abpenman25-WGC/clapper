@@ -2,6 +2,9 @@
 const nextConfig = {
   output: 'standalone',
 
+  // Empty turbopack config to acknowledge we're intentionally using webpack
+  turbopack: {},
+
   experimental: {
     serverActions: {
       // a clap file can be quite large - but that's OK
