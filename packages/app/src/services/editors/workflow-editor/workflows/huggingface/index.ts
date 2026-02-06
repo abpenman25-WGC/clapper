@@ -293,7 +293,7 @@ export const huggingfaceWorkflows: ClapWorkflow[] = [
   // ============================================================================
   // ⚠️ Hugging Face ASSISTANT models are NOT supported yet in Clapper
   // The backend code needs ChatHuggingFace from LangChain which is not installed
-  // 
+  //
   // These models are COMMENTED OUT because they don't work:
   // {
   //   id: 'huggingface://models/HuggingFaceH4/zephyr-7b-beta',

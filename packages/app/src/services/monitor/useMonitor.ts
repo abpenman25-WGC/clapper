@@ -20,7 +20,8 @@ export const useMonitor = create<MonitorStore>((set, get) => ({
       const element = event.target as unknown as HTMLElement
 
       // Check if we're inside Monaco Editor
-      const isInMonacoEditor = element.classList?.contains('monaco-editor') ||
+      const isInMonacoEditor =
+        element.classList?.contains('monaco-editor') ||
         element.closest('.monaco-editor') !== null
 
       if (

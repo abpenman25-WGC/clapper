@@ -192,31 +192,42 @@ export async function updateStoryAndScene({
   }
 
   // Update the script editor with the screenplay text from updatedStoryBlocks
-  if (assistantMessage.updatedStoryBlocks && assistantMessage.updatedStoryBlocks.length > 0) {
+  if (
+    assistantMessage.updatedStoryBlocks &&
+    assistantMessage.updatedStoryBlocks.length > 0
+  ) {
     const screenplayText = assistantMessage.updatedStoryBlocks
-      .map(block => block.block)
+      .map((block) => block.block)
       .join('\n')
-    
+
     console.log('🎬 updateStoryAndScene screenplay stats:')
     console.log('  Total blocks:', assistantMessage.updatedStoryBlocks.length)
-    console.log('  Last block:', assistantMessage.updatedStoryBlocks[assistantMessage.updatedStoryBlocks.length - 1])
+    console.log(
+      '  Last block:',
+      assistantMessage.updatedStoryBlocks[
+        assistantMessage.updatedStoryBlocks.length - 1
+      ]
+    )
     console.log('  Screenplay length:', screenplayText.length, 'characters')
     console.log('  First 150 chars:', screenplayText.substring(0, 150))
-    console.log('  Last 150 chars:', screenplayText.substring(Math.max(0, screenplayText.length - 150)))
-    
+    console.log(
+      '  Last 150 chars:',
+      screenplayText.substring(Math.max(0, screenplayText.length - 150))
+    )
+
     // Update both the current state and the text model
     scriptEditor.setCurrent(screenplayText)
-    
+
     // Also update the Monaco editor model if it exists
     if (scriptEditor.textModel) {
       scriptEditor.textModel.setValue(screenplayText)
     }
-    
+
     // Show the screenplay text in the chat for easy copying
     addEventToHistory({
       senderId: 'assistant',
       senderName: 'Assistant',
-      message: assistantMessage.comment 
+      message: assistantMessage.comment
         ? `${assistantMessage.comment}\n\n---\n\n${screenplayText}`
         : screenplayText,
     })

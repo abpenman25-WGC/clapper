@@ -299,8 +299,7 @@ export const redTruckInputExample: AssistantInput = {
     },
     {
       blockId: 50,
-      block:
-        'A pickup truck drives across the highway.',
+      block: 'A pickup truck drives across the highway.',
     },
   ],
   sceneSegments: [
@@ -338,8 +337,7 @@ export const redTruckOutputExample: AssistantMessage = {
     },
     {
       blockId: 50,
-      block:
-        'A red pickup truck drives across the highway.',
+      block: 'A red pickup truck drives across the highway.',
     },
   ],
   updatedSceneSegments: [
@@ -430,7 +428,8 @@ export const lightRainOutputExample: AssistantMessage = {
     },
     {
       blockId: 73,
-      block: 'Light rain falls from a cloudy sky. The road glistens, wet with fresh rainfall.',
+      block:
+        'Light rain falls from a cloudy sky. The road glistens, wet with fresh rainfall.',
     },
   ],
   updatedSceneSegments: [
@@ -467,7 +466,8 @@ export const lightRainInputExample: AssistantInput = {
     },
     {
       blockId: 73,
-      block: 'Light rain falls from a cloudy sky. The road glistens, wet with fresh rainfall.',
+      block:
+        'Light rain falls from a cloudy sky. The road glistens, wet with fresh rainfall.',
     },
   ],
   sceneSegments: [
@@ -505,7 +505,8 @@ export const heavyRainOutputExample: AssistantMessage = {
     },
     {
       blockId: 73,
-      block: 'A stormy sky unleashes heavy rain. Downpours of water hammer the road.',
+      block:
+        'A stormy sky unleashes heavy rain. Downpours of water hammer the road.',
     },
   ],
   updatedSceneSegments: [

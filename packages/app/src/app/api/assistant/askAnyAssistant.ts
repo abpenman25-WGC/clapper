@@ -192,7 +192,7 @@ export async function askAnyAssistant({
   // - Gemini 1.5 Flash/Pro: 500,000 chars (~75K words) - 1M token context
   // - Claude/GPT-4: 100,000 chars (~15K words) - 200K token context
   // This should handle full-length screenplays for providers that support it
-  const MAX_BLOCK_LENGTH = 500000  // Large enough for complete scripts
+  const MAX_BLOCK_LENGTH = 500000 // Large enough for complete scripts
   const storyBlocks: AssistantStoryBlock[] = [
     {
       blockId: 0,
@@ -213,7 +213,7 @@ export async function askAnyAssistant({
   // Send more segments to LLM for full context
   // Modern LLMs can handle large context windows effectively
   // Very long scripts can have 2000+ segments (100 pages × 20 segments/page)
-  const MAX_SEGMENTS = 5000  // Handle even the longest feature screenplays
+  const MAX_SEGMENTS = 5000 // Handle even the longest feature screenplays
   const sceneSegments: AssistantSceneSegment[] = Array.isArray(segments)
     ? segments.slice(0, MAX_SEGMENTS).map((segment, i) => ({
         segmentId: i,
@@ -230,17 +230,29 @@ export async function askAnyAssistant({
     storyBlocks,
     sceneSegments,
   }
-  
+
   // Log what we're actually sending to the AI
   console.log('\n=========================================')
   console.log('📤 SCRIPT DATA SENT TO AI')
   console.log('=========================================')
   console.log('Full script length:', fullScene?.length || 0, 'characters')
-  console.log('Script sent to AI:', storyBlocks[0]?.block?.length || 0, 'characters')
-  console.log('Script TRUNCATED?', (fullScene?.length || 0) > MAX_BLOCK_LENGTH ? '⚠️  YES - TOO LONG!' : '✅ NO')
+  console.log(
+    'Script sent to AI:',
+    storyBlocks[0]?.block?.length || 0,
+    'characters'
+  )
+  console.log(
+    'Script TRUNCATED?',
+    (fullScene?.length || 0) > MAX_BLOCK_LENGTH
+      ? '⚠️  YES - TOO LONG!'
+      : '✅ NO'
+  )
   console.log('Total segments available:', segments?.length || 0)
   console.log('Segments sent to AI:', sceneSegments.length)
-  console.log('Segments TRUNCATED?', (segments?.length || 0) > MAX_SEGMENTS ? '⚠️  YES - TOO MANY!' : '✅ NO')
+  console.log(
+    'Segments TRUNCATED?',
+    (segments?.length || 0) > MAX_SEGMENTS ? '⚠️  YES - TOO MANY!' : '✅ NO'
+  )
   console.log('=========================================\n')
 
   // console.log("INPUT:", JSON.stringify(inputData, null, 2))
@@ -257,13 +269,16 @@ export async function askAnyAssistant({
 
   // For simple greetings, return a friendly response without calling the LLM
   const simpleGreetings = ['hello', 'hi', 'hey', 'test']
-  const isSimpleGreeting = simpleGreetings.some((greeting) => 
-    prompt.toLowerCase().trim() === greeting || 
-    prompt.toLowerCase().trim() === greeting + '!'
+  const isSimpleGreeting = simpleGreetings.some(
+    (greeting) =>
+      prompt.toLowerCase().trim() === greeting ||
+      prompt.toLowerCase().trim() === greeting + '!'
   )
-  
+
   if (isSimpleGreeting && prompt.length < 15) {
-    console.log('[askAnyAssistant] Detected simple greeting, using canned response')
+    console.log(
+      '[askAnyAssistant] Detected simple greeting, using canned response'
+    )
     assistantMessage.comment = `Hello! I'm your AI assistant, ready to help with your video production! 🎬
 
 I can assist you with:
@@ -278,7 +293,7 @@ What would you like to work on? Try asking:
 - "Add visual details to this dialogue"`
     return assistantMessage
   }
-  
+
   console.log('[askAnyAssistant] Proceeding to LLM call with prompt:', prompt)
 
   // --- LLM call and logging ---
@@ -286,7 +301,7 @@ What would you like to work on? Try asking:
   let llmError: any = null
   try {
     // Limit chat history to maintain conversation context while maximizing script visibility
-    const MAX_HISTORY = 20  // Increased for extensive conversation tracking
+    const MAX_HISTORY = 20 // Increased for extensive conversation tracking
     const trimmedHistory = Array.isArray(history)
       ? history.slice(-MAX_HISTORY)
       : []
@@ -316,42 +331,66 @@ What would you like to work on? Try asking:
       '[askAnyAssistant] LLM raw response:',
       JSON.stringify(rawLlmResponse, null, 2)
     )
-    
+
     // Extract content from LangChain response
     let responseContent = rawLlmResponse
     console.log('[askAnyAssistant] Raw response type:', typeof rawLlmResponse)
-    
-    if (rawLlmResponse && typeof rawLlmResponse === 'object' && 'content' in rawLlmResponse) {
+
+    if (
+      rawLlmResponse &&
+      typeof rawLlmResponse === 'object' &&
+      'content' in rawLlmResponse
+    ) {
       responseContent = rawLlmResponse.content
-      console.log('[askAnyAssistant] Extracted content field, type:', typeof responseContent)
+      console.log(
+        '[askAnyAssistant] Extracted content field, type:',
+        typeof responseContent
+      )
       console.log('[askAnyAssistant] Content value:', responseContent)
-      
+
       // Try to parse as JSON if it's a string that looks like JSON
-      if (typeof responseContent === 'string' && responseContent.trim().startsWith('{')) {
+      if (
+        typeof responseContent === 'string' &&
+        responseContent.trim().startsWith('{')
+      ) {
         try {
           responseContent = JSON.parse(responseContent)
           console.log('[askAnyAssistant] Successfully parsed JSON content')
         } catch (e) {
-          console.log('[askAnyAssistant] Content is not valid JSON, using as string')
+          console.log(
+            '[askAnyAssistant] Content is not valid JSON, using as string'
+          )
         }
       }
     } else {
       console.log('[askAnyAssistant] Using raw response directly')
     }
-    
+
     // Parse the LLM response
     assistantMessage = parseLangChainResponse(responseContent)
     console.log(
       '[askAnyAssistant] Parsed assistantMessage:',
       JSON.stringify(assistantMessage, null, 2)
     )
-    
+
     // Log validation details
     console.log('[askAnyAssistant] Validation check:')
-    console.log('  - Has comment:', !!assistantMessage.comment, '(length:', assistantMessage.comment?.length, ')')
-    console.log('  - Has scene segments:', assistantMessage.updatedSceneSegments?.length || 0)
-    console.log('  - Has story blocks:', assistantMessage.updatedStoryBlocks?.length || 0)
-    
+    console.log(
+      '  - Has comment:',
+      !!assistantMessage.comment,
+      '(length:',
+      assistantMessage.comment?.length,
+      ')'
+    )
+    console.log(
+      '  - Has scene segments:',
+      assistantMessage.updatedSceneSegments?.length || 0
+    )
+    console.log(
+      '  - Has story blocks:',
+      assistantMessage.updatedStoryBlocks?.length || 0
+    )
+
     // If the response is valid, return it
     if (
       assistantMessage &&
@@ -359,12 +398,15 @@ What would you like to work on? Try asking:
         assistantMessage.updatedSceneSegments?.length ||
         assistantMessage.updatedStoryBlocks?.length)
     ) {
-      console.log('[askAnyAssistant] ✅ Validation passed, returning assistantMessage')
+      console.log(
+        '[askAnyAssistant] ✅ Validation passed, returning assistantMessage'
+      )
       return assistantMessage
     }
-    
-    console.log('[askAnyAssistant] ⚠️ Validation failed, falling through to fallback')
-    
+
+    console.log(
+      '[askAnyAssistant] ⚠️ Validation failed, falling through to fallback'
+    )
   } catch (err) {
     llmError = err
     console.error('[askAnyAssistant] LLM error:', err)
@@ -377,19 +419,19 @@ What would you like to work on? Try asking:
       '[askAnyAssistant] Fallback triggered. LLM error object:',
       llmError
     )
-    
+
     // Extract useful error information
     const errorMessage = llmError?.message || String(llmError)
-    const isContextLengthError = errorMessage.toLowerCase().includes('context') || 
-                                 errorMessage.toLowerCase().includes('token') ||
-                                 errorMessage.toLowerCase().includes('length')
-    
+    const isContextLengthError =
+      errorMessage.toLowerCase().includes('context') ||
+      errorMessage.toLowerCase().includes('token') ||
+      errorMessage.toLowerCase().includes('length')
+
     if (isContextLengthError) {
       assistantMessage.comment =
         'The script is too long for the AI to process at once. Try asking about a specific scene or section instead of the entire script.'
     } else {
-      assistantMessage.comment =
-        `Sorry, I encountered an issue: ${errorMessage.slice(0, 200)}. Please try again or rephrase your input.`
+      assistantMessage.comment = `Sorry, I encountered an issue: ${errorMessage.slice(0, 200)}. Please try again or rephrase your input.`
     }
     return assistantMessage
   }

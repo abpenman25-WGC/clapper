@@ -21,11 +21,11 @@ const MAX_RECENT_PROJECTS = 10
  */
 export function getRecentProjects(): RecentProject[] {
   if (typeof window === 'undefined') return []
-  
+
   try {
     const stored = localStorage.getItem(STORAGE_KEY)
     if (!stored) return []
-    
+
     const projects: RecentProject[] = JSON.parse(stored)
     // Sort by most recent first
     return projects.sort((a, b) => b.lastAccessed - a.lastAccessed)
@@ -38,15 +38,17 @@ export function getRecentProjects(): RecentProject[] {
 /**
  * Add or update a recent project
  */
-export function addRecentProject(project: Omit<RecentProject, 'lastAccessed'>): void {
+export function addRecentProject(
+  project: Omit<RecentProject, 'lastAccessed'>
+): void {
   if (typeof window === 'undefined') return
-  
+
   try {
     const projects = getRecentProjects()
-    
+
     // Remove existing entry with same fileName if exists
-    const filtered = projects.filter(p => p.fileName !== project.fileName)
-    
+    const filtered = projects.filter((p) => p.fileName !== project.fileName)
+
     // Add new entry at the beginning
     const updated: RecentProject[] = [
       {
@@ -55,7 +57,7 @@ export function addRecentProject(project: Omit<RecentProject, 'lastAccessed'>): 
       },
       ...filtered,
     ].slice(0, MAX_RECENT_PROJECTS) // Keep only the most recent ones
-    
+
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
   } catch (err) {
     console.error('Failed to save recent project:', err)
@@ -67,10 +69,10 @@ export function addRecentProject(project: Omit<RecentProject, 'lastAccessed'>): 
  */
 export function removeRecentProject(fileName: string): void {
   if (typeof window === 'undefined') return
-  
+
   try {
     const projects = getRecentProjects()
-    const filtered = projects.filter(p => p.fileName !== fileName)
+    const filtered = projects.filter((p) => p.fileName !== fileName)
     localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered))
   } catch (err) {
     console.error('Failed to remove recent project:', err)
@@ -82,7 +84,7 @@ export function removeRecentProject(fileName: string): void {
  */
 export function clearRecentProjects(): void {
   if (typeof window === 'undefined') return
-  
+
   try {
     localStorage.removeItem(STORAGE_KEY)
   } catch (err) {
@@ -97,7 +99,7 @@ export function getProjectFileName(title: string): string {
   if (!title || title.trim() === '') {
     return 'untitled_project.clap'
   }
-  
+
   // Remove invalid filename characters and normalize
   const sanitized = title
     .trim()
@@ -105,7 +107,7 @@ export function getProjectFileName(title: string): string {
     .replace(/\s+/g, '_') // Replace whitespace with underscore
     .replace(/_+/g, '_') // Collapse multiple underscores
     .replace(/^_|_$/g, '') // Remove leading/trailing underscores
-  
+
   // Ensure it has .clap extension
   return sanitized.endsWith('.clap') ? sanitized : `${sanitized}.clap`
 }

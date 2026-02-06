@@ -46,16 +46,16 @@ export function TopMenuFile() {
   const saveKdenline = useIO((s) => s.saveKdenline)
 
   const hasBetaAccess = useUI((s) => s.hasBetaAccess)
-  
+
   // State for recent projects
   const [recentProjects, setRecentProjects] = useState<RecentProject[]>([])
-  
+
   // Load recent projects on mount and when menu opens
   useEffect(() => {
     const projects = getRecentProjects()
     setRecentProjects(projects)
   }, [])
-  
+
   const handleClearRecentProjects = () => {
     if (confirm('Clear all recent projects from the list?')) {
       clearRecentProjects()
@@ -69,24 +69,33 @@ export function TopMenuFile() {
       alert('No screenplay text to export')
       return
     }
-    
+
     console.log('🎬 copyScreenplayForTrelby:')
     console.log('  Screenplay length:', current.length, 'characters')
     console.log('  First 150 chars:', current.substring(0, 150))
-    console.log('  Last 150 chars:', current.substring(Math.max(0, current.length - 150)))
-    
+    console.log(
+      '  Last 150 chars:',
+      current.substring(Math.max(0, current.length - 150))
+    )
+
     const trelbyText = exportToTrelby(current)
-    
+
     console.log('  Trelby output length:', trelbyText.length, 'characters')
     console.log('  Trelby first 150 chars:', trelbyText.substring(0, 150))
-    console.log('  Trelby last 150 chars:', trelbyText.substring(Math.max(0, trelbyText.length - 150)))
-    
+    console.log(
+      '  Trelby last 150 chars:',
+      trelbyText.substring(Math.max(0, trelbyText.length - 150))
+    )
+
     // Copy to clipboard
-    navigator.clipboard.writeText(trelbyText)
+    navigator.clipboard
+      .writeText(trelbyText)
       .then(() => {
-        alert('Screenplay copied in Trelby format! You can now paste it into Trelby.')
+        alert(
+          'Screenplay copied in Trelby format! You can now paste it into Trelby.'
+        )
       })
-      .catch(err => {
+      .catch((err) => {
         console.error('Failed to copy to clipboard:', err)
         alert('Failed to copy to clipboard. Please try again.')
       })
@@ -277,9 +286,7 @@ export function TopMenuFile() {
             Export all assets (.zip)
           </MenubarItem>
           <MenubarSeparator />
-          <MenubarItem
-            onClick={copyScreenplayForTrelby}
-          >
+          <MenubarItem onClick={copyScreenplayForTrelby}>
             Copy screenplay for Trelby
           </MenubarItem>
           {/*

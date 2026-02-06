@@ -19,14 +19,14 @@ export function exportToTrelby(screenplayText: string): string {
 
   const lines = screenplayText.split('\n')
   const trelbyLines: string[] = []
-  
+
   let insideDialogue = false
   let previousLineWasCharacter = false
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]
     const trimmedLine = line.trim()
-    
+
     // Skip completely empty lines
     if (trimmedLine.length === 0) {
       insideDialogue = false
@@ -55,12 +55,13 @@ export function exportToTrelby(screenplayText: string): string {
     const isReasonableLength = trimmedLine.length > 0 && trimmedLine.length < 40
     const notSceneHeading = !/^(INT|EXT)/.test(trimmedLine)
     const noLowerCase = !/[a-z]/.test(trimmedLine)
-    
+
     if (isAllCaps && isReasonableLength && notSceneHeading && noLowerCase) {
       // Check if the next line looks like dialogue (indented or regular text)
       const nextLine = i + 1 < lines.length ? lines[i + 1].trim() : ''
-      const nextLineIsDialogue = nextLine.length > 0 && !/^(INT|EXT|FADE|CUT)/.test(nextLine)
-      
+      const nextLineIsDialogue =
+        nextLine.length > 0 && !/^(INT|EXT|FADE|CUT)/.test(nextLine)
+
       if (nextLineIsDialogue) {
         trelbyLines.push(`._${trimmedLine}`)
         insideDialogue = true
@@ -71,11 +72,11 @@ export function exportToTrelby(screenplayText: string): string {
 
     // Check if it's dialogue (line after character name, or indented)
     const isIndented = line.startsWith('    ') || line.startsWith('\t')
-    
+
     if (insideDialogue || previousLineWasCharacter || isIndented) {
       // Remove indentation for dialogue
       const dialogueLine = trimmedLine
-      
+
       if (previousLineWasCharacter) {
         // First line of dialogue after character
         trelbyLines.push(`>:${dialogueLine}`)
@@ -104,7 +105,7 @@ ${trelbyLines.join('\n')}
 
   console.log('🎬 exportToTrelby stats:')
   console.log('  Input lines:', lines.length)
-  console.log('  Output Trelby lines:', trelbyLines.length)  
+  console.log('  Output Trelby lines:', trelbyLines.length)
   console.log('  Last input line:', lines[lines.length - 1]?.trim())
   console.log('  Last Trelby line:', trelbyLines[trelbyLines.length - 1])
 
