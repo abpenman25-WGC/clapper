@@ -117,7 +117,6 @@ const MemoizedTextCell = React.memo(function TextCell({
                   anchorX="left"
                   anchorY="top"
                   fontWeight={400}
-                  depthTest={false}
                   renderOrder={999}
                   outlineWidth={0}
                 >
