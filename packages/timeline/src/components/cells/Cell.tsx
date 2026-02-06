@@ -1,5 +1,6 @@
 import { Suspense, useMemo } from "react"
-import { a } from "@react-spring/three"
+// TEMPORARILY DISABLED FOR REACT 19 MIGRATION
+// import { a } from "@react-spring/three"
 import { ClapSegmentCategory } from "@aitube/clap"
 
 import { useTimeline } from "@/hooks"
@@ -13,7 +14,8 @@ import { VideoCell } from "./VideoCell"
 import { TextCell } from "./TextCell"
 import { RedrawButton } from "./RedrawButton"
 import { AudioCell } from "./AudioCell"
-import { useThree } from "@react-three/fiber"
+// TEMPORARILY DISABLED FOR REACT 19 MIGRATION
+// import { useThree } from "@react-three/fiber"
 import { SegmentArea, SegmentPointerEvent } from "@/types/timeline"
 import { SegmentIcon } from "../icons/SegmentIcon"
 
@@ -25,7 +27,8 @@ export function Cell({
 }: {
   segment: TimelineSegment
 }) {
-  const { size } = useThree()
+  // TEMPORARILY DISABLED FOR REACT 19 MIGRATION
+  // const { size } = useThree()
   const showBetaFeatures = useTimeline(s => s.showBetaFeatures)
 
   // TODO JULIAN: we should optimize this component because it causes
@@ -100,105 +103,9 @@ export function Cell({
     -verticalCellPosition 
     + (cellHeight / 2)
 
-  return (
-    <a.mesh
-      key={s.id}
-      position={[
-        posX,
-        posY,
-        -3
-      ]}
-      onPointerMove={handleSegmentEvent({
-          eventType: SegmentPointerEvent.MOVE,
-          segment: s
-      })}
-
-      onPointerDown={handleSegmentEvent({
-        eventType: SegmentPointerEvent.DOWN,
-        segment: s
-      })}
-    
-      onPointerUp={handleSegmentEvent({
-        eventType: SegmentPointerEvent.UP,
-        segment: s
-      })}
-
-      onClick={handleSegmentEvent({
-        eventType: SegmentPointerEvent.CLICK,
-        segment: s,
-      })}
-      onContextMenu={(e) => {
-        console.log('TODO @julian: show the context menu')
-
-        e.stopPropagation()
-        return false
-      }}
-      onDoubleClick={handleSegmentEvent({
-        eventType: SegmentPointerEvent.DOUBLE_CLICK,
-        segment: s
-      })}
-      // onWheel={(e) => console.log('wheel spins')}
-      // onPointerUp={(e) => console.log('up')}
-      // onPointerDown={(e) => console.log('down')}
-      // onPointerOver={(e) => console.log('over')}
-      // onPointerOut={(e) => console.log('out')}
-
-      // onPointerMove={(e) => console.log('move')}
-      // onPointerMissed={() => console.log('missed')}
-      // onUpdate={(self) => console.log('props have been updated')}
-    >
-      <Suspense fallback={<group></group>}>
-       <SpecializedCell
-          segment={s}
-          cellWidth={cellWidth}
-          cellHeight={cellHeight}
-          isHovered={isHovered}
-          setHoveredSegment={setHoveredSegment}
-          durationInSteps={durationInSteps}
-          startTimeInSteps={startTimeInSteps}
-          colorScheme={colorScheme}
-          widthInPx={widthInPx}
-          widthInPxAfterZoom={widthInPxAfterZoom}
-          isResizing={isResizing}
-          track={tracks[s.track]}
-        />
-      </Suspense>
-       
-      {/*
-      if you manage to make this component work,
-      let me know.. 
-      
-      (s.category !== ClapSegmentCategory.IMAGE && 
-       s.category !== ClapSegmentCategory.VIDEO) 
-      && <SegmentIcon category={s.category} />
-      */}
-
-      {
-        // TODO also add the buttons to Dialogue, Sound, Music etc..
-        // also maybe fix the display, as when zoomed out it doesn't look good
-      (s.category === ClapSegmentCategory.IMAGE
-      || s.category === ClapSegmentCategory.VIDEO
-      || s.category === ClapSegmentCategory.DIALOGUE
-      || s.category === ClapSegmentCategory.SOUND
-      || s.category === ClapSegmentCategory.MUSIC
-      )
-      && <RedrawButton
-        segment={s}
-        cellWidth={cellWidth}
-        cellHeight={cellHeight}
-        isHovered={isHovered}
-        durationInSteps={durationInSteps}
-        /*
-        isBusy={
-          // TODO TO_GENERATE means pending,
-          // so we need an "in progress" status
-          // s.status === ClapSegmentStatus.TO_INTERPOLATE
-
-          inProgress
-        }
-        onClick={onRender}
-        */
-      />}
-    </a.mesh>
-  )
+  // TEMPORARILY DISABLED FOR REACT 19 MIGRATION - 3D TIMELINE RENDERING
+  // The timeline visualization is temporarily disabled while we wait for
+  // @react-three/fiber to support React 19
+  return null;
 }
+
