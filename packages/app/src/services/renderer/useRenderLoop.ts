@@ -33,7 +33,7 @@ export function useRenderLoop(): void {
   const currentSegmentKey = useRenderer((s) => s.currentSegmentKey)
   const preloadSegmentKey = useRenderer((s) => s.preloadSegmentKey)
 
-  const timeoutRef = useRef<NodeJS.Timeout>()
+  const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
 
   const setUserDefinedRenderingStrategies = useRenderer(
     (s) => s.setUserDefinedRenderingStrategies

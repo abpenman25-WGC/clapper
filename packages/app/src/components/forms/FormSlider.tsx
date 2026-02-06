@@ -4,6 +4,8 @@ import {
   ReactNode,
   useMemo,
   useRef,
+  ComponentPropsWithoutRef,
+  ElementRef,
 } from 'react'
 
 import { cn, getValidNumber, isValidNumber } from '@/lib/utils'
@@ -14,7 +16,7 @@ import { FormField } from './FormField'
 import { useTheme } from '@/services'
 import { Slider } from '../ui/slider'
 
-type SliderProps = React.ComponentProps<typeof Slider>
+type SliderProps = ComponentPropsWithoutRef<typeof Slider>
 
 export function FormSlider<T>(
   {

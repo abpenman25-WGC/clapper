@@ -13,7 +13,7 @@ export function EmbeddedPlayer() {
   const isInteractive = useTimeline((s) => s.isInteractive)
 
   const [isOverlayVisible, setOverlayVisible] = useState(true)
-  const overlayTimerRef = useRef<NodeJS.Timeout>()
+  const overlayTimerRef = useRef<NodeJS.Timeout | undefined>(undefined)
   // const videoLayerRef = useRef<HTMLDivElement>(null)
   // const segmentationLayerRef = useRef<HTMLDivElement>(null)
 

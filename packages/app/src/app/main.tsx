@@ -38,7 +38,10 @@ import { useQueryStringLoader } from '@/components/toolbars/top-menu/file/useQue
 import { useSetupIframeOnce } from './embed/useSetupIframeOnce'
 import { TimelineZoom } from '@/components/core/timeline/TimelineZoom'
 import { useBreakpoints } from '@/lib/hooks/useBreakpoints'
-import { getRecentProjects, type RecentProject } from '@/lib/utils/recentProjects'
+import {
+  getRecentProjects,
+  type RecentProject,
+} from '@/lib/utils/recentProjects'
 import { useOpenFilePicker } from '@/lib/hooks'
 
 export enum ClapperIntegrationMode {
@@ -52,10 +55,10 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
   const ref = useRef<HTMLDivElement>(null)
   const showWelcomeScreen = useUI((s) => s.showWelcomeScreen)
   const { openFilePicker } = useOpenFilePicker()
-  
+
   // State for recent projects
   const [recentProjects, setRecentProjects] = useState<RecentProject[]>([])
-  
+
   // Load recent projects when welcome screen is shown
   useEffect(() => {
     if (showWelcomeScreen) {
@@ -292,9 +295,11 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
           'flex h-full w-full items-center justify-center',
           styles.welcomeScreenBg
         )}
-        style={{
-          '--bg-image': theme.wallpaperBgImage,
-        } as React.CSSProperties}
+        style={
+          {
+            '--bg-image': theme.wallpaperBgImage,
+          } as React.CSSProperties
+        }
       >
         <div
           className={cn(
@@ -327,9 +332,11 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
             Welcome to{' '}
             <span
               className={styles.clapperPrimaryColor}
-              style={{
-                '--primary-color': theme.defaultPrimaryColor,
-              } as React.CSSProperties}
+              style={
+                {
+                  '--primary-color': theme.defaultPrimaryColor,
+                } as React.CSSProperties
+              }
             >
               Clapper
             </span>
@@ -339,7 +346,7 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
             <p>A free and open-source AI video editor,</p>
             <p>designed for the age of generative filmmaking.</p>
           </div>
-          
+
           {recentProjects.length > 0 && (
             <div className="mt-8 flex flex-col items-center space-y-4">
               <h2 className="text-xl font-semibold">Recent Projects</h2>
@@ -390,7 +397,7 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
         style={
           (isIframe || windowLayout === UIWindowLayout.GRID
             ? { '--bg-color': theme.defaultBgColor }
-            : { '--bg-image': theme.wallpaperBgImage }) as React.CSSProperties
+            : { '--bg-image': theme.wallpaperBgImage }) as Record<string, string | undefined>
         }
       >
         {isIframe

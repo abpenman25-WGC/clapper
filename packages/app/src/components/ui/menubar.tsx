@@ -147,10 +147,11 @@ const Menubar = React.forwardRef<
     return React.Children.map(items, (child) => {
       if (React.isValidElement(child)) {
         if (child.type === MenubarMenu) {
-          const trigger = child.props.children.find(
+          const props = child.props as any
+          const trigger = props.children.find(
             (c: React.ReactElement) => c.type === MenubarTrigger
           )
-          const content = child.props.children.find(
+          const content = props.children.find(
             (c: React.ReactElement) => c.type === MenubarContent
           )
 
@@ -160,22 +161,24 @@ const Menubar = React.forwardRef<
             </MobileMenuItem>
           )
         } else if (child.type === MenubarItem) {
+          const props = child.props as any
           return (
             <MobileMenuItem
-              label={child.props.children}
+              label={props.children}
               onClick={() => {
-                if (child.props.onClick) {
-                  child.props.onClick()
+                if (props.onClick) {
+                  props.onClick()
                 }
                 setIsMobileMenuOpen(false)
               }}
             />
           )
         } else if (child.type === MenubarSub) {
-          const subTrigger = child.props.children.find(
+          const props = child.props as any
+          const subTrigger = props.children.find(
             (c: React.ReactElement) => c.type === MenubarSubTrigger
           )
-          const subContent = child.props.children.find(
+          const subContent = props.children.find(
             (c: React.ReactElement) => c.type === MenubarSubContent
           )
           return (

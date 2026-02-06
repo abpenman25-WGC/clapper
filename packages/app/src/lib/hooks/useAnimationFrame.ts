@@ -6,8 +6,8 @@ export function useAnimationFrame(
 ) {
   // Use useRef for mutable variables that we want to persist
   // without triggering a re-render on their change
-  const requestRef = useRef<number>()
-  const previousTimeRef = useRef<number>()
+  const requestRef = useRef<number | undefined>(undefined)
+  const previousTimeRef = useRef<number | undefined>(undefined)
 
   const animate = (time: number) => {
     if (previousTimeRef.current != undefined) {
