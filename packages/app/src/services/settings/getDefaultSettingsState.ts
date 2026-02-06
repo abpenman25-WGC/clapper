@@ -62,6 +62,7 @@ export function getDefaultSettingsState(): SettingsState {
       inputValues: {},
       nonCommercial: false,
     }),
+    imagePromptPrefix: '',
     imagePromptSuffix: 'high quality, beautiful, amazing, intricate details',
     imageNegativePrompt:
       'black banding, ugly, imperfect, cropped, low resolution',
@@ -71,7 +72,8 @@ export function getDefaultSettingsState(): SettingsState {
       'black banding, ugly, imperfect, cropped, low resolution',
 
     // ...existing code...
-    // Removed deprecated assistantTurboWorkflow and duplicated fields
+    // Added back required workflow fields
+    assistantTurboWorkflow: '',
     imageGenerationWorkflow: '',
     imageGenerationTurboWorkflow: '',
     imageFaceswapWorkflow: '',
@@ -131,90 +133,92 @@ export function getDefaultSettingsState(): SettingsState {
     // "models/HuggingFaceH4/zephyr-7b-beta"
     // "models/mistralai/Mixtral-8x7B-Instruct-v0.1",
 
-    huggingFaceModelForAssistant: "models/mistralai/Mixtral-8x7B-Instruct-v0.1",
-    huggingFaceModelForImage: "models/sd-community/sdxl-flash",
-    huggingFaceModelForImageDepth: "",
-    huggingFaceModelForImageSegmentation: "",
-    huggingFaceModelForImageUpscaling: "",
+    huggingFaceModelForAssistant: 'models/mistralai/Mixtral-8x7B-Instruct-v0.1',
+    huggingFaceModelForImage: 'models/sd-community/sdxl-flash',
+    huggingFaceModelForImageDepth: '',
+    huggingFaceModelForImageSegmentation: '',
+    huggingFaceModelForImageUpscaling: '',
 
     // huggingFaceModelForVideo: "spaces/jbilcke-hf/hallo-api",
-    huggingFaceModelForVideo: "spaces/hpcai-tech/open-sora",
-    huggingFaceModelForVideoDepth: "",
-    huggingFaceModelForVideoSegmentation: "",
-    huggingFaceModelForVideoUpscaling: "",
+    huggingFaceModelForVideo: 'spaces/hpcai-tech/open-sora',
+    huggingFaceModelForVideoDepth: '',
+    huggingFaceModelForVideoSegmentation: '',
+    huggingFaceModelForVideoUpscaling: '',
 
-    huggingFaceModelForVoice: "",
-    huggingFaceModelForSound: "",
-    huggingFaceModelForMusic: "",
-  
-    replicateModelForImage: "chenxwh/sdxl-flash:001bb81139b01780380407b4106ac681df46108e002eafbeb9ccb2d8faca42e1",
-    replicateModelForImageDepth: "",
-    replicateModelForImageSegmentation: "",
-    replicateModelForImageUpscaling: "",
-    
+    huggingFaceModelForVoice: '',
+    huggingFaceModelForSound: '',
+    huggingFaceModelForMusic: '',
+
+    replicateModelForImage:
+      'chenxwh/sdxl-flash:001bb81139b01780380407b4106ac681df46108e002eafbeb9ccb2d8faca42e1',
+    replicateModelForImageDepth: '',
+    replicateModelForImageSegmentation: '',
+    replicateModelForImageUpscaling: '',
+
     // note: this model doesn't support width and height parameters
-    replicateModelForVideo: "camenduru/animatediff-lightning-4-step:be39c6d599942831314b770f03cfd062bfd0faa8cc52e9289bcce830b721fcb6",
-    replicateModelForVideoDepth: "",
-    replicateModelForVideoSegmentation: "",
-    replicateModelForVideoUpscaling: "",
-    
-    replicateModelForVoice: "lucataco/xtts-v2",
-    replicateModelForSound: "sepal/audiogen",
-    replicateModelForMusic: "meta/musicgen",
-  
-    stabilityAiModelForImage: "",
-    stabilityAiModelForVideo: "",
-    stabilityAiModelForVoice: "",
-    stabilityAiModelForSound: "",
-    stabilityAiModelForMusic: "",
-  
-    fireworksAiModelForAssistant: "",
-    fireworksAiModelForImage: "stability/sd3",
-    fireworksAiModelForVideo: "",
-    fireworksAiModelForVoice: "",
-    fireworksAiModelForSound: "",
-    fireworksAiModelForMusic: "",
-  
-    falAiModelForImage: "fal-ai/fast-sdxl", // "fal-ai/fast-lightning-sdxl",
-    falAiModelForImageDepth: "",
-    falAiModelForImageSegmentation: "",
-    falAiModelForImageUpscaling: "",
-    falAiModelForVideo: "fal-ai/stable-video",
-    falAiModelForVoice: "fal-ai/metavoice-v1",
-    falAiModelForSound: "fal-ai/stable-audio",
-    falAiModelForMusic: "fal-ai/stable-audio",
-  
-    modelsLabModelForImage: "",
-    modelsLabModelForVideo: "",
-    modelsLabModelForVoice: "",
-    modelsLabModelForSound: "",
-    modelsLabModelForMusic: "",
+    replicateModelForVideo:
+      'camenduru/animatediff-lightning-4-step:be39c6d599942831314b770f03cfd062bfd0faa8cc52e9289bcce830b721fcb6',
+    replicateModelForVideoDepth: '',
+    replicateModelForVideoSegmentation: '',
+    replicateModelForVideoUpscaling: '',
 
-    openaiModelForAssistant: "gpt-4o-mini",
-    openaiModelForImage: "dall-e-3",
-    openaiModelForVideo: "sora",
-    openaiModelForVoice: "v1",
+    replicateModelForVoice: 'lucataco/xtts-v2',
+    replicateModelForSound: 'sepal/audiogen',
+    replicateModelForMusic: 'meta/musicgen',
 
-    groqModelForAssistant: "llama-3.3-70b-versatile",
-  
-    googleModelForAssistant: "gemini-1.5-pro-001",
-    googleModelForImage: "imagen",
-    googleModelForVideo: "veo",
-    googleModelForVoice: "v1",
-    googleModelForMusic: "MusicLM",
+    stabilityAiModelForImage: '',
+    stabilityAiModelForVideo: '',
+    stabilityAiModelForVoice: '',
+    stabilityAiModelForSound: '',
+    stabilityAiModelForMusic: '',
+
+    fireworksAiModelForAssistant: '',
+    fireworksAiModelForImage: 'stability/sd3',
+    fireworksAiModelForVideo: '',
+    fireworksAiModelForVoice: '',
+    fireworksAiModelForSound: '',
+    fireworksAiModelForMusic: '',
+
+    falAiModelForImage: 'fal-ai/fast-sdxl', // "fal-ai/fast-lightning-sdxl",
+    falAiModelForImageDepth: '',
+    falAiModelForImageSegmentation: '',
+    falAiModelForImageUpscaling: '',
+    falAiModelForVideo: 'fal-ai/stable-video',
+    falAiModelForVoice: 'fal-ai/metavoice-v1',
+    falAiModelForSound: 'fal-ai/stable-audio',
+    falAiModelForMusic: 'fal-ai/stable-audio',
+
+    modelsLabModelForImage: '',
+    modelsLabModelForVideo: '',
+    modelsLabModelForVoice: '',
+    modelsLabModelForSound: '',
+    modelsLabModelForMusic: '',
+
+    openaiModelForAssistant: 'gpt-4o-mini',
+    openaiModelForImage: 'dall-e-3',
+    openaiModelForVideo: 'sora',
+    openaiModelForVoice: 'v1',
+
+    groqModelForAssistant: 'llama-3.3-70b-versatile',
+
+    googleModelForAssistant: 'gemini-1.5-pro-001',
+    googleModelForImage: 'imagen',
+    googleModelForVideo: 'veo',
+    googleModelForVoice: 'v1',
+    googleModelForMusic: 'MusicLM',
 
     // Claude 3 stats:
     // Context window	200K*
     // *~150K words, ~680K unicode characters
     // Max output	4096 tokens
-    anthropicModelForAssistant: "claude-3-5-sonnet-20240620",
+    anthropicModelForAssistant: 'claude-3-5-sonnet-20240620',
 
-    elevenLabsModelForVoice: "v1",
-    elevenLabsModelForSound: "v1",
+    elevenLabsModelForVoice: 'v1',
+    elevenLabsModelForSound: 'v1',
 
-    kitsAiModelForVoice: "",
-    cohereModelForAssistant: "command-r-plus",
-    mistralAiModelForAssistant: "open-mixtral-8x22b",
+    kitsAiModelForVoice: '',
+    cohereModelForAssistant: 'command-r-plus',
+    mistralAiModelForAssistant: 'open-mixtral-8x22b',
   }
   return state
 }
