@@ -44,15 +44,23 @@
     "packages/clapper-services",
     "packages/app"
   ],
+  "pnpm": {
+    "overrides": {
+      "react": "^19.2.4",
+      "react-dom": "^19.2.4",
+      "@types/react": "^19.2.13",
+      "@types/react-dom": "^19.2.3"
+    }
+  },
   "dependencies": {
     "@swc/helpers": "^0.5.18",
-    "@types/react": "^18.3.27",
-    "@types/react-dom": "^18.3.7",
+    "@types/react": "^19.2.13",
+    "@types/react-dom": "^19.2.3",
     "caniuse-lite": "^1.0.30001767",
     "mediainfo.js": "^0.3.7",
-    "next": "14.2.35",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "next": "16.1.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "resolve": "^1.22.11",
     "styled-jsx": "^5.1.7"
   },
