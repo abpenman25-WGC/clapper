@@ -81,6 +81,12 @@ export function SettingsSectionProvider() {
   const googleApiKey = useSettings((s) => s.googleApiKey)
   const setGoogleApiKey = useSettings((s) => s.setGoogleApiKey)
 
+  const googleProjectId = useSettings((s) => s.googleProjectId)
+  const setGoogleProjectId = useSettings((s) => s.setGoogleProjectId)
+
+  const googleLocation = useSettings((s) => s.googleLocation)
+  const setGoogleLocation = useSettings((s) => s.setGoogleLocation)
+
   const anthropicApiKey = useSettings((s) => s.anthropicApiKey)
   const setAnthropicApiKey = useSettings((s) => s.setAnthropicApiKey)
 
@@ -270,6 +276,25 @@ export function SettingsSectionProvider() {
               defaultValue={defaultSettings.googleApiKey}
               onChange={setGoogleApiKey}
               type={apiKeyType}
+            />
+
+            <FormInput
+              label={
+                <GetItHere href="https://console.cloud.google.com/projectselector">
+                  Google Project ID
+                </GetItHere>
+              }
+              value={googleProjectId}
+              defaultValue={defaultSettings.googleProjectId}
+              onChange={setGoogleProjectId}
+            />
+
+            <FormInput
+              label="Google Location (Region)"
+              value={googleLocation}
+              defaultValue={defaultSettings.googleLocation}
+              onChange={setGoogleLocation}
+              placeholder="us-central1"
             />
 
             <FormInput

@@ -18,7 +18,6 @@ import { ChatAnthropic } from '@langchain/anthropic'
 import { ChatCohere } from '@langchain/cohere'
 import { ChatMistralAI } from '@langchain/mistralai'
 import { ChatVertexAI } from '@langchain/google-vertexai'
-import { ChatGoogleGenerativeAI } from '@langchain/google-genai'
 // to properly support Replicate and Hugging Face we need the following packages:
 // import { ChatReplicate } from "@langchain/replicate"
 // import { ChatHuggingFace } from "@langchain/huggingface"
@@ -161,14 +160,12 @@ export async function askAnyAssistant({
                   // temperature: 0.7,
                 })
               : provider === ClapWorkflowProvider.GOOGLE
-                ? new ChatGoogleGenerativeAI({
-                    apiKey: getApiKey(
-                      settings.googleApiKey,
-                      builtinProviderCredentialsGoogle,
-                      settings.clapperApiKey
-                    ),
-                    modelName,
+                ? new ChatVertexAI({
+                    model: modelName,
+                    project: settings.googleProjectId,
+                    location: settings.googleLocation || 'us-central1',
                     // temperature: 0.7,
+                    // Credentials are loaded from GOOGLE_APPLICATION_CREDENTIALS env var
                   })
                 : undefined
   ) as RunnableLike<ChatPromptValueInterface, AssistantMessage> | undefined

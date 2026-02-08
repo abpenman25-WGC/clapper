@@ -162,6 +162,22 @@ export const useSettings = create<SettingsStore>()(
           ),
         })
       },
+      setGoogleProjectId: (googleProjectId?: string) => {
+        set({
+          googleProjectId: getValidString(
+            googleProjectId,
+            getDefaultSettingsState().googleProjectId
+          ),
+        })
+      },
+      setGoogleLocation: (googleLocation?: string) => {
+        set({
+          googleLocation: getValidString(
+            googleLocation,
+            getDefaultSettingsState().googleLocation
+          ),
+        })
+      },
       setAnthropicApiKey: (anthropicApiKey?: string) => {
         set({
           anthropicApiKey: getValidString(

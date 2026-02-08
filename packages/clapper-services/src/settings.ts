@@ -18,6 +18,8 @@ export type BaseSettings = {
   huggingFaceApiKey: string
   openaiApiKey: string
   googleApiKey: string
+  googleProjectId: string
+  googleLocation: string
   groqApiKey: string
   anthropicApiKey: string
   elevenLabsApiKey: string
@@ -241,6 +243,8 @@ export type SettingsControls = {
   setFalAiApiKey: (falAiApiKey?: string) => void
   setOpenaiApiKey: (openaiApiKey?: string) => void
   setGoogleApiKey: (googleApiKey?: string) => void
+  setGoogleProjectId: (googleProjectId?: string) => void
+  setGoogleLocation: (googleLocation?: string) => void
   setGroqApiKey: (groqApiKey?: string) => void
   setFireworksAiApiKey: (fireworksAiApiKey?: string) => void
   setAnthropicApiKey: (anthropicApiKey?: string) => void

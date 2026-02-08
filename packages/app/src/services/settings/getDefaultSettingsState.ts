@@ -25,6 +25,8 @@ export function getDefaultSettingsState(): SettingsState {
     aiTubeApiKey: '',
     openaiApiKey: '',
     googleApiKey: '',
+    googleProjectId: 'gen-lang-client-0254625242',
+    googleLocation: 'us-central1',
     groqApiKey: '',
     anthropicApiKey: '',
     elevenLabsApiKey: '',
