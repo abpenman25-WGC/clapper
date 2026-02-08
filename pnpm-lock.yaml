@@ -111,6 +111,9 @@ importers:
       '@langchain/core':
         specifier: 0.3.18
         version: 0.3.18
+      '@langchain/google-genai':
+        specifier: 0.1.0
+        version: 0.1.0(@langchain/core@0.3.18)(zod@3.25.3)
       '@langchain/google-vertexai':
         specifier: 0.1.2
         version: 0.1.2(@langchain/core@0.3.18)(zod@3.25.3)
@@ -380,7 +383,7 @@ importers:
         version: 3.25.3
       zustand:
         specifier: 5.0.11
-        version: 5.0.11(@types/react@19.2.13)(react@19.2.4)
+        version: 5.0.11(@types/react@19.2.13)(react@19.2.4)(use-sync-external-store@1.6.0)
       zx:
         specifier: 8.1.4
         version: 8.1.4
@@ -2816,6 +2819,11 @@ packages:
     resolution: {integrity: sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==}
     dev: true
 
+  /@google/generative-ai@0.7.1:
+    resolution: {integrity: sha512-WTjMLLYL/xfA5BW6xAycRPiAX7FNHKAxrid/ayqC1QMam0KAK0NbMeS9Lubw80gVg5xFMLE+H7pw4wdNzTOlxw==}
+    engines: {node: '>=18.0.0'}
+    dev: false
+
   /@gradio/client@1.8.0(@types/node@25.2.1):
     resolution: {integrity: sha512-0Nxi+AuEL/ICdnZ6TSxRif1yS2A0HtJnggtWhN/8sqwFxx5UAGN29/vnJONcVfe3g9nctDJCvik3uDHkzQHFGw==}
     engines: {node: '>=18.0.0'}
@@ -3706,6 +3714,19 @@ packages:
     transitivePeerDependencies:
       - encoding
       - supports-color
+      - zod
+    dev: false
+
+  /@langchain/google-genai@0.1.0(@langchain/core@0.3.18)(zod@3.25.3):
+    resolution: {integrity: sha512-6rIba77zJVMj+048tLfkCBrkFbfAMiT+AfLEsu5s+CFoFmXMiI/dbKeDL4vhUWrJVb9uL4ZZyrnl0nKxyEKYgA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@langchain/core': '>=0.2.21 <0.4.0'
+    dependencies:
+      '@google/generative-ai': 0.7.1
+      '@langchain/core': 0.3.18
+      zod-to-json-schema: 3.25.1(zod@3.25.3)
+    transitivePeerDependencies:
       - zod
     dev: false
 
@@ -5837,7 +5858,7 @@ packages:
       tunnel-rat: 0.1.2(@types/react@19.2.13)(react@19.2.4)
       utility-types: 3.11.0
       uuid: 9.0.1
-      zustand: 5.0.11(@types/react@19.2.13)(react@19.2.4)
+      zustand: 5.0.11(@types/react@19.2.13)(react@19.2.4)(use-sync-external-store@1.6.0)
     transitivePeerDependencies:
       - '@types/react'
       - '@types/three'
@@ -17075,28 +17096,6 @@ packages:
       '@types/react': 19.2.13
       react: 19.2.4
       use-sync-external-store: 1.2.0(react@19.2.4)
-    dev: false
-
-  /zustand@5.0.11(@types/react@19.2.13)(react@19.2.4):
-    resolution: {integrity: sha512-fdZY+dk7zn/vbWNCYmzZULHRrss0jx5pPFiOuMZ/5HJN6Yv3u+1Wswy/4MpZEkEGhtNH+pwxZB8OKgUBPzYAGg==}
-    engines: {node: '>=12.20.0'}
-    peerDependencies:
-      '@types/react': ^19.2.13
-      immer: '>=9.0.6'
-      react: ^19.2.4
-      use-sync-external-store: '>=1.2.0'
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      immer:
-        optional: true
-      react:
-        optional: true
-      use-sync-external-store:
-        optional: true
-    dependencies:
-      '@types/react': 19.2.13
-      react: 19.2.4
     dev: false
 
   /zustand@5.0.11(@types/react@19.2.13)(react@19.2.4)(use-sync-external-store@1.6.0):
