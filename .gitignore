@@ -29,6 +29,21 @@ build-log.txt
 # local env files
 .env*.local
 .env
+.env.production
+.env.development
+
+# google credentials and service accounts
+google-credentials.json
+*-credentials.json
+service-account*.json
+credentials/
+.clapper/credentials/
+
+# api keys and secrets
+*secret*.json
+*apikey*.json
+*.pem
+*.key
 
 # vercel
 .vercel
