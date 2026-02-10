@@ -23,20 +23,22 @@ const MemoizedTextCell = React.memo(function TextCell({
 }: SpecializedCellProps) {
 
 
-  const padding = 1.5;
+  const padding = 2.5;  // Even more padding
   const fontSize = 13;
-  const lineHeight = 2.2;  // Even larger line spacing
+  const lineHeight = 1.9;  // Very generous line spacing
   
   // Use the raw text without any processing for display  
   const text = s.label || s.prompt || "";
   
-  // Use clamping just to calculate lines for height, with huge width
+  // Use proper text wrapping with actual cell width
   const lines = React.useMemo(() => {
-    return clampWebGLText(text, (widthInPx - padding * 2) * 100, Number.MAX_SAFE_INTEGER);
+    // Calculate available width for text - very conservative with lots of margin
+    const availableWidth = widthInPx - (padding * 8);
+    return clampWebGLText(text, availableWidth, Number.MAX_SAFE_INTEGER);
   }, [text, widthInPx, padding]);
   
-  // Calculate height with TRIPLE the needed space to ensure no clipping
-  const calculatedHeight = (lines.length * fontSize * lineHeight * 3) + (padding * 30);
+  // Calculate height with VERY generous spacing to ensure all lines are fully visible
+  const calculatedHeight = (lines.length * fontSize * lineHeight) + (padding * 20);
   const dynamicCellHeight = Math.max(cellHeight, calculatedHeight);
 
   return (
@@ -108,8 +110,8 @@ const MemoizedTextCell = React.memo(function TextCell({
                 <Text
                   key={index}
                   position={[
-                    (-widthInPx / 2) + (cellWidth / 4),
-                    (dynamicCellHeight / 2) - (padding * 10) - (index * fontSize * lineHeight),
+                    (-widthInPx / 2) + (padding * 4),
+                    (dynamicCellHeight / 2) - (padding * 4) - (index * fontSize * lineHeight),
                     1
                   ]}
                   fontSize={fontSize}
@@ -119,6 +121,7 @@ const MemoizedTextCell = React.memo(function TextCell({
                   fontWeight={400}
                   renderOrder={999}
                   outlineWidth={0}
+                  maxWidth={widthInPx - (padding * 8)}
                 >
                   {line}
                 </Text>

@@ -27,13 +27,12 @@ function getTextWidthInCanvas(text: string, font: string) {
 const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()_-"+=,;:?/\\&@#'.split('')
 const charLength = characters.reduce((acc, char) => ({
   ...acc,
-  [char]: getTextWidthInCanvas(char, "bold Arial")
+  [char]: getTextWidthInCanvas(char, "400 13px Arial")  // Match actual WebGL rendering
 }), {} as Record<string, number>)
-let defaultCharLength = 5.561523437
+let defaultCharLength = 7.5  // Updated for 13px font size
 
-// change this whenever you modify the font size
-// Drastically reduced to prevent any truncation - characters are much narrower than estimated
-const webglFontWidthFactor = 0.3
+// Match the actual fontSize used in TextCell.tsx
+const webglFontWidthFactor = 1.0  // Direct 1:1 mapping since we now measure at actual size
 
 /**
  * Compute the text of a simple Arial text in a WebGL environmment
@@ -43,24 +42,9 @@ const webglFontWidthFactor = 0.3
  * @returns 
  */
 export function getWebGLCharWidth(char: string = ""): number {
-
-  const cellWidthInPixels = useTimeline.getState().cellWidth
-
-  // Much lower multiplier to prevent truncation - actual character widths are smaller
-  let responsiveHack = 0.3
-
-  if (cellWidthInPixels < 16) {
-    responsiveHack = 0.35
-  } else if (cellWidthInPixels < 24) {
-    responsiveHack = 0.33
-  } else if (cellWidthInPixels < 48) {
-    responsiveHack = 0.31
-  } else if (cellWidthInPixels < 128) {
-    responsiveHack = 0.3
-  } else {
-    responsiveHack = 0.28
-  }
-  return responsiveHack * webglFontWidthFactor * (charLength[char] || defaultCharLength)
+  // Be very conservative to prevent any overflow
+  const scaleFactor = 0.85  // Much more conservative to ensure text always fits
+  return scaleFactor * webglFontWidthFactor * (charLength[char] || defaultCharLength)
 }
 
 /**
@@ -90,35 +74,45 @@ export function clampWebGLText(
   let width = 0
   let lines: string[] = []
 
-  const text = `${input || ""}`.replace('\n', ' ').trim()
-  const characters = text.split('')
-  for (const c of characters) {
-    width += getWebGLCharWidth(c)
-    buffer += c
-    if (width >= maxWidthInPixels) {
-      // Check if we've reached max lines before adding more
+  // Normalize text: collapse multiple spaces and ensure punctuation stays with preceding word
+  const text = `${input || ""}`
+    .replace(/\n/g, ' ')  // Replace newlines with spaces
+    .replace(/\s+/g, ' ')  // Collapse multiple spaces
+    .replace(/\s+([.,!?;:])/g, '$1')  // Remove space before punctuation
+    .replace(/([.,!?;:])\s+/g, '$1 ')  // Normalize space after punctuation
+    .trim()
+  
+  const words = text.split(' ').filter(w => w.length > 0)  // Filter empty strings
+  
+  for (let i = 0; i < words.length; i++) {
+    const word = words[i]
+    const wordWidth = getWebGLTextWidth(word)
+    const spaceWidth = getWebGLCharWidth(' ')
+    
+    // Width of current buffer + space + word
+    const testWidth = buffer.length > 0 
+      ? width + spaceWidth + wordWidth 
+      : wordWidth
+    
+    if (testWidth > maxWidthInPixels && buffer.length > 0) {
+      // Word doesn't fit, push current buffer to new line
       if (lines.length >= maxNbLines - 1) {
-        // Last line - truncate with ellipsis if needed
-        const words = buffer.split(" ")
-        if (words.length > 1) {
-          lines.push(words.slice(0, -1).join(" ") + "...")
-        } else {
-          lines.push(buffer + "...")
-        }
+        // Last line - add ellipsis
+        lines.push(buffer + "...")
         return lines
       }
       
-      // Never truncate with "..", just wrap to next line
-      const words = buffer.split(" ")
-      const lastWord = (words.at(-1) || "")
-      if (lastWord.length) {
-        lines.push(words.slice(0, -1).join(" "))
-        buffer = lastWord
-        width = getWebGLTextWidth(lastWord)
+      lines.push(buffer.trim())  // Trim any trailing spaces
+      buffer = word
+      width = wordWidth
+    } else {
+      // Word fits, add it to buffer
+      if (buffer.length > 0) {
+        buffer += ' ' + word
+        width += spaceWidth + wordWidth
       } else {
-         lines.push(buffer)
-         buffer = ""
-         width = 0
+        buffer = word
+        width = wordWidth
       }
     }
   }
@@ -130,7 +124,7 @@ export function clampWebGLText(
       lines[maxNbLines - 1] = lines[maxNbLines - 1] + "..."
       return lines.slice(0, maxNbLines)
     }
-    lines.push(buffer)
+    lines.push(buffer.trim())  // Trim any trailing spaces
   }
   
   return lines
