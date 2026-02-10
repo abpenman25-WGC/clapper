@@ -163,7 +163,7 @@ export async function askAnyAssistant({
                 ? new ChatVertexAI({
                     model: modelName,
                     project: settings.googleProjectId,
-                    location: settings.googleLocation || 'us-west1',
+                    location: settings.googleLocation || 'us-central1',
                     // temperature: 0.7,
                     // Credentials are loaded from GOOGLE_APPLICATION_CREDENTIALS env var
                   })
