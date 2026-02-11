@@ -74,20 +74,56 @@ export function clampWebGLText(
   let width = 0
   let lines: string[] = []
 
-  // Normalize text: collapse multiple spaces and ensure punctuation stays with preceding word
+  // Normalize text: collapse multiple spaces, preserve punctuation properly
   const text = `${input || ""}`
     .replace(/\n/g, ' ')  // Replace newlines with spaces
     .replace(/\s+/g, ' ')  // Collapse multiple spaces
-    .replace(/\s+([.,!?;:])/g, '$1')  // Remove space before punctuation
-    .replace(/([.,!?;:])\s+/g, '$1 ')  // Normalize space after punctuation
     .trim()
   
-  const words = text.split(' ').filter(w => w.length > 0)  // Filter empty strings
+  // Split by spaces but keep punctuation attached to words
+  const words = text.split(' ').filter(w => w.length > 0)
   
   for (let i = 0; i < words.length; i++) {
     const word = words[i]
     const wordWidth = getWebGLTextWidth(word)
     const spaceWidth = getWebGLCharWidth(' ')
+    
+    // Handle words that are individually too long
+    if (wordWidth > maxWidthInPixels) {
+      // If we have content in buffer, flush it first
+      if (buffer.length > 0) {
+        if (lines.length >= maxNbLines) {
+          lines[maxNbLines - 1] = lines[maxNbLines - 1] + "..."
+          return lines.slice(0, maxNbLines)
+        }
+        lines.push(buffer.trim())
+        buffer = ""
+        width = 0
+      }
+      
+      // Truncate the long word to fit
+      let truncatedWord = ""
+      let truncatedWidth = 0
+      const ellipsisWidth = getWebGLTextWidth("...")
+      const targetWidth = maxWidthInPixels - ellipsisWidth
+      
+      for (let j = 0; j < word.length; j++) {
+        const char = word[j]
+        const charWidth = getWebGLCharWidth(char)
+        if (truncatedWidth + charWidth > targetWidth) {
+          break
+        }
+        truncatedWord += char
+        truncatedWidth += charWidth
+      }
+      
+      if (lines.length >= maxNbLines) {
+        lines[maxNbLines - 1] = truncatedWord + "..."
+        return lines.slice(0, maxNbLines)
+      }
+      lines.push(truncatedWord + "...")
+      continue
+    }
     
     // Width of current buffer + space + word
     const testWidth = buffer.length > 0 
@@ -96,13 +132,13 @@ export function clampWebGLText(
     
     if (testWidth > maxWidthInPixels && buffer.length > 0) {
       // Word doesn't fit, push current buffer to new line
-      if (lines.length >= maxNbLines - 1) {
-        // Last line - add ellipsis
-        lines.push(buffer + "...")
-        return lines
+      if (lines.length >= maxNbLines) {
+        // Reached max lines, truncate and return
+        lines[maxNbLines - 1] = lines[maxNbLines - 1].trim() + "..."
+        return lines.slice(0, maxNbLines)
       }
       
-      lines.push(buffer.trim())  // Trim any trailing spaces
+      lines.push(buffer.trim())
       buffer = word
       width = wordWidth
     } else {
@@ -117,17 +153,17 @@ export function clampWebGLText(
     }
   }
 
-  if (buffer.length) {
-    // Check if we've exceeded max lines
+  // Add remaining buffer as final line
+  if (buffer.length > 0) {
     if (lines.length >= maxNbLines) {
       // Replace last line with truncated version
-      lines[maxNbLines - 1] = lines[maxNbLines - 1] + "..."
+      lines[maxNbLines - 1] = lines[maxNbLines - 1].trim() + "..."
       return lines.slice(0, maxNbLines)
     }
-    lines.push(buffer.trim())  // Trim any trailing spaces
+    lines.push(buffer.trim())
   }
   
-  return lines
+  return lines.length > 0 ? lines : [""]
 }
 
 export function clampWebGLTextNaive(input: string = "", maxWidthInPixels: number = 0): string {

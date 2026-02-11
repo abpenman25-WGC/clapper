@@ -23,9 +23,9 @@ const MemoizedTextCell = React.memo(function TextCell({
 }: SpecializedCellProps) {
 
 
-  const padding = 2.5;  // Even more padding
+  const padding = 2.5;
   const fontSize = 13;
-  const lineHeight = 1.9;  // Very generous line spacing
+  const lineHeight = 1.9;
   
   // Use the raw text without any processing for display  
   const text = s.label || s.prompt || "";
@@ -34,11 +34,18 @@ const MemoizedTextCell = React.memo(function TextCell({
   const lines = React.useMemo(() => {
     // Calculate available width for text - very conservative with lots of margin
     const availableWidth = widthInPx - (padding * 8);
+    // Allow unlimited lines - will be constrained by available height
     return clampWebGLText(text, availableWidth, Number.MAX_SAFE_INTEGER);
   }, [text, widthInPx, padding]);
   
-  // Calculate height with VERY generous spacing to ensure all lines are fully visible
-  const calculatedHeight = (lines.length * fontSize * lineHeight) + (padding * 20);
+  // Calculate height with proper spacing to ensure ALL lines are fully visible
+  // Each line needs lineHeight space, plus we need padding at top and bottom
+  const topPadding = padding * 6;  // Increased top padding
+  const lineSpacing = fontSize * lineHeight;
+  const totalTextHeight = lines.length * lineSpacing;
+  // Add extra bottom padding to ensure descenders of last line are visible
+  const bottomPadding = lineSpacing + (padding * 8);
+  const calculatedHeight = topPadding + totalTextHeight + bottomPadding;
   const dynamicCellHeight = Math.max(cellHeight, calculatedHeight);
 
   return (
@@ -106,26 +113,30 @@ const MemoizedTextCell = React.memo(function TextCell({
           // so we are interested in the value post-zoom
           !track.visible || isResizing || widthInPxAfterZoom < 50 ? null : (
             <group>
-              {lines.map((line, index) => (
-                <Text
-                  key={index}
-                  position={[
-                    (-widthInPx / 2) + (padding * 4),
-                    (dynamicCellHeight / 2) - (padding * 4) - (index * fontSize * lineHeight),
-                    1
-                  ]}
-                  fontSize={fontSize}
-                  color={isHovered ? colorScheme.textColorHover : colorScheme.textColor}
-                  anchorX="left"
-                  anchorY="top"
-                  fontWeight={400}
-                  renderOrder={999}
-                  outlineWidth={0}
-                  maxWidth={widthInPx - (padding * 8)}
-                >
-                  {line}
-                </Text>
-              ))}
+              {lines.map((line, index) => {
+                // Position each line from top with proper spacing
+                const yPosition = (dynamicCellHeight / 2) - topPadding - (index * (fontSize * lineHeight));
+                return (
+                  <Text
+                    key={index}
+                    position={[
+                      (-widthInPx / 2) + (padding * 4),
+                      yPosition,
+                      1
+                    ]}
+                    fontSize={fontSize}
+                    color={isHovered ? colorScheme.textColorHover : colorScheme.textColor}
+                    anchorX="left"
+                    anchorY="top"
+                    fontWeight={400}
+                    renderOrder={999}
+                    outlineWidth={0}
+                    // Don't set maxWidth since we pre-wrap text - prevents conflicts
+                  >
+                    {line}
+                  </Text>
+                );
+              })}
             </group>
           )
         }

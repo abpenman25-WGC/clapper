@@ -5,6 +5,45 @@
 **Repository**: <https://github.com/jbilcke-hf/clapper> (Fork: <https://github.com/abpenman25-WCG/clapper>)
 **Latest Status**: ✅ **RESOLVED** - AI Assistant Functional with Groq Integration
 
+---
+
+## 🔴 OPEN ISSUE - February 11, 2026
+
+### Timeline Text Rendering: Last Line Truncation
+
+**Status**: 🔴 OPEN - Pending Resolution  
+**Priority**: High  
+**Component**: `packages/timeline/src/components/cells/TextCell.tsx`
+
+**Issue Description**:  
+The last line of dialog text in timeline cells is still being cut off despite multiple attempts to fix text wrapping and height calculations.
+
+**Files Involved**:
+- `packages/timeline/src/components/cells/TextCell.tsx`
+- `packages/timeline/src/utils/getTextLength.ts`
+
+**Attempted Fixes** (February 11, 2026):
+1. Fixed word overflow handling in `clampWebGLText()` - long words now truncated with ellipsis
+2. Removed problematic punctuation regex that was misplacing periods
+3. Increased bottom padding calculation: `(fontSize * lineHeight) + (padding * 8)`
+4. Increased top padding from `padding * 4` to `padding * 6`
+5. Removed `maxWidth` property conflict on Text component
+6. Improved height calculation with explicit `topPadding`, `lineSpacing`, and `bottomPadding` variables
+
+**Current State**:
+- Text wrapping is working correctly
+- Words exceeding cell width are properly truncated
+- Punctuation is preserved in correct positions
+- Last line is still being clipped/cut off at bottom of cell
+
+**Next Steps**:
+- Further investigation needed into WebGL text rendering anchor points
+- May need to adjust `anchorY` behavior or text positioning calculation
+- Consider whether descenders (g, y, p, q, j) require additional spacing
+- To be revisited for deeper root cause analysis
+
+---
+
 ## 🎉 MAJOR UPDATE - January 20, 2026: AI Assistant Successfully Implemented
 
 ### ✅ **ISSUE RESOLVED: AI Assistant Now Working**
