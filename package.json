@@ -54,9 +54,9 @@
   },
   "dependencies": {
     "@swc/helpers": "^0.5.18",
-    "@types/react": "^19.2.13",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "caniuse-lite": "^1.0.30001767",
+    "caniuse-lite": "^1.0.30001769",
     "mediainfo.js": "^0.3.7",
     "next": "16.1.6",
     "react": "^19.2.4",
@@ -68,7 +68,7 @@
     "@playwright/test": "^1.58.2",
     "@types/three": "^0.182.0",
     "@webgpu/types": "^0.1.69",
-    "playwright": "^1.58.1",
+    "playwright": "^1.58.2",
     "prettier": "^3.8.1"
   }
 }
