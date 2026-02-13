@@ -36,11 +36,120 @@ The last line of dialog text in timeline cells is still being cut off despite mu
 - Punctuation is preserved in correct positions
 - Last line is still being clipped/cut off at bottom of cell
 
-**Next Steps**:
-- Further investigation needed into WebGL text rendering anchor points
-- May need to adjust `anchorY` behavior or text positioning calculation
-- Consider whether descenders (g, y, p, q, j) require additional spacing
-- To be revisited for deeper root cause analysis
+**Diagnostic Update** (February 12, 2026):
+- Console logging was added to screenplay parsing (parseScenes.ts, getScreenplayFromText.ts)
+- Browser console does not provide useful diagnostic information for this issue
+- Problem appears to be in WebGL rendering layer, not parsing layer
+
+**Fix Attempts** (February 12, 2026):
+
+**Attempt 1** (Failed):
+- Changed `anchorY` from "top" to "middle"
+- Increased bottom padding to `(lineSpacing * 1.5) + (padding * 10)`
+- Result: Last line still cut off
+
+**Attempt 2** (Current):
+1. **Reverted to top anchor** with corrected positioning
+   - Using `anchorY="top"` means text extends DOWN from the y position
+   - Position calculation: `yPosition = (dynamicCellHeight / 2) - topPadding - (index * lineSpacing)`
+
+2. **Dramatically increased bottom padding**: 
+   - Changed to `(lineSpacing * 2.5) + (padding * 15)`
+   - Adds 2.5 full line heights worth of space below the last line
+   - This should be more than enough for descenders and any rendering artifacts
+
+3. **Increased top padding**: From `padding * 6` to `padding * 8`
+
+4. **Enhanced diagnostic logging**: 
+   - Cell dimension calculations (cellHeight, calculatedHeight, dynamicCellHeight)
+   - Padding values (topPadding, bottomPadding)
+   - Line spacing and total text height
+   - First and last line y positions
+   - **Critical**: Distance between bottom of last line and bottom of cell box
+   - This will help pinpoint if it's a height calculation issue or a rendering issue
+
+**Testing Required**: Please check browser console for detailed position information, then verify if the last line is now visible.
+
+**Attempt 3** (February 12, 2026 - Afternoon):
+After multiple failed incremental fixes, consulted Windows 11 Copilot for complete rewrite solution.
+
+**Windows Copilot's Approach**:
+1. **Clean centering logic**: Centers entire text block around y=0 (box center)
+2. **Simplified padding**: Symmetric vertical padding (verticalPadding * 2) instead of separate top/bottom
+3. **Reverted to top anchor**: Using `anchorY="top"` with proper position calculations
+4. **Position calculation**: `yPosition = centerOffset - (index * lineSpacing)` where `centerOffset = totalTextHeight / 2`
+5. **Cleaner diagnostics**: Streamlined console logging
+
+**Key Changes from Previous Attempts**:
+- Reduced padding value from 2.5 → 4
+- Removed separate topPadding/bottomPadding in favor of uniform verticalPadding
+- Changed from complex offset calculations to simple center-based positioning
+- Position calc: Centers text block, then offsets each line down from top
+
+**Status**: ❌ FAILED - Last line still cut off after Windows Copilot rewrite  
+**Result**: All three positioning approaches (top anchor, middle anchor, centered block) have failed
+
+**Files Modified**:
+- `packages/timeline/src/components/cells/TextCell.tsx` - Multiple rewrites attempted
+
+**Summary of All Attempts**:
+1. ❌ Top anchor with massive bottom padding - Failed
+2. ❌ Middle anchor with corrected position calculations - Failed  
+3. ❌ Windows Copilot's centered text block approach - Failed
+
+**Conclusion**: The issue may be deeper than text positioning - could be:
+- WebGL Text component clipping behavior
+- RoundedBox geometry clipping the text meshes
+- Font metrics calculation issues in @react-three/drei
+- Z-index or rendering order problems
+- Canvas/viewport clipping at a higher level
+
+**Conclusion**: The issue may be deeper than text positioning - could be:
+- WebGL Text component clipping behavior
+- RoundedBox geometry clipping the text meshes
+- Font metrics calculation issues in @react-three/drei
+- Z-index or rendering order problems
+- Canvas/viewport clipping at a higher level
+
+**Recommendation**: May need to investigate the rendering pipeline itself rather than just positioning calculations.
+
+**Status Update** (February 12, 2026):
+- ✅ Windows Copilot version restored after accidental revert
+- ⏸️ User to continue troubleshooting with current approach
+- 🔍 May need to investigate @react-three/drei Text component behavior or RoundedBox clipping
+
+---
+
+## ✅ FIXED ISSUE - February 12, 2026
+
+---
+
+## ✅ FIXED ISSUE - February 12, 2026
+
+### Google Imagen Models Miscategorized
+
+**Status**: ✅ FIXED  
+**Priority**: Medium  
+**Component**: `packages/app/src/services/editors/workflow-editor/workflows/google/index.ts`
+
+**Issue Description**:  
+Google Imagen 4 models (Imagen 4, Imagen 4 Flash, Imagen 4 Pro, Imagen 4 Turbo) were incorrectly categorized as `VIDEO_GENERATION` when they are actually image generation models. Only Veo models (Veo 2, Veo 3, Veo 3.1) are for video generation.
+
+**Fix Applied** (February 12, 2026):
+- Changed all Imagen 4 models from `ClapWorkflowCategory.VIDEO_GENERATION` to `ClapWorkflowCategory.IMAGE_GENERATION`
+- Updated descriptions from "video generation model" to "image generation model"
+- Updated tags from `['Imagen', 'video', ...]` to `['Imagen', 'image', ...]`
+
+**Models Corrected**:
+- ✅ Imagen 4 → IMAGE_GENERATION
+- ✅ Imagen 4 Flash → IMAGE_GENERATION  
+- ✅ Imagen 4 Pro → IMAGE_GENERATION
+- ✅ Imagen 4 Turbo → IMAGE_GENERATION
+
+**Models Already Correct**:
+- ✅ Veo 2 → VIDEO_GENERATION
+- ✅ Veo 3 → VIDEO_GENERATION
+- ✅ Veo 3.1 → VIDEO_GENERATION
 
 ---
 

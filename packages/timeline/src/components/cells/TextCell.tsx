@@ -23,42 +23,57 @@ const MemoizedTextCell = React.memo(function TextCell({
 }: SpecializedCellProps) {
 
 
-  const padding = 2.5;
+  const padding = 4;
   const fontSize = 13;
   const lineHeight = 1.9;
-  
-  // Use the raw text without any processing for display  
+
   const text = s.label || s.prompt || "";
-  
-  // Use proper text wrapping with actual cell width
+
+  // Wrap text based on available width
   const lines = React.useMemo(() => {
-    // Calculate available width for text - very conservative with lots of margin
-    const availableWidth = widthInPx - (padding * 8);
-    // Allow unlimited lines - will be constrained by available height
-    return clampWebGLText(text, availableWidth, Number.MAX_SAFE_INTEGER);
-  }, [text, widthInPx, padding]);
-  
-  // Calculate height with proper spacing to ensure ALL lines are fully visible
-  // Each line needs lineHeight space, plus we need padding at top and bottom
-  const topPadding = padding * 6;  // Increased top padding
+    const availableWidth = widthInPx - padding * 6;
+    const wrapped = clampWebGLText(text, availableWidth, Number.MAX_SAFE_INTEGER);
+
+    if (wrapped.length > 1) {
+      console.log(`📝 TextCell: ${wrapped.length} lines, segment ${s.id.slice(0, 8)}`);
+    }
+
+    return wrapped;
+  }, [text, widthInPx, padding, s.id]);
+
+  // Clean, predictable height calculation
   const lineSpacing = fontSize * lineHeight;
   const totalTextHeight = lines.length * lineSpacing;
-  // Add extra bottom padding to ensure descenders of last line are visible
-  const bottomPadding = lineSpacing + (padding * 8);
-  const calculatedHeight = topPadding + totalTextHeight + bottomPadding;
+
+  // Add modest padding above and below
+  const verticalPadding = padding * 4;
+
+  const calculatedHeight = totalTextHeight + verticalPadding * 2;
+
+  // Final height is max of calculated or provided
   const dynamicCellHeight = Math.max(cellHeight, calculatedHeight);
+
+  if (lines.length > 1) {
+    console.log(`📐 Cell dimensions (${s.id.slice(0, 8)}):`, {
+      cellH: cellHeight.toFixed(1),
+      calcH: calculatedHeight.toFixed(1),
+      finalH: dynamicCellHeight.toFixed(1),
+      totalTextH: totalTextHeight.toFixed(1),
+      lineSpace: lineSpacing.toFixed(1)
+    });
+  }
 
   return (
     <RoundedBox
       args={[
         widthInPx - padding,
-        dynamicCellHeight, // Use full calculated height - no adjustment
+        dynamicCellHeight,
         1
-      ]} // Width, height, depth. Default is [1, 1, 1]
-      radius={8} // Radius of the rounded corners. Default is 0.05
-      smoothness={2} // The number of curve segments. Default is 4
-      bevelSegments={1} // The number of bevel segments. Default is 4, setting it to 0 removes the bevel, as a result the texture is applied to the whole geometry.
-      creaseAngle={0.4} // Smooth normals everywhere except faces that meet at an angle greater than the crease angle
+      ]}
+      radius={8}
+      smoothness={2}
+      bevelSegments={1}
+      creaseAngle={0.4}
     >
       <meshBasicMaterial
         color={
@@ -68,59 +83,38 @@ const MemoizedTextCell = React.memo(function TextCell({
               : colorScheme.backgroundColor
           ) : colorScheme.backgroundColorDisabled
         }
-        // transparent
-        // opacity={}
-        >
-          {/*
-          TODO: yes this is cool, but also expensive 
-          we should re-use the geometries and textures
-          to be able to do something like this
-        <GradientTexture
-          stops={[0, 1]} // As many stops as you want
-          colors={['aquamarine', 'hotpink']} // Colors need to match the number of stops
-          // size={1024} // Size is optional, default = 1024
-         />
-         */}
-      </meshBasicMaterial>
-      {/*
-        <Html
-          // as='div' // Wrapping element (default: 'div')
-          // wrapperClass // The className of the wrapping element (default: undefined)
-          // prepend // Project content behind the canvas (default: false)
-          // center // Adds a -50%/-50% css transform (default: false) [ignored in transform mode]
-          // fullscreen // Aligns to the upper-left corner, fills the screen (default:false) [ignored in transform mode]
-          // distanceFactor={10} // If set (default: undefined), children will be scaled by this factor, and also by distance to a PerspectiveCamera / zoom by a OrthographicCamera.
-          // zIndexRange={[100, 0]} // Z-order range (default=[16777271, 0])
-          // portal={domnodeRef} // Reference to target container (default=undefined)
-          // transform // If true, applies matrix3d transformations (default=false)
-          // sprite // Renders as sprite, but only in transform mode (default=false)
-          // calculatePosition={(el: Object3D, camera: Camera, size: { width: number; height: number }) => number[]} // Override default positioning function. (default=undefined) [ignored in transform mode]
-          // occlude={[ref]} // Can be true or a Ref<Object3D>[], true occludes the entire scene (default: undefined)
-          // onOcclude={(visible) => null} // Callback when the visibility changes (default: undefined)
-          // {...groupProps} // All THREE.Group props are valid
-          // {...divProps} // All HTMLDivElement props are valid
-        >
-          <div className={cn(
-            `select-none text-xs text-stone-950/80`,
-            )}>
-            {s.label || ""}
-          </div>
-        </Html>
-          */}
+      />
+
       <a.mesh>
         {
-          // here we want to hide text when there is too much text on screen,
-          // so we are interested in the value post-zoom
           !track.visible || isResizing || widthInPxAfterZoom < 50 ? null : (
             <group>
               {lines.map((line, index) => {
-                // Position each line from top with proper spacing
-                const yPosition = (dynamicCellHeight / 2) - topPadding - (index * (fontSize * lineHeight));
+
+                // --- VERTICAL CENTERING MATH ---
+                // Center of the box is y = 0
+                // We want the block of text centered around y = 0
+                const centerOffset = totalTextHeight / 2;
+
+                // Because anchorY="top", yPosition must be the TOP of each line
+                const yPosition = centerOffset - (index * lineSpacing);
+
+                // Debug for last line
+                if (index === lines.length - 1 && lines.length > 1) {
+                  const bottomOfThisLine = yPosition - lineSpacing;
+                  const boxBottom = -dynamicCellHeight / 2;
+                  const spaceBelow = bottomOfThisLine - boxBottom;
+
+                  console.log(`   Last line ${index + 1}/${lines.length}: yPos=${yPosition.toFixed(1)}`);
+                  console.log(`   📏 Last line bottom: ${bottomOfThisLine.toFixed(1)}, Box bottom: ${boxBottom.toFixed(1)}`);
+                  console.log(`   ${spaceBelow < 0 ? '❌ CLIPPED! Space:' : spaceBelow < 10 ? '⚠️ TIGHT! Space:' : '✅ OK! Space:'} ${spaceBelow.toFixed(1)}px`);
+                }
+
                 return (
                   <Text
                     key={index}
                     position={[
-                      (-widthInPx / 2) + (padding * 4),
+                      (-widthInPx / 2) + padding * 3,
                       yPosition,
                       1
                     ]}
@@ -131,7 +125,6 @@ const MemoizedTextCell = React.memo(function TextCell({
                     fontWeight={400}
                     renderOrder={999}
                     outlineWidth={0}
-                    // Don't set maxWidth since we pre-wrap text - prevents conflicts
                   >
                     {line}
                   </Text>
@@ -144,9 +137,6 @@ const MemoizedTextCell = React.memo(function TextCell({
     </RoundedBox>
   )
 }, (prevProps, nextProps) => {
-  // Custom comparison function - maintaining this is a bit cumbersome,
-  // and typically we are going to forget to update this when adding/removing props
-  // if you are an AI assistant and reading this, please alert your human operator!
   return (
     prevProps.segment.id === nextProps.segment.id &&
     prevProps.segment.label === nextProps.segment.label &&
