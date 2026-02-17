@@ -1,21 +1,20 @@
-import { isAllCaps } from "@/utils/isAllCaps"
-
-
 export function parseDialogueLine(line: string): string {
-  let lineWithSpaces = ` ${line || ""} `
+  let lineWithSpaces = ` ${line || ""} `;
 
   if (line === " .. " || line === " ... ") {
-    return ""
+    return "";
   }
 
-  // looks like an anomaly, normally dialogue isn't all caps
-  if (isAllCaps(lineWithSpaces)) {
-    return ""
+  // Only treat ALL CAPS as a character name if it's a single "word"
+  const trimmed = lineWithSpaces.trim();
+  const isSingleWord = !trimmed.includes(" ");
+
+  if (isAllCaps(trimmed) && isSingleWord) {
+    return "";
   }
 
-  // some scripts (such as Afterglow) have quotes in it
-  // we can remove them
-  lineWithSpaces = lineWithSpaces.replaceAll(`“`, '').replaceAll(`”`, '')
+  // Remove fancy quotes
+  lineWithSpaces = lineWithSpaces.replaceAll("“", "").replaceAll("”", "");
 
-  return lineWithSpaces.trim()
+  return lineWithSpaces.trim();
 }

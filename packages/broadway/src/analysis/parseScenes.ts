@@ -187,25 +187,23 @@ export function parseScenes(screenplaySequence: ScreenplaySequence): Scene[] {
         continue
       }
 
-      if (!line.length) {
+      if if (!line.length) {
 
-        // if the line is empty, we terminate the current event
-        // UNLESS it is obviously not terminated (ie. unless
-        // it isn't finishing in a !, ? or .)
-        if (currentEvent && (
-          currentEvent.description.endsWith("!") ||
-          currentEvent.description.endsWith("?") ||
-          currentEvent.description.endsWith(".")
-        )) {
-          // no, we don't update the line here, since this is a NEW line
-          // currentEvent.endAtLine = lineNumber
-          currentEvents.push(currentEvent)
-          currentEvent = undefined
-        }
+  // if the line is empty, we terminate the current event
+  // UNLESS it is obviously not terminated (ie. unless
+  // it isn't finishing in a !, ? or .)
+  if (currentEvent && (
+    currentEvent.description.endsWith("!") ||
+    currentEvent.description.endsWith("?") ||
+    currentEvent.description.endsWith(".")
+  )) {
+    currentEvents.push(currentEvent)
+    currentEvent = undefined
+  }
 
-        lineNumber += 1
-        continue
-      }
+  lineNumber += 1
+  continue
+}
 
       // basic heuristic: the first line of a a scene is the scene description
       if (!initialScene) {
@@ -341,20 +339,26 @@ export function parseScenes(screenplaySequence: ScreenplaySequence): Scene[] {
       currentScene = undefined
     }
 
-    // one last trick, which is pretty important actually: we expand the action further
-    for (const scene of scenes) {
-      const sceneEvents: SceneEvent[] = []
-      for (const event of scene.events) {
-        event.description.split(/\. /).forEach(sentence => {
-          sceneEvents.push({
-            ...event,
-            description: sentence
-          })
+   // Only split ACTION events into sentences, not dialogue
+for (const scene of scenes) {
+  const sceneEvents: SceneEvent[] = []
+  for (const event of scene.events) {
+    if (event.type === "action") {
+      const sentences = event.description.split(/\. /)
+      for (const sentence of sentences) {
+        sceneEvents.push({
+          ...event,
+          description: sentence.trim()
         })
       }
-
-      scene.events = sceneEvents
+    } else {
+      // Keep dialogue and description intact
+      sceneEvents.push(event)
     }
+  }
+
+  scene.events = sceneEvents
+} 
     return scenes
   } catch (err) {
     console.error(err)

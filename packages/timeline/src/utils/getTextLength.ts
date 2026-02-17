@@ -1,180 +1,154 @@
 /**
-  * Uses canvas.measureText to compute and return the width of the given text of given font in pixels.
-  * 
-  * @param {String} text The text to be rendered.
-  * @param {String} font The css font descriptor that text is to be rendered with (e.g. "bold 14px verdana").
-  * 
-  * @see https://stackoverflow.com/questions/118241/calculate-text-width-with-javascript/21015393#21015393
-  */
+ * Measure text width in a canvas using a given font.
+ */
+function getTextWidthInCanvas(text: string, font: string): number {
+  if (typeof window === "undefined") return 0;
 
-import { useTimeline } from ".."
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("2d");
+  if (!context) return 0;
 
-function getTextWidthInCanvas(text: string, font: string) {
-  if (typeof window === "undefined") {
-    return 0
-  }
-  const canvas = document.createElement("canvas")
-  const context = canvas.getContext("2d")
-  if (!context) { return 0 }
-
-  context.font = font
-  const metrics = context.measureText(text)
-  return metrics.width
+  context.font = font;
+  return context.measureText(text).width;
 }
 
+// Precompute character widths for a specific font
+const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()_-"+=,;:?/\\&@# '.split('');
 
-// one option could be to pre-compute some of the width
-const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789()_-"+=,;:?/\\&@#'.split('')
-const charLength = characters.reduce((acc, char) => ({
-  ...acc,
-  [char]: getTextWidthInCanvas(char, "400 13px Arial")  // Match actual WebGL rendering
-}), {} as Record<string, number>)
-let defaultCharLength = 7.5  // Updated for 13px font size
+const charLength: Record<string, number> = characters.reduce((acc, char) => {
+  acc[char] = getTextWidthInCanvas(char, "400 13px Arial");
+  return acc;
+}, {} as Record<string, number>);
 
-// Match the actual fontSize used in TextCell.tsx
-const webglFontWidthFactor = 1.0  // Direct 1:1 mapping since we now measure at actual size
+// Fallback width for characters we didn't precompute
+let defaultCharLength = 7.5;
+
+// Match actual font size used in WebGL
+const webglFontWidthFactor = 1.0;
 
 /**
- * Compute the text of a simple Arial text in a WebGL environmment
- * This actually just do a lookup + sum
- * 
- * @param text 
- * @returns 
+ * Conservative width for a single character.
  */
 export function getWebGLCharWidth(char: string = ""): number {
-  // Be very conservative to prevent any overflow
-  const scaleFactor = 0.85  // Much more conservative to ensure text always fits
-  return scaleFactor * webglFontWidthFactor * (charLength[char] || defaultCharLength)
+  const scaleFactor = 0.85;
+  return scaleFactor * webglFontWidthFactor * (charLength[char] || defaultCharLength);
 }
 
 /**
- * Compute the text of a simple Arial text in a WebGL environmment
- * This actually just do a lookup + sum
- * 
- * @param text 
- * @returns 
+ * Compute width of a full string.
  */
 export function getWebGLTextWidth(text: string = ""): number {
-  return text.split('').reduce((s, c) => (s + getWebGLCharWidth(c)), 0)
+  return text.split("").reduce((sum, c) => sum + getWebGLCharWidth(c), 0);
 }
 
 /**
- * Clamp a text to a given width and maximum number of lines
- * @param input - The text to wrap
- * @param maxWidthInPixels - Maximum width in pixels per line
- * @param maxNbLines - Maximum number of lines to allow
- * @returns Array of wrapped text lines
+ * Clamp a text to a given width and maximum number of lines.
+ * NEW VERSION — preserves newlines and wraps each paragraph independently.
  */
 export function clampWebGLText(
   input: string,
   maxWidthInPixels: number,
   maxNbLines: number
 ): string[] {
-  let buffer = ""
-  let width = 0
-  let lines: string[] = []
+  if (!input) return [""];
 
-  // Normalize text: collapse multiple spaces, preserve punctuation properly
-  const text = `${input || ""}`
-    .replace(/\n/g, ' ')  // Replace newlines with spaces
-    .replace(/\s+/g, ' ')  // Collapse multiple spaces
-    .trim()
-  
-  // Split by spaces but keep punctuation attached to words
-  const words = text.split(' ').filter(w => w.length > 0)
-  
-  for (let i = 0; i < words.length; i++) {
-    const word = words[i]
-    const wordWidth = getWebGLTextWidth(word)
-    const spaceWidth = getWebGLCharWidth(' ')
-    
-    // Handle words that are individually too long
-    if (wordWidth > maxWidthInPixels) {
-      // If we have content in buffer, flush it first
-      if (buffer.length > 0) {
-        if (lines.length >= maxNbLines) {
-          lines[maxNbLines - 1] = lines[maxNbLines - 1] + "..."
-          return lines.slice(0, maxNbLines)
-        }
-        lines.push(buffer.trim())
-        buffer = ""
-        width = 0
-      }
-      
-      // Truncate the long word to fit
-      let truncatedWord = ""
-      let truncatedWidth = 0
-      const ellipsisWidth = getWebGLTextWidth("...")
-      const targetWidth = maxWidthInPixels - ellipsisWidth
-      
-      for (let j = 0; j < word.length; j++) {
-        const char = word[j]
-        const charWidth = getWebGLCharWidth(char)
-        if (truncatedWidth + charWidth > targetWidth) {
-          break
-        }
-        truncatedWord += char
-        truncatedWidth += charWidth
-      }
-      
-      if (lines.length >= maxNbLines) {
-        lines[maxNbLines - 1] = truncatedWord + "..."
-        return lines.slice(0, maxNbLines)
-      }
-      lines.push(truncatedWord + "...")
-      continue
+  // Split into paragraphs by real newlines
+  const paragraphs = input.split(/\r?\n/);
+
+  const finalLines: string[] = [];
+
+  for (const paragraph of paragraphs) {
+    const text = paragraph.trim();
+
+    // Preserve intentional blank lines
+    if (!text) {
+      finalLines.push("");
+      continue;
     }
-    
-    // Width of current buffer + space + word
-    const testWidth = buffer.length > 0 
-      ? width + spaceWidth + wordWidth 
-      : wordWidth
-    
-    if (testWidth > maxWidthInPixels && buffer.length > 0) {
-      // Word doesn't fit, push current buffer to new line
-      if (lines.length >= maxNbLines) {
-        // Reached max lines, truncate and return
-        lines[maxNbLines - 1] = lines[maxNbLines - 1].trim() + "..."
-        return lines.slice(0, maxNbLines)
+
+    // Split on spaces/tabs, but keep punctuation attached to words
+    const words = text.split(/[ \t]+/).filter(Boolean);
+
+    let buffer = "";
+    let width = 0;
+
+    for (let i = 0; i < words.length; i++) {
+      const word = words[i];
+      const wordWidth = getWebGLTextWidth(word);
+      const spaceWidth = getWebGLCharWidth(" ");
+
+      // Handle extremely long words that exceed max width on their own
+      if (wordWidth > maxWidthInPixels) {
+        // Flush current buffer as a line first
+        if (buffer.length > 0) {
+          finalLines.push(buffer.trim());
+          buffer = "";
+          width = 0;
+        }
+
+        let truncated = "";
+        let tw = 0;
+        const ellipsisWidth = getWebGLTextWidth("...");
+        const targetWidth = maxWidthInPixels - ellipsisWidth;
+
+        for (let j = 0; j < word.length; j++) {
+          const cw = getWebGLCharWidth(word[j]);
+          if (tw + cw > targetWidth) break;
+          truncated += word[j];
+          tw += cw;
+        }
+
+        finalLines.push(truncated + "...");
+        continue;
       }
-      
-      lines.push(buffer.trim())
-      buffer = word
-      width = wordWidth
-    } else {
-      // Word fits, add it to buffer
-      if (buffer.length > 0) {
-        buffer += ' ' + word
-        width += spaceWidth + wordWidth
+
+      const testWidth =
+        buffer.length > 0 ? width + spaceWidth + wordWidth : wordWidth;
+
+      if (testWidth > maxWidthInPixels && buffer.length > 0) {
+        // Word doesn't fit on this line, flush buffer
+        finalLines.push(buffer.trim());
+        buffer = word;
+        width = wordWidth;
       } else {
-        buffer = word
-        width = wordWidth
+        // Word fits, append to buffer
+        if (buffer.length > 0) {
+          buffer += " " + word;
+          width += spaceWidth + wordWidth;
+        } else {
+          buffer = word;
+          width = wordWidth;
+        }
       }
+    }
+
+    // Flush final line of this paragraph
+    if (buffer.length > 0) {
+      finalLines.push(buffer.trim());
     }
   }
 
-  // Add remaining buffer as final line
-  if (buffer.length > 0) {
-    if (lines.length >= maxNbLines) {
-      // Replace last line with truncated version
-      lines[maxNbLines - 1] = lines[maxNbLines - 1].trim() + "..."
-      return lines.slice(0, maxNbLines)
-    }
-    lines.push(buffer.trim())
+  // Enforce max lines with ellipsis on the last visible line
+  if (finalLines.length > maxNbLines) {
+    const truncated = finalLines.slice(0, maxNbLines);
+    truncated[maxNbLines - 1] = truncated[maxNbLines - 1] + "...";
+    return truncated;
   }
-  
-  return lines.length > 0 ? lines : [""]
+
+  return finalLines.length > 0 ? finalLines : [""];
 }
 
-export function clampWebGLTextNaive(input: string = "", maxWidthInPixels: number = 0): string {
-  // this cutoff is very approximate as we should make it dependent on each character's width
-  // a simple heuristic can be to count the uppercase / lower case
-  const maxhInCharacter = Math.ceil(maxWidthInPixels / 3.4)
+/**
+ * Legacy naive clamp (kept for compatibility).
+ */
+export function clampWebGLTextNaive(
+  input: string = "",
+  maxWidthInPixels: number = 0
+): string {
+  const maxInCharacters = Math.ceil(maxWidthInPixels / 3.4);
+  const text = `${input || ""}`;
 
-  const text = `${input || ""}`
-
-  return (text.length >= maxhInCharacter)
-              ? `${text.slice(0, maxhInCharacter)}..`
-              : text
-   
+  return text.length >= maxInCharacters
+    ? `${text.slice(0, maxInCharacters)}..`
+    : text;
 }

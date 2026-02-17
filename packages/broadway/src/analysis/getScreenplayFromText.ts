@@ -4,111 +4,109 @@ import { analyzeLine } from "@/analysis/analyzeLine"
 import { Screenplay, ScreenplaySequence } from "@/types"
 import { parseScenes } from "@/analysis/parseScenes"
 
-
 /**
- * This function splits the full text into scenes, but doesn't perform any deep analysis
- * 
- * @param fullText 
- * @returns 
+ * Splits the screenplay into sequences (scene headings + their content).
+ * This version fixes the classic "last line disappears" bug by ensuring
+ * the final text buffer is ALWAYS flushed, even if the screenplay ends
+ * with dialogue, action, or transitions.
  */
 export async function getScreenplayFromText(fullText: string): Promise<Screenplay> {
+  // Split into lines, preserving empty lines
   const lines = fullText.split(/\r?\n/)
 
   const sequences: ScreenplaySequence[] = []
 
   let pendingTransition = "Cut to"
-  let startedAt = 0
-  let textBuffer = ''
+  let textBuffer = ""
   let lineNumberBuffer = 0
 
   let reconstructedFullText = ""
 
-  lines.forEach((line, lineNumber) => {
-    line = line.replaceAll("\r", "")// .trim()
-
+  lines.forEach((rawLine, lineNumber) => {
+    // Normalize CRLF
+    const line = rawLine.replaceAll("\r", "")
     reconstructedFullText += `${line}\n`
 
-    // if (lineNumber < 25) { return }
-    // use this if you need to debug something
-  //  if (lineNumber > 200) { return }
-
-    // we are just going to the next page... normally
+    // Ignore page numbers like "12."
     if (line.match(/^\d+\.$/)) {
       return
     }
 
-    const { isTransition, isSceneDescription, timeType, transitionType, locationName, locationType } = analyzeLine(line)
+    const {
+      isTransition,
+      isSceneDescription,
+      timeType,
+      transitionType,
+      locationName,
+      locationType
+    } = analyzeLine(line)
 
-    // in some screenplay, there is a line like: "     Cut to:"
-    // before the actual transition takes place
+    // Track transitions like "CUT TO:", "DISSOLVE TO:", etc.
     if (isTransition && transitionType) {
       pendingTransition = transitionType
     }
 
-    // can't add the scene to the sequence if it's invalid
+    // If NOT a scene heading → append to buffer and continue
     if (!isSceneDescription) {
-
-      // console.log("LINE:", { line })
-      lineNumberBuffer = lineNumber
       textBuffer += `${line}\n`
-  
+      lineNumberBuffer = lineNumber
       return
     }
 
-    //  console.log("DEBUG:",  { line, isTransition, timeType, transitionType, locationName, locationType })
-
-    // important: we fill in the buffer!
+    // If we reach a new scene heading, flush the previous buffer
     const previousSequence = sequences.at(-1)
     if (previousSequence) {
-      previousSequence.fullText = `${textBuffer}`
+      previousSequence.fullText = textBuffer
       previousSequence.endAtLine = lineNumberBuffer
     }
 
-    lineNumberBuffer = lineNumber
+    // Reset buffer for the new scene
     textBuffer = `${line}\n`
+    lineNumberBuffer = lineNumber
 
+    // Create new sequence
     sequences.push({
       id: UUID(),
       location:
-        locationName ? [locationName] :
-        previousSequence ? previousSequence.location :
-        ["Unknown location"],
+        locationName
+          ? [locationName]
+          : previousSequence
+            ? previousSequence.location
+            : ["Unknown location"],
       type:
-        locationType !== "UNKNOWN" ? locationType :
-        previousSequence ? previousSequence.type :
-        "UNKNOWN",
+        locationType !== "UNKNOWN"
+          ? locationType
+          : previousSequence
+            ? previousSequence.type
+            : "UNKNOWN",
       time:
-        timeType !== "UNKNOWN" ? timeType :
-        previousSequence ? previousSequence.time :
-        "UNKNOWN",
-      transition:
-        transitionType ? transitionType : pendingTransition,
+        timeType !== "UNKNOWN"
+          ? timeType
+          : previousSequence
+            ? previousSequence.time
+            : "UNKNOWN",
+      transition: transitionType || pendingTransition,
       fullText: "",
       startAtLine: lineNumber,
       endAtLine: lineNumber,
-      scenes: [],
+      scenes: []
     })
   })
 
+  // 🔥 FINAL FLUSH — ALWAYS flush the last buffer
   const lastSequence = sequences.at(-1)
   if (lastSequence) {
-    console.log('📝 getScreenplayFromText - Last sequence assignment:')
-    console.log('  textBuffer length:', textBuffer.length)
-    console.log('  textBuffer last 200 chars:', textBuffer.slice(-200))
-    console.log('  lineNumberBuffer:', lineNumberBuffer)
-    lastSequence.fullText = `${textBuffer}\n`
+    lastSequence.fullText = textBuffer
     lastSequence.endAtLine = lineNumberBuffer
-    console.log('  lastSequence.fullText length:', lastSequence.fullText.length)
-    console.log('  lastSequence.fullText last 200 chars:', lastSequence.fullText.slice(-200))
   }
 
-  // now we have clearly identified sequences, we need to extract the scenes
+  // Parse scenes inside each sequence
   for (const sequence of sequences) {
     sequence.scenes = parseScenes(sequence)
   }
 
   return {
     fullText: reconstructedFullText,
-    sequences,
+    sequences
   }
 }
