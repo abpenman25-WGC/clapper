@@ -1,6 +1,5 @@
 import { UUID } from "@aitube/clap"
 
-
 import { isAllCaps } from "@/utils/isAllCaps"
 import { analyzeLine } from "@/analysis/analyzeLine"
 import { Scene, SceneEvent, ScreenplaySequence } from "@/types"
@@ -8,167 +7,91 @@ import { Scene, SceneEvent, ScreenplaySequence } from "@/types"
 import { parseCharacterName } from "@/analysis/parseCharacterName"
 
 /**
+ * Detects screenplay scene headers in Trelby-style scripts.
+ */
+function isSceneHeader(line: string): boolean {
+  if (!line) return false
+
+  const trimmed = line.trim()
+
+  // Standard screenplay headers
+  const sceneHeaderRegex = /^(INT\.|EXT\.|INT\/EXT\.|I\/E\.|EST\.)/i
+
+  // Trelby sometimes omits the dot:
+  // INT - HOUSE - DAY
+  const looseHeaderRegex = /^(INT|EXT)[\s\-]/i
+
+  // Handles dash-separated headers with unicode dashes
+  const dashHeaderRegex = /^(INT\.|EXT\.)\s+.+[\-–—]\s*.+/i
+
+  return (
+    sceneHeaderRegex.test(trimmed) ||
+    looseHeaderRegex.test(trimmed) ||
+    dashHeaderRegex.test(trimmed)
+  )
+}
+
+/**
  * Check whether the given line contains a character dialogue or action bitmap.
- * @param fullLine the line to check. Might contain spaces.
  */
 function isDialogueLine(fullLine: string): boolean {
- 
   const containsTabulation = fullLine.startsWith("        ")
-  
-  // this rule is a bit strict as some text files don't have tabulation..
-  // but it helps A LOT
-  if (!containsTabulation) {
-    return false
-  }
-
+  if (!containsTabulation) return false
   return true
 }
 
 /**
- * Check whether the given line contains a character dialogue or action bitmap.
- * @param fullLine the line to check. Might contain spaces.
+ * Check whether the given line contains a character name.
  */
 function isCharacterLine(fullLine: string): boolean {
- 
   const containsTabulation = fullLine.startsWith("            ")
-  
-  // disabled, because some character line include things like parenthesis
-  // if (fullLine.match(/\([^\)]+\)/)) {
-  //  return false
-  // }
-
-  // this rule is a bit strict as some text files don't have tabulation..
-  // but it helps A LOT
-  if (!containsTabulation) {
-    return false
-  }
-
-  // the fullLine is important and useful (to locate characters, highlight etc)
-  // however it might not be a reliable indicated, so we use uppercase
-  const line = fullLine.trim()
-
-  const { isTransition, isSceneDescription, timeType, locationType } = analyzeLine(line)
-
-
-  const character = parseCharacterName(line)
-
-  // doesn't look like a character name, after filtering
-  if (!character) {
-   return false
-  }
-
-  // console.log("isAllCaps?", isAllCaps(line))
-  if (
-    line.length < 2 || // line is too short to be a character
-    !isAllCaps(line) // line is not all uppercase
-    ) {
-    // console.log("FAIL 1")
-    return false
-  }
-
-  if (
-    isTransition || // nope, that's a transition or scene
-    isSceneDescription
-    ) {
-    // console.log("FAIL 2")
-    return false
-  }
-
-  if (
-    locationType !== "UNKNOWN" ||
-    timeType !== "UNKNOWN"
-    ) {
-    // console.log("FAIL 3")
-    return false
-  }
-
-  // nah, it's juste someone shouting
-  if (line.includes("!")) {
-    return false
-  }
-
-  if (
-    line === "NO" || line === "NO." ||
-    line === "YES" || line === "YES." ||
-    line === "STOP" || line === "STOP." 
-  ) {
-    return false
-  }
-
-  const lineWithSpace = ` ${line} `
-  if (
-    lineWithSpace.includes(" INSERT ") ||
-    lineWithSpace.includes(" POV ") ||
-    lineWithSpace.includes(" CLOSE-UP ")
-  ) {
-    return false
-  }
-
-  return true
+  return containsTabulation
 }
 
 /**
- * Parse screenplay script into scenes and events..
- * @param screenplay The entire screenplay script.
+ * Parse screenplay script into scenes and events.
  */
 export function parseScenes(screenplaySequence: ScreenplaySequence): Scene[] {
   try {
     const screenplay = screenplaySequence.fullText
 
-    let initialScene: string = ""
-
-    // the little text in parenthesis
-    let currentDialogueAction = ""
-
     let currentScene: Scene | undefined = undefined
     let currentEvents: SceneEvent[] = []
     let currentEvent: SceneEvent | undefined = undefined
 
+    let currentDialogueAction = ""
     let lastCharacter = ""
 
     let lineNumber = screenplaySequence.startAtLine
-
     const scenes: Scene[] = []
 
     for (const lineWithSpaces of screenplay.split("\n")) {
+      const line = lineWithSpaces.trim()
 
-      let line = lineWithSpaces.trim()
-
-      // we are just going to the next page... normally
-      if (line.match(/^\d+\.$/)) {
+      // Skip page numbers like "12."
+      if (/^\d+\.$/.test(line)) {
         lineNumber += 1
         continue
       }
-      
-      // TODO detect scenes (the "descriptions")
 
-      // IMPORTANT: USE THE FULL LINE WITH SPACES HERE!
-      const maybeCharacter = parseCharacterName(lineWithSpaces)
-      const isCharacter = isCharacterLine(lineWithSpaces)
-      // console.log(`isCharacterLine("${lineWithSpaces}"):`, isCharacter)
-      // console.log(`maybeCharacter: `, maybeCharacter)
-      if (isCharacter && maybeCharacter) {
-        // console.log(" found a character:", maybeCharacter)
-        lastCharacter = maybeCharacter
-
+      // --- SCENE HEADER DETECTION -----------------------------------------
+      if (isSceneHeader(lineWithSpaces)) {
         if (currentScene) {
           if (currentEvent) {
-            // no, we don't update the line here, since this is a NEW line
-            // currentEvent.endAtLine = lineNumber
             currentEvents.push(currentEvent)
+            currentEvent = undefined
           }
-          currentEvent = undefined
+
           currentScene.events = currentEvents
-          // no, we don't update the line here, since this is a NEW line
-          // currentScene.endAtLine = lineNumber
           scenes.push(currentScene)
+
           currentEvents = []
           currentScene = undefined
         }
 
         currentScene = {
           id: UUID(),
-          scene: (currentScene as any)?.scene || "",
+          scene: line.trim(),
           line,
           rawLine: lineWithSpaces,
           sequenceFullText: screenplaySequence.fullText,
@@ -179,72 +102,77 @@ export function parseScenes(screenplaySequence: ScreenplaySequence): Scene[] {
           events: [],
         }
 
-        // need to reset this!
         currentDialogueAction = ""
-
-        lineNumber += 1
-
-        continue
-      }
-
-      if if (!line.length) {
-
-  // if the line is empty, we terminate the current event
-  // UNLESS it is obviously not terminated (ie. unless
-  // it isn't finishing in a !, ? or .)
-  if (currentEvent && (
-    currentEvent.description.endsWith("!") ||
-    currentEvent.description.endsWith("?") ||
-    currentEvent.description.endsWith(".")
-  )) {
-    currentEvents.push(currentEvent)
-    currentEvent = undefined
-  }
-
-  lineNumber += 1
-  continue
-}
-
-      // basic heuristic: the first line of a a scene is the scene description
-      if (!initialScene) {
-
-        let firstLine = ` ${line.trim().toUpperCase()} `
-
-        // the first part of the line might be a number - we remove this
-        firstLine = firstLine.replaceAll(/^(\s*\d+)[^\d]/gi, " ")
-        
-        // the last part of the line might be also a number - we remove this too
-        firstLine = firstLine.replaceAll(/[^\d](\d+\s*)$/gi, " ")
-        
-        initialScene = firstLine.trim()
-
-        // reset the last character
         lastCharacter = ""
 
         lineNumber += 1
         continue
       }
+      // --------------------------------------------------------------------
 
+      // CHARACTER LINE DETECTION
+      const maybeCharacter = parseCharacterName(lineWithSpaces)
+      const isCharacter = isCharacterLine(lineWithSpaces)
 
-      // parse the line, and determine if it's dialogue,
-      // commentary, action..
-      const startOfAction = line.match(/^\(/)
-      const endOfAction = line.match(/\)$/)
-      const isDialogue = isDialogueLine(lineWithSpaces) // <-- yes, spaces are important here!!
+      if (isCharacter && maybeCharacter) {
+        lastCharacter = maybeCharacter
 
-      if (startOfAction) {
+        if (currentScene) {
+          if (currentEvent) {
+            currentEvents.push(currentEvent)
+          }
+          currentEvent = undefined
+
+          currentScene.events = currentEvents
+          scenes.push(currentScene)
+
+          currentEvents = []
+          currentScene = undefined
+        }
+
+        currentScene = {
+          id: UUID(),
+          scene: "",
+          line,
+          rawLine: lineWithSpaces,
+          sequenceFullText: screenplaySequence.fullText,
+          sequenceStartAtLine: screenplaySequence.startAtLine,
+          sequenceEndAtLine: screenplaySequence.endAtLine,
+          startAtLine: lineNumber,
+          endAtLine: lineNumber,
+          events: [],
+        }
+
+        currentDialogueAction = ""
+        lineNumber += 1
+        continue
+      }
+
+      // EMPTY LINE TERMINATES CURRENT EVENT
+      if (!line.length) {
         if (currentEvent) {
-          // no, we don't update the line here, since this is a NEW line
-          // currentEvent.endAtLine = lineNumber
           currentEvents.push(currentEvent)
           currentEvent = undefined
         }
 
-        const action = `${
-          endOfAction
+        lineNumber += 1
+        continue
+      }
+
+      // ACTION / DIALOGUE / DESCRIPTION LOGIC
+      const startOfAction = line.startsWith("(")
+      const endOfAction = line.endsWith(")")
+      const isDialogue = isDialogueLine(lineWithSpaces)
+
+      if (startOfAction) {
+        if (currentEvent) {
+          currentEvents.push(currentEvent)
+          currentEvent = undefined
+        }
+
+        const action = endOfAction
           ? line.replaceAll("(", "").replaceAll(")", "")
           : line.replaceAll("(", "")
-        }`
 
         currentDialogueAction = action
 
@@ -258,7 +186,6 @@ export function parseScenes(screenplaySequence: ScreenplaySequence): Scene[] {
           endAtLine: lineNumber,
         }
       } else if (endOfAction && currentEvent?.type === "action") {
-
         const action = currentEvent.description.trim()
           ? `${currentEvent.description.trim()} ${line.replace(")", "")}`
           : line.replace(")", "")
@@ -272,17 +199,14 @@ export function parseScenes(screenplaySequence: ScreenplaySequence): Scene[] {
       } else if (currentEvent) {
         const typeHasChanged = isDialogue && currentEvent.type !== "dialogue"
 
-        // we are not in a dialogue anymore, so let's clear the dialogue action buffer
         if (currentEvent.type === "description") {
           currentDialogueAction = ""
         }
 
         if (typeHasChanged) {
-          // no, we don't update the line here, since this is a NEW line
-          // currentEvent.endAtLine = lineNumber
           currentEvents.push(currentEvent)
           currentEvent = undefined
-    
+
           currentEvent = {
             id: UUID(),
             type: isDialogue ? "dialogue" : "action",
@@ -290,19 +214,16 @@ export function parseScenes(screenplaySequence: ScreenplaySequence): Scene[] {
             description: line,
             behavior: isDialogue ? currentDialogueAction : "",
             startAtLine: lineNumber,
-            endAtLine: lineNumber
+            endAtLine: lineNumber,
           }
         } else {
-          // current event type has not changed, we are just extending it
-          currentEvent.description =
-            currentEvent.description.trim()
+          currentEvent.description = currentEvent.description.trim()
             ? `${currentEvent.description.trim()} ${line}`
             : `${line}`
 
           currentEvent.endAtLine = lineNumber
         }
       } else {
-        // we are creating a new event
         currentEvent = {
           id: UUID(),
           type: lastCharacter && isDialogue ? "dialogue" : "description",
@@ -310,55 +231,48 @@ export function parseScenes(screenplaySequence: ScreenplaySequence): Scene[] {
           description: `${line}`,
           behavior: isDialogue ? currentDialogueAction : "",
           startAtLine: lineNumber,
-          endAtLine: lineNumber
+          endAtLine: lineNumber,
         }
       }
 
       lineNumber += 1
     }
 
-
+    // FINAL FLUSH AT EOF
     if (currentScene) {
       if (currentEvent) {
-        console.log('📝 parseScenes - Pushing final event:')
-        console.log('  type:', currentEvent.type)
-        console.log('  character:', currentEvent.character)
-        console.log('  description:', currentEvent.description)
-        console.log('  startAtLine:', currentEvent.startAtLine, 'endAtLine:', currentEvent.endAtLine)
-        // no, we don't update the line here, since this is a NEW line
-        // currentEvent.endAtLine = lineNumber
         currentEvents.push(currentEvent)
       }
-      currentEvent = undefined
+
       currentScene.events = currentEvents
-      // no, we don't update the line here, since this is a NEW line
-      // currentScene.endAtLine = lineNumber
-      console.log('📝 parseScenes - Pushing final scene with', currentEvents.length, 'events')
       scenes.push(currentScene)
-      currentEvents = []
-      currentScene = undefined
     }
 
-   // Only split ACTION events into sentences, not dialogue
-for (const scene of scenes) {
-  const sceneEvents: SceneEvent[] = []
-  for (const event of scene.events) {
-    if (event.type === "action") {
-      const sentences = event.description.split(/\. /)
-      for (const sentence of sentences) {
-        sceneEvents.push({
-          ...event,
-          description: sentence.trim()
-        })
+    // SPLIT ACTION EVENTS INTO SENTENCES
+    for (const scene of scenes) {
+      const sceneEvents: SceneEvent[] = []
+
+      for (const event of scene.events) {
+        if (event.type === "action") {
+          const sentences = event.description.split(/[\.!?]\s+/)
+
+          for (const sentence of sentences) {
+            const trimmed = sentence.trim()
+            if (!trimmed) continue
+
+            sceneEvents.push({
+              ...event,
+              description: trimmed,
+            })
+          }
+        } else {
+          sceneEvents.push(event)
+        }
       }
-    } else {
-      // Keep dialogue and description intact
-      sceneEvents.push(event)
-    }
-  }
 
-  scene.events = sceneEvents
-} 
+      scene.events = sceneEvents
+    }
+
     return scenes
   } catch (err) {
     console.error(err)
