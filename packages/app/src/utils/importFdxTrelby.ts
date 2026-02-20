@@ -1,101 +1,121 @@
 /**
- * Parse Trelby screenplay format (.fdx.trelby, .trelby files)
+ * Trelby importer aligned with parseScenes indentation rules.
  *
- * Trelby is an open-source screenplay writing software that saves files
- * in a proprietary text format with configuration and content sections.
- *
- * @param trelbyText - Raw text content from a .trelby file
- * @returns Plain text screenplay content suitable for Broadway parsing
+ * - Scene headings: no indent
+ * - Character names: 12 spaces
+ * - Dialogue: 8 spaces
+ * - Action: no indent
  */
 export function importFdxTrelby(trelbyText: string): string {
-  if (!trelbyText || typeof trelbyText !== 'string') {
-    throw new Error('Invalid Trelby file content')
+  if (!trelbyText || typeof trelbyText !== "string") {
+    throw new Error("Invalid Trelby file content");
   }
 
-  const lines = trelbyText.split('\n')
-  let inScriptSection = false
-  const contentLines: string[] = []
+  const lines = trelbyText.split("\n");
+  let inScriptSection = false;
+  const out: string[] = [];
 
-  for (const line of lines) {
-    const trimmedLine = line.trim()
+  const CHAR_INDENT = "            "; // 12 spaces
+  const DIALOG_INDENT = "        ";   // 8 spaces
 
-    // Start script content detection
-    if (trimmedLine === '#Start-Script') {
-      inScriptSection = true
-      continue
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+
+    // Start of script
+    if (line === "#Start-Script") {
+      inScriptSection = true;
+      continue;
     }
 
-    // Skip lines until we're in the script section
-    if (!inScriptSection) {
-      continue
+    if (!inScriptSection) continue;
+
+    // Preserve blank lines (they terminate events)
+    if (line.length === 0) {
+      out.push("");
+      continue;
     }
 
-    // Skip empty lines and title strings outside of script
-    if (
-      trimmedLine.length === 0 ||
-      trimmedLine.startsWith('#Title-String') ||
-      trimmedLine.startsWith('#Header-')
-    ) {
-      continue
+    // Skip metadata
+    if (line.startsWith("#Title-String") || line.startsWith("#Header-")) {
+      continue;
     }
 
-    // Parse Trelby content format
-    if (trimmedLine.startsWith('.')) {
-      const content = trimmedLine.substring(1) // Remove the leading dot
+    // Dot-prefix system
+    if (line.startsWith(".")) {
+      const content = line.slice(1);
 
-      if (content.startsWith('/')) {
-        // Transition: ./FADE IN:
-        contentLines.push(content.substring(1)) // Remove slash, keep transition
-      } else if (content.startsWith('\\')) {
-        // Special formatting or scene continuation: .\(ACT 1)
-        const text = content.substring(1) // Remove backslash
-        contentLines.push(text)
-      } else if (content.startsWith('=')) {
-        // Scene heading: .=Ext. Night - earth orbit
-        contentLines.push(content.substring(1)) // Remove equals, keep scene heading
-      } else if (content.startsWith('_')) {
-        // Character name: ._Sid v.O.
-        const charName = content.substring(1) // Remove underscore
-        contentLines.push('') // Add empty line before character
-        contentLines.push(charName.toUpperCase()) // Character names in caps
-      } else if (content.startsWith('.')) {
-        // Action/description: ..Lights start to become visible on Earth.
-        const actionText = content.substring(1) // Remove extra dot
-        contentLines.push(actionText)
+      // Scene heading: .=INT. HOUSE - DAY
+      if (content.startsWith("=")) {
+        out.push(content.slice(1).trim());
+        continue;
       }
-    } else if (trimmedLine.startsWith('>')) {
-      // Action or dialogue
-      const content = trimmedLine.substring(1) // Remove >
 
-      if (content.startsWith(':')) {
-        // Dialogue: >:For so many years we gazed
-        const dialogue = content.substring(1) // Remove colon
-        contentLines.push('    ' + dialogue) // Indent dialogue
-      } else {
-        // Action: >Shot from orbit, Earth is dark
-        contentLines.push(content)
+      // Character: ._JOHN
+      if (content.startsWith("_")) {
+        const name = content.slice(1).trim().toUpperCase();
+        out.push(""); // blank line before character
+        out.push(CHAR_INDENT + name);
+        continue;
       }
-    } else if (trimmedLine.startsWith('.:')) {
-      // Continued dialogue: .:crisis. Then it happened.
-      const dialogue = trimmedLine.substring(2) // Remove .:
-      contentLines.push('    ' + dialogue) // Indent dialogue
+
+      // Transition: ./FADE OUT:
+      if (content.startsWith("/")) {
+        out.push(content.slice(1).trim());
+        continue;
+      }
+
+      // Special formatting: .\ACT 1
+      if (content.startsWith("\\")) {
+        out.push(content.slice(1).trim());
+        continue;
+      }
+
+      // Action: ..Lights flicker
+      if (content.startsWith(".")) {
+        out.push(content.slice(1).trim());
+        continue;
+      }
+
+      // Fallback: treat as action
+      out.push(content.trim());
+      continue;
     }
+
+    // > prefix system
+    if (line.startsWith(">")) {
+      const content = line.slice(1);
+
+      // Dialogue: >:Hello there
+      if (content.startsWith(":")) {
+        const dialog = content.slice(1).trim();
+        out.push(DIALOG_INDENT + dialog);
+        continue;
+      }
+
+      // Action: >The ship descends
+      out.push(content.trim());
+      continue;
+    }
+
+    // Continued dialogue: .:Hello again
+    if (line.startsWith(".:")) {
+      const dialog = line.slice(2).trim();
+      out.push(DIALOG_INDENT + dialog);
+      continue;
+    }
+
+    // Fallback: treat as action
+    out.push(line);
   }
 
-  if (contentLines.length === 0) {
-    throw new Error('No screenplay content found in Trelby file')
+  if (out.length === 0) {
+    throw new Error("No screenplay content found in Trelby file");
   }
 
-  // Join lines and clean up the text
-  const cleanText = contentLines
-    .join('\n')
-    .replace(/\\n/g, '\n') // Convert escaped newlines
-    .replace(/\r/g, '') // Remove carriage returns
-    .trim()
+  const clean = out
+    .map(l => l.replace(/^\.+/, "").trimEnd()) // strip stray leading dots
+    .join("\n")
+    .replace(/\r/g, "");
 
-  if (!cleanText) {
-    throw new Error('Empty screenplay content after parsing Trelby file')
-  }
-
-  return cleanText
+  return clean + "\n";
 }
