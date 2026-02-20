@@ -5,7 +5,13 @@
  * - Character names: 12 spaces
  * - Dialogue: 8 spaces
  * - Action: no indent
+ *
+ * IMPORTANT:
+ * We must NOT trim indentation before classification.
+ * Trelby sometimes emits wrapped dialogue lines starting with ":" but indented.
+ * If we trim first, we lose the indentation signal and misclassify them.
  */
+
 export function importFdxTrelby(trelbyText: string): string {
   if (!trelbyText || typeof trelbyText !== "string") {
     throw new Error("Invalid Trelby file content");
@@ -19,10 +25,14 @@ export function importFdxTrelby(trelbyText: string): string {
   const DIALOG_INDENT = "        ";   // 8 spaces
 
   for (const rawLine of lines) {
-    const line = rawLine.trim();
+    // 🔍 DEBUG: Show the exact raw line, including hidden characters
+    console.log("RAW:", JSON.stringify(rawLine));
+
+    const trimmed = rawLine.trim();   // for content
+    const line = rawLine;             // preserve indentation for classification
 
     // Start of script
-    if (line === "#Start-Script") {
+    if (trimmed === "#Start-Script") {
       inScriptSection = true;
       continue;
     }
@@ -30,19 +40,21 @@ export function importFdxTrelby(trelbyText: string): string {
     if (!inScriptSection) continue;
 
     // Preserve blank lines (they terminate events)
-    if (line.length === 0) {
+    if (trimmed.length === 0) {
       out.push("");
       continue;
     }
 
     // Skip metadata
-    if (line.startsWith("#Title-String") || line.startsWith("#Header-")) {
+    if (trimmed.startsWith("#Title-String") || trimmed.startsWith("#Header-")) {
       continue;
     }
 
-    // Dot-prefix system
-    if (line.startsWith(".")) {
-      const content = line.slice(1);
+    // -------------------------
+    // DOT PREFIX SYSTEM
+    // -------------------------
+    if (trimmed.startsWith(".")) {
+      const content = trimmed.slice(1);
 
       // Scene heading: .=INT. HOUSE - DAY
       if (content.startsWith("=")) {
@@ -81,9 +93,11 @@ export function importFdxTrelby(trelbyText: string): string {
       continue;
     }
 
-    // > prefix system
-    if (line.startsWith(">")) {
-      const content = line.slice(1);
+    // -------------------------
+    // > PREFIX SYSTEM
+    // -------------------------
+    if (trimmed.startsWith(">")) {
+      const content = trimmed.slice(1);
 
       // Dialogue: >:Hello there
       if (content.startsWith(":")) {
@@ -97,15 +111,36 @@ export function importFdxTrelby(trelbyText: string): string {
       continue;
     }
 
-    // Continued dialogue: .:Hello again
-    if (line.startsWith(".:")) {
-      const dialog = line.slice(2).trim();
+    // -------------------------
+    // CONTINUED DIALOGUE: .:Hello again
+    // -------------------------
+    if (trimmed.startsWith(".:")) {
+      const dialog = trimmed.slice(2).trim();
       out.push(DIALOG_INDENT + dialog);
       continue;
     }
 
+    // -------------------------
+    // *** CRITICAL FIX ***
+    // Wrapped dialogue lines that begin with ":" but are indented.
+    //
+    // Example raw input:
+    //     "        :for action."
+    //
+    // We must detect indentation BEFORE trimming.
+    // -------------------------
+    const leadingSpaces = rawLine.match(/^\s*/)?.[0].length ?? 0;
+
+    if (leadingSpaces >= 4 && trimmed.startsWith(":")) {
+      const dialog = trimmed.slice(1).trim();
+      out.push(DIALOG_INDENT + dialog);
+      continue;
+    }
+
+    // -------------------------
     // Fallback: treat as action
-    out.push(line);
+    // -------------------------
+    out.push(trimmed);
   }
 
   if (out.length === 0) {
