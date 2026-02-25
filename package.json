@@ -53,10 +53,10 @@
     }
   },
   "dependencies": {
-    "@swc/helpers": "^0.5.18",
+    "@swc/helpers": "^0.5.19",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "caniuse-lite": "^1.0.30001770",
+    "caniuse-lite": "^1.0.30001774",
     "mediainfo.js": "^0.3.7",
     "next": "16.1.6",
     "react": "^19.2.4",
