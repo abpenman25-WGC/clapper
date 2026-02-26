@@ -203,7 +203,7 @@ export function getDefaultSettingsState(): SettingsState {
 
     groqModelForAssistant: 'llama-3.3-70b-versatile',
 
-    googleModelForAssistant: 'gemini-1.5-pro-001',
+    googleModelForAssistant: 'gemini-3.0-pro', // Google Gemini 3.0
     googleModelForImage: 'imagen',
     googleModelForVideo: 'veo',
     googleModelForVoice: 'v1',
