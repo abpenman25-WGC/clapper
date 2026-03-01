@@ -29,6 +29,24 @@ import {
 // https://docs.anthropic.com/en/docs/models-overview
 export const googleWorkflows: ClapWorkflow[] = [
   {
+    id: 'google://gemini-3.0-pro',
+    label: 'Gemini 3.0 Pro',
+    description: '',
+    tags: ['Gemini', 'pro', '3.0'],
+    author: 'Google (GCP Vertex AI)',
+    thumbnailUrl: '',
+    nonCommercial: false,
+    engine: ClapWorkflowEngine.REST_API,
+    category: ClapWorkflowCategory.ASSISTANT,
+    provider: ClapWorkflowProvider.GOOGLE,
+    data: 'gemini-3.0-pro',
+    schema: '',
+    inputFields: [genericPrompt],
+    inputValues: {
+      prompt: genericPrompt.defaultValue,
+    },
+  },
+  {
     id: 'google://gemini-2.0-flash-001',
     label: 'Gemini 2.0 Flash (001)',
     description: '',
