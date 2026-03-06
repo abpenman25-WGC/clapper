@@ -43,6 +43,7 @@ export function TopMenuFile() {
   const saveClap = useIO((s) => s.saveClap)
   const saveVideoFile = useIO((s) => s.saveVideoFile)
   const saveZipFile = useIO((s) => s.saveZipFile)
+  const saveDaVinciResolve = useIO((s) => s.saveDaVinciResolve)
   const saveKdenline = useIO((s) => s.saveKdenline)
 
   const hasBetaAccess = useUI((s) => s.hasBetaAccess)
@@ -284,6 +285,13 @@ export function TopMenuFile() {
             }}
           >
             Export all assets (.zip)
+          </MenubarItem>
+          <MenubarItem
+            onClick={() => {
+              saveDaVinciResolve()
+            }}
+          >
+            Export for DaVinci Resolve (.zip)
           </MenubarItem>
           <MenubarSeparator />
           <MenubarItem onClick={copyScreenplayForTrelby}>

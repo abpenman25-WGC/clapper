@@ -881,6 +881,76 @@ export const useIO = create<IOStore>((set, get) => ({
     }
   },
 
+  saveDaVinciResolve: async () => {
+    const { saveAnyFile } = get()
+    console.log(`Exporting project for DaVinci Resolve..`)
+
+    const task = useTasks.getState().add({
+      category: TaskCategory.EXPORT,
+      visibility: TaskVisibility.BLOCKER,
+      initialMessage: `Exporting project for DaVinci Resolve..`,
+      successMessage: `Successfully exported for DaVinci Resolve!`,
+      value: 0,
+    })
+
+    try {
+      const timeline: TimelineStore = useTimeline.getState()
+      const { segments: timelineSegments } = timeline
+
+      const segments: ExportableSegment[] = timelineSegments
+        .map((segment, i) => formatSegmentForExport(segment, i))
+        .filter(({ isExportableToFile }) => isExportableToFile)
+
+      let files: fflate.AsyncZippable = {}
+
+      task.setProgress({ message: 'Generating EDL timeline..', value: 20 })
+
+      try {
+        const edlContent = await generateEDL()
+        files['davinci_timeline.edl'] = fflate.strToU8(edlContent)
+      } catch (err) {
+        console.error(`failed to generate the EDL file`)
+      }
+
+      files['HOW_TO_IMPORT.txt'] = fflate.strToU8(
+        'DaVinci Resolve Import Instructions\n' +
+        '====================================\n\n' +
+        '1. Open DaVinci Resolve\n' +
+        '2. Create a new project (or open an existing one)\n' +
+        '3. Go to File > Import > Timeline (AAF, EDL, XML, FCPXML, DRT, ADL, OTIO)\n' +
+        '4. Select the "davinci_timeline.edl" file from this folder\n' +
+        '5. In the import dialog, set the media folder to the "media" subfolder of this ZIP\n' +
+        '6. DaVinci Resolve will create its own project (.drp) — edits made there will not sync back to Clapper\n'
+      )
+
+      task.setProgress({ message: 'Packaging media assets..', value: 50 })
+
+      segments.forEach(({ segment, filePath }) => {
+        files[`media/${filePath.split('/').pop()}`] = [
+          base64DataUriToUint8Array(segment.assetUrl),
+          { level: 0 },
+        ]
+      })
+
+      fflate.zip(
+        files,
+        {},
+        (error, zipFile) => {
+          task.setProgress({ message: 'Saving to file..', value: 100 })
+          const clap = (timeline as any).clap
+          const baseName = getProjectFileName(
+            clap?.meta?.title || 'untitled_project'
+          ).replace('.clap', '')
+          saveAnyFile(new Blob([zipFile]), `${baseName}_davinci.zip`)
+          task.success()
+        }
+      )
+    } catch (err) {
+      console.error(err)
+      task.fail(`${err || 'unknown error'}`)
+    }
+  },
+
   saveOTIOZFile: async () => {
     const { saveAnyFile } = get()
     console.log(`Exporting project to OTIOZ...`)
