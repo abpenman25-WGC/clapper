@@ -1,5 +1,6 @@
 export { resolveSegment as resolveSegmentUsingAiTube } from './aitube'
 export { resolveSegment as resolveSegmentUsingBigModel } from './bigmodel'
+export { resolveSegment as resolveSegmentUsingGoogle } from './google'
 export { resolveSegment as resolveSegmentUsingCivitai } from './civitai'
 export { resolveSegment as resolveSegmentUsingComfyDeploy } from './comfy-comfydeploy'
 export { resolveSegment as resolveSegmentUsingComfyIcu } from './comfy-comfyicu'

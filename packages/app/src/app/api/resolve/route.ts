@@ -28,6 +28,7 @@ import {
   resolveSegmentUsingPiApi,
   resolveSegmentUsingHotshot,
   resolveSegmentUsingCivitai,
+  resolveSegmentUsingGoogle,
 } from './providers'
 
 import { ResolveRequest } from '@aitube/clapper-services'
@@ -111,6 +112,7 @@ export async function POST(req: NextRequest) {
     [ClapWorkflowProvider.BIGMODEL]: resolveSegmentUsingBigModel,
     [ClapWorkflowProvider.PIAPI]: resolveSegmentUsingPiApi,
     [ClapWorkflowProvider.AITUBE]: resolveSegmentUsingAiTube,
+    [ClapWorkflowProvider.GOOGLE]: resolveSegmentUsingGoogle,
   }
 
   const resolveSegment: ProviderFn | undefined =
