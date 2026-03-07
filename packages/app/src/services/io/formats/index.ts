@@ -1,5 +1,6 @@
 export { generateEDL } from './edl'
 export { generateFCP } from './fcp'
+export { generateKdenlive } from './kdenlive'
 export { generateMLT } from './mlt'
 export { generateOTIO } from './otio'
 export { generateOTIOZ } from './otioz'

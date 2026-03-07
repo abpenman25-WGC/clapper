@@ -297,14 +297,9 @@ export function TopMenuFile() {
           <MenubarItem onClick={copyScreenplayForTrelby}>
             Copy screenplay for Trelby
           </MenubarItem>
-          {/*
-        <MenubarItem onClick={() => {
-          saveKdenline()
-        }}>
-          Export .kdenlive
-        </MenubarItem>
-        <MenubarSeparator />
-        */}
+          <MenubarItem onClick={() => saveKdenline()}>
+            Export for Kdenlive (.zip)
+          </MenubarItem>
           {/*
         <MenubarItem
         disabled

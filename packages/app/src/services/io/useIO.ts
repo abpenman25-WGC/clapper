@@ -63,6 +63,7 @@ import { useScriptEditor } from '../editors'
 import {
   generateEDL,
   generateFCP,
+  generateKdenlive,
   generateMLT,
   generateOTIO,
   generateOTIOZ,
@@ -1003,61 +1004,70 @@ export const useIO = create<IOStore>((set, get) => ({
 
   saveKdenline: async () => {
     const { saveAnyFile } = get()
-    const clap: ClapProject = (useTimeline.getState() as any).clap
-    // const tracks: ClapTracks = useTimeline.getState().tracks
+    console.log(`Exporting project for Kdenlive..`)
 
-    throw new Error(`cannot run in a browser, unfortunately`)
+    const task = useTasks.getState().add({
+      category: TaskCategory.EXPORT,
+      visibility: TaskVisibility.BLOCKER,
+      initialMessage: `Exporting project for Kdenlive..`,
+      successMessage: `Successfully exported for Kdenlive!`,
+      value: 0,
+    })
 
-    /*
-    // hum.. we should add FPS to the ClapProject metadata
-    const fps = 30 // clap.meta
+    try {
+      const timeline: TimelineStore = useTimeline.getState()
+      const { segments: timelineSegments } = timeline
 
-    // for documentation, look at the example test file in:
-    // https://www.npmjs.com/package/kdenlive?activeTab=code
-    const project = new Project(fps)
+      const segments: ExportableSegment[] = timelineSegments
+        .map((segment, i) => formatSegmentForExport(segment, i))
+        .filter(({ isExportableToFile }) => isExportableToFile)
 
-    const cameraSegments = clap.segments.filter(s => s.category === ClapSegmentCategory.CAMERA)
- 
-    const segmentsWithNonEmptyAssets = clap.segments.filter(s => s.assetUrl)
+      let files: fflate.AsyncZippable = {}
 
-    // const videoSegments = clap.segments.filter(s => s.category === ClapSegmentCategory.VIDEO && s.assetUrl)
-    const videoTractor = project.addVideoTractor()
+      task.setProgress({ message: 'Generating Kdenlive project file..', value: 20 })
 
-    // const soundSegments = clap.segments.filter(s => s.category === ClapSegmentCategory.SOUND && s.assetUrl)
-    const soundTractor = project.addAudioTractor()
+      try {
+        const kdenliveXml = await generateKdenlive()
+        files['project.kdenlive'] = fflate.strToU8(kdenliveXml)
+      } catch (err) {
+        console.error(`failed to generate the Kdenlive XML file`)
+      }
 
-    // const voiceSegments = clap.segments.filter(s => s.category === ClapSegmentCategory.DIALOGUE && s.assetUrl)
-    const voiceTractor = project.addAudioTractor()
-
-    // const musicSegments = clap.segments.filter(s => s.category === ClapSegmentCategory.MUSIC && s.assetUrl)
-    const musicTractor = project.addAudioTractor()
-
-    for (const shot of cameraSegments) {
-      const videoSegments = filterSegments(
-        ClapSegmentFilteringMode.ANY,
-        shot,
-        segmentsWithNonEmptyAssets,
-        ClapSegmentCategory.VIDEO
+      files['HOW_TO_IMPORT.txt'] = fflate.strToU8(
+        'Kdenlive Import Instructions\n' +
+        '============================\n\n' +
+        '1. Open Kdenlive\n' +
+        '2. Go to File > Open and select the "project.kdenlive" file from this folder\n' +
+        '3. If Kdenlive asks to locate missing clips, point it to the "media" subfolder\n' +
+        '4. Edits made in Kdenlive will not sync back to Clapper\n'
       )
-      const videoSegment = videoSegments.at(0)
-      if (videoSegment) { continue }
 
-      const producer = project.addProducer(`${videoSegment.id}.mp4`)
-			
-      const entry = new Entry(
-        producer,
-        formatDuration(shot.startTimeInMs),
-        formatDuration(shot.endTimeInMs)
+      task.setProgress({ message: 'Packaging media assets..', value: 50 })
+
+      segments.forEach(({ segment, fileName }) => {
+        files[`media/${fileName}`] = [
+          base64DataUriToUint8Array(segment.assetUrl),
+          { level: 0 },
+        ]
+      })
+
+      fflate.zip(
+        files,
+        {},
+        (error, zipFile) => {
+          task.setProgress({ message: 'Saving to file..', value: 100 })
+          const clap = (timeline as any).clap
+          const baseName = getProjectFileName(
+            clap?.meta?.title || 'untitled_project'
+          ).replace('.clap', '')
+          saveAnyFile(new Blob([zipFile]), `${baseName}_kdenlive.zip`)
+          task.success()
+        }
       )
-			videoTractor.addEntry(entry)
-			// audio_track.addEntry(entry)
+    } catch (err) {
+      console.error(err)
+      task.fail(`${err || 'unknown error'}`)
     }
-
-    const xml = await project.toXML()
-    const blob = new Blob([xml], { type: "text/xml" })
-    saveAnyFile(blob, `my_project.kdenlive`)
-
-    */
   },
 
   openOpenTimelineIO: async (file: File) => {
