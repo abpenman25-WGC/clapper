@@ -1,6 +1,7 @@
 export { resolveSegment as resolveSegmentUsingAiTube } from './aitube'
 export { resolveSegment as resolveSegmentUsingBigModel } from './bigmodel'
 export { resolveSegment as resolveSegmentUsingElevenLabs } from './elevenlabs'
+export { resolveSegment as resolveSegmentUsingOpenAI } from './openai'
 export { resolveSegment as resolveSegmentUsingGoogle } from './google'
 export { resolveSegment as resolveSegmentUsingCivitai } from './civitai'
 export { resolveSegment as resolveSegmentUsingComfyDeploy } from './comfy-comfydeploy'
