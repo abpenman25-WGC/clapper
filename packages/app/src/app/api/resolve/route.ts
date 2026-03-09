@@ -29,6 +29,7 @@ import {
   resolveSegmentUsingHotshot,
   resolveSegmentUsingCivitai,
   resolveSegmentUsingGoogle,
+  resolveSegmentUsingElevenLabs,
 } from './providers'
 
 import { ResolveRequest } from '@aitube/clapper-services'
@@ -104,7 +105,7 @@ export async function POST(req: NextRequest) {
     [ClapWorkflowProvider.STABILITYAI]: resolveSegmentUsingStabilityAi,
     [ClapWorkflowProvider.FALAI]: resolveSegmentUsingFalAi,
     [ClapWorkflowProvider.MODELSLAB]: resolveSegmentUsingModelsLab,
-    // [ClapWorkflowProvider.ELEVENLABS]: resolveSegmentUsingElevenLabs,
+    [ClapWorkflowProvider.ELEVENLABS]: resolveSegmentUsingElevenLabs,
     [ClapWorkflowProvider.LETZAI]: resolveSegmentUsingLetzAi,
     [ClapWorkflowProvider.LUMALABS]: resolveSegmentUsingLumaLabs,
     [ClapWorkflowProvider.HOTSHOT]: resolveSegmentUsingHotshot,

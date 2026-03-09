@@ -44,7 +44,8 @@ export async function generateVoice(request: ResolveRequest): Promise<string> {
     inputs: request.prompts.voice.positive,
   })
 
-  console.log('output from Hugging Face Inference API:', blob)
-
-  throw new Error(`finish me`)
+  const arrayBuffer = await blob.arrayBuffer()
+  const base64Audio = Buffer.from(arrayBuffer).toString('base64')
+  const mimeType = blob.type || 'audio/flac'
+  return `data:${mimeType};base64,${base64Audio}`
 }
