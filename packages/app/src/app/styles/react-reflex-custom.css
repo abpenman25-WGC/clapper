@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@reference "tailwindcss";
 
 /*
 This extends the original react-reflex.css (from react-reflex@4.1.0),
