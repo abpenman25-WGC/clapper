@@ -14,13 +14,13 @@
     "update": "rm -Rf node_modules && rm pnpm-lock.yaml && pnpm i && pnpm run build"
   },
   "devDependencies": {
-    "@types/react": "*",
-    "@types/react-dom": "*",
-    "bun-types": "latest",
-    "prettier": "^3.3.3",
-    "rimraf": "^6.0.1",
-    "tailwindcss": "3.4.16",
-    "typescript": "5.5.2"
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "bun-types": "^1.3.10",
+    "prettier": "^3.8.1",
+    "rimraf": "^6.1.3",
+    "tailwindcss": "4.2.1",
+    "typescript": "5.9.3"
   },
   "peerDependencies": {
     "@aitube/clap": "workspace:*",
