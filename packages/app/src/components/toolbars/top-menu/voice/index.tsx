@@ -36,7 +36,6 @@ export function TopMenuVoice() {
         <IsBusy nbPendingTasks={nbPendingRequestsForVoice} />
       </MenubarTrigger>
       <MenubarContent>
-        <MenubarSub>
           <MenubarItem
             onClick={() => {
               setShowSettings(SettingsCategory.VOICE)
@@ -52,7 +51,6 @@ export function TopMenuVoice() {
           />
           <MenubarSeparator />
           <MenubarItem disabled>Usage and costs: not implemented</MenubarItem>
-        </MenubarSub>
       </MenubarContent>
     </MenubarMenu>
   )

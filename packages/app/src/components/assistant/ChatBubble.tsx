@@ -37,12 +37,9 @@ export function ChatBubble({
               : theme.assistantRobotTextColor || theme.defaultTextColor || '',
           }}
         >
-          <Markdown
-            className={cn(`select-text text-sm`)}
-            remarkPlugins={[remarkGfm]}
-          >
-            {message}
-          </Markdown>
+          <div className={cn(`select-text text-sm`)}>
+            <Markdown remarkPlugins={[remarkGfm]}>{message}</Markdown>
+          </div>
         </div>
         <div
           className={cn(

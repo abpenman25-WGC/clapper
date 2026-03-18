@@ -44,7 +44,6 @@ export function TopMenuImage() {
         <IsBusy nbPendingTasks={nbPendingRequestsForImage} />
       </MenubarTrigger>
       <MenubarContent>
-        <MenubarSub>
           <MenubarItem
             onClick={() => {
               setShowSettings(SettingsCategory.IMAGE)
@@ -68,7 +67,6 @@ export function TopMenuImage() {
           />
           <MenubarSeparator />
           <MenubarItem disabled>Usage and costs: not implemented</MenubarItem>
-        </MenubarSub>
       </MenubarContent>
     </MenubarMenu>
   )

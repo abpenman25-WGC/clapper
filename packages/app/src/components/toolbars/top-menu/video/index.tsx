@@ -42,7 +42,6 @@ export function TopMenuVideo() {
         <IsBusy nbPendingTasks={nbPendingRequestsForVideo} />
       </MenubarTrigger>
       <MenubarContent>
-        <MenubarSub>
           <MenubarItem
             onClick={() => {
               setShowSettings(SettingsCategory.VIDEO)
@@ -62,7 +61,6 @@ export function TopMenuVideo() {
           />
           <MenubarSeparator />
           <MenubarItem disabled>Usage and costs: not implemented</MenubarItem>
-        </MenubarSub>
       </MenubarContent>
     </MenubarMenu>
   )

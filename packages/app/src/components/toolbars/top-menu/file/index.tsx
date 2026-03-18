@@ -20,6 +20,7 @@ import { useIO, useUI } from '@/services'
 import { newClap } from '@aitube/clap'
 import { getDemoGame } from '@/experiments/samples/demo'
 import { exportToTrelby } from '@/utils/exportToTrelby'
+import { importFdxTrelby } from '@/utils/importFdxTrelby'
 import { useScriptEditor } from '@/services/editors/script-editor/useScriptEditor'
 import {
   getRecentProjects,
@@ -62,6 +63,49 @@ export function TopMenuFile() {
       clearRecentProjects()
       setRecentProjects([])
     }
+  }
+
+  const updateScriptFromFile = () => {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = '.fdx,.trelby,.txt'
+    input.onchange = async (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0]
+      if (!file) return
+      const rawText = await file.text()
+      let scriptText: string
+      try {
+        if (
+          file.name.endsWith('.fdx') ||
+          file.name.endsWith('.trelby') ||
+          file.name.endsWith('.fdx.trelby')
+        ) {
+          scriptText = importFdxTrelby(rawText)
+        } else {
+          scriptText = rawText
+        }
+      } catch (err) {
+        alert(`Failed to read script file:\n${err}`)
+        return
+      }
+      // Update the Monaco editor and mark it for publish
+      const scriptEditor = useScriptEditor.getState()
+      const { textModel } = scriptEditor
+      if (textModel) {
+        textModel.setValue(scriptText)
+      }
+      useScriptEditor.setState({
+        current: scriptText,
+        lastPublished: '',
+      })
+      // Also update the clap metadata so it round-trips correctly on save
+      const clap = useTimeline.getState().clap
+      if (clap) {
+        clap.meta.storyPrompt = scriptText
+      }
+      alert(`Script updated from "${file.name}". Review the changes, then save your project (Ctrl+S).`)
+    }
+    input.click()
   }
 
   const copyScreenplayForTrelby = () => {
@@ -296,6 +340,9 @@ export function TopMenuFile() {
           <MenubarSeparator />
           <MenubarItem onClick={copyScreenplayForTrelby}>
             Copy screenplay for Trelby
+          </MenubarItem>
+          <MenubarItem onClick={updateScriptFromFile}>
+            Update script from file (.fdx / .trelby / .txt)
           </MenubarItem>
           <MenubarItem onClick={() => saveKdenline()}>
             Export for Kdenlive (.zip)
