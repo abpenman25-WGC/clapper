@@ -99,6 +99,15 @@ export async function resolve(
     body: JSON.stringify(request),
   })
 
+  if (!res.ok) {
+    let errorDetails = `HTTP ${res.status}`
+    try {
+      const errBody = await res.json()
+      errorDetails = errBody?.error || errBody?.details || errorDetails
+    } catch (_) {}
+    throw new Error(errorDetails)
+  }
+
   const newSegmentData = (await res.json()) as TimelineSegment
 
   return newSegmentData

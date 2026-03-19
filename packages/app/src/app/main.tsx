@@ -33,6 +33,7 @@ import { FilterEditor } from '@/components/editors/FilterEditor'
 import { useUI, useIO, useTheme, useMonitor } from '@/services'
 import { useRenderLoop } from '@/services/renderer'
 import { useDynamicWorkflows } from '@/services/editors/workflow-editor/useDynamicWorkflows'
+import { useAutoSave } from '@/lib/hooks'
 
 import { useQueryStringLoader } from '@/components/toolbars/top-menu/file/useQueryStringLoader'
 import { useSetupIframeOnce } from './embed/useSetupIframeOnce'
@@ -82,6 +83,9 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
   // this has to be done at the root of the app, that way it can
   // perform its routine even when the monitor component is hidden
   useRenderLoop()
+
+  // silently saves to IndexedDB every 3 minutes
+  useAutoSave()
 
   // this has to be done at the root of the app, that way it can
   // sync workflows even when the workflow component is hidden

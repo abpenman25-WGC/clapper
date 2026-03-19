@@ -50,40 +50,53 @@ export async function getMediaInfo(input: string): Promise<MediaMetadata> {
 }
 
 async function getMetaDataFromPath(filePath: string): Promise<MediaMetadata> {
-  return new Promise((resolve, reject) => {
-    ffmpeg.ffprobe(filePath, (err, metadata) => {
-      let results = {
-        durationInSec: 0,
-        durationInMs: 0,
-        hasAudio: false,
-      }
-
-      if (err) {
-        console.error(
-          'getMediaInfo(): failed to analyze the source (might happen with empty files)',
-          err
-        )
-        // reject(err);
+  return new Promise((resolve) => {
+    let finished = false
+    const done = (results: MediaMetadata) => {
+      if (!finished) {
+        finished = true
         resolve(results)
-        return
       }
+    }
 
-      try {
-        results.durationInSec = metadata?.format?.duration || 0
-        results.durationInMs = results.durationInSec * 1000
-        results.hasAudio = (metadata?.streams || []).some(
-          (stream) => stream.codec_type === 'audio'
-        )
-      } catch (err) {
-        console.error(
-          `getMediaInfo(): failed to analyze the source (might happen with empty files)`,
-          err
-        )
-        results.durationInSec = 0
-        results.durationInMs = 0
-        results.hasAudio = false
-      }
-      resolve(results)
-    })
+    const defaultResults: MediaMetadata = {
+      durationInSec: 0,
+      durationInMs: 0,
+      hasAudio: false,
+    }
+
+    try {
+      ffmpeg.ffprobe(filePath, (err, metadata) => {
+        if (err) {
+          console.error(
+            'getMediaInfo(): failed to analyze the source (might happen with empty files or missing ffprobe)',
+            err
+          )
+          done(defaultResults)
+          return
+        }
+
+        try {
+          const results: MediaMetadata = {
+            durationInSec: metadata?.format?.duration || 0,
+            durationInMs: (metadata?.format?.duration || 0) * 1000,
+            hasAudio: (metadata?.streams || []).some(
+              (stream) => stream.codec_type === 'audio'
+            ),
+          }
+          done(results)
+        } catch (err) {
+          console.error(
+            `getMediaInfo(): failed to analyze the source (might happen with empty files)`,
+            err
+          )
+          done(defaultResults)
+        }
+      })
+    } catch (err) {
+      // ffprobe binary not found or other synchronous error
+      console.error('getMediaInfo(): ffprobe unavailable, skipping media analysis', err)
+      done(defaultResults)
+    }
   })
 }

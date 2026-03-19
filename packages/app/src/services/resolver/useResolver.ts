@@ -176,6 +176,32 @@ export const useResolver = create<ResolverStore>((set, get) => ({
 
     const segmentsToRender: TimelineSegment[] = []
 
+    // Reset any ERROR segments back to TO_GENERATE so they will be retried
+    // (e.g. after a user fixes their settings / switches provider)
+    // Respect per-category rendering strategy: don't reset if that category is ON_DEMAND
+    for (const s of segments) {
+      if (s.status === ClapSegmentStatus.ERROR) {
+        // Check if the rendering strategy for this category is ON_DEMAND (manual/click only)
+        let strategyForCategory: RenderingStrategy = RenderingStrategy.ON_DEMAND
+        if (s.category === ClapSegmentCategory.VIDEO) {
+          strategyForCategory = videoRenderingStrategy
+        } else if (s.category === ClapSegmentCategory.IMAGE) {
+          strategyForCategory = imageRenderingStrategy
+        } else if (s.category === ClapSegmentCategory.VOICE || s.category === ClapSegmentCategory.DIALOGUE) {
+          strategyForCategory = voiceRenderingStrategy
+        } else if (s.category === ClapSegmentCategory.SOUND) {
+          strategyForCategory = soundRenderingStrategy
+        } else if (s.category === ClapSegmentCategory.MUSIC) {
+          strategyForCategory = musicRenderingStrategy
+        }
+        if (strategyForCategory === RenderingStrategy.ON_DEMAND) {
+          continue
+        }
+        Object.assign(s, { status: ClapSegmentStatus.TO_GENERATE })
+        timeline.trackSilentChangeInSegment(s.id)
+      }
+    }
+
     // the following loop isn't the prettiest, but I think it presents
     // the dynamic generation logic in a clear way, so let's keep it for now
     for (const s of segments) {

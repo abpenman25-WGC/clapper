@@ -9,12 +9,17 @@ import {
 import { getDefaultBufferedSegments } from './getDefaultBufferedSegments'
 
 export function getDefaultRendererState(): RendererState {
+  // Default to ON_DEMAND so the resolver never fires requests before the
+  // useRenderLoop useEffect has had a chance to sync the user's saved settings
+  // into the renderer state. Without this, video segments get submitted on the
+  // very first resolver tick (before React has mounted and synced settings),
+  // even when the user has video set to ON_DEMAND.
   const renderingStrategies: RenderingStrategies = {
-    imageRenderingStrategy: RenderingStrategy.BUFFERED_PLAYBACK_STREAMING,
-    videoRenderingStrategy: RenderingStrategy.BUFFERED_PLAYBACK_STREAMING,
-    soundRenderingStrategy: RenderingStrategy.BUFFERED_PLAYBACK_STREAMING,
-    voiceRenderingStrategy: RenderingStrategy.BUFFERED_PLAYBACK_STREAMING,
-    musicRenderingStrategy: RenderingStrategy.BUFFERED_PLAYBACK_STREAMING,
+    imageRenderingStrategy: RenderingStrategy.ON_DEMAND,
+    videoRenderingStrategy: RenderingStrategy.ON_DEMAND,
+    soundRenderingStrategy: RenderingStrategy.ON_DEMAND,
+    voiceRenderingStrategy: RenderingStrategy.ON_DEMAND,
+    musicRenderingStrategy: RenderingStrategy.ON_DEMAND,
   }
 
   /**

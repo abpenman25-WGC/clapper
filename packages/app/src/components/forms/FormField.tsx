@@ -18,7 +18,6 @@ export function FormField({
       className={cn(
         `flex flex-col items-center justify-center`,
         `w-full`,
-        `opacity-80`,
         `font-thin text-neutral-200`,
         // note: the parent component needs @container for this to work
         `@md:flex-row @md:space-x-3`

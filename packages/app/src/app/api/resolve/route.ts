@@ -73,24 +73,25 @@ export async function POST(req: NextRequest) {
     lipsyncEngine,
   } = getSegmentWorkflowProviderAndEngine(request)
 
-  /*
-  console.log(`Resolving a ${request.segment.category} segment using:`, {
-    workflow,
-    provider,
-    engine,
-  })
-    */
-
   if (!generationWorkflow) {
-    throw new Error(`cannot resolve a segment without a valid workflow`)
+    return NextResponse.json(
+      { error: 'cannot resolve a segment without a valid workflow' },
+      { status: 400 }
+    )
   }
 
   if (!generationProvider || generationProvider === ClapWorkflowProvider.NONE) {
-    throw new Error(`cannot resolve a segment without a valid provider`)
+    return NextResponse.json(
+      { error: 'cannot resolve a segment without a valid provider. Please configure a generation workflow in the advanced settings.' },
+      { status: 400 }
+    )
   }
 
   if (!generationEngine) {
-    throw new Error(`cannot resolve a segment without a valid engine`)
+    return NextResponse.json(
+      { error: 'cannot resolve a segment without a valid engine' },
+      { status: 400 }
+    )
   }
 
   const comfyProviders: Partial<Record<ClapWorkflowProvider, ProviderFn>> = {
@@ -133,8 +134,6 @@ export async function POST(req: NextRequest) {
   let segment = request.segment
 
   try {
-    // Log the incoming request for debugging
-    console.log('Incoming resolve request:', JSON.stringify(request, null, 2))
     segment = await resolveSegment(request)
 
     // we clean-up and parse the output from all the resolvers:

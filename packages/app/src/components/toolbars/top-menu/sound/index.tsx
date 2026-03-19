@@ -36,7 +36,6 @@ export function TopMenuSound() {
         <IsBusy nbPendingTasks={nbPendingRequestsForSound} />
       </MenubarTrigger>
       <MenubarContent>
-        <MenubarSub>
           <MenubarItem
             onClick={() => {
               setShowSettings(SettingsCategory.SOUND)
@@ -52,7 +51,6 @@ export function TopMenuSound() {
           />
           <MenubarSeparator />
           <MenubarItem disabled>Usage and costs: not implemented</MenubarItem>
-        </MenubarSub>
       </MenubarContent>
     </MenubarMenu>
   )

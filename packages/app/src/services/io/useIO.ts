@@ -72,6 +72,7 @@ import {
   addRecentProject,
   getProjectFileName,
 } from '@/lib/utils/recentProjects'
+import { loadAutoSaveRecord, clearAutoSave } from '@/lib/utils/autoSaveDb'
 
 export const useIO = create<IOStore>((set, get) => ({
   ...getDefaultIOState(),
@@ -582,7 +583,40 @@ export const useIO = create<IOStore>((set, get) => ({
       fileName,
     })
 
+    // Clear the auto-save now that the user has an explicit manual save
+    clearAutoSave().catch(() => {})
+
     task.success()
+  },
+
+  restoreAutoSave: async () => {
+    const { openClapBlob } = get()
+
+    const record = await loadAutoSaveRecord()
+    if (!record) {
+      console.log('[AutoSave] No auto-save found.')
+      return false
+    }
+
+    const tasks = useTasks.getState()
+    const task = tasks.add({
+      category: TaskCategory.EXPORT,
+      visibility: TaskVisibility.BLOCKER,
+      initialMessage: `Restoring auto-saved project "${record.title}"…`,
+      successMessage: `Auto-save restored!`,
+    })
+
+    try {
+      const file = new File([record.blob], `${record.title}.clap`, {
+        type: 'application/gzip',
+      })
+      await openClapBlob(record.title, record.title, record.blob)
+      task.success()
+      return true
+    } catch (err) {
+      task.fail(`Failed to restore auto-save: ${err}`)
+      return false
+    }
   },
 
   saveVideoFile: async () => {

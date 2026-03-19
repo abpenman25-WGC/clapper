@@ -965,6 +965,10 @@ export const useSettings = create<SettingsStore>()(
           openaiApiKey: state.openaiApiKey || defaultSettings.openaiApiKey,
           groqApiKey: state.groqApiKey || defaultSettings.groqApiKey,
           googleApiKey: state.googleApiKey || defaultSettings.googleApiKey,
+          googleProjectId:
+            state.googleProjectId || defaultSettings.googleProjectId,
+          googleLocation:
+            state.googleLocation || defaultSettings.googleLocation,
           anthropicApiKey:
             state.anthropicApiKey || defaultSettings.anthropicApiKey,
           elevenLabsApiKey:
