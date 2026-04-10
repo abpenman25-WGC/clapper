@@ -34,6 +34,7 @@ import { useUI, useIO, useTheme, useMonitor } from '@/services'
 import { useRenderLoop } from '@/services/renderer'
 import { useDynamicWorkflows } from '@/services/editors/workflow-editor/useDynamicWorkflows'
 import { useAutoSave } from '@/lib/hooks'
+import { loadAutoSaveRecord } from '@/lib/utils/autoSaveDb'
 
 import { useQueryStringLoader } from '@/components/toolbars/top-menu/file/useQueryStringLoader'
 import { useSetupIframeOnce } from './embed/useSetupIframeOnce'
@@ -86,6 +87,26 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
 
   // silently saves to IndexedDB every 3 minutes
   useAutoSave()
+
+  // on first mount, check for a crash-recovery auto-save and prompt to restore
+  useEffect(() => {
+    loadAutoSaveRecord().then((record) => {
+      if (!record) return
+      const ageMinutes = Math.round((Date.now() - record.savedAt) / 60_000)
+      const confirmed = window.confirm(
+        `An auto-saved project "${record.title}" was found` +
+        ` (saved ${ageMinutes} minute${ageMinutes === 1 ? '' : 's'} ago,` +
+        ` ${record.segmentCount} segment${record.segmentCount === 1 ? '' : 's'}).\n\n` +
+        `Restore it now?`
+      )
+      if (confirmed) {
+        useIO.getState().restoreAutoSave()
+      }
+    }).catch(() => {
+      // IndexedDB unavailable — silently skip
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // this has to be done at the root of the app, that way it can
   // sync workflows even when the workflow component is hidden

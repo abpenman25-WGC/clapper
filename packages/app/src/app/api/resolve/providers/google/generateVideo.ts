@@ -42,11 +42,13 @@ export async function generateVideo(request: ResolveRequest): Promise<string> {
         ? '9:16'
         : '16:9'
 
-  const durationSeconds = Math.max(
-    5,
-    Math.round(
-      (request.segment.endTimeInMs - request.segment.startTimeInMs) / 1000
-    )
+  // Veo only accepts 4, 6, or 8 seconds — snap to nearest valid value
+  const rawDuration = Math.round(
+    (request.segment.endTimeInMs - request.segment.startTimeInMs) / 1000
+  )
+  const validDurations = [4, 6, 8]
+  const durationSeconds = validDurations.reduce((prev, curr) =>
+    Math.abs(curr - rawDuration) < Math.abs(prev - rawDuration) ? curr : prev
   )
 
   const instance: Record<string, unknown> = {
@@ -97,18 +99,20 @@ export async function generateVideo(request: ResolveRequest): Promise<string> {
   }
 
   console.log(`${TAG}: started long-running operation ${operationName}`)
-  return await pollVideoOperation(operationName, token, location)
+  return await pollVideoOperation(operationName, token, location, projectId, model)
 }
 
 async function pollVideoOperation(
   operationName: string,
   token: string,
   location: string,
+  projectId: string,
+  model: string,
   maxPollingCount = 60,
   intervalMs = 10000
 ): Promise<string> {
-  // The operation name already contains the full resource path
-  const pollEndpoint = `https://${location}-aiplatform.googleapis.com/v1/${operationName}`
+  // Veo uses fetchPredictOperation (POST) rather than a standard GET LRO endpoint
+  const pollEndpoint = `https://${location}-aiplatform.googleapis.com/v1/projects/${projectId}/locations/${location}/publishers/google/models/${model}:fetchPredictOperation`
 
   return new Promise((resolve, reject) => {
     let pollingCount = 0
@@ -116,10 +120,12 @@ async function pollVideoOperation(
     const intervalId = setInterval(async () => {
       try {
         const res = await fetch(pollEndpoint, {
-          method: 'GET',
+          method: 'POST',
           headers: {
             Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
           },
+          body: JSON.stringify({ operationName }),
           cache: 'no-store',
         })
 

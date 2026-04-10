@@ -60,8 +60,11 @@ export const useResolver = create<ResolverStore>((set, get) => ({
 
     console.log(`useResolver.startLoop() isRunning: ${isRunning}`)
 
+    // reset isRunning so hot reloads don't leave the loop permanently dead
+    set({ isRunning: false })
+
     if (isRunning) {
-      return
+      console.log(`useResolver.startLoop() restarting loop after hot reload`)
     }
 
     set({ isRunning: true })
@@ -251,6 +254,12 @@ export const useResolver = create<ResolverStore>((set, get) => ({
         }
       } else if (s.category === ClapSegmentCategory.IMAGE) {
         // console.log(`useResolver.runLoop(): found a storyboard segment`)
+
+        // if a segment is COMPLETED but has no asset, reset it so it gets re-generated
+        if (s.status === ClapSegmentStatus.COMPLETED && !s.assetUrl) {
+          Object.assign(s, { status: ClapSegmentStatus.TO_GENERATE })
+          timeline.trackSilentChangeInSegment(s.id)
+        }
 
         if (s.status !== ClapSegmentStatus.TO_GENERATE) {
           // console.log(`useResolver.runLoop(): found a storyboard segment that is not to_generate`)

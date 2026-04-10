@@ -228,7 +228,7 @@ export const googleWorkflows: ClapWorkflow[] = [
     },
   },
   {
-    id: 'google://veo-3.1',
+    id: 'google://veo-3.1-generate-001',
     label: 'Veo 3.1',
     description: 'Google Veo 3.1 video generation model',
     tags: ['Veo', 'video', '3.1'],
@@ -238,7 +238,7 @@ export const googleWorkflows: ClapWorkflow[] = [
     engine: ClapWorkflowEngine.REST_API,
     category: ClapWorkflowCategory.VIDEO_GENERATION,
     provider: ClapWorkflowProvider.GOOGLE,
-    data: 'veo-3.1',
+    data: 'veo-3.1-generate-001',
     schema: '',
     inputFields: [genericPrompt],
     inputValues: {

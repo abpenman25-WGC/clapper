@@ -566,6 +566,15 @@ export const useIO = create<IOStore>((set, get) => ({
       throw new Error(`cannot save a clap.. if there is no clap`)
     }
 
+    // Sync the current script editor content into the clap before saving.
+    // Without this, the timeline store's storyPrompt (which getClap() reads)
+    // remains the original value loaded from disk, so edits made in the
+    // Monaco script editor are silently discarded on every save.
+    const scriptEditorCurrent = useScriptEditor.getState().current
+    if (scriptEditorCurrent) {
+      clap.meta.storyPrompt = scriptEditorCurrent
+    }
+
     // TODO: serializeClap should have a progress callback, so that we can
     // track the progression.
     //

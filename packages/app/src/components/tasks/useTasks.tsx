@@ -390,7 +390,11 @@ export const useTasks = create<TasksStore>((set, get) => ({
     })
     get().setStatus(TaskStatus.ERROR, taskId)
 
-    toast.error(message)
+    // Don't show error toasts for invisible tasks (e.g. auto-retried generation segments)
+    const task = get().tasks[taskId]
+    if (!task || task.visibility !== TaskVisibility.INVISIBLE) {
+      toast.error(message)
+    }
   },
   cancel: (taskId?: string) => {
     get().setStatus(TaskStatus.CANCELLED, taskId)

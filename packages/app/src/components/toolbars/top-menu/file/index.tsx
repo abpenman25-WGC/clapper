@@ -46,6 +46,7 @@ export function TopMenuFile() {
   const saveZipFile = useIO((s) => s.saveZipFile)
   const saveDaVinciResolve = useIO((s) => s.saveDaVinciResolve)
   const saveKdenline = useIO((s) => s.saveKdenline)
+  const restoreAutoSave = useIO((s) => s.restoreAutoSave)
 
   const hasBetaAccess = useUI((s) => s.hasBetaAccess)
 
@@ -184,6 +185,13 @@ export function TopMenuFile() {
             }}
           >
             Save project (.clap)<MenubarShortcut>⌘S</MenubarShortcut>
+          </MenubarItem>
+          <MenubarItem
+            onClick={() => {
+              restoreAutoSave()
+            }}
+          >
+            Restore Auto-Save
           </MenubarItem>
           <MenubarSeparator />
           {recentProjects.length > 0 && (

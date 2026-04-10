@@ -124,7 +124,7 @@ export const openaiWorkflows: ClapWorkflow[] = [
     id: 'openai://gpt-image-1',
     label: 'GPT-Image-1 ✅',
     description:
-      'Latest OpenAI image model. Higher quality than DALL-E 3. Billed per image.',
+      'Latest OpenAI image model. Tier: Medium. Aspect Ratio: 16:9. Max Resolution: 2560 × 1400 pixels. Price Per Image: $0.004 USD.',
     tags: ['gpt-image', 'image'],
     author: 'OpenAI',
     thumbnailUrl: '',

@@ -7,6 +7,47 @@
 
 ---
 
+## ✅ FIXED ISSUE - April 10, 2026
+
+### Script Edits Not Persisted on Save (Ctrl+S)
+
+**Status**: ✅ FIXED  
+**Priority**: Critical  
+**Component**: `packages/app/src/services/io/useIO.ts` — `saveClap()`
+
+**Issue Description**:  
+When the user edits the script in the Monaco script editor (e.g., removing words like "Dictators" or "Angry") and then saves the project via Ctrl+S (or File → Save), the saved `.clap` file still contains the **original, unedited script**. On reopening the file, the edits are gone every time — the script always reverts to what it was when the project was first loaded.
+
+**Root Cause**:  
+A state synchronization gap between the script editor and the timeline store:
+
+1. When a `.clap` file is opened, `loadDraftFromClap()` copies `clap.meta.storyPrompt` into both the **Monaco text model** and `useScriptEditor.current`.  
+2. As the user types, `useScriptEditor.current` is kept up to date with every keystroke.  
+3. However, the **timeline store's `storyPrompt` field** (inside `useTimeline`) is **never updated** to reflect those edits.  
+4. When `saveClap()` runs, it calls `getClap()` → `getClapMeta()`, which reads `storyPrompt` from the **timeline store** — the original value — not from the script editor.  
+5. The stale `storyPrompt` is serialized into the `.clap` file, silently discarding every script edit the user made.
+
+**Files Involved**:
+- `packages/app/src/services/io/useIO.ts` — bug was here (`saveClap`)
+- `packages/app/src/services/editors/script-editor/useScriptEditor.ts` — holds live edits in `current`
+- `packages/timeline/src/hooks/useTimeline.ts` — `getClapMeta()` reads stale `storyPrompt`
+
+**Fix Applied** (April 10, 2026):  
+In `saveClap()`, immediately after `getClap()` returns the clap object and before `serializeClap()` is called, the live script editor content is pulled from `useScriptEditor.getState().current` and written into `clap.meta.storyPrompt`. This ensures the correct, user-edited script is always what gets saved to disk.
+
+```ts
+// packages/app/src/services/io/useIO.ts — saveClap()
+const scriptEditorCurrent = useScriptEditor.getState().current
+if (scriptEditorCurrent) {
+  clap.meta.storyPrompt = scriptEditorCurrent
+}
+```
+
+**Deeper Recommendation for Julian**:  
+The timeline store's `storyPrompt` should stay in sync with the script editor as the user types (e.g., by calling `useTimeline.setState({ storyPrompt: current })` inside the Monaco `onChange` handler). The one-line fix above is a reliable save-time guard, but the underlying disconnect between the two stores is a systemic design issue worth addressing properly.
+
+---
+
 ## 🔴 OPEN ISSUE - February 11, 2026
 
 ### Timeline Text Rendering: Last Line Truncation
