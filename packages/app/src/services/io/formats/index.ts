@@ -1,5 +1,5 @@
 export { generateEDL } from './edl'
-export { generateFCP } from './fcp'
+export { generateFCP, generateFCP7XML } from './fcp'
 export { generateKdenlive } from './kdenlive'
 export { generateMLT } from './mlt'
 export { generateOTIO } from './otio'

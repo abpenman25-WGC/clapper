@@ -13,7 +13,6 @@ import { comfyuiWorkflows, getDynamicComfyuiWorkflows } from './comfyui'
 import { elevenlabsWorkflows } from './elevenlabs'
 import { falaiWorkflows } from './falai'
 import { fireworksaiWorkflows } from './fireworksai'
-import { googleWorkflows } from './google'
 import { groqWorkflows } from './groq'
 import { hotshotWorkflows } from './hotshot'
 import { huggingfaceWorkflows } from './huggingface'
@@ -43,7 +42,6 @@ export const staticWorkflows: ClapWorkflow[] = [
   ...elevenlabsWorkflows,
   ...falaiWorkflows,
   ...fireworksaiWorkflows,
-  ...googleWorkflows,
   ...groqWorkflows,
   ...hotshotWorkflows,
   ...huggingfaceWorkflows,

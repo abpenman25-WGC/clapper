@@ -63,9 +63,6 @@ export function getDefaultMetricsPerProvider(): MetricsPerProvider {
     [ClapWorkflowProvider.ANTHROPIC]: {
       ...getDefaultClapWorkflowProviderMetrics(),
     },
-    [ClapWorkflowProvider.GOOGLE]: {
-      ...getDefaultClapWorkflowProviderMetrics(),
-    },
     [ClapWorkflowProvider.MISTRALAI]: {
       ...getDefaultClapWorkflowProviderMetrics(),
     },

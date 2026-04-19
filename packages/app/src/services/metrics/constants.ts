@@ -63,9 +63,6 @@ export const estimatedMetrics: Record<
   [ClapWorkflowProvider.ANTHROPIC]: {
     // TODO list the most popular models
   },
-  [ClapWorkflowProvider.GOOGLE]: {
-    // TODO list the most popular models
-  },
   [ClapWorkflowProvider.MISTRALAI]: {
     // TODO list the most popular models
   },

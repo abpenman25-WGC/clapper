@@ -34,7 +34,6 @@ import {
 //      • Mistral AI provider (requires Mistral AI API key from platform.mistral.ai)
 //      • Groq provider (free API, very fast inference)
 //      • OpenAI provider (GPT models)
-//      • Google provider (Gemini models)
 //      • Anthropic provider (Claude models)
 //
 // ⚠️ DEPRECATED/UNRELIABLE (commented out below):

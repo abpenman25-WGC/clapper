@@ -1,4 +1,4 @@
-import { ClapAssetSource, ClapProject } from '@aitube/clap'
+import { ClapProject } from '@aitube/clap'
 import { TimelineStore, useTimeline } from '@aitube/timeline'
 import {
   ExportableSegment,
@@ -46,10 +46,7 @@ export async function generateEDL(): Promise<string> {
     (exportableSegment: ExportableSegment, index: number) => {
       const { segment, filePath, category } = exportableSegment
 
-      if (
-        segment.assetUrl &&
-        segment.assetSourceType === ClapAssetSource.PATH
-      ) {
+      if (segment.assetUrl) {
         const reelName = getReelName(filePath)
         const eventNumber = (index + 1).toString().padStart(3, '0')
 

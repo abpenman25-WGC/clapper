@@ -24,10 +24,7 @@ export function getDefaultSettingsState(): SettingsState {
     clapperApiKey: '',
     aiTubeApiKey: '',
     openaiApiKey: '',
-    googleApiKey: '',
-    googleProjectId: 'gen-lang-client-0254625242',
-    googleLocation: 'us-central1',
-    groqApiKey: '',
+    groqApiKey: '',,
     anthropicApiKey: '',
     elevenLabsApiKey: '',
     kitsAiApiKey: '',
@@ -218,12 +215,6 @@ export function getDefaultSettingsState(): SettingsState {
     openaiModelForVoice: 'v1',
 
     groqModelForAssistant: 'llama-3.3-70b-versatile',
-
-    googleModelForAssistant: 'gemini-3.0-pro', // Google Gemini 3.0
-    googleModelForImage: 'imagen',
-    googleModelForVideo: 'veo',
-    googleModelForVoice: 'v1',
-    googleModelForMusic: 'MusicLM',
 
     // Claude 3 stats:
     // Context window	200K*

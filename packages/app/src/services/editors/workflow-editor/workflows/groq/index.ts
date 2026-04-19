@@ -23,24 +23,6 @@ import {
 // ------------------------------------------------------------------------------
 export const groqWorkflows: ClapWorkflow[] = [
   {
-    id: 'groq://gemma-7b-it',
-    label: 'Gemma 7b it',
-    description: '',
-    tags: ['Gemma'],
-    author: 'Google',
-    thumbnailUrl: '',
-    nonCommercial: false,
-    engine: ClapWorkflowEngine.REST_API,
-    category: ClapWorkflowCategory.ASSISTANT,
-    provider: ClapWorkflowProvider.GROQ,
-    data: 'gemma-7b-it',
-    schema: '',
-    inputFields: [genericPrompt],
-    inputValues: {
-      prompt: genericPrompt.defaultValue,
-    },
-  },
-  {
     id: 'groq://llama-3.3-70b-versatile',
     label: 'Llama 3.3 70B Versatile',
     description: '',

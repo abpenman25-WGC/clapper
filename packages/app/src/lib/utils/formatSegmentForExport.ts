@@ -50,6 +50,15 @@ export function formatSegmentForExport(
   if (segment.assetUrl.startsWith('data:')) {
     const reg = new RegExp(/data:(.*);base64/gi)
     fallbackFileFormat = `${reg.exec(segment.assetUrl)?.[1] || notFoundFileFormat}`
+  } else if (segment.assetUrl.startsWith('/tmp/')) {
+    // Detect format from file extension for disk-written assets
+    const ext = segment.assetUrl.split('.').pop()?.toLowerCase() || ''
+    if (ext === 'mp4') fallbackFileFormat = 'video/mp4'
+    else if (ext === 'mp3') fallbackFileFormat = 'audio/mp3'
+    else if (ext === 'wav') fallbackFileFormat = 'audio/wav'
+    else if (ext === 'png') fallbackFileFormat = 'image/png'
+    else if (ext === 'jpg' || ext === 'jpeg') fallbackFileFormat = 'image/jpeg'
+    else if (ext === 'webp') fallbackFileFormat = 'image/webp'
   }
 
   // old .clap files might not have the `assetFileFormat`
@@ -71,7 +80,7 @@ export function formatSegmentForExport(
       segment.category === ClapSegmentCategory.SOUND ||
       segment.category === ClapSegmentCategory.MUSIC) &&
     format !== 'unknown' &&
-    segment.assetUrl.startsWith('data:')
+    (segment.assetUrl.startsWith('data:') || segment.assetUrl.startsWith('/tmp/'))
 
   const category = segment.category.toLocaleLowerCase()
 

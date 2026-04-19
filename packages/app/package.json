@@ -9,7 +9,7 @@
     "./main.js"
   ],
   "scripts": {
-    "dev": "next dev",
+    "dev": "cross-env NODE_OPTIONS=--max-old-space-size=6144 next dev",
     "dev:withchecks": "pnpm run checks && next dev",
     "build": "npx rimraf out && next build && pnpm run build:copyassets",
     "build:copyassets": "npx cpy public .next/standalone/packages/app/ && npx cpy .next/static .next/standalone/packages/app/.next/",
@@ -162,6 +162,7 @@
     "@vitejs/plugin-react": "6.0.1",
     "@webgpu/types": "0.1.69",
     "cpy-cli": "^7.0.0",
+    "cross-env": "^10.1.0",
     "electron": "41.0.2",
     "eslint": "^10.0.3",
     "eslint-config-next": "16.1.6",

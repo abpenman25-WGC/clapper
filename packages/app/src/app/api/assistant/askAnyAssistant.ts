@@ -17,7 +17,6 @@ import { ChatGroq } from '@langchain/groq'
 import { ChatAnthropic } from '@langchain/anthropic'
 import { ChatCohere } from '@langchain/cohere'
 import { ChatMistralAI } from '@langchain/mistralai'
-import { ChatVertexAI } from '@langchain/google-vertexai'
 // to properly support Replicate and Hugging Face we need the following packages:
 // import { ChatReplicate } from "@langchain/replicate"
 // import { ChatHuggingFace } from "@langchain/huggingface"
@@ -41,7 +40,6 @@ import { getApiKey } from '../getApiKey'
 import {
   builtinProviderCredentialsAnthropic,
   builtinProviderCredentialsCohere,
-  builtinProviderCredentialsGoogle,
   builtinProviderCredentialsGroq,
   builtinProviderCredentialsMistralai,
   builtinProviderCredentialsOpenai,
@@ -159,15 +157,7 @@ export async function askAnyAssistant({
                   modelName,
                   // temperature: 0.7,
                 })
-              : provider === ClapWorkflowProvider.GOOGLE
-                ? new ChatVertexAI({
-                    model: modelName,
-                    project: settings.googleProjectId,
-                    location: settings.googleLocation || 'us-central1',
-                    // temperature: 0.7,
-                    // Credentials are loaded from GOOGLE_APPLICATION_CREDENTIALS env var
-                  })
-                : undefined
+              : undefined
   ) as RunnableLike<ChatPromptValueInterface, AssistantMessage> | undefined
 
   if (!coerceable) {
@@ -187,7 +177,6 @@ export async function askAnyAssistant({
 
   // Script context limits per provider:
   // - Groq: 12,000 chars (~2K words) - limited 32K token context
-  // - Gemini 1.5 Flash/Pro: 500,000 chars (~75K words) - 1M token context
   // - Claude/GPT-4: 100,000 chars (~15K words) - 200K token context
   // This should handle full-length screenplays for providers that support it
   const MAX_BLOCK_LENGTH = 500000 // Large enough for complete scripts

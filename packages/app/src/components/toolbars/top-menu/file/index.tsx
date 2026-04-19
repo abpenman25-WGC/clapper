@@ -45,6 +45,7 @@ export function TopMenuFile() {
   const saveVideoFile = useIO((s) => s.saveVideoFile)
   const saveZipFile = useIO((s) => s.saveZipFile)
   const saveDaVinciResolve = useIO((s) => s.saveDaVinciResolve)
+  const saveFCP7XML = useIO((s) => s.saveFCP7XML)
   const saveKdenline = useIO((s) => s.saveKdenline)
   const restoreAutoSave = useIO((s) => s.restoreAutoSave)
 
@@ -344,6 +345,13 @@ export function TopMenuFile() {
             }}
           >
             Export for DaVinci Resolve (.zip)
+          </MenubarItem>
+          <MenubarItem
+            onClick={() => {
+              saveFCP7XML()
+            }}
+          >
+            Export FCP7 XML for DaVinci Resolve (.zip)
           </MenubarItem>
           <MenubarSeparator />
           <MenubarItem onClick={copyScreenplayForTrelby}>

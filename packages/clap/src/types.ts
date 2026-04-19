@@ -666,7 +666,6 @@ export enum ClapWorkflowProvider {
   EVERARTAI = "EVERARTAI",
   FALAI = "FALAI", // https://fal.ai
   FIREWORKSAI = "FIREWORKSAI", // https://fireworks.ai
-  GOOGLE = "GOOGLE", // https://google.com (in case you didn't know)
   GROQ = "GROQ", // https://groq.com
   HEDRA = "HEDRA",
   HOTSHOT = "HOTSHOT", // https://hotshot.co

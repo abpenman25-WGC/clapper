@@ -17,9 +17,6 @@ export type BaseSettings = {
   modelsLabApiKey: string
   huggingFaceApiKey: string
   openaiApiKey: string
-  googleApiKey: string
-  googleProjectId: string
-  googleLocation: string
   groqApiKey: string
   anthropicApiKey: string
   elevenLabsApiKey: string
@@ -160,13 +157,6 @@ export type BaseSettings = {
   // Groq models
   groqModelForAssistant: string
 
-  // Google models
-  googleModelForAssistant: string
-  googleModelForImage: string
-  googleModelForVideo: string
-  googleModelForVoice: string
-  googleModelForMusic: string
-
   // Anthropic models
   anthropicModelForAssistant: string
 
@@ -242,9 +232,6 @@ export type SettingsControls = {
   setClapperApiKey: (clapperApiKey?: string) => void
   setFalAiApiKey: (falAiApiKey?: string) => void
   setOpenaiApiKey: (openaiApiKey?: string) => void
-  setGoogleApiKey: (googleApiKey?: string) => void
-  setGoogleProjectId: (googleProjectId?: string) => void
-  setGoogleLocation: (googleLocation?: string) => void
   setGroqApiKey: (groqApiKey?: string) => void
   setFireworksAiApiKey: (fireworksAiApiKey?: string) => void
   setAnthropicApiKey: (anthropicApiKey?: string) => void

@@ -154,30 +154,6 @@ export const useSettings = create<SettingsStore>()(
           ),
         })
       },
-      setGoogleApiKey: (googleApiKey?: string) => {
-        set({
-          googleApiKey: getValidString(
-            googleApiKey,
-            getDefaultSettingsState().googleApiKey
-          ),
-        })
-      },
-      setGoogleProjectId: (googleProjectId?: string) => {
-        set({
-          googleProjectId: getValidString(
-            googleProjectId,
-            getDefaultSettingsState().googleProjectId
-          ),
-        })
-      },
-      setGoogleLocation: (googleLocation?: string) => {
-        set({
-          googleLocation: getValidString(
-            googleLocation,
-            getDefaultSettingsState().googleLocation
-          ),
-        })
-      },
       setAnthropicApiKey: (anthropicApiKey?: string) => {
         set({
           anthropicApiKey: getValidString(
@@ -964,11 +940,6 @@ export const useSettings = create<SettingsStore>()(
             state.modelsLabApiKey || defaultSettings.modelsLabApiKey,
           openaiApiKey: state.openaiApiKey || defaultSettings.openaiApiKey,
           groqApiKey: state.groqApiKey || defaultSettings.groqApiKey,
-          googleApiKey: state.googleApiKey || defaultSettings.googleApiKey,
-          googleProjectId:
-            state.googleProjectId || defaultSettings.googleProjectId,
-          googleLocation:
-            state.googleLocation || defaultSettings.googleLocation,
           anthropicApiKey:
             state.anthropicApiKey || defaultSettings.anthropicApiKey,
           elevenLabsApiKey:

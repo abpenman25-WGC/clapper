@@ -179,11 +179,11 @@ export const useResolver = create<ResolverStore>((set, get) => ({
 
     const segmentsToRender: TimelineSegment[] = []
 
-    // Reset any ERROR segments back to TO_GENERATE so they will be retried
-    // (e.g. after a user fixes their settings / switches provider)
+    // Reset any ERROR or stale IN_PROGRESS segments back to TO_GENERATE so they will be retried
+    // (e.g. after a user fixes their settings / switches provider, or after a crashed request)
     // Respect per-category rendering strategy: don't reset if that category is ON_DEMAND
     for (const s of segments) {
-      if (s.status === ClapSegmentStatus.ERROR) {
+      if (s.status === ClapSegmentStatus.ERROR || s.status === ClapSegmentStatus.IN_PROGRESS) {
         // Check if the rendering strategy for this category is ON_DEMAND (manual/click only)
         let strategyForCategory: RenderingStrategy = RenderingStrategy.ON_DEMAND
         if (s.category === ClapSegmentCategory.VIDEO) {
@@ -737,7 +737,7 @@ wake of the euro-zone debt crisis.`
     // getBackgroundAudioPrompt()
 
     // note: not all AI models will support those parameters.
-    // in 2024, even the "best" proprietary video models like Sora, Veo, Kling, Gen-3, Dream Machine etc..
+    // in 2024, even the "best" proprietary video models like Sora, Kling, Gen-3, Dream Machine etc..
     // don't support voice input for lip syncing, for instance.
     const prompts: ResolveRequestPrompts = getDefaultResolveRequestPrompts({
       image: {

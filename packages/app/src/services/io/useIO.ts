@@ -63,6 +63,7 @@ import { useScriptEditor } from '../editors'
 import {
   generateEDL,
   generateFCP,
+  generateFCP7XML,
   generateKdenlive,
   generateMLT,
   generateOTIO,
@@ -670,55 +671,60 @@ export const useIO = create<IOStore>((set, get) => ({
       const images: FFMPegVideoInput[] = []
       const audios: FFMPegAudioInput[] = []
 
-      segments.forEach(
-        ({
-          segment,
-          prefix,
-          filePath,
-          assetUrl,
-          assetSourceType,
-          isExportableToFile,
-        }) => {
-          if (isExportableToFile) {
-            assetUrl = filePath
-            assetSourceType = ClapAssetSource.PATH
+      const getAssetBytes = async (assetUrl: string): Promise<Uint8Array> => {
+        if (assetUrl.startsWith('/tmp/')) {
+          const res = await fetch(assetUrl, { cache: 'no-store' })
+          return new Uint8Array(await res.arrayBuffer())
+        }
+        return base64DataUriToUint8Array(assetUrl)
+      }
 
-            if (filePath.startsWith('video/')) {
-              videos.push({
-                data: base64DataUriToUint8Array(segment.assetUrl),
-                startTimeInMs: segment.startTimeInMs,
-                endTimeInMs: segment.endTimeInMs,
-                durationInSecs: segment.assetDurationInMs / 1000,
-                category: segment.category,
-              })
-            } else if (
-              filePath.startsWith('image/') ||
-              segment.category === ClapSegmentCategory.IMAGE
-            ) {
-              images.push({
-                data: base64DataUriToUint8Array(segment.assetUrl),
-                startTimeInMs: segment.startTimeInMs,
-                endTimeInMs: segment.endTimeInMs,
-                durationInSecs:
-                  (segment.endTimeInMs - segment.startTimeInMs) / 1000,
-                category: segment.category,
-              })
-            } else if (
-              filePath.startsWith('music/') ||
-              filePath.startsWith('sound/') ||
-              filePath.startsWith('dialogue/')
-            ) {
-              audios.push({
-                data: base64DataUriToUint8Array(segment.assetUrl),
-                startTimeInMs: segment.startTimeInMs,
-                endTimeInMs: segment.endTimeInMs,
-                durationInSecs: segment.assetDurationInMs / 1000,
-                category: segment.category,
-              })
-            }
+      for (const {
+        segment,
+        prefix,
+        filePath,
+        assetUrl: _assetUrl,
+        assetSourceType: _assetSourceType,
+        isExportableToFile,
+      } of segments) {
+        if (isExportableToFile) {
+          const bytes = await getAssetBytes(segment.assetUrl)
+
+          if (filePath.startsWith('video/')) {
+            videos.push({
+              data: bytes,
+              startTimeInMs: segment.startTimeInMs,
+              endTimeInMs: segment.endTimeInMs,
+              durationInSecs: segment.assetDurationInMs / 1000,
+              category: segment.category,
+            })
+          } else if (
+            filePath.startsWith('image/') ||
+            segment.category === ClapSegmentCategory.IMAGE
+          ) {
+            images.push({
+              data: bytes,
+              startTimeInMs: segment.startTimeInMs,
+              endTimeInMs: segment.endTimeInMs,
+              durationInSecs:
+                (segment.endTimeInMs - segment.startTimeInMs) / 1000,
+              category: segment.category,
+            })
+          } else if (
+            filePath.startsWith('music/') ||
+            filePath.startsWith('sound/') ||
+            filePath.startsWith('dialogue/')
+          ) {
+            audios.push({
+              data: bytes,
+              startTimeInMs: segment.startTimeInMs,
+              endTimeInMs: segment.endTimeInMs,
+              durationInSecs: segment.assetDurationInMs / 1000,
+              category: segment.category,
+            })
           }
         }
-      )
+      }
 
       // Combine videos and images
       const videoInputs = [...videos, ...images].sort(
@@ -956,25 +962,41 @@ export const useIO = create<IOStore>((set, get) => ({
         console.error(`failed to generate the EDL file`)
       }
 
+      try {
+        const fcp7Xml = await generateFCP7XML()
+        files['davinci_timeline_fcp7.xml'] = fflate.strToU8(fcp7Xml)
+      } catch (err) {
+        console.error(`failed to generate the FCP7 XML file`)
+      }
+
       files['HOW_TO_IMPORT.txt'] = fflate.strToU8(
         'DaVinci Resolve Import Instructions\n' +
         '====================================\n\n' +
+        'Option A – FCP7 XML (recommended):\n' +
         '1. Open DaVinci Resolve\n' +
         '2. Create a new project (or open an existing one)\n' +
         '3. Go to File > Import > Timeline (AAF, EDL, XML, FCPXML, DRT, ADL, OTIO)\n' +
-        '4. Select the "davinci_timeline.edl" file from this folder\n' +
-        '5. In the import dialog, set the media folder to the "media" subfolder of this ZIP\n' +
-        '6. DaVinci Resolve will create its own project (.drp) — edits made there will not sync back to Clapper\n'
+        '4. Select the "davinci_timeline_fcp7.xml" file from this folder\n' +
+        '5. In the import dialog, set the media folder to the "media" subfolder of this ZIP\n\n' +
+        'Option B – EDL:\n' +
+        '1. Go to File > Import > Timeline\n' +
+        '2. Select "davinci_timeline.edl" instead\n' +
+        '3. Set media folder to the "media" subfolder\n'
       )
 
       task.setProgress({ message: 'Packaging media assets..', value: 50 })
 
-      segments.forEach(({ segment, filePath }) => {
-        files[`media/${filePath.split('/').pop()}`] = [
-          base64DataUriToUint8Array(segment.assetUrl),
-          { level: 0 },
-        ]
-      })
+      for (const { segment, filePath } of segments) {
+        const fileName = filePath.split('/').pop()!
+        let bytes: Uint8Array
+        if (segment.assetUrl.startsWith('/tmp/')) {
+          const res = await fetch(segment.assetUrl, { cache: 'no-store' })
+          bytes = new Uint8Array(await res.arrayBuffer())
+        } else {
+          bytes = base64DataUriToUint8Array(segment.assetUrl)
+        }
+        files[`media/${fileName}`] = [bytes, { level: 0 }]
+      }
 
       fflate.zip(
         files,
@@ -989,6 +1011,90 @@ export const useIO = create<IOStore>((set, get) => ({
           task.success()
         }
       )
+    } catch (err) {
+      console.error(err)
+      task.fail(`${err || 'unknown error'}`)
+    }
+  },
+
+  saveFCP7XML: async () => {
+    const { saveAnyFile } = get()
+    console.log(`Exporting project as FCP7 XML bundle..`)
+
+    const task = useTasks.getState().add({
+      category: TaskCategory.EXPORT,
+      visibility: TaskVisibility.BLOCKER,
+      initialMessage: `Exporting FCP7 XML for DaVinci Resolve..`,
+      successMessage: `Successfully exported FCP7 XML bundle!`,
+      value: 0,
+    })
+
+    try {
+      const timeline: TimelineStore = useTimeline.getState()
+      const { segments: timelineSegments } = timeline
+      const clap = (timeline as any).clap
+      const baseName = getProjectFileName(
+        clap?.meta?.title || 'untitled_project'
+      ).replace('.clap', '')
+
+      const segments: ExportableSegment[] = timelineSegments
+        .map((segment, i) => formatSegmentForExport(segment, i))
+        .filter(
+          ({ isExportableToFile, category }) =>
+            isExportableToFile && category === 'video'
+        )
+
+      console.log(`[FCP7 export] found ${segments.length} video segments to pack`)
+
+      task.setProgress({ message: 'Generating FCP7 XML..', value: 10 })
+      const xmlContent = await generateFCP7XML()
+
+      const files: fflate.AsyncZippable = {}
+      files['timeline.xml'] = fflate.strToU8(xmlContent)
+
+      let packed = 0
+      let failed = 0
+
+      for (let i = 0; i < segments.length; i++) {
+        const { segment, filePath } = segments[i]
+        const progress = 10 + Math.round((i / segments.length) * 75)
+        task.setProgress({ message: `Packing clip ${i + 1} of ${segments.length}..`, value: progress })
+
+        try {
+          let bytes: Uint8Array
+          if (segment.assetUrl.startsWith('/tmp/')) {
+            const res = await fetch(segment.assetUrl, { cache: 'no-store' })
+            if (!res.ok) {
+              console.warn(`[FCP7 export] fetch failed for ${segment.assetUrl}: HTTP ${res.status}`)
+              failed++
+              continue
+            }
+            bytes = new Uint8Array(await res.arrayBuffer())
+          } else {
+            bytes = base64DataUriToUint8Array(segment.assetUrl)
+          }
+          console.log(`[FCP7 export] packed ${filePath} (${(bytes.byteLength / 1024 / 1024).toFixed(1)} MB)`)
+          files[`media/${filePath}`] = [bytes, { level: 0 }]
+          packed++
+        } catch (fileErr) {
+          console.error(`[FCP7 export] failed to pack ${filePath}:`, fileErr)
+          failed++
+        }
+      }
+
+      console.log(`[FCP7 export] packed ${packed} files, skipped ${failed}`)
+
+      task.setProgress({ message: 'Zipping..', value: 88 })
+
+      fflate.zip(files, {}, (error, zipFile) => {
+        if (error) {
+          task.fail(`Zip error: ${error}`)
+          return
+        }
+        task.setProgress({ message: 'Saving..', value: 100 })
+        saveAnyFile(new Blob([zipFile]), `${baseName}_fcp7_resolve.zip`)
+        task.success()
+      })
     } catch (err) {
       console.error(err)
       task.fail(`${err || 'unknown error'}`)

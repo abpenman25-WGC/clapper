@@ -18,7 +18,6 @@ export const builtinProviderCredentialsElevenlabs = `${process.env.BUILTIN_PROVI
 export const builtinProviderCredentialsEverartai = `${process.env.BUILTIN_PROVIDER_CREDENTIALS_EVERARTAI || ''}`
 export const builtinProviderCredentialsFalai = `${process.env.BUILTIN_PROVIDER_CREDENTIALS_FALAI || ''}`
 export const builtinProviderCredentialsFireworksai = `${process.env.BUILTIN_PROVIDER_CREDENTIALS_FIREWORKSAI || ''}`
-export const builtinProviderCredentialsGoogle = `${process.env.BUILTIN_PROVIDER_CREDENTIALS_GOOGLE || ''}`
 export const builtinProviderCredentialsGroq = `${process.env.BUILTIN_PROVIDER_CREDENTIALS_GROQ || ''}`
 export const builtinProviderCredentialsHedra = `${process.env.BUILTIN_PROVIDER_CREDENTIALS_HEDRA || ''}`
 export const builtinProviderCredentialsHotshot = `${process.env.BUILTIN_PROVIDER_CREDENTIALS_HOTSHOT || ''}`
@@ -55,7 +54,6 @@ export const sharedCredentials: Record<ClapWorkflowProvider, string> = {
   [ClapWorkflowProvider.EVERARTAI]: builtinProviderCredentialsEverartai,
   [ClapWorkflowProvider.FALAI]: builtinProviderCredentialsFalai,
   [ClapWorkflowProvider.FIREWORKSAI]: builtinProviderCredentialsFireworksai,
-  [ClapWorkflowProvider.GOOGLE]: builtinProviderCredentialsGoogle,
   [ClapWorkflowProvider.GROQ]: builtinProviderCredentialsGroq,
   [ClapWorkflowProvider.HEDRA]: builtinProviderCredentialsHedra,
   [ClapWorkflowProvider.HOTSHOT]: builtinProviderCredentialsHotshot,

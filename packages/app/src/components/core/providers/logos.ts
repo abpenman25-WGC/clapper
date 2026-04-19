@@ -17,7 +17,6 @@ const elevenlabs = '/images/providers/elevenlabs.png'
 const everartai = '/images/providers/everartai.png'
 const falai = '/images/providers/falai.png'
 const fireworks = '/images/providers/fireworks.png'
-const google = '/images/providers/google.png'
 const groq = '/images/providers/groq.png'
 const hedra = '/images/providers/hedra.png'
 const hotshot = '/images/providers/hotshot.png'
@@ -56,7 +55,6 @@ export const ClapWorkflowProvidersLogos: Record<ClapWorkflowProvider, string> =
     [ClapWorkflowProvider.EVERARTAI]: everartai,
     [ClapWorkflowProvider.FALAI]: falai,
     [ClapWorkflowProvider.FIREWORKSAI]: fireworks,
-    [ClapWorkflowProvider.GOOGLE]: google,
     [ClapWorkflowProvider.GROQ]: groq,
     [ClapWorkflowProvider.HEDRA]: hedra,
     [ClapWorkflowProvider.HOTSHOT]: hotshot,

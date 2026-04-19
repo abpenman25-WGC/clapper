@@ -1,3 +1,6 @@
+import * as fs from 'fs'
+import * as path from 'path'
+import { randomUUID } from 'crypto'
 import { NextResponse, NextRequest } from 'next/server'
 import {
   ClapOutputType,
@@ -28,7 +31,6 @@ import {
   resolveSegmentUsingPiApi,
   resolveSegmentUsingHotshot,
   resolveSegmentUsingCivitai,
-  resolveSegmentUsingGoogle,
   resolveSegmentUsingElevenLabs,
   resolveSegmentUsingOpenAI,
 } from './providers'
@@ -116,7 +118,6 @@ export async function POST(req: NextRequest) {
     [ClapWorkflowProvider.BIGMODEL]: resolveSegmentUsingBigModel,
     [ClapWorkflowProvider.PIAPI]: resolveSegmentUsingPiApi,
     [ClapWorkflowProvider.AITUBE]: resolveSegmentUsingAiTube,
-    [ClapWorkflowProvider.GOOGLE]: resolveSegmentUsingGoogle,
   }
 
   const resolveSegment: ProviderFn | undefined =
@@ -272,6 +273,25 @@ export async function POST(req: NextRequest) {
       } catch (err) {
         console.error(`failed to run the lipsync (${err})`)
       }
+    }
+  }
+
+  // Write large base64 video assets to disk to keep the JS heap small.
+  // The client will receive a short /tmp/<uuid>.mp4 URL instead of a multi-MB string.
+  if (
+    segment.assetUrl?.startsWith('data:video/') &&
+    segment.outputType === ClapOutputType.VIDEO
+  ) {
+    try {
+      const tmpDir = path.join(process.cwd(), 'public', 'tmp')
+      fs.mkdirSync(tmpDir, { recursive: true })
+      const filename = `${randomUUID()}.mp4`
+      const [, b64] = segment.assetUrl.split(';base64,')
+      fs.writeFileSync(path.join(tmpDir, filename), Buffer.from(b64, 'base64'))
+      segment.assetUrl = `/tmp/${filename}`
+      segment.assetSourceType = getClapAssetSourceType(segment.assetUrl)
+    } catch (err) {
+      console.error('Failed to write video to disk, keeping base64:', err)
     }
   }
 

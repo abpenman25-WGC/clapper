@@ -22,7 +22,6 @@ export const ClapWorkflowProviderShortNames: Record<
   [ClapWorkflowProvider.FALAI]: 'Fal.ai',
   [ClapWorkflowProvider.AITUBE]: 'AiTube.at',
   [ClapWorkflowProvider.FIREWORKSAI]: 'FireworksAI',
-  [ClapWorkflowProvider.GOOGLE]: 'Google (VertexAI)',
   [ClapWorkflowProvider.GROQ]: 'Groq',
   [ClapWorkflowProvider.HUGGINGFACE]: 'Hugging Face',
   [ClapWorkflowProvider.KITSAI]: 'Kits.ai',
