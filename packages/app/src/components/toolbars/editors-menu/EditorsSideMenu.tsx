@@ -15,6 +15,7 @@ import {
   PiTreeViewLight,
   PiTreeStructureLight,
   PiBookOpenTextLight,
+  PiBookOpenLight,
 } from 'react-icons/pi'
 import { IoFilmOutline } from 'react-icons/io5'
 import { CiViewTimeline } from 'react-icons/ci'
@@ -57,6 +58,9 @@ export function EditorsSideMenu() {
         </EditorsSideMenuItem>
         <EditorsSideMenuItem view={EditorView.WORKFLOW} label="Workflows">
           <PiTreeStructureLight />
+        </EditorsSideMenuItem>
+        <EditorsSideMenuItem view={EditorView.PROMPT_BOOK} label="Prompt Book">
+          <PiBookOpenLight />
         </EditorsSideMenuItem>
       </div>
     </div>

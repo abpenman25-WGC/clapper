@@ -10,6 +10,7 @@ import { EntityEditor } from './EntityEditor'
 import { ProjectEditor } from './ProjectEditor'
 import { SegmentEditor } from './SegmentEditor'
 import { WorkflowEditor } from './WorkflowEditor'
+import { PromptBookEditor } from './PromptBookEditor'
 
 export function Editors() {
   const theme = useTheme()
@@ -34,6 +35,8 @@ export function Editors() {
           <SegmentEditor />
         ) : view === EditorView.WORKFLOW ? (
           <WorkflowEditor />
+        ) : view === EditorView.PROMPT_BOOK ? (
+          <PromptBookEditor />
         ) : (
           <div>TODO</div>
         )}

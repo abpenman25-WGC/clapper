@@ -5,6 +5,7 @@ export enum EditorView {
   SEGMENT = "SEGMENT",
   HISTORY = "HISTORY",
   WORKFLOW = "WORKFLOW",
+  PROMPT_BOOK = "PROMPT_BOOK",
 }
 
 export type EditorsState = {
