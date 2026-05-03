@@ -73,7 +73,22 @@ export function getDefaultSettingsState(): SettingsState {
     // ...existing code...
     // Added back required workflow fields
     assistantTurboWorkflow: '',
-    imageGenerationWorkflow: '',
+    imageGenerationWorkflow: JSON.stringify({
+      id: 'comfyui://local/sd15',
+      label: 'Local SD 1.5 (v1-5-pruned-emaonly)',
+      description: 'Stable Diffusion 1.5 running on local ComfyUI',
+      tags: ['local', 'sd1.5', 'image generation'],
+      author: 'local',
+      thumbnailUrl: '',
+      nonCommercial: false,
+      engine: ClapWorkflowEngine.COMFYUI_WORKFLOW,
+      provider: ClapWorkflowProvider.COMFYUI,
+      category: ClapWorkflowCategory.IMAGE_GENERATION,
+      data: '',
+      schema: '',
+      inputFields: [],
+      inputValues: {},
+    }),
     imageGenerationTurboWorkflow: '',
     imageFaceswapWorkflow: '',
     imageUpscalingWorkflow: '',

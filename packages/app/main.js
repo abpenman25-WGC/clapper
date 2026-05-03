@@ -29,6 +29,45 @@ try {
 }
 
 const { app, BrowserWindow, screen } = require('electron')
+const { spawn } = require('child_process')
+
+// Auto-launch local ComfyUI (CPU mode)
+let comfyUiProcess = null
+
+function startComfyUI() {
+  const comfyUIPath = 'C:\\AI\\ComfyUI'
+  const venvPython = path.join(comfyUIPath, 'venv', 'Scripts', 'python.exe')
+  const mainPy = path.join(comfyUIPath, 'main.py')
+
+  console.log('[ComfyUI] Starting local ComfyUI (CPU mode)...')
+
+  comfyUiProcess = spawn(venvPython, [mainPy, '--cpu'], {
+    cwd: comfyUIPath,
+    stdio: 'pipe',
+    detached: false,
+  })
+
+  comfyUiProcess.stdout.on('data', (data) => {
+    console.log(`[ComfyUI] ${data.toString().trim()}`)
+  })
+
+  comfyUiProcess.stderr.on('data', (data) => {
+    console.error(`[ComfyUI] ${data.toString().trim()}`)
+  })
+
+  comfyUiProcess.on('exit', (code) => {
+    console.log(`[ComfyUI] Process exited with code ${code}`)
+    comfyUiProcess = null
+  })
+}
+
+function stopComfyUI() {
+  if (comfyUiProcess) {
+    console.log('[ComfyUI] Shutting down...')
+    comfyUiProcess.kill()
+    comfyUiProcess = null
+  }
+}
 
 
 try {
@@ -66,11 +105,12 @@ const createWindow = () => {
 }
 
 app.whenReady().then(() => {
-
+  startComfyUI()
   createWindow()
 })
 
 app.on('window-all-closed', () => {
+  stopComfyUI()
   if (process.platform !== 'darwin') {
     app.quit()
   }
