@@ -119,6 +119,96 @@ export const comfyuiWorkflows: ClapWorkflow[] = [
       [genericPrompt.id]: genericPrompt.defaultValue,
     },
   },
+  {
+    id: 'comfyui://local/animatediff-sd15',
+    label: 'Local AnimateDiff SD 1.5',
+    description: 'AnimateDiff with SD 1.5 running on local ComfyUI (requires ComfyUI-VideoHelperSuite)',
+    tags: ['local', 'animatediff', 'sd1.5', 'video generation'],
+    author: 'local',
+    thumbnailUrl: '',
+    nonCommercial: false,
+    engine: ClapWorkflowEngine.COMFYUI_WORKFLOW,
+    provider: ClapWorkflowProvider.COMFYUI,
+    category: ClapWorkflowCategory.VIDEO_GENERATION,
+    data: JSON.stringify({
+      '1': {
+        inputs: { ckpt_name: 'v1-5-pruned-emaonly.safetensors' },
+        class_type: 'CheckpointLoaderSimple',
+        _meta: { title: 'Load Checkpoint' },
+      },
+      '2': {
+        inputs: { model_name: 'mm_sd_v15_v2.ckpt' },
+        class_type: 'ADE_LoadAnimateDiffModel',
+        _meta: { title: 'Load AnimateDiff Model' },
+      },
+      '3': {
+        inputs: {
+          motion_model: ['2', 0],
+          model: ['1', 0],
+        },
+        class_type: 'ADE_ApplyAnimateDiffModelSimple',
+        _meta: { title: 'Apply AnimateDiff Model' },
+      },
+      '4': {
+        inputs: { text: '', clip: ['1', 1] },
+        class_type: 'CLIPTextEncode',
+        _meta: { title: 'Positive Prompt' },
+      },
+      '5': {
+        inputs: { text: 'text, watermark, blurry, ugly, bad anatomy', clip: ['1', 1] },
+        class_type: 'CLIPTextEncode',
+        _meta: { title: 'Negative Prompt' },
+      },
+      '6': {
+        inputs: { width: 512, height: 512, batch_size: 16 },
+        class_type: 'EmptyLatentImage',
+        _meta: { title: 'Empty Latent Image' },
+      },
+      '7': {
+        inputs: {
+          seed: 42,
+          steps: 20,
+          cfg: 7,
+          sampler_name: 'euler',
+          scheduler: 'normal',
+          denoise: 1,
+          model: ['3', 0],
+          positive: ['4', 0],
+          negative: ['5', 0],
+          latent_image: ['6', 0],
+        },
+        class_type: 'KSampler',
+        _meta: { title: 'KSampler' },
+      },
+      '8': {
+        inputs: { samples: ['7', 0], vae: ['1', 2] },
+        class_type: 'VAEDecode',
+        _meta: { title: 'VAE Decode' },
+      },
+      '9': {
+        inputs: {
+          frame_rate: 8,
+          loop_count: 0,
+          filename_prefix: 'AnimateDiff',
+          format: 'video/h264-mp4',
+          pix_fmt: 'yuv420p',
+          crf: 19,
+          save_metadata: false,
+          pingpong: false,
+          save_output: true,
+          images: ['8', 0],
+        },
+        class_type: 'VHS_VideoCombine',
+        _meta: { title: 'Video Combine' },
+      },
+    }),
+    schema: '',
+    inputFields: [genericPrompt, genericNegativePrompt],
+    inputValues: {
+      [genericPrompt.id]: genericPrompt.defaultValue,
+      [genericNegativePrompt.id]: genericNegativePrompt.defaultValue,
+    },
+  },
 ]
 
 // this define dynamic comfyui workflow
