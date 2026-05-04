@@ -69,7 +69,7 @@ export const comfyuiWorkflows: ClapWorkflow[] = [
         _meta: { title: 'Load Checkpoint' },
       },
       '5': {
-        inputs: { width: 512, height: 512, batch_size: 1 },
+        inputs: { width: 768, height: 432, batch_size: 1 },
         class_type: 'EmptyLatentImage',
         _meta: { title: 'Empty Latent Image' },
       },
@@ -160,7 +160,7 @@ export const comfyuiWorkflows: ClapWorkflow[] = [
         _meta: { title: 'Negative Prompt' },
       },
       '6': {
-        inputs: { width: 512, height: 512, batch_size: 16 },
+        inputs: { width: 512, height: 288, batch_size: 16 },
         class_type: 'EmptyLatentImage',
         _meta: { title: 'Empty Latent Image' },
       },

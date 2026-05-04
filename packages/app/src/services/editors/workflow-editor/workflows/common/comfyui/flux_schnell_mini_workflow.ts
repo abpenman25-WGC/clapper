@@ -98,8 +98,8 @@ export const flux_schnell_mini_workflow = {
   },
   '27': {
     inputs: {
-      width: 512,
-      height: 512,
+      width: 768,
+      height: 432,
       batch_size: 1,
     },
     class_type: 'EmptySD3LatentImage',
