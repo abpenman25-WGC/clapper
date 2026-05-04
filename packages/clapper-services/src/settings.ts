@@ -75,6 +75,9 @@ export type BaseSettings = {
 
   comfyUiApiUrl: string
 
+  piperTtsExePath: string
+  piperTtsVoicesPath: string
+
   gradioApiUrlForAssistant: string
   gradioApiUrlForImage: string
   gradioApiUrlForVideo: string

@@ -21,6 +21,7 @@ import { lumalabsWorkflows } from './lumalabs'
 import { mistralaiWorkflows } from './mistralai'
 import { openaiWorkflows } from './openai'
 import { piApiWorkflows } from './piapi'
+import { piperTtsWorkflows } from './pipertts'
 import { replicateWorkflows } from './replicate'
 import { stabilityaiWorkflows } from './stabilityai'
 import { noneWorkflows } from './none'
@@ -50,6 +51,7 @@ export const staticWorkflows: ClapWorkflow[] = [
   ...mistralaiWorkflows,
   ...openaiWorkflows,
   ...piApiWorkflows,
+  ...piperTtsWorkflows,
   ...replicateWorkflows,
   ...stabilityaiWorkflows,
 ]

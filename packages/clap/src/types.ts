@@ -680,6 +680,7 @@ export enum ClapWorkflowProvider {
   MODELSLAB = "MODELSLAB", // https://modelslab.com
   OPENAI = "OPENAI", // https://openai.com
   PIAPI = "PIAPI", // (Kling etc)
+  PIPERTTS = "PIPERTTS", // https://github.com/rhasspy/piper (local)
   REPLICATE = "REPLICATE", // https://replicate.com
   RUNWAYML = "RUNWAYML",
   STABILITYAI = "STABILITYAI", // https://stability.ai
