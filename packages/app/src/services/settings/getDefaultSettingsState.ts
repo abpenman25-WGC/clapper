@@ -24,7 +24,7 @@ export function getDefaultSettingsState(): SettingsState {
     clapperApiKey: '',
     aiTubeApiKey: '',
     openaiApiKey: '',
-    groqApiKey: '',,
+    groqApiKey: '',
     anthropicApiKey: '',
     elevenLabsApiKey: '',
     kitsAiApiKey: '',

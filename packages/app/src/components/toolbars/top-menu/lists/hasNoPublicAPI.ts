@@ -1,6 +1,7 @@
 import { ClapWorkflow, ClapWorkflowProvider } from '@aitube/clap'
 
 export function hasNoPublicAPI({ provider }: ClapWorkflow) {
+  if (!provider) return false
   const providerStr = provider.toLowerCase()
   if (
     provider === ClapWorkflowProvider.SUNO ||

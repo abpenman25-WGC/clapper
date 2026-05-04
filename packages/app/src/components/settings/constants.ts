@@ -11,6 +11,7 @@ export const ClapWorkflowProviderShortNames: Record<
   [ClapWorkflowProvider.HOTSHOT]: 'Hotshot',
   [ClapWorkflowProvider.LETZAI]: 'Letz.ai',
   [ClapWorkflowProvider.PIAPI]: 'PiApi',
+  [ClapWorkflowProvider.PIPERTTS]: 'Piper TTS (local)',
   [ClapWorkflowProvider.BIGMODEL]: 'BigModel',
   [ClapWorkflowProvider.ANTHROPIC]: 'Anthropic',
   [ClapWorkflowProvider.COHERE]: 'Cohere',
