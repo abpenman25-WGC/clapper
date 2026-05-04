@@ -734,6 +734,12 @@ export const useSettings = create<SettingsStore>()(
           comfyUiApiUrl: getValidString(comfyUiApiUrl, defaultComfyUiApiUrl),
         })
       },
+      setOllamaApiUrl: (ollamaApiUrl?: string) => {
+        const { ollamaApiUrl: defaultOllamaApiUrl } = getDefaultSettingsState()
+        set({
+          ollamaApiUrl: getValidString(ollamaApiUrl, defaultOllamaApiUrl),
+        })
+      },
       setGradioApiUrlForAssistant: (gradioApiUrlForAssistant?: string) => {
         set({
           gradioApiUrlForAssistant: getValidString(

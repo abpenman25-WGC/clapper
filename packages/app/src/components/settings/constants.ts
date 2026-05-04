@@ -29,6 +29,7 @@ export const ClapWorkflowProviderShortNames: Record<
   [ClapWorkflowProvider.MISTRALAI]: 'MistralAI',
   [ClapWorkflowProvider.MODELSLAB]: 'ModelsLab',
   [ClapWorkflowProvider.NONE]: 'None', // <-- this is the default
+  [ClapWorkflowProvider.OLLAMA]: 'Ollama (local)',
   [ClapWorkflowProvider.OPENAI]: 'OpenAI',
   [ClapWorkflowProvider.REPLICATE]: 'Replicate',
   [ClapWorkflowProvider.STABILITYAI]: 'StabilityAI',

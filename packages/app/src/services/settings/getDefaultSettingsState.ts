@@ -161,6 +161,8 @@ export function getDefaultSettingsState(): SettingsState {
     piperTtsExePath: 'C:\\AI\\PiperTTS\\piper\\piper.exe',
     piperTtsVoicesPath: 'C:\\AI\\PiperTTS\\voices',
 
+    ollamaApiUrl: 'http://localhost:11434',
+
     // those are not designed for Hugging Face specifically,
     // but to be compatible with any Gradio API URL that the
     // user would set manually (eg. running on localhost)

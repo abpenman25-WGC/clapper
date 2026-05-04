@@ -43,6 +43,9 @@ export function SettingsSectionProvider() {
   const comfyUiApiUrl = useSettings((s) => s.comfyUiApiUrl)
   const setComfyUiApiUrl = useSettings((s) => s.setComfyUiApiUrl)
 
+  const ollamaApiUrl = useSettings((s) => s.ollamaApiUrl)
+  const setOllamaApiUrl = useSettings((s) => s.setOllamaApiUrl)
+
   const comfyUiClientId = useSettings((s) => s.comfyUiClientId)
   const setComfyUiClientId = useSettings((s) => s.setComfyUiClientId)
 
@@ -164,6 +167,14 @@ export function SettingsSectionProvider() {
               value={comfyUiApiUrl}
               defaultValue={defaultSettings.comfyUiApiUrl}
               onChange={setComfyUiApiUrl}
+              type="text"
+            />
+
+            <FormInput
+              label="Ollama API URL (local)"
+              value={ollamaApiUrl}
+              defaultValue={defaultSettings.ollamaApiUrl}
+              onChange={setOllamaApiUrl}
               type="text"
             />
 

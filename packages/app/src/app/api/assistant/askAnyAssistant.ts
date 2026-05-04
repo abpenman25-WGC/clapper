@@ -157,7 +157,15 @@ export async function askAnyAssistant({
                   modelName,
                   // temperature: 0.7,
                 })
-              : undefined
+              : provider === ClapWorkflowProvider.OLLAMA
+                ? new ChatOpenAI({
+                    openAIApiKey: 'ollama',
+                    modelName,
+                    configuration: {
+                      baseURL: `${settings.ollamaApiUrl || 'http://localhost:11434'}/v1`,
+                    },
+                  })
+                : undefined
   ) as RunnableLike<ChatPromptValueInterface, AssistantMessage> | undefined
 
   if (!coerceable) {

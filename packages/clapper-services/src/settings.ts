@@ -76,6 +76,7 @@ export type BaseSettings = {
   comfyUiApiUrl: string
 
   piperTtsExePath: string
+  ollamaApiUrl: string
   piperTtsVoicesPath: string
 
   gradioApiUrlForAssistant: string
@@ -299,6 +300,7 @@ export type SettingsControls = {
   setComfyWorkflowForMusic: (comfyWorkflowForMusic?: string) => void
 
   setComfyUiApiUrl: (comfyUiApiUrl?: string) => void
+  setOllamaApiUrl: (ollamaApiUrl?: string) => void
 
   setGradioApiUrlForAssistant: (gradioApiUrlForAssistant?: string) => void
   setGradioApiUrlForImage: (gradioApiUrlForImage?: string) => void

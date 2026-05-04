@@ -165,4 +165,7 @@ export const estimatedMetrics: Record<
   [ClapWorkflowProvider.HOTSHOT]: {
     // TODO list the most popular models
   },
+  [ClapWorkflowProvider.OLLAMA]: {
+    // local, no cost
+  },
 }

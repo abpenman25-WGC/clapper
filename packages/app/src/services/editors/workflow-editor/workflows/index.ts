@@ -20,6 +20,7 @@ import { letzAiWorkflows } from './letzai'
 import { lumalabsWorkflows } from './lumalabs'
 import { mistralaiWorkflows } from './mistralai'
 import { openaiWorkflows } from './openai'
+import { ollamaWorkflows } from './ollama'
 import { piApiWorkflows } from './piapi'
 import { piperTtsWorkflows } from './pipertts'
 import { replicateWorkflows } from './replicate'
@@ -50,6 +51,7 @@ export const staticWorkflows: ClapWorkflow[] = [
   ...lumalabsWorkflows,
   ...mistralaiWorkflows,
   ...openaiWorkflows,
+  ...ollamaWorkflows,
   ...piApiWorkflows,
   ...piperTtsWorkflows,
   ...replicateWorkflows,

@@ -66,6 +66,7 @@ export const sharedCredentials: Record<ClapWorkflowProvider, string> = {
   [ClapWorkflowProvider.MIDJOURNEY]: builtinProviderCredentialsMidjourney,
   [ClapWorkflowProvider.MISTRALAI]: builtinProviderCredentialsMistralai,
   [ClapWorkflowProvider.MODELSLAB]: builtinProviderCredentialsModelslab,
+  [ClapWorkflowProvider.OLLAMA]: '',
   [ClapWorkflowProvider.OPENAI]: builtinProviderCredentialsOpenai,
   [ClapWorkflowProvider.PIAPI]: builtinProviderCredentialsPiapi,
   [ClapWorkflowProvider.REPLICATE]: builtinProviderCredentialsReplicate,
