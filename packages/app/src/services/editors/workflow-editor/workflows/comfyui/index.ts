@@ -209,6 +209,82 @@ export const comfyuiWorkflows: ClapWorkflow[] = [
       [genericNegativePrompt.id]: genericNegativePrompt.defaultValue,
     },
   },
+  {
+    id: 'comfyui://local/deforum-sd15',
+    label: 'Local Deforum SD 1.5',
+    description: 'Deforum animation with SD 1.5 running on local ComfyUI (requires deforum-comfy-nodes)',
+    tags: ['local', 'deforum', 'sd1.5', 'video generation'],
+    author: 'local',
+    thumbnailUrl: '',
+    nonCommercial: false,
+    engine: ClapWorkflowEngine.COMFYUI_WORKFLOW,
+    provider: ClapWorkflowProvider.COMFYUI,
+    category: ClapWorkflowCategory.VIDEO_GENERATION,
+    data: JSON.stringify({
+      '1': {
+        inputs: { ckpt_name: 'v1-5-pruned-emaonly.safetensors' },
+        class_type: 'CheckpointLoaderSimple',
+        _meta: { title: 'Load Checkpoint' },
+      },
+      '2': {
+        inputs: { deforum_data: null },
+        class_type: 'DeforumBaseParamsNode',
+        _meta: { title: 'Deforum Base Params' },
+      },
+      '3': {
+        inputs: {
+          deforum_data: ['2', 0],
+          reset: 0,
+        },
+        class_type: 'DeforumIteratorNode',
+        _meta: { title: 'Deforum Iterator' },
+      },
+      '4': {
+        inputs: { text: '@clapper/prompt', clip: ['1', 1] },
+        class_type: 'CLIPTextEncode',
+        _meta: { title: 'Positive Prompt' },
+      },
+      '5': {
+        inputs: { text: '@clapper/negative', clip: ['1', 1] },
+        class_type: 'CLIPTextEncode',
+        _meta: { title: 'Negative Prompt' },
+      },
+      '6': {
+        inputs: {
+          model: ['1', 0],
+          latent: null,
+          positive: ['4', 0],
+          negative: ['5', 0],
+          deforum_frame_data: ['3', 0],
+          vae: ['1', 2],
+        },
+        class_type: 'DeforumKSampler',
+        _meta: { title: 'Deforum KSampler' },
+      },
+      '7': {
+        inputs: { samples: ['6', 0], vae: ['1', 2] },
+        class_type: 'VAEDecode',
+        _meta: { title: 'VAE Decode' },
+      },
+      '8': {
+        inputs: {
+          images: ['7', 0],
+          deforum_frame_data: ['3', 0],
+          fps: 12,
+          format: 'video/h264-mp4',
+          save_output: true,
+        },
+        class_type: 'DeforumVideoSaveNode',
+        _meta: { title: 'Deforum Video Save' },
+      },
+    }),
+    schema: '',
+    inputFields: [genericPrompt, genericNegativePrompt],
+    inputValues: {
+      [genericPrompt.id]: genericPrompt.defaultValue,
+      [genericNegativePrompt.id]: genericNegativePrompt.defaultValue,
+    },
+  },
 ]
 
 // this define dynamic comfyui workflow
