@@ -740,6 +740,12 @@ export const useSettings = create<SettingsStore>()(
           ollamaApiUrl: getValidString(ollamaApiUrl, defaultOllamaApiUrl),
         })
       },
+      setBarkTtsApiUrl: (barkTtsApiUrl?: string) => {
+        const { barkTtsApiUrl: defaultBarkTtsApiUrl } = getDefaultSettingsState()
+        set({
+          barkTtsApiUrl: getValidString(barkTtsApiUrl, defaultBarkTtsApiUrl),
+        })
+      },
       setGradioApiUrlForAssistant: (gradioApiUrlForAssistant?: string) => {
         set({
           gradioApiUrlForAssistant: getValidString(
@@ -1069,6 +1075,8 @@ export const useSettings = create<SettingsStore>()(
             defaultSettings.comfyWorkflowForMusic,
 
           comfyUiApiUrl: state.comfyUiApiUrl || defaultSettings.comfyUiApiUrl,
+
+          ollamaApiUrl: state.ollamaApiUrl || defaultSettings.ollamaApiUrl,
 
           gradioApiUrlForAssistant:
             state.gradioApiUrlForAssistant ||

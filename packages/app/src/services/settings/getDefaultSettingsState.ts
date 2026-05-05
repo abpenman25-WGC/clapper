@@ -160,6 +160,7 @@ export function getDefaultSettingsState(): SettingsState {
 
     piperTtsExePath: 'C:\\AI\\PiperTTS\\piper\\piper.exe',
     piperTtsVoicesPath: 'C:\\AI\\PiperTTS\\voices',
+    barkTtsApiUrl: 'http://localhost:5001',
 
     ollamaApiUrl: 'http://localhost:11434',
 

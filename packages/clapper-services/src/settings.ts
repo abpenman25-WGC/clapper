@@ -78,6 +78,7 @@ export type BaseSettings = {
   piperTtsExePath: string
   ollamaApiUrl: string
   piperTtsVoicesPath: string
+  barkTtsApiUrl: string
 
   gradioApiUrlForAssistant: string
   gradioApiUrlForImage: string
@@ -301,6 +302,7 @@ export type SettingsControls = {
 
   setComfyUiApiUrl: (comfyUiApiUrl?: string) => void
   setOllamaApiUrl: (ollamaApiUrl?: string) => void
+  setBarkTtsApiUrl: (barkTtsApiUrl?: string) => void
 
   setGradioApiUrlForAssistant: (gradioApiUrlForAssistant?: string) => void
   setGradioApiUrlForImage: (gradioApiUrlForImage?: string) => void

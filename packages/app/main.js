@@ -69,6 +69,44 @@ function stopComfyUI() {
   }
 }
 
+// Auto-launch local Bark TTS server
+let barkTtsProcess = null
+
+function startBarkTTS() {
+  const barkPath = 'C:\\AI\\bark'
+  const venvPython = path.join(barkPath, 'venv', 'Scripts', 'python.exe')
+  const serverPy = path.join(barkPath, 'server.py')
+
+  console.log('[BarkTTS] Starting local Bark TTS server...')
+
+  barkTtsProcess = spawn(venvPython, [serverPy], {
+    cwd: barkPath,
+    stdio: 'pipe',
+    detached: false,
+  })
+
+  barkTtsProcess.stdout.on('data', (data) => {
+    console.log(`[BarkTTS] ${data.toString().trim()}`)
+  })
+
+  barkTtsProcess.stderr.on('data', (data) => {
+    console.error(`[BarkTTS] ${data.toString().trim()}`)
+  })
+
+  barkTtsProcess.on('exit', (code) => {
+    console.log(`[BarkTTS] Process exited with code ${code}`)
+    barkTtsProcess = null
+  })
+}
+
+function stopBarkTTS() {
+  if (barkTtsProcess) {
+    console.log('[BarkTTS] Shutting down...')
+    barkTtsProcess.kill()
+    barkTtsProcess = null
+  }
+}
+
 
 try {
   // used when the app is built with `npm run electron:make`
@@ -106,11 +144,13 @@ const createWindow = () => {
 
 app.whenReady().then(() => {
   startComfyUI()
+  startBarkTTS()
   createWindow()
 })
 
 app.on('window-all-closed', () => {
   stopComfyUI()
+  stopBarkTTS()
   if (process.platform !== 'darwin') {
     app.quit()
   }

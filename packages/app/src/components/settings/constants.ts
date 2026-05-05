@@ -7,6 +7,7 @@ export const ClapWorkflowProviderShortNames: Record<
   string
 > = {
   [ClapWorkflowProvider.BUILTIN]: 'Clapper',
+  [ClapWorkflowProvider.BARKTTS]: 'Bark TTS (local)',
   [ClapWorkflowProvider.CIVITAI]: 'Civitai',
   [ClapWorkflowProvider.HOTSHOT]: 'Hotshot',
   [ClapWorkflowProvider.LETZAI]: 'Letz.ai',
