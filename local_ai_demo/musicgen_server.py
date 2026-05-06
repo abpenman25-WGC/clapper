@@ -1,10 +1,10 @@
 """
 MusicGen local server for Clapper.
-Wraps Meta's AudioCraft MusicGen and exposes a simple HTTP endpoint.
+Uses HuggingFace Transformers to run Meta's MusicGen locally (CPU-only).
 
-Requirements (already installed in musicgen_env):
+Requirements (installed in musicgen_env):
     torch, torchaudio  (CPU-only)
-    audiocraft (Meta)
+    transformers>=4.31.0
     flask, soundfile
 
 Start:
@@ -16,6 +16,7 @@ Endpoint:
     Returns: audio/wav binary
 
 Models: "small" (fastest), "medium" (slower), "large" (very slow on CPU)
+First run downloads model weights from HuggingFace Hub (~300 MB for small).
 """
 
 import io
@@ -23,6 +24,7 @@ import logging
 import os
 
 import soundfile as sf
+import torch
 from flask import Flask, Response, jsonify, request
 
 logging.basicConfig(level=logging.INFO)
@@ -30,19 +32,27 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
-# Cache loaded models to avoid reloading on each request
+# Cache loaded models/processors to avoid reloading on each request
 _models: dict = {}
+_processors: dict = {}
 
 
-def get_model(model_name: str):
+def get_model_and_processor(model_name: str):
     if model_name not in _models:
-        from audiocraft.models import MusicGen
-        logger.info(f"Loading MusicGen model: facebook/musicgen-{model_name} (first run downloads weights) …")
-        model = MusicGen.get_pretrained(f"facebook/musicgen-{model_name}")
-        model.set_generation_params(duration=10)  # default, overridden per request
+        from transformers import MusicgenForConditionalGeneration, AutoProcessor
+
+        hf_name = f"facebook/musicgen-{model_name}"
+        logger.info(f"Loading {hf_name} (first run downloads weights) …")
+
+        processor = AutoProcessor.from_pretrained(hf_name)
+        model = MusicgenForConditionalGeneration.from_pretrained(hf_name)
+        model.eval()
+
+        _processors[model_name] = processor
         _models[model_name] = model
-        logger.info(f"MusicGen model '{model_name}' loaded.")
-    return _models[model_name]
+        logger.info(f"MusicGen '{model_name}' loaded.")
+
+    return _models[model_name], _processors[model_name]
 
 
 @app.route("/generate", methods=["POST"])
@@ -60,19 +70,26 @@ def generate():
         model_name = "small"
 
     try:
-        model = get_model(model_name)
-        model.set_generation_params(duration=duration)
+        model, processor = get_model_and_processor(model_name)
+        sample_rate = model.config.audio_encoder.sampling_rate  # 32000 Hz
 
-        logger.info(f"Generating {duration}s music [{model_name}] for prompt: {prompt!r}")
-        wav = model.generate([prompt])  # returns (1, channels, samples) tensor
+        # tokens_per_second is 50 for MusicGen
+        max_new_tokens = int(duration * 50)
 
-        # Convert tensor to numpy
-        wav_np = wav[0].cpu().numpy()  # shape: (channels, samples)
+        logger.info(f"Generating {duration}s music [{model_name}] for: {prompt!r}")
+
+        inputs = processor(text=[prompt], padding=True, return_tensors="pt")
+
+        with torch.no_grad():
+            audio_values = model.generate(
+                **inputs,
+                max_new_tokens=max_new_tokens,
+            )
+
+        # audio_values shape: (batch, channels, samples)
+        wav_np = audio_values[0].cpu().numpy()  # (channels, samples)
         if wav_np.ndim == 2:
-            # MusicGen outputs stereo; transpose to (samples, channels) for soundfile
-            wav_np = wav_np.T
-
-        sample_rate = model.sample_rate
+            wav_np = wav_np.T  # -> (samples, channels)
 
         buf = io.BytesIO()
         sf.write(buf, wav_np, samplerate=sample_rate, format="WAV", subtype="PCM_16")
