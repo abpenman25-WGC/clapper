@@ -746,6 +746,12 @@ export const useSettings = create<SettingsStore>()(
           audioLdmApiUrl: getValidString(audioLdmApiUrl, defaultAudioLdmApiUrl),
         })
       },
+      setMusicGenApiUrl: (musicGenApiUrl?: string) => {
+        const { musicGenApiUrl: defaultMusicGenApiUrl } = getDefaultSettingsState()
+        set({
+          musicGenApiUrl: getValidString(musicGenApiUrl, defaultMusicGenApiUrl),
+        })
+      },
       setBarkTtsApiUrl: (barkTtsApiUrl?: string) => {
         const { barkTtsApiUrl: defaultBarkTtsApiUrl } = getDefaultSettingsState()
         set({

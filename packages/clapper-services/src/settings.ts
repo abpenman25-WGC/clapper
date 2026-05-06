@@ -79,6 +79,7 @@ export type BaseSettings = {
   ollamaApiUrl: string
   piperTtsVoicesPath: string
   audioLdmApiUrl: string
+  musicGenApiUrl: string
   barkTtsApiUrl: string
 
   gradioApiUrlForAssistant: string
@@ -304,6 +305,7 @@ export type SettingsControls = {
   setComfyUiApiUrl: (comfyUiApiUrl?: string) => void
   setOllamaApiUrl: (ollamaApiUrl?: string) => void
   setAudioLdmApiUrl: (audioLdmApiUrl?: string) => void
+  setMusicGenApiUrl: (musicGenApiUrl?: string) => void
   setBarkTtsApiUrl: (barkTtsApiUrl?: string) => void
 
   setGradioApiUrlForAssistant: (gradioApiUrlForAssistant?: string) => void

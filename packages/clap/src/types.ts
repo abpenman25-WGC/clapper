@@ -683,6 +683,7 @@ export enum ClapWorkflowProvider {
   PIAPI = "PIAPI", // (Kling etc)
   AUDIOLDM = "AUDIOLDM", // https://github.com/haoheliu/AudioLDM (local)
   BARKTTS = "BARKTTS", // https://github.com/suno-ai/bark (local)
+  MUSICGEN = "MUSICGEN", // https://github.com/facebookresearch/audiocraft (local)
   PIPERTTS = "PIPERTTS", // https://github.com/rhasspy/piper (local)
   REPLICATE = "REPLICATE", // https://replicate.com
   RUNWAYML = "RUNWAYML",

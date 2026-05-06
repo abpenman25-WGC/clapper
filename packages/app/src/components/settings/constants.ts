@@ -7,6 +7,7 @@ export const ClapWorkflowProviderShortNames: Record<
   string
 > = {
   [ClapWorkflowProvider.AUDIOLDM]: 'AudioLDM (local)',
+  [ClapWorkflowProvider.MUSICGEN]: 'MusicGen (local)',
   [ClapWorkflowProvider.BUILTIN]: 'Clapper',
   [ClapWorkflowProvider.BARKTTS]: 'Bark TTS (local)',
   [ClapWorkflowProvider.CIVITAI]: 'Civitai',

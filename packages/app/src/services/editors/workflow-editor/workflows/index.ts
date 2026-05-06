@@ -6,6 +6,7 @@ import { aitubeWorkflows } from './aitube'
 import { anthropicWorkflows } from './anthropic'
 import { audioLdmWorkflows } from './audioldm'
 import { barkTtsWorkflows } from './barktts'
+import { musicGenWorkflows } from './musicgen'
 import { bigModelWorkflows } from './bigmodel'
 import { civitaiWorkflows } from './civitai'
 import { cohereWorkflows } from './cohere'
@@ -39,6 +40,7 @@ export const staticWorkflows: ClapWorkflow[] = [
   ...anthropicWorkflows,
   ...audioLdmWorkflows,
   ...barkTtsWorkflows,
+  ...musicGenWorkflows,
   ...bigModelWorkflows,
   ...civitaiWorkflows,
   ...cohereWorkflows,

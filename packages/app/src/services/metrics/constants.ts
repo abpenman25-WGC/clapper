@@ -159,6 +159,9 @@ export const estimatedMetrics: Record<
   [ClapWorkflowProvider.AUDIOLDM]: {
     // local, no cost
   },
+  [ClapWorkflowProvider.MUSICGEN]: {
+    // local, no cost
+  },
   [ClapWorkflowProvider.PIPERTTS]: {
     // local, no cost
   },
