@@ -681,6 +681,7 @@ export enum ClapWorkflowProvider {
   OLLAMA = "OLLAMA", // https://ollama.com (local)
   OPENAI = "OPENAI", // https://openai.com
   PIAPI = "PIAPI", // (Kling etc)
+  AUDIOLDM = "AUDIOLDM", // https://github.com/haoheliu/AudioLDM (local)
   BARKTTS = "BARKTTS", // https://github.com/suno-ai/bark (local)
   PIPERTTS = "PIPERTTS", // https://github.com/rhasspy/piper (local)
   REPLICATE = "REPLICATE", // https://replicate.com

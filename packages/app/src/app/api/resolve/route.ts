@@ -35,6 +35,7 @@ import {
   resolveSegmentUsingOpenAI,
   resolveSegmentUsingPiperTTS,
   resolveSegmentUsingBarkTTS,
+  resolveSegmentUsingAudioLDM,
 } from './providers'
 
 import { ResolveRequest } from '@aitube/clapper-services'
@@ -115,6 +116,7 @@ export async function POST(req: NextRequest) {
     [ClapWorkflowProvider.OPENAI]: resolveSegmentUsingOpenAI,
     [ClapWorkflowProvider.PIPERTTS]: resolveSegmentUsingPiperTTS,
     [ClapWorkflowProvider.BARKTTS]: resolveSegmentUsingBarkTTS,
+    [ClapWorkflowProvider.AUDIOLDM]: resolveSegmentUsingAudioLDM,
     [ClapWorkflowProvider.LETZAI]: resolveSegmentUsingLetzAi,
     [ClapWorkflowProvider.LUMALABS]: resolveSegmentUsingLumaLabs,
     [ClapWorkflowProvider.HOTSHOT]: resolveSegmentUsingHotshot,

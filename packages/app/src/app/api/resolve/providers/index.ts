@@ -1,4 +1,5 @@
 export { resolveSegment as resolveSegmentUsingAiTube } from './aitube'
+export { resolveSegment as resolveSegmentUsingAudioLDM } from './audioldm'
 export { resolveSegment as resolveSegmentUsingBarkTTS } from './barktts'
 export { resolveSegment as resolveSegmentUsingBigModel } from './bigmodel'
 export { resolveSegment as resolveSegmentUsingElevenLabs } from './elevenlabs'

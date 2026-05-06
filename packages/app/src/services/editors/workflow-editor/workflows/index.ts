@@ -4,6 +4,7 @@ import { DynamicClapWorkflow } from './common/types'
 
 import { aitubeWorkflows } from './aitube'
 import { anthropicWorkflows } from './anthropic'
+import { audioLdmWorkflows } from './audioldm'
 import { barkTtsWorkflows } from './barktts'
 import { bigModelWorkflows } from './bigmodel'
 import { civitaiWorkflows } from './civitai'
@@ -36,6 +37,7 @@ export const staticWorkflows: ClapWorkflow[] = [
   ...noneWorkflows,
   ...aitubeWorkflows,
   ...anthropicWorkflows,
+  ...audioLdmWorkflows,
   ...barkTtsWorkflows,
   ...bigModelWorkflows,
   ...civitaiWorkflows,

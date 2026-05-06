@@ -740,6 +740,12 @@ export const useSettings = create<SettingsStore>()(
           ollamaApiUrl: getValidString(ollamaApiUrl, defaultOllamaApiUrl),
         })
       },
+      setAudioLdmApiUrl: (audioLdmApiUrl?: string) => {
+        const { audioLdmApiUrl: defaultAudioLdmApiUrl } = getDefaultSettingsState()
+        set({
+          audioLdmApiUrl: getValidString(audioLdmApiUrl, defaultAudioLdmApiUrl),
+        })
+      },
       setBarkTtsApiUrl: (barkTtsApiUrl?: string) => {
         const { barkTtsApiUrl: defaultBarkTtsApiUrl } = getDefaultSettingsState()
         set({

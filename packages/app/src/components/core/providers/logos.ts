@@ -68,6 +68,7 @@ export const ClapWorkflowProvidersLogos: Record<ClapWorkflowProvider, string> =
     [ClapWorkflowProvider.MISTRALAI]: mistralai,
     [ClapWorkflowProvider.MODELSLAB]: modelslab,
     [ClapWorkflowProvider.OPENAI]: openai,
+    [ClapWorkflowProvider.AUDIOLDM]: none,
     [ClapWorkflowProvider.OLLAMA]: none,
     [ClapWorkflowProvider.PIAPI]: piapi,
     [ClapWorkflowProvider.PIPERTTS]: none,
