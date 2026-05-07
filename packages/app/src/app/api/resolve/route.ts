@@ -169,8 +169,8 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     console.error('Failed to generate a segment:', {
       error: String(err),
-      request,
-      segment,
+      segmentId: segment.id,
+      segmentCategory: segment.category,
       stack: err instanceof Error ? err.stack : undefined,
     })
     segment.assetUrl = ''
@@ -183,8 +183,8 @@ export async function POST(req: NextRequest) {
       {
         error: 'Failed to generate a segment',
         details: String(err),
-        request,
-        segment,
+        segmentId: segment.id,
+        segmentCategory: segment.category,
         stack: err instanceof Error ? err.stack : undefined,
       },
       { status: 500 }

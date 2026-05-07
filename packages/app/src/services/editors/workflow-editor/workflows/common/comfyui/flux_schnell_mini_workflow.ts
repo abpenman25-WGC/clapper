@@ -6,7 +6,7 @@
 export const flux_schnell_mini_workflow = {
   '6': {
     inputs: {
-      text: '',
+      text: '@clapper/prompt',
       clip: ['11', 0],
     },
     class_type: 'CLIPTextEncode',
