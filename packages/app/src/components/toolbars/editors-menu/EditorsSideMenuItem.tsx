@@ -9,6 +9,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { useEditors } from '@/services/editors/useEditors'
+import { useUI } from '@/services/ui/useUI'
 import { useTheme } from '@/services/ui/useTheme'
 
 export function EditorsSideMenuItem({
@@ -37,6 +38,7 @@ export function EditorsSideMenuItem({
   const theme = useTheme()
   const view = useEditors((s) => s.view)
   const setView = useEditors((s) => s.setView)
+  const setShowExplorer = useUI((s) => s.setShowExplorer)
 
   const isActive = !unmanaged && view === expectedView
 
@@ -49,6 +51,7 @@ export function EditorsSideMenuItem({
     }
 
     console.log(`handleClick("${expectedView}")`)
+    setShowExplorer(true)
     setView(expectedView)
   }
 
