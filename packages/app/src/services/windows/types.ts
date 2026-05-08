@@ -1,7 +1,9 @@
+import type { ReactElement } from 'react'
+
 // Define the window state type
 export type WindowState = {
   id: string
-  title: string | JSX.Element
+  title: string | ReactElement
   isVisible: boolean
   zIndex: number
   width: number

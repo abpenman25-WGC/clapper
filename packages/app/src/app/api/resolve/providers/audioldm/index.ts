@@ -33,7 +33,12 @@ export async function resolveSegment(
     'http://localhost:5002'
 
   // duration comes from the workflow data field (seconds), default 5
-  const duration = Number(request.generationWorkflow?.data) || 5
+  const generationWorkflow =
+    segment.category === ClapSegmentCategory.SOUND
+      ? request.settings.soundGenerationWorkflow
+      : request.settings.musicGenerationWorkflow
+
+  const duration = Number(generationWorkflow?.data) || 5
 
   const response = await fetch(`${apiUrl}/generate`, {
     method: 'POST',

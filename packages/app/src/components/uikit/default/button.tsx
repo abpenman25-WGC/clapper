@@ -1,11 +1,9 @@
 import {
-  AllOptionalProperties,
-  ComponentInternals,
   Container,
   ContainerProperties,
   DefaultProperties,
 } from '@react-three/uikit'
-import React, { ReactNode, RefAttributes, forwardRef } from 'react'
+import React, { ReactNode, forwardRef } from 'react'
 import { borderRadius, colors } from './theme.jsx'
 
 const buttonVariants = {
@@ -89,7 +87,7 @@ export const Button = forwardRef(
       disabled = false,
       hover,
       ...props
-    }: ButtonProperties & RefAttributes<ComponentInternals>,
+    }: ButtonProperties,
     ref
   ) => {
     const {
@@ -99,7 +97,7 @@ export const Button = forwardRef(
     }: {
       containerHoverProps?: ContainerProperties['hover']
       containerProps?: Omit<ContainerProperties, 'hover'>
-      defaultProps?: AllOptionalProperties
+      defaultProps?: Partial<React.ComponentProps<typeof DefaultProperties>>
     } = (buttonVariants as any)[variant]
     const sizeProps = (buttonSizes as any)[size]
 

@@ -34,7 +34,7 @@ export function EntityViewer({
   const setShowEntityList = useEntityEditor((s) => s.setShowEntityList)
 
   useEffect(() => {
-    setCurrent(entities.at(0))
+    setCurrent(entities[0])
   }, [entities, setCurrent])
 
   useEffect(() => {

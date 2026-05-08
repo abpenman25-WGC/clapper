@@ -23,13 +23,10 @@ export function importFdxTrelby(trelbyText: string): string {
 
   const CHAR_INDENT = "            "; // 12 spaces
   const DIALOG_INDENT = "        ";   // 8 spaces
+  const TRANSITION_INDENT = "                            "; // 28 spaces
 
   for (const rawLine of lines) {
-    // 🔍 DEBUG: Show the exact raw line, including hidden characters
-    console.log("RAW:", JSON.stringify(rawLine));
-
     const trimmed = rawLine.trim();   // for content
-    const line = rawLine;             // preserve indentation for classification
 
     // Start of script
     if (trimmed === "#Start-Script") {
@@ -56,9 +53,17 @@ export function importFdxTrelby(trelbyText: string): string {
     if (trimmed.startsWith(".")) {
       const content = trimmed.slice(1);
 
+      // Continued dialogue: .:Hello again
+      // Must be handled before generic dot fallbacks, or it will leak ':'
+      if (content.startsWith(":")) {
+        const dialog = content.slice(1).trim();
+        out.push(DIALOG_INDENT + dialog);
+        continue;
+      }
+
       // Scene heading: .=INT. HOUSE - DAY
       if (content.startsWith("=")) {
-        out.push(content.slice(1).trim());
+        out.push(content.slice(1).trim().toUpperCase());
         continue;
       }
 
@@ -72,7 +77,7 @@ export function importFdxTrelby(trelbyText: string): string {
 
       // Transition: ./FADE OUT:
       if (content.startsWith("/")) {
-        out.push(content.slice(1).trim());
+        out.push(TRANSITION_INDENT + content.slice(1).trim().toUpperCase());
         continue;
       }
 
@@ -108,15 +113,6 @@ export function importFdxTrelby(trelbyText: string): string {
 
       // Action: >The ship descends
       out.push(content.trim());
-      continue;
-    }
-
-    // -------------------------
-    // CONTINUED DIALOGUE: .:Hello again
-    // -------------------------
-    if (trimmed.startsWith(".:")) {
-      const dialog = trimmed.slice(2).trim();
-      out.push(DIALOG_INDENT + dialog);
       continue;
     }
 

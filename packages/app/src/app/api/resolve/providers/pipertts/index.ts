@@ -36,7 +36,7 @@ export async function resolveSegment(
     'C:\\AI\\PiperTTS\\voices'
 
   // `data` holds the voice model filename, e.g. "en_US-lessac-medium.onnx"
-  const modelFile = request.generationWorkflow?.data || 'en_US-lessac-medium.onnx'
+  const modelFile = request.settings.voiceGenerationWorkflow?.data || 'en_US-lessac-medium.onnx'
   const modelPath = path.join(voicesDir, modelFile)
 
   if (!fs.existsSync(modelPath)) {

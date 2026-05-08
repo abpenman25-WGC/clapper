@@ -2,7 +2,7 @@ import { CiViewTimeline } from 'react-icons/ci'
 import { MdMovieEdit } from 'react-icons/md'
 import { GoVideo } from 'react-icons/go'
 import { GrUserSettings } from 'react-icons/gr'
-import { PiBookOpenTextLight, PiTreeStructureLight } from 'react-icons/pi'
+import { PiBookOpenTextLight, PiBookOpenLight, PiTreeStructureLight } from 'react-icons/pi'
 import { EditorView, SettingsCategory } from '@aitube/clapper-services'
 
 import { cn } from '@/lib/utils'
@@ -69,6 +69,9 @@ export function MobileBottomBar() {
       </BottomMenuItem>
       <BottomMenuItem view={EditorView.SEGMENT} label="Segment editor">
         <CiViewTimeline />
+      </BottomMenuItem>
+      <BottomMenuItem view={EditorView.PROMPT_BOOK} label="Prompt Book">
+        <PiBookOpenLight />
       </BottomMenuItem>
       <BottomMenuItem
         view={EditorView.WORKFLOW}

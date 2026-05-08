@@ -30,6 +30,15 @@ export function parseWorkflow(
   // console.log("parseWorkflow:", { input })
 
   try {
+    const hasNodeInputRef = (value: unknown) => {
+      return (
+        !!value &&
+        typeof value === 'object' &&
+        'id' in value &&
+        typeof (value as { id?: unknown }).id === 'string'
+      )
+    }
+
     const maybeWorkflow =
       typeof input === 'string'
         ? (JSON.parse(input) as ClapWorkflow)
@@ -57,12 +66,25 @@ export function parseWorkflow(
         maybeWorkflow.data,
         maybeWorkflow.category
       )
+      const hasCustomInputFields =
+        Array.isArray(maybeWorkflow.inputFields) &&
+        maybeWorkflow.inputFields.length > 0
+      const hasCustomInputValues =
+        typeof maybeWorkflow.inputValues === 'object' &&
+        maybeWorkflow.inputValues !== null &&
+        Object.keys(maybeWorkflow.inputValues).length > 0
+      const hasValidMainInputValues =
+        hasNodeInputRef(maybeWorkflow.inputValues?.prompt) &&
+        hasNodeInputRef(maybeWorkflow.inputValues?.output)
+
       // Use the already existing inputFields/inputValues, otherwise use the default
       // ones based on the raw comfyui workflow data
-      maybeWorkflow.inputFields =
-        maybeWorkflow.inputFields || defaultInputFields
-      maybeWorkflow.inputValues =
-        maybeWorkflow.inputValues || defaultInputValues
+      maybeWorkflow.inputFields = hasCustomInputFields
+        ? maybeWorkflow.inputFields
+        : defaultInputFields
+      maybeWorkflow.inputValues = hasCustomInputValues && hasValidMainInputValues
+        ? maybeWorkflow.inputValues
+        : defaultInputValues
     }
     return maybeWorkflow
   } catch (err) {

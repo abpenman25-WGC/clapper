@@ -82,7 +82,7 @@ export const usePlugins = create<PluginsStore>((set, get) => ({
       simulator: useSimulator,
       ui: useUI,
       io: useIO,
-    }
+    } as unknown as PublicServices
   },
   pluginApiGetSettings: async (id: string) => {
     return []

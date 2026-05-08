@@ -21,8 +21,8 @@ export async function generateOTIOZ(): Promise<Uint8Array> {
   files['timeline.otio'] = fflate.strToU8(otioContent)
 
   const exportableSegments: ExportableSegment[] = timelineSegments
-    .map((segment, index) => formatSegmentForExport(segment, index))
-    .filter(({ isExportableToFile }) => isExportableToFile)
+    .map((segment: any, index: number) => formatSegmentForExport(segment, index))
+    .filter(({ isExportableToFile }: { isExportableToFile: boolean }) => isExportableToFile)
 
   exportableSegments.forEach((exportableSegment: ExportableSegment) => {
     const { segment, filePath } = exportableSegment

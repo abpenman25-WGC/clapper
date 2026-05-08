@@ -5,7 +5,7 @@ export function getWorkflowInputValues(workflow: ClapWorkflow): {
   workflowValues: ClapInputValues
 } {
   const workflowDefaultValues = workflow.inputFields.reduce(
-    (acc, field) => ({
+    (acc: ClapInputValues, field: { id: string; defaultValue: unknown }) => ({
       ...acc,
       [field.id]: field.defaultValue,
     }),

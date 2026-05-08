@@ -23,7 +23,7 @@ export async function resolveSegment(
     'http://localhost:5001'
 
   // The `data` field of the workflow holds the voice preset (e.g. "v2/en_speaker_6")
-  const voicePreset = request.generationWorkflow?.data || null
+  const voicePreset = request.settings.voiceGenerationWorkflow?.data || null
 
   const response = await fetch(`${apiUrl}/generate`, {
     method: 'POST',

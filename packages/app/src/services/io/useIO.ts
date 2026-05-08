@@ -95,7 +95,7 @@ export const useIO = create<IOStore>((set, get) => ({
       console.log('user tried to drop some files:', files)
 
       // for now let's simplify things, and only import the first file
-      const file: File | undefined = files.at(0)
+      const file: File | undefined = files[0]
       if (!file) {
         return
       }
@@ -338,6 +338,11 @@ export const useIO = create<IOStore>((set, get) => ({
 
       clap.meta.title = `${projectName || ''}`
 
+      // Preserve original screenplay formatting in Story editor.
+      // Parsing still creates structured scenes/segments for generation,
+      // but we don't want to replace user-authored layout/casing/alignment.
+      clap.meta.storyPrompt = plainText
+
       task.setProgress({
         message: 'Loading rendering engine..',
         value: 90,
@@ -404,6 +409,9 @@ export const useIO = create<IOStore>((set, get) => ({
       )
 
       clap.meta.title = `${projectName || ''}`
+
+      // Preserve original screenplay formatting in Story editor.
+      clap.meta.storyPrompt = plainText
 
       task.setProgress({
         message: 'Loading rendering engine..',
@@ -661,9 +669,9 @@ export const useIO = create<IOStore>((set, get) => ({
       const ignoreThisVideoSegmentId = (await getFinalVideo(clap))?.id || ''
 
       const segments: ExportableSegment[] = timelineSegments
-        .map((segment, i) => formatSegmentForExport(segment, i))
+        .map((segment: any, i: number) => formatSegmentForExport(segment, i))
         .filter(
-          ({ id, isExportableToFile }) =>
+          ({ id, isExportableToFile }: { id: string; isExportableToFile: boolean }) =>
             isExportableToFile && id !== ignoreThisVideoSegmentId
         )
 
@@ -745,7 +753,7 @@ export const useIO = create<IOStore>((set, get) => ({
         }
       )
 
-      const videoBlob = new Blob([fullVideo], { type: 'video/mp4' })
+      const videoBlob = new Blob([new Uint8Array(fullVideo)], { type: 'video/mp4' })
 
       // Use project title for filename
       const fileName = getProjectFileName(
@@ -777,8 +785,8 @@ export const useIO = create<IOStore>((set, get) => ({
       const { segments: timelineSegments } = timeline
 
       const segments: ExportableSegment[] = timelineSegments
-        .map((segment, i) => formatSegmentForExport(segment, i))
-        .filter(({ isExportableToFile }) => isExportableToFile)
+        .map((segment: any, i: number) => formatSegmentForExport(segment, i))
+        .filter(({ isExportableToFile }: { isExportableToFile: boolean }) => isExportableToFile)
 
       let files: fflate.AsyncZippable = {}
 
@@ -921,7 +929,7 @@ export const useIO = create<IOStore>((set, get) => ({
           const fileName = getProjectFileName(
             clap?.meta?.title || 'untitled_project'
           ).replace('.clap', '.zip')
-          saveAnyFile(new Blob([zipFile]), fileName)
+          saveAnyFile(new Blob([new Uint8Array(zipFile)], { type: 'application/zip' }), fileName)
           task.success()
         }
       )
@@ -948,8 +956,8 @@ export const useIO = create<IOStore>((set, get) => ({
       const { segments: timelineSegments } = timeline
 
       const segments: ExportableSegment[] = timelineSegments
-        .map((segment, i) => formatSegmentForExport(segment, i))
-        .filter(({ isExportableToFile }) => isExportableToFile)
+        .map((segment: any, i: number) => formatSegmentForExport(segment, i))
+        .filter(({ isExportableToFile }: { isExportableToFile: boolean }) => isExportableToFile)
 
       let files: fflate.AsyncZippable = {}
 
@@ -1007,7 +1015,7 @@ export const useIO = create<IOStore>((set, get) => ({
           const baseName = getProjectFileName(
             clap?.meta?.title || 'untitled_project'
           ).replace('.clap', '')
-          saveAnyFile(new Blob([zipFile]), `${baseName}_davinci.zip`)
+          saveAnyFile(new Blob([new Uint8Array(zipFile)], { type: 'application/zip' }), `${baseName}_davinci.zip`)
           task.success()
         }
       )
@@ -1038,9 +1046,9 @@ export const useIO = create<IOStore>((set, get) => ({
       ).replace('.clap', '')
 
       const segments: ExportableSegment[] = timelineSegments
-        .map((segment, i) => formatSegmentForExport(segment, i))
+        .map((segment: any, i: number) => formatSegmentForExport(segment, i))
         .filter(
-          ({ isExportableToFile, category }) =>
+          ({ isExportableToFile, category }: { isExportableToFile: boolean; category: string }) =>
             isExportableToFile && category === 'video'
         )
 
@@ -1092,7 +1100,7 @@ export const useIO = create<IOStore>((set, get) => ({
           return
         }
         task.setProgress({ message: 'Saving..', value: 100 })
-        saveAnyFile(new Blob([zipFile]), `${baseName}_fcp7_resolve.zip`)
+        saveAnyFile(new Blob([new Uint8Array(zipFile)], { type: 'application/zip' }), `${baseName}_fcp7_resolve.zip`)
         task.success()
       })
     } catch (err) {
@@ -1126,7 +1134,7 @@ export const useIO = create<IOStore>((set, get) => ({
         value: 90,
       })
 
-      const blob = new Blob([otiozData], { type: 'application/octet-stream' })
+      const blob = new Blob([new Uint8Array(otiozData)], { type: 'application/octet-stream' })
 
       // Use project title for filename
       const timeline: TimelineStore = useTimeline.getState()
@@ -1168,8 +1176,8 @@ export const useIO = create<IOStore>((set, get) => ({
       const { segments: timelineSegments } = timeline
 
       const segments: ExportableSegment[] = timelineSegments
-        .map((segment, i) => formatSegmentForExport(segment, i))
-        .filter(({ isExportableToFile }) => isExportableToFile)
+        .map((segment: any, i: number) => formatSegmentForExport(segment, i))
+        .filter(({ isExportableToFile }: { isExportableToFile: boolean }) => isExportableToFile)
 
       let files: fflate.AsyncZippable = {}
 
@@ -1209,7 +1217,7 @@ export const useIO = create<IOStore>((set, get) => ({
           const baseName = getProjectFileName(
             clap?.meta?.title || 'untitled_project'
           ).replace('.clap', '')
-          saveAnyFile(new Blob([zipFile]), `${baseName}_kdenlive.zip`)
+          saveAnyFile(new Blob([new Uint8Array(zipFile)], { type: 'application/zip' }), `${baseName}_kdenlive.zip`)
           task.success()
         }
       )

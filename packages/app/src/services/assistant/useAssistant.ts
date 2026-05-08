@@ -277,7 +277,7 @@ export const useAssistant = create<AssistantStore>((set, get) => ({
 
         if (segmentWithScene?.sceneId) {
           const foundScene = (scenes || []).find(
-            (s) => s.id === segmentWithScene.sceneId
+            (s: ClapScene) => s.id === segmentWithScene.sceneId
           )
           console.log(
             '- Found scene via segment:',
@@ -315,7 +315,7 @@ export const useAssistant = create<AssistantStore>((set, get) => ({
       }
 
       const referenceSegment: TimelineSegment | undefined =
-        activeSegments?.at(0)
+        activeSegments?.[0]
       const scene: ClapScene | undefined = getCurrentSceneAtCursor()
 
       // Get script from editor

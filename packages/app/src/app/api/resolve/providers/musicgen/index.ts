@@ -33,7 +33,7 @@ export async function resolveSegment(
     'http://localhost:5003'
 
   // data field encodes "model|duration" e.g. "small|10" or just "small"
-  const dataParts = (request.generationWorkflow?.data || 'small|10').split('|')
+  const dataParts = (request.settings.musicGenerationWorkflow?.data || 'small|10').split('|')
   const model = dataParts[0] || 'small'
   const duration = Number(dataParts[1]) || 10
 

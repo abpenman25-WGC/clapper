@@ -17,7 +17,7 @@ export function SegmentEditor() {
   const redo = useSegmentEditor((s) => s.redo)
 
   useEffect(() => {
-    setCurrent(selectedSegments.at(-1))
+    setCurrent(selectedSegments[selectedSegments.length - 1])
     // eslint-disable-next-line
   }, [setCurrent, selectedSegments.map((s) => s.id).join(',')])
 

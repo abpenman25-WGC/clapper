@@ -45,9 +45,9 @@ export async function resolveSegment(
     // we try to look into the workflow input fields
     // to find the best match
     const promptFields = [
-      inputFields.find((f) => f.id === 'prompt'), // exactMatch,
-      inputFields.find((f) => f.id.includes('prompt')), // similarName,
-      inputFields.find((f) => f.type === 'string'), // similarType
+      inputFields.find((f: { id: string; type?: string }) => f.id === 'prompt'), // exactMatch,
+      inputFields.find((f: { id: string; type?: string }) => f.id.includes('prompt')), // similarName,
+      inputFields.find((f: { id: string; type?: string }) => f.type === 'string'), // similarType
     ].filter((x) => typeof x !== 'undefined')
 
     const promptField = promptFields[0]

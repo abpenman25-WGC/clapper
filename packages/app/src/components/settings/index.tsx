@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogFooter } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 import { useUI } from '@/services'
+import type { ReactElement } from 'react'
 
 import { SettingsSectionProvider } from './provider'
 import { SettingsSectionAssistant } from './assistant'
@@ -14,7 +15,7 @@ import { SettingsSectionMusic } from './music'
 import { SettingsSectionVoice } from './voice'
 import { SettingsCategory } from '@aitube/clapper-services'
 
-const panels: Record<SettingsCategory, JSX.Element> = {
+const panels: Record<SettingsCategory, ReactElement> = {
   [SettingsCategory.NONE]: <></>,
   [SettingsCategory.PROVIDER]: <SettingsSectionProvider />,
   [SettingsCategory.ASSISTANT]: <SettingsSectionAssistant />,

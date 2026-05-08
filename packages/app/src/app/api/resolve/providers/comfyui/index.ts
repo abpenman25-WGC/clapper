@@ -15,6 +15,7 @@ import { decodeOutput } from '@/lib/utils/decodeOutput'
 import { ClapperComfyUiInputIds } from './types'
 import { createPromptBuilder } from './createPromptBuilder'
 import { ComfyUIWorkflowApiGraph } from './graph'
+import { getInputsFromComfyUiWorkflow } from './getInputsFromComfyUiWorkflow'
 
 export async function resolveSegment(
   request: ResolveRequest
@@ -48,24 +49,40 @@ export async function resolveSegment(
 
   if (
     request.segment.category === ClapSegmentCategory.IMAGE ||
+    request.segment.category === ClapSegmentCategory.STORYBOARD ||
     request.segment.category === ClapSegmentCategory.VIDEO
   ) {
     const workflowMap = {
       [ClapSegmentCategory.IMAGE]: request.settings.imageGenerationWorkflow,
+      [ClapSegmentCategory.STORYBOARD]: request.settings.imageGenerationWorkflow,
       [ClapSegmentCategory.VIDEO]: request.settings.videoGenerationWorkflow,
     }
     const clapWorkflow = workflowMap[request.segment.category]
 
+    const derivedWorkflowIO = getInputsFromComfyUiWorkflow(
+      clapWorkflow.data,
+      clapWorkflow.category
+    )
+
+    // Some built-in workflows use generic input fields, while Clapper's ComfyUI
+    // resolver expects mapped main inputs (prompt/output/etc). Always derive the
+    // mapping from the workflow graph to avoid silent incompatibilities.
+    const inputFields = derivedWorkflowIO.inputFields
+    const inputValues = {
+      ...derivedWorkflowIO.inputValues,
+      ...clapWorkflow.inputValues,
+    }
+
     if (
       clapWorkflow.category === ClapWorkflowCategory.IMAGE_GENERATION &&
-      !clapWorkflow.inputValues[ClapperComfyUiInputIds.PROMPT]
+      !inputValues[ClapperComfyUiInputIds.PROMPT]
     ) {
       throw new Error(
         `This workflow doesn't seem to have an input required by Clapper (e.g. a node with an input called "prompt")`
       )
     }
 
-    if (!clapWorkflow.inputValues[ClapperComfyUiInputIds.OUTPUT]) {
+    if (!inputValues[ClapperComfyUiInputIds.OUTPUT]) {
       throw new Error(
         `This workflow doesn't seem to have a node output required by Clapper (e.g. a 'Save Image' node)`
       )
@@ -75,9 +92,7 @@ export async function resolveSegment(
       ComfyUIWorkflowApiGraph.fromString(clapWorkflow.data)
     )
 
-    const { inputFields, inputValues } = clapWorkflow
-
-    inputFields.forEach((inputField) => {
+    inputFields.forEach((inputField: { id: string }) => {
       comfyApiWorkflowPromptBuilder.input(
         inputField.id,
         inputValues[inputField.id]
@@ -153,7 +168,7 @@ export async function resolveSegment(
 
     console.log(`assetPaths:`, assetPaths)
 
-    const assetPath = assetPaths.at(0)
+    const assetPath = assetPaths[0]
     if (!assetPath) {
       throw new Error(`failed to run the pipeline (no image)`)
     }

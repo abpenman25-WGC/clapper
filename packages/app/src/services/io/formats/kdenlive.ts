@@ -18,8 +18,8 @@ export async function generateKdenlive(): Promise<string> {
     timeline
 
   const segments: ExportableSegment[] = timelineSegments
-    .map((segment, i) => formatSegmentForExport(segment, i))
-    .filter(({ isExportableToFile }) => isExportableToFile)
+    .map((segment: any, i: number) => formatSegmentForExport(segment, i))
+    .filter(({ isExportableToFile }: { isExportableToFile: boolean }) => isExportableToFile)
 
   const videos: ExportableSegment[] = segments.filter(
     ({ segment }) => segment.category === ClapSegmentCategory.VIDEO

@@ -40,6 +40,7 @@ export function TopMenuFile() {
   //const isLoading = isTimelineLoading || filePickerIsLoading
 
   const openClapUrl = useIO((s) => s.openClapUrl)
+  const openScreenplay = useIO((s) => s.openScreenplay)
   const openScreenplayUrl = useIO((s) => s.openScreenplayUrl)
   const saveClap = useIO((s) => s.saveClap)
   const saveVideoFile = useIO((s) => s.saveVideoFile)
@@ -90,22 +91,17 @@ export function TopMenuFile() {
         alert(`Failed to read script file:\n${err}`)
         return
       }
-      // Update the Monaco editor and mark it for publish
-      const scriptEditor = useScriptEditor.getState()
-      const { textModel } = scriptEditor
-      if (textModel) {
-        textModel.setValue(scriptText)
-      }
-      useScriptEditor.setState({
-        current: scriptText,
-        lastPublished: '',
-      })
-      // Also update the clap metadata so it round-trips correctly on save
+      // Use the full screenplay import pipeline so scenes/segments/entities are rebuilt.
       const clap = useTimeline.getState().clap
-      if (clap) {
-        clap.meta.storyPrompt = scriptText
-      }
-      alert(`Script updated from "${file.name}". Review the changes, then save your project (Ctrl+S).`)
+      const currentTitle = `${clap?.meta?.title || ''}`.trim()
+      const fallbackTitle = file.name.replace(/\.[^/.]+$/, '')
+      const projectName = currentTitle || fallbackTitle
+
+      await openScreenplay(projectName, file.name, scriptText)
+
+      alert(
+        `Script updated from "${file.name}" using the full parser/import pipeline.`
+      )
     }
     input.click()
   }

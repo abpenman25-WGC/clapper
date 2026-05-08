@@ -1,7 +1,6 @@
 import {
   basedOnPreferredColorScheme,
   DefaultProperties,
-  DefaultPropertiesProperties,
 } from '@react-three/uikit'
 import React from 'react'
 import { Color } from 'three'
@@ -62,12 +61,10 @@ export const colors = basedOnPreferredColorScheme({
   },
 })
 
-export function Defaults(props: DefaultPropertiesProperties) {
+export function Defaults(props: React.ComponentProps<typeof DefaultProperties>) {
   return (
     <DefaultProperties
       scrollbarColor={colors.foreground}
-      scrollbarBorderRadius={4}
-      scrollbarOpacity={0.3}
       lineHeight="150%"
       borderColor={colors.border}
       color={colors.foreground}

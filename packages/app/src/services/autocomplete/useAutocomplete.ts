@@ -69,7 +69,7 @@ export const useAutocomplete = create<AutocompleteStore>((set, get) => ({
         range,
         timeline.segments,
         ClapSegmentCategory.IMAGE
-      ).filter((storyboardImage) =>
+      ).filter((storyboardImage: TimelineSegment) =>
         storyboardImage.assetUrl.startsWith('data:')
       )
 

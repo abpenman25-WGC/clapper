@@ -59,10 +59,12 @@ export async function callGradioApi<T>({
     gradioApiInfo,
   })
 
+  const token = apiKey as `hf_${string}` | undefined
+
   // console.log(`gradioEndpointInputs: `, gradioEndpointInputs)
 
   const app = await Client.connect(ownerAndId, {
-    hf_token: apiKey as any,
+    token,
   })
   // console.log(`app: `, app)
 

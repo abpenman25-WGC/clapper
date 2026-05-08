@@ -39,8 +39,8 @@ export async function generateEDL(): Promise<string> {
   let timelineInPoint = 0
 
   const exportableSegments: ExportableSegment[] = timelineSegments
-    .map((segment, index) => formatSegmentForExport(segment, index))
-    .filter(({ isExportableToFile }) => isExportableToFile)
+    .map((segment: any, index: number) => formatSegmentForExport(segment, index))
+    .filter(({ isExportableToFile }: { isExportableToFile: boolean }) => isExportableToFile)
 
   exportableSegments.forEach(
     (exportableSegment: ExportableSegment, index: number) => {

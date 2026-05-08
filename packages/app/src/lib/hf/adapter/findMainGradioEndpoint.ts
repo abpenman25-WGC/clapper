@@ -71,5 +71,5 @@ export function findMainGradioEndpoint({
     .sort((a, b) => {
       return b.score - a.score
     })
-    .at(0)
+    [0]
 }

@@ -847,11 +847,24 @@ export const useSettings = create<SettingsStore>()(
           ClapWorkflowCategory.ASSISTANT
         )
 
-        const imageGenerationWorkflow = parseWorkflow(
-          state.imageGenerationWorkflow ||
-            defaultSettings.imageGenerationWorkflow,
-          ClapWorkflowCategory.IMAGE_GENERATION
-        )
+        const imageGenerationWorkflow = (() => {
+          const parsed = parseWorkflow(
+            state.imageGenerationWorkflow ||
+              defaultSettings.imageGenerationWorkflow,
+            ClapWorkflowCategory.IMAGE_GENERATION
+          )
+          // If the persisted workflow has empty data (old default), fall back to
+          // the proper ComfyUI workflow that has real inputFields/inputValues
+          if (!parsed.data) {
+            if (state.comfyClapWorkflowForImage?.data) {
+              return state.comfyClapWorkflowForImage
+            }
+            if (defaultSettings.comfyClapWorkflowForImage?.data) {
+              return defaultSettings.comfyClapWorkflowForImage
+            }
+          }
+          return parsed
+        })()
 
         const imageGenerationTurboWorkflow = parseWorkflow(
           state.imageGenerationTurboWorkflow ||
@@ -933,6 +946,8 @@ export const useSettings = create<SettingsStore>()(
         )
 
         return {
+          ...defaultSettings,
+
           // why do we need those fallbacks? because some users will leave the fields empty,
           // eg. an empty model string.. basically we want to allow empty config that still works!
 

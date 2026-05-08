@@ -1,4 +1,4 @@
-import { HfInference, HfInferenceEndpoint } from '@huggingface/inference'
+import { HfInference } from '@huggingface/inference'
 
 import { decodeOutput } from '@/lib/utils/decodeOutput'
 import { ResolveRequest } from '@aitube/clapper-services'
@@ -40,7 +40,7 @@ export async function generateImage(request: ResolveRequest): Promise<string> {
     }
   }
 
-  const hf: HfInferenceEndpoint = new HfInference(apiKey)
+  const hf = new HfInference(apiKey)
 
   const blob: Blob = await hf.textToImage({
     model: request.settings.imageGenerationWorkflow.data,
@@ -62,6 +62,8 @@ export async function generateImage(request: ResolveRequest): Promise<string> {
        */
       // guidance_scale?: number;
     },
+  }, {
+    outputType: 'blob',
   })
 
   // console.log('output from Hugging Face Inference API:', blob)

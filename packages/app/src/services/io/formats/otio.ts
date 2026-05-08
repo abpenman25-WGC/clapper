@@ -69,8 +69,8 @@ export async function generateOTIO(): Promise<string> {
   }
 
   const exportableSegments: ExportableSegment[] = timelineSegments
-    .map((segment, index) => formatSegmentForExport(segment, index))
-    .filter(({ isExportableToFile }) => isExportableToFile)
+    .map((segment: any, index: number) => formatSegmentForExport(segment, index))
+    .filter(({ isExportableToFile }: { isExportableToFile: boolean }) => isExportableToFile)
 
   exportableSegments.forEach((exportableSegment: ExportableSegment) => {
     const { segment, filePath } = exportableSegment

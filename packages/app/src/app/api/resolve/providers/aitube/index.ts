@@ -59,10 +59,10 @@ export async function resolveSegment(
     })
 
     const storyboardImages = resolvedClap.segments.filter(
-      (s) => s.category === ClapSegmentCategory.IMAGE
+      (s: TimelineSegment) => s.category === ClapSegmentCategory.IMAGE
     )
 
-    const storyboardImage = storyboardImages.at(0)
+    const storyboardImage = storyboardImages[0]
 
     if (!storyboardImage) {
       throw new Error(`failed to generate a storyboard image`)
@@ -81,10 +81,10 @@ export async function resolveSegment(
     })
 
     const videos = resolvedClap.segments.filter(
-      (s) => s.category === ClapSegmentCategory.VIDEO
+      (s: TimelineSegment) => s.category === ClapSegmentCategory.VIDEO
     )
 
-    const video = videos.at(0)
+    const video = videos[0]
 
     if (!video) {
       throw new Error(`failed to generate a video`)
@@ -103,10 +103,10 @@ export async function resolveSegment(
     })
 
     const sounds = resolvedClap.segments.filter(
-      (s) => s.category === ClapSegmentCategory.SOUND
+      (s: TimelineSegment) => s.category === ClapSegmentCategory.SOUND
     )
 
-    const sound = sounds.at(0)
+    const sound = sounds[0]
 
     if (!sound) {
       throw new Error(`failed to generate a sound`)
@@ -125,10 +125,10 @@ export async function resolveSegment(
     })
 
     const musics = resolvedClap.segments.filter(
-      (s) => s.category === ClapSegmentCategory.MUSIC
+      (s: TimelineSegment) => s.category === ClapSegmentCategory.MUSIC
     )
 
-    const music = musics.at(0)
+    const music = musics[0]
 
     if (!music) {
       throw new Error(`failed to generate a music`)

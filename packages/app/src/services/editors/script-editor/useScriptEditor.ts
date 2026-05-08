@@ -4,6 +4,7 @@ import { create } from 'zustand'
 import { Monaco } from '@monaco-editor/react'
 import MonacoEditor from 'monaco-editor'
 import { ClapProject, ClapSegmentCategory } from '@aitube/clap'
+import { ClapEntity } from '@aitube/clap'
 import {
   TimelineStore,
   useTimeline,
@@ -25,11 +26,11 @@ export const useScriptEditor = create<ScriptEditorStore>((set, get) => ({
   setMonaco: (monaco?: Monaco) => {
     set({ monaco })
   },
-  setTextModel: (textModel?: MonacoEditor.editor.ITextModel) => {
+  setTextModel: (textModel?: any) => {
     set({ textModel })
   },
   setStandaloneCodeEditor: (
-    standaloneCodeEditor?: MonacoEditor.editor.IStandaloneCodeEditor
+    standaloneCodeEditor?: any
   ) => {
     set({ standaloneCodeEditor })
   },
@@ -142,9 +143,9 @@ export const useScriptEditor = create<ScriptEditorStore>((set, get) => ({
         scrollTop,
         scrollWidth,
         scrollRatio,
-        scrollX
+        scrollX,
       })
-       */
+      */
 
       if (useTimeline.getState().scrollX !== scrollX) {
         useTimeline.setState({ scrollX })
@@ -163,7 +164,7 @@ export const useScriptEditor = create<ScriptEditorStore>((set, get) => ({
 
     const mentionedSegments = lineNumberToMentionedSegments[line] || []
 
-    const firstMentionedSegment = mentionedSegments.at(0)
+    const firstMentionedSegment = mentionedSegments[0]
 
     if (typeof firstMentionedSegment?.startTimeInMs !== 'number') {
       return
@@ -184,8 +185,8 @@ export const useScriptEditor = create<ScriptEditorStore>((set, get) => ({
     }
 
     const characters = entities
-      .filter((entity) => entity.category === ClapSegmentCategory.CHARACTER)
-      .map((entity) => entity.triggerName)
+        .filter((entity: ClapEntity) => entity.category === ClapSegmentCategory.CHARACTER)
+        .map((entity: ClapEntity) => entity.triggerName)
 
     // any character
     applyClassNameToKeywords('entity entity-character', characters)
@@ -198,8 +199,8 @@ export const useScriptEditor = create<ScriptEditorStore>((set, get) => ({
     )
 
     const locations = entities
-      .filter((entity) => entity.category === ClapSegmentCategory.LOCATION)
-      .map((entity) => entity.triggerName)
+        .filter((entity: ClapEntity) => entity.category === ClapSegmentCategory.LOCATION)
+        .map((entity: ClapEntity) => entity.triggerName)
     // any location
     applyClassNameToKeywords('entity entity-location', locations)
 
@@ -221,7 +222,7 @@ export const useScriptEditor = create<ScriptEditorStore>((set, get) => ({
     }
 
     keywords.forEach((entityTriggerName: string): void => {
-      const matches: MonacoEditor.editor.FindMatch[] = textModel.findMatches(
+      const matches = textModel.findMatches(
         // searchString — The string used to search. If it is a regular expression, set isRegex to true.
         // searchString: string,
         entityTriggerName,
@@ -248,9 +249,9 @@ export const useScriptEditor = create<ScriptEditorStore>((set, get) => ({
 
         // limitResultCount — Limit the number of results
         // limitResultCount?: number
-      )
+      ) as any[]
 
-      matches.forEach((match: MonacoEditor.editor.FindMatch): void => {
+      matches.forEach((match: any): void => {
         standaloneCodeEditor.createDecorationsCollection([
           {
             range: match.range,

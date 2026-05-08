@@ -126,7 +126,9 @@ async function getRequestImage(request: ResolveRequest) {
         position: 'center',
       })
       .toBuffer()
-    imageBlob = new Blob([resizedImageBuffer], { type: 'image/jpeg' })
+    imageBlob = new Blob([Uint8Array.from(resizedImageBuffer)], {
+      type: 'image/jpeg',
+    })
   }
   return imageBlob
 }

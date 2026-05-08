@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { ClapSegmentCategory, ClapEntity, ClapSegment } from '@aitube/clap'
+import { useMemo } from 'react'
+import { ClapSegmentCategory } from '@aitube/clap'
 import { useTimeline } from '@aitube/timeline'
 import { useTheme } from '@/services/ui/useTheme'
-import { cn } from '@/lib/utils'
+import { useScriptEditor } from '@/services/editors'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import {
   Accordion,
@@ -15,66 +15,72 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
-interface PromptBookSection {
+type ParsedScriptPromptKind = 'image' | 'voice' | 'sound' | 'music' | 'camera' | 'other'
+
+type ParsedScriptPrompt = {
+  id: string
+  label: string
+  kind: ParsedScriptPromptKind
+  content: string
+}
+
+type PromptBookSegment = {
+  id: string
   category: ClapSegmentCategory
-  segments: ClapSegment[]
+  startTimeInMs: number
+  endTimeInMs: number
+  prompt?: string
+  entityId?: string
+  label?: string
+  assetUrl?: string
+}
+
+type PromptBookEntity = {
+  id: string
+  category: ClapSegmentCategory
+  label?: string
+  age?: number
+  gender?: string
+  description?: string
+  appearance?: string
+  imagePrompt?: string
+  audioPrompt?: string
 }
 
 export function PromptBookEditor() {
   const theme = useTheme()
-  const [sections, setSections] = useState<PromptBookSection[]>([])
-  const [entities, setEntities] = useState<ClapEntity[]>([])
-  const [projectInfo, setProjectInfo] = useState<{
-    title: string
-    description: string
-    width: number
-    height: number
-    frameRate: number
-  }>({
-    title: '',
-    description: '',
-    width: 0,
-    height: 0,
-    frameRate: 0,
-  })
 
-  useEffect(() => {
-    const timeline = useTimeline.getState()
-    const clap = timeline.getClap()
+  const title = useTimeline((s) => s.title)
+  const description = useTimeline((s) => s.description)
+  const synopsis = useTimeline((s) => s.synopsis)
+  const width = useTimeline((s) => s.width)
+  const height = useTimeline((s) => s.height)
+  const frameRate = useTimeline((s) => s.frameRate)
+  const bpm = useTimeline((s) => s.bpm)
+  const imagePrompt = useTimeline((s) => s.imagePrompt)
+  const storyPrompt = useTimeline((s) => s.storyPrompt)
+  const systemPrompt = useTimeline((s) => s.systemPrompt)
+  const currentScript = useScriptEditor((s) => s.current)
+  const allSegments = useTimeline((s) => s.segments) as PromptBookSegment[]
+  const allEntities = useTimeline((s) => s.entities) as PromptBookEntity[]
+  // subscribe to change counters so the view updates reactively even if array refs are mutated in place
+  const allSegmentsChanged = useTimeline((s) => s.allSegmentsChanged)
+  const entitiesChanged = useTimeline((s) => s.entitiesChanged)
 
-    if (clap) {
-      // Get project info
-      setProjectInfo({
-        title: clap.meta.title || 'Untitled Project',
-        description: clap.meta.description || '',
-        width: clap.meta.width,
-        height: clap.meta.height,
-        frameRate: clap.meta.frameRate,
-      })
-
-      // Get entities (characters, locations)
-      const allEntities = Object.values(clap.entities)
-      setEntities(allEntities)
-
-      // Group segments by category
-      const segmentsByCategory: Record<ClapSegmentCategory, ClapSegment[]> = {} as any
-
-      clap.segments.forEach((segment) => {
-        if (!segmentsByCategory[segment.category]) {
-          segmentsByCategory[segment.category] = []
-        }
-        segmentsByCategory[segment.category].push(segment)
-      })
-
-      // Convert to array and sort
-      const sectionsArray = Object.entries(segmentsByCategory).map(([category, segs]) => ({
-        category: category as ClapSegmentCategory,
-        segments: segs.sort((a, b) => a.startTimeInMs - b.startTimeInMs),
-      }))
-
-      setSections(sectionsArray)
-    }
-  }, [])
+  const sections = useMemo(() => {
+    const segmentsByCategory: Record<string, PromptBookSegment[]> = {}
+    allSegments.forEach((segment) => {
+      if (!segmentsByCategory[segment.category]) {
+        segmentsByCategory[segment.category] = []
+      }
+      segmentsByCategory[segment.category].push(segment)
+    })
+    return Object.entries(segmentsByCategory).map(([category, segs]) => ({
+      category: category as ClapSegmentCategory,
+      segments: [...segs].sort((a, b) => a.startTimeInMs - b.startTimeInMs),
+    }))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allSegments, allSegmentsChanged])
 
   const formatTime = (ms: number) => {
     const seconds = Math.floor(ms / 1000)
@@ -104,8 +110,197 @@ export function PromptBookEditor() {
     return icons[category] || '📝'
   }
 
-  const characters = entities.filter((e) => e.category === ClapSegmentCategory.CHARACTER)
-  const locations = entities.filter((e) => e.category === ClapSegmentCategory.LOCATION)
+  const characters = useMemo(
+    () => allEntities.filter((e) => e.category === ClapSegmentCategory.CHARACTER),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [allEntities, entitiesChanged]
+  )
+  const locations = useMemo(
+    () => allEntities.filter((e) => e.category === ClapSegmentCategory.LOCATION),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [allEntities, entitiesChanged]
+  )
+
+  const entityById = useMemo(() => {
+    return allEntities.reduce<Record<string, PromptBookEntity>>((acc, entity) => {
+      acc[entity.id] = entity
+      return acc
+    }, {})
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allEntities, entitiesChanged])
+
+  const promptFocusedCategories: ClapSegmentCategory[] = [
+    ClapSegmentCategory.IMAGE,
+    ClapSegmentCategory.VIDEO,
+    ClapSegmentCategory.DIALOGUE,
+    ClapSegmentCategory.SOUND,
+    ClapSegmentCategory.MUSIC,
+    ClapSegmentCategory.CAMERA,
+    ClapSegmentCategory.STYLE,
+    ClapSegmentCategory.LIGHTING,
+  ]
+
+  const segmentHasPromptData = ({
+    category,
+    prompt,
+    entityId,
+  }: {
+    category: ClapSegmentCategory
+    prompt?: string
+    entityId?: string
+  }) => {
+    const linkedEntity = entityId ? entityById[entityId] : undefined
+    const hasSegmentPrompt = !!prompt?.trim()
+
+    if (hasSegmentPrompt) {
+      return true
+    }
+
+    if (
+      category === ClapSegmentCategory.IMAGE ||
+      category === ClapSegmentCategory.VIDEO ||
+      category === ClapSegmentCategory.CAMERA ||
+      category === ClapSegmentCategory.STYLE ||
+      category === ClapSegmentCategory.LIGHTING
+    ) {
+      return !!linkedEntity?.imagePrompt?.trim()
+    }
+
+    if (
+      category === ClapSegmentCategory.DIALOGUE ||
+      category === ClapSegmentCategory.SOUND ||
+      category === ClapSegmentCategory.MUSIC
+    ) {
+      return !!linkedEntity?.audioPrompt?.trim()
+    }
+
+    return false
+  }
+
+  const promptSections = useMemo(() => {
+    return sections
+      .filter((section) => promptFocusedCategories.includes(section.category))
+      .map((section) => ({
+        ...section,
+        segments: section.segments.filter((segment) =>
+          segmentHasPromptData({
+            category: section.category,
+            prompt: segment.prompt,
+            entityId: segment.entityId,
+          })
+        ),
+      }))
+      .filter((section) => section.segments.length > 0)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sections, entityById])
+
+  const getPromptRoleLabel = (category: ClapSegmentCategory) => {
+    if (category === ClapSegmentCategory.IMAGE || category === ClapSegmentCategory.VIDEO) {
+      return 'Visual prompt'
+    }
+    if (category === ClapSegmentCategory.DIALOGUE) {
+      return 'Voice/Dialogue prompt'
+    }
+    if (category === ClapSegmentCategory.SOUND) {
+      return 'Sound prompt'
+    }
+    if (category === ClapSegmentCategory.MUSIC) {
+      return 'Music prompt'
+    }
+    if (category === ClapSegmentCategory.CAMERA) {
+      return 'Camera cue'
+    }
+    if (category === ClapSegmentCategory.LIGHTING) {
+      return 'Lighting cue'
+    }
+    if (category === ClapSegmentCategory.STYLE) {
+      return 'Style cue'
+    }
+    return 'Prompt'
+  }
+
+  const parsedScriptPrompts = useMemo<ParsedScriptPrompt[]>(() => {
+    const screenplaySource = (currentScript || storyPrompt || '').trim()
+
+    if (!screenplaySource) {
+      return []
+    }
+
+    const classifyPromptKind = (label: string, content: string): ParsedScriptPromptKind => {
+      const text = `${label} ${content}`.toLowerCase()
+
+      if (text.includes('camera')) {
+        return 'camera'
+      }
+      if (text.includes('speech') || text.includes('voice') || text.includes('tts')) {
+        return 'voice'
+      }
+      if (text.includes('audioldm') || text.includes('sound') || text.includes('sfx')) {
+        return 'sound'
+      }
+      if (text.includes('music')) {
+        return 'music'
+      }
+      if (
+        text.includes('image') ||
+        text.includes('visual') ||
+        text.includes('render') ||
+        /^prompt\s*\d+$/i.test(label.trim())
+      ) {
+        return 'image'
+      }
+
+      return 'other'
+    }
+
+    const parsed: ParsedScriptPrompt[] = []
+    const seen = new Set<string>()
+
+    // Matches patterns like:
+    // (Prompt 1 = """...""")
+    // (Bark (Suno) Speech Prompt = """...""")
+    const blockRegex = /\(?\s*([^=\n]+?)\s*=\s*"""([\s\S]*?)"""\s*\)?/g
+
+    let match: RegExpExecArray | null = null
+    while ((match = blockRegex.exec(screenplaySource)) !== null) {
+      const rawLabel = match[1]?.trim() || 'Prompt'
+      const rawContent = match[2]?.trim() || ''
+
+      if (!rawContent) {
+        continue
+      }
+
+      const normalizedContent = rawContent
+        .split('|')
+        .map((part) => part.trim())
+        .filter(Boolean)
+        .join('\n')
+
+      const dedupeKey = `${rawLabel}::${normalizedContent}`
+      if (seen.has(dedupeKey)) {
+        continue
+      }
+      seen.add(dedupeKey)
+
+      parsed.push({
+        id: `${rawLabel}-${parsed.length}`,
+        label: rawLabel,
+        kind: classifyPromptKind(rawLabel, normalizedContent),
+        content: normalizedContent,
+      })
+    }
+
+    return parsed
+  }, [currentScript, storyPrompt])
+
+  const promptKindBadge = (kind: ParsedScriptPromptKind) => {
+    if (kind === 'image') return 'IMAGE'
+    if (kind === 'voice') return 'VOICE'
+    if (kind === 'sound') return 'SOUND'
+    if (kind === 'music') return 'MUSIC'
+    if (kind === 'camera') return 'CAMERA'
+    return 'OTHER'
+  }
 
   return (
     <div
@@ -138,24 +333,88 @@ export function PromptBookEditor() {
             </CardHeader>
             <CardContent className="space-y-2">
               <div>
-                <span className="font-semibold">Title:</span> {projectInfo.title}
+                <span className="font-semibold">Title:</span> {title || 'Untitled Project'}
               </div>
-              {projectInfo.description && (
+              {description && (
                 <div>
-                  <span className="font-semibold">Description:</span> {projectInfo.description}
+                  <span className="font-semibold">Description:</span> {description}
+                </div>
+              )}
+              {synopsis && (
+                <div>
+                  <span className="font-semibold">Synopsis:</span> {synopsis}
                 </div>
               )}
               <div className="flex gap-4 text-sm">
                 <span>
-                  <span className="font-semibold">Resolution:</span> {projectInfo.width}x
-                  {projectInfo.height}
+                  <span className="font-semibold">Resolution:</span> {width}x{height}
                 </span>
                 <span>
-                  <span className="font-semibold">Frame Rate:</span> {projectInfo.frameRate} fps
+                  <span className="font-semibold">Frame Rate:</span> {frameRate} fps
+                </span>
+                <span>
+                  <span className="font-semibold">BPM:</span> {Math.round(bpm * 100) / 100}
                 </span>
               </div>
             </CardContent>
           </Card>
+
+          {/* Global Prompt Settings */}
+          {(imagePrompt || systemPrompt || storyPrompt) && (
+            <Card>
+              <CardHeader>
+                <CardTitle>🧠 Global Generation Prompts</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {imagePrompt && (
+                  <div>
+                    <p className="text-sm font-semibold">Global Image Prompt</p>
+                    <p className="whitespace-pre-wrap text-sm opacity-90">{imagePrompt}</p>
+                  </div>
+                )}
+                {systemPrompt && (
+                  <div>
+                    <p className="text-sm font-semibold">System Prompt</p>
+                    <p className="whitespace-pre-wrap text-sm opacity-90">{systemPrompt}</p>
+                  </div>
+                )}
+                {storyPrompt && (
+                  <p className="text-xs opacity-65">
+                    Story prompt detected and kept in project metadata; Prompt Book now focuses on
+                    per-cue image/voice/sound/music/camera prompts.
+                  </p>
+                )}
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Script-embedded prompts */}
+          {parsedScriptPrompts.length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle>🧾 Extracted Script Prompt Blocks</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Accordion type="multiple" className="w-full">
+                  {parsedScriptPrompts.map((item, index) => (
+                    <AccordionItem key={item.id} value={`script-prompt-${index}`}>
+                      <AccordionTrigger>
+                        <div className="flex items-center gap-2">
+                          <Badge variant="outline">{promptKindBadge(item.kind)}</Badge>
+                          <span className="text-sm font-semibold">{item.label}</span>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="rounded border p-3 text-sm">
+                          <p className="whitespace-pre-wrap opacity-90">{item.content}</p>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Characters Section */}
           {characters.length > 0 && (
@@ -197,6 +456,105 @@ export function PromptBookEditor() {
                     </div>
                   ))}
                 </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Prompt-centric cue extraction */}
+          {promptSections.length > 0 && (
+            <Card>
+              <CardHeader>
+                <CardTitle>🎛️ Image, Voice, Sound, Music & Camera Prompts</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Accordion type="multiple" className="w-full">
+                  {promptSections.map((section, index) => (
+                    <AccordionItem key={`prompt-${index}`} value={`prompt-section-${index}`}>
+                      <AccordionTrigger>
+                        <div className="flex items-center gap-2">
+                          <span>{getCategoryIcon(section.category)}</span>
+                          <span className="font-semibold">{section.category}</span>
+                          <Badge variant="outline">{section.segments.length} cues</Badge>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="space-y-3 pt-2">
+                          {section.segments.map((segment) => {
+                            const linkedEntity = segment.entityId ? entityById[segment.entityId] : undefined
+                            return (
+                              <div
+                                key={`prompt-cue-${segment.id}`}
+                                className="rounded border-l-4 bg-opacity-10 p-3"
+                                style={{
+                                  borderLeftColor:
+                                    theme.defaultPrimaryColor ||
+                                    '#3b82f6',
+                                }}
+                              >
+                                <div className="mb-2 flex items-center justify-between">
+                                  <span className="text-sm font-semibold">
+                                    {formatTime(segment.startTimeInMs)} - {formatTime(segment.endTimeInMs)}
+                                  </span>
+                                  <div className="flex items-center gap-2">
+                                    {segment.label && (
+                                      <Badge variant="secondary" className="text-xs">
+                                        {segment.label}
+                                      </Badge>
+                                    )}
+                                    {linkedEntity?.label && (
+                                      <Badge variant="outline" className="text-xs">
+                                        {linkedEntity.label}
+                                      </Badge>
+                                    )}
+                                  </div>
+                                </div>
+
+                                {segment.prompt && (
+                                  <div className="mb-2">
+                                    <p className="text-xs font-semibold opacity-70">
+                                      {getPromptRoleLabel(section.category)}
+                                    </p>
+                                    <p className="whitespace-pre-wrap text-sm">{segment.prompt}</p>
+                                  </div>
+                                )}
+
+                                {(section.category === ClapSegmentCategory.IMAGE ||
+                                  section.category === ClapSegmentCategory.VIDEO ||
+                                  section.category === ClapSegmentCategory.CAMERA ||
+                                  section.category === ClapSegmentCategory.STYLE) &&
+                                  linkedEntity?.imagePrompt && (
+                                    <div className="mb-2">
+                                      <p className="text-xs font-semibold opacity-70">
+                                        Linked Entity Visual Prompt
+                                      </p>
+                                      <p className="whitespace-pre-wrap text-sm opacity-90">
+                                        {linkedEntity.imagePrompt}
+                                      </p>
+                                    </div>
+                                  )}
+
+                                {(section.category === ClapSegmentCategory.DIALOGUE ||
+                                  section.category === ClapSegmentCategory.SOUND ||
+                                  section.category === ClapSegmentCategory.MUSIC) &&
+                                  linkedEntity?.audioPrompt && (
+                                    <div className="mb-2">
+                                      <p className="text-xs font-semibold opacity-70">
+                                        Linked Entity Voice Prompt
+                                      </p>
+                                      <p className="whitespace-pre-wrap text-sm opacity-90">
+                                        {linkedEntity.audioPrompt}
+                                      </p>
+                                    </div>
+                                  )}
+
+                              </div>
+                            )
+                          })}
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
               </CardContent>
             </Card>
           )}
@@ -260,7 +618,6 @@ export function PromptBookEditor() {
                               className="rounded border-l-4 bg-opacity-10 p-3"
                               style={{
                                 borderLeftColor:
-                                  theme.editorAccentColor ||
                                   theme.defaultPrimaryColor ||
                                   '#3b82f6',
                               }}
@@ -298,7 +655,10 @@ export function PromptBookEditor() {
           )}
 
           {/* Empty State */}
-          {sections.length === 0 && characters.length === 0 && locations.length === 0 && (
+          {sections.length === 0 &&
+            characters.length === 0 &&
+            locations.length === 0 &&
+            parsedScriptPrompts.length === 0 && (
             <Card>
               <CardContent className="py-12 text-center">
                 <p className="text-lg opacity-60">

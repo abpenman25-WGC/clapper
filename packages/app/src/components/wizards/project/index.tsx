@@ -4,6 +4,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 import { useUI } from '@/services'
 import { ProjectCreationWizardStep } from '@aitube/clapper-services'
+import type { ReactElement } from 'react'
 
 export function StepChooseCategory() {
   return (
@@ -21,7 +22,7 @@ export function StepCreateFromPrompt() {
   )
 }
 
-const stepPanels: Record<ProjectCreationWizardStep, JSX.Element> = {
+const stepPanels: Record<ProjectCreationWizardStep, ReactElement> = {
   [ProjectCreationWizardStep.NONE]: <></>,
   [ProjectCreationWizardStep.CHOOSE_CATEGORY]: <StepChooseCategory />,
   [ProjectCreationWizardStep.CREATE_FROM_PROMPT]: <StepCreateFromPrompt />,

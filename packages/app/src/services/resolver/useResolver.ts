@@ -32,6 +32,7 @@ import {
   getVideoPrompt,
   getCharacterReferencePrompt,
 } from '@aitube/engine'
+import { parseScriptToClap } from '@aitube/broadway'
 import {
   RendererState,
   RenderingBufferSizes,
@@ -51,6 +52,153 @@ import { getDefaultResolveRequestPrompts } from './getDefaultResolveRequestPromp
 import { resolve } from '../api/resolve'
 import { useTasks } from '@/components/tasks/useTasks'
 import { getSegmentWorkflowProviderAndEngine } from '../editors/workflow-editor/getSegmentWorkflowProviderAndEngine'
+import { useScriptEditor } from '../editors'
+
+type EmbeddedPromptKind = 'image' | 'voice' | 'sound' | 'music' | 'camera' | 'other'
+
+type EmbeddedPromptBlock = {
+  label: string
+  content: string
+  kind: EmbeddedPromptKind
+  explicitIndex?: number
+}
+
+// Fail-safe for stalled sessions: only force a given segment once per app lifetime.
+const autoRequeueOnceBySegmentId = new Set<string>()
+let autoBootstrapFromStoryInProgress = false
+let lastAutoBootstrapStorySignature = ''
+
+function classifyEmbeddedPromptKind(label: string, content: string): EmbeddedPromptKind {
+  const text = `${label} ${content}`.toLowerCase()
+
+  if (text.includes('camera')) {
+    return 'camera'
+  }
+  if (text.includes('speech') || text.includes('voice') || text.includes('tts')) {
+    return 'voice'
+  }
+  if (text.includes('audioldm') || text.includes('sound') || text.includes('sfx')) {
+    return 'sound'
+  }
+  if (text.includes('music')) {
+    return 'music'
+  }
+  if (
+    text.includes('image') ||
+    text.includes('visual') ||
+    text.includes('render') ||
+    /^prompt\s*\d+$/i.test(label.trim())
+  ) {
+    return 'image'
+  }
+
+  return 'other'
+}
+
+function parseEmbeddedPromptBlocks(screenplay: string): EmbeddedPromptBlock[] {
+  if (!screenplay?.trim()) {
+    return []
+  }
+
+  const blockRegex = /\(?\s*([^=\n]+?)\s*=\s*"""([\s\S]*?)"""\s*\)?/g
+  const blocks: EmbeddedPromptBlock[] = []
+  const seen = new Set<string>()
+
+  let match: RegExpExecArray | null = null
+  while ((match = blockRegex.exec(screenplay)) !== null) {
+    const label = `${match[1] || ''}`.trim() || 'Prompt'
+    const content = `${match[2] || ''}`
+      .trim()
+      .split('|')
+      .map((part) => part.trim())
+      .filter(Boolean)
+      .join('\n')
+
+    if (!content) {
+      continue
+    }
+
+    const dedupeKey = `${label}::${content}`
+    if (seen.has(dedupeKey)) {
+      continue
+    }
+    seen.add(dedupeKey)
+
+    const indexMatch = label.match(/\bprompt\s*(\d+)\b/i)
+    const explicitIndex = indexMatch?.[1] ? Number(indexMatch[1]) : undefined
+
+    blocks.push({
+      label,
+      content,
+      kind: classifyEmbeddedPromptKind(label, content),
+      explicitIndex: Number.isFinite(explicitIndex) ? explicitIndex : undefined,
+    })
+  }
+
+  return blocks
+}
+
+function getPromptKindForSegmentCategory(category: ClapSegmentCategory): EmbeddedPromptKind | undefined {
+  if (
+    category === ClapSegmentCategory.IMAGE ||
+    category === ClapSegmentCategory.STORYBOARD ||
+    category === ClapSegmentCategory.VIDEO ||
+    category === ClapSegmentCategory.CAMERA ||
+    category === ClapSegmentCategory.STYLE ||
+    category === ClapSegmentCategory.LIGHTING
+  ) {
+    return 'image'
+  }
+  if (category === ClapSegmentCategory.DIALOGUE) {
+    return 'voice'
+  }
+  if (category === ClapSegmentCategory.SOUND) {
+    return 'sound'
+  }
+  if (category === ClapSegmentCategory.MUSIC) {
+    return 'music'
+  }
+
+  return undefined
+}
+
+function getMappedEmbeddedPromptForSegment({
+  targetKind,
+  segment,
+  segments,
+  blocks,
+}: {
+  targetKind: EmbeddedPromptKind
+  segment: TimelineSegment
+  segments: TimelineSegment[]
+  blocks: EmbeddedPromptBlock[]
+}): string {
+  const candidates = blocks.filter((b) => b.kind === targetKind)
+  if (!candidates.length) {
+    return ''
+  }
+
+  const relevantCategorySegments = segments
+    .filter((s) => getPromptKindForSegmentCategory(s.category) === targetKind)
+    .sort((a, b) => {
+      if (a.startTimeInMs !== b.startTimeInMs) {
+        return a.startTimeInMs - b.startTimeInMs
+      }
+      return a.id.localeCompare(b.id)
+    })
+
+  const ordinal = Math.max(
+    1,
+    relevantCategorySegments.findIndex((s) => s.id === segment.id) + 1
+  )
+
+  const explicitMatch = candidates.find((c) => c.explicitIndex === ordinal)
+  if (explicitMatch?.content) {
+    return explicitMatch.content
+  }
+
+  return candidates[Math.min(ordinal - 1, candidates.length - 1)]?.content || ''
+}
 
 export const useResolver = create<ResolverStore>((set, get) => ({
   ...getDefaultResolverState(),
@@ -83,6 +231,7 @@ export const useResolver = create<ResolverStore>((set, get) => ({
    */
   runLoop: async (): Promise<void> => {
     const renderer: RendererState = useRenderer.getState()
+    const settings = useSettings.getState()
     const timeline: TimelineStore = useTimeline.getState()
 
     // note: we read the rendering strategies from the renderer, not from the settings
@@ -96,6 +245,29 @@ export const useResolver = create<ResolverStore>((set, get) => ({
       voiceRenderingStrategy,
       musicRenderingStrategy,
     }: RenderingStrategies = renderer
+
+    // If the renderer still reports ON_DEMAND while settings were changed,
+    // use the persisted settings values so auto-dispatch doesn't get stuck.
+    const effectiveImageRenderingStrategy =
+      imageRenderingStrategy === RenderingStrategy.ON_DEMAND
+        ? settings.imageRenderingStrategy
+        : imageRenderingStrategy
+    const effectiveVideoRenderingStrategy =
+      videoRenderingStrategy === RenderingStrategy.ON_DEMAND
+        ? settings.videoRenderingStrategy
+        : videoRenderingStrategy
+    const effectiveSoundRenderingStrategy =
+      soundRenderingStrategy === RenderingStrategy.ON_DEMAND
+        ? settings.soundRenderingStrategy
+        : soundRenderingStrategy
+    const effectiveVoiceRenderingStrategy =
+      voiceRenderingStrategy === RenderingStrategy.ON_DEMAND
+        ? settings.voiceRenderingStrategy
+        : voiceRenderingStrategy
+    const effectiveMusicRenderingStrategy =
+      musicRenderingStrategy === RenderingStrategy.ON_DEMAND
+        ? settings.musicRenderingStrategy
+        : musicRenderingStrategy
 
     // Tells how many segments should be renderer in advanced during playback, for each segment category
     const {
@@ -128,6 +300,41 @@ export const useResolver = create<ResolverStore>((set, get) => ({
       segments: allSegments,
       resolveSegment,
     } = timeline
+
+    const storySource =
+      useScriptEditor.getState().current || timeline.storyPrompt || ''
+    const trimmedStory = `${storySource}`.trim()
+    const storySignature = trimmedStory.slice(0, 512)
+
+    // If the user loaded/pasted a screenplay in Story but the timeline is still empty,
+    // bootstrap segments once from Story so auto-render strategies can actually dispatch.
+    if (
+      !autoBootstrapFromStoryInProgress &&
+      !allSegments.length &&
+      trimmedStory.length > 0 &&
+      storySignature !== lastAutoBootstrapStorySignature
+    ) {
+      autoBootstrapFromStoryInProgress = true
+      lastAutoBootstrapStorySignature = storySignature
+      try {
+        console.log(
+          '[useResolver] Bootstrapping timeline from Story text because no segments are loaded'
+        )
+        const clap = await parseScriptToClap(trimmedStory)
+        clap.meta.storyPrompt = trimmedStory
+        await timeline.setClap(clap)
+        useScriptEditor.getState().loadDraftFromClap(clap)
+
+        autoBootstrapFromStoryInProgress = false
+        return runLoopAgain(0)
+      } catch (err) {
+        autoBootstrapFromStoryInProgress = false
+        console.error(
+          '[useResolver] Failed to bootstrap timeline from Story text:',
+          err
+        )
+      }
+    }
 
     // ------------------------------------------------------------------------------------------------
     //
@@ -179,25 +386,133 @@ export const useResolver = create<ResolverStore>((set, get) => ({
 
     const segmentsToRender: TimelineSegment[] = []
 
+    const isCategoryAutoEnabled = (category: ClapSegmentCategory): boolean => {
+      if (
+        category === ClapSegmentCategory.IMAGE ||
+        category === ClapSegmentCategory.STORYBOARD
+      ) {
+        return effectiveImageRenderingStrategy !== RenderingStrategy.ON_DEMAND
+      }
+      if (category === ClapSegmentCategory.VIDEO) {
+        return effectiveVideoRenderingStrategy !== RenderingStrategy.ON_DEMAND
+      }
+      if (category === ClapSegmentCategory.DIALOGUE) {
+        return effectiveVoiceRenderingStrategy !== RenderingStrategy.ON_DEMAND
+      }
+      if (category === ClapSegmentCategory.SOUND) {
+        return effectiveSoundRenderingStrategy !== RenderingStrategy.ON_DEMAND
+      }
+      if (category === ClapSegmentCategory.MUSIC) {
+        return effectiveMusicRenderingStrategy !== RenderingStrategy.ON_DEMAND
+      }
+      return false
+    }
+
+    const hasAnyToGenerateForEnabledCategories = segments.some(
+      (s) =>
+        isCategoryAutoEnabled(s.category) &&
+        s.status === ClapSegmentStatus.TO_GENERATE
+    )
+
+    // If Render-all is enabled and nothing is queued for generation,
+    // requeue completed segments once so auto-render can recover.
+    if (!isPaused && !hasAnyToGenerateForEnabledCategories) {
+      for (const s of segments) {
+        if (
+          (s.category === ClapSegmentCategory.IMAGE ||
+            s.category === ClapSegmentCategory.STORYBOARD) &&
+          effectiveImageRenderingStrategy === RenderingStrategy.ON_SCREEN_THEN_ALL &&
+          s.status === ClapSegmentStatus.COMPLETED &&
+          !autoRequeueOnceBySegmentId.has(s.id)
+        ) {
+          autoRequeueOnceBySegmentId.add(s.id)
+          Object.assign(s, { status: ClapSegmentStatus.TO_GENERATE })
+          timeline.trackSilentChangeInSegment(s.id)
+          continue
+        }
+
+        if (
+          s.category === ClapSegmentCategory.VIDEO &&
+          effectiveVideoRenderingStrategy === RenderingStrategy.ON_SCREEN_THEN_ALL &&
+          s.status === ClapSegmentStatus.COMPLETED &&
+          !autoRequeueOnceBySegmentId.has(s.id)
+        ) {
+          autoRequeueOnceBySegmentId.add(s.id)
+          Object.assign(s, { status: ClapSegmentStatus.TO_GENERATE })
+          timeline.trackSilentChangeInSegment(s.id)
+          continue
+        }
+
+        if (
+          s.category === ClapSegmentCategory.DIALOGUE &&
+          effectiveVoiceRenderingStrategy === RenderingStrategy.ON_SCREEN_THEN_ALL &&
+          s.status === ClapSegmentStatus.COMPLETED &&
+          !autoRequeueOnceBySegmentId.has(s.id)
+        ) {
+          autoRequeueOnceBySegmentId.add(s.id)
+          Object.assign(s, { status: ClapSegmentStatus.TO_GENERATE })
+          timeline.trackSilentChangeInSegment(s.id)
+          continue
+        }
+
+        if (
+          s.category === ClapSegmentCategory.SOUND &&
+          effectiveSoundRenderingStrategy === RenderingStrategy.ON_SCREEN_THEN_ALL &&
+          s.status === ClapSegmentStatus.COMPLETED &&
+          !autoRequeueOnceBySegmentId.has(s.id)
+        ) {
+          autoRequeueOnceBySegmentId.add(s.id)
+          Object.assign(s, { status: ClapSegmentStatus.TO_GENERATE })
+          timeline.trackSilentChangeInSegment(s.id)
+          continue
+        }
+
+        if (
+          s.category === ClapSegmentCategory.MUSIC &&
+          effectiveMusicRenderingStrategy === RenderingStrategy.ON_SCREEN_THEN_ALL &&
+          s.status === ClapSegmentStatus.COMPLETED &&
+          !autoRequeueOnceBySegmentId.has(s.id)
+        ) {
+          autoRequeueOnceBySegmentId.add(s.id)
+          Object.assign(s, { status: ClapSegmentStatus.TO_GENERATE })
+          timeline.trackSilentChangeInSegment(s.id)
+        }
+      }
+    }
+
     // Reset any ERROR or stale IN_PROGRESS segments back to TO_GENERATE so they will be retried
     // (e.g. after a user fixes their settings / switches provider, or after a crashed request)
     // Respect per-category rendering strategy: don't reset if that category is ON_DEMAND
     for (const s of segments) {
-      if (s.status === ClapSegmentStatus.ERROR || s.status === ClapSegmentStatus.IN_PROGRESS) {
+      if (
+        s.status === ClapSegmentStatus.ERROR ||
+        s.status === ClapSegmentStatus.IN_PROGRESS ||
+        s.status === ClapSegmentStatus.TO_INTERPOLATE ||
+        s.status === ClapSegmentStatus.TO_UPSCALE
+      ) {
         // Check if the rendering strategy for this category is ON_DEMAND (manual/click only)
         let strategyForCategory: RenderingStrategy = RenderingStrategy.ON_DEMAND
         if (s.category === ClapSegmentCategory.VIDEO) {
-          strategyForCategory = videoRenderingStrategy
-        } else if (s.category === ClapSegmentCategory.IMAGE) {
-          strategyForCategory = imageRenderingStrategy
+          strategyForCategory = effectiveVideoRenderingStrategy
+        } else if (
+          s.category === ClapSegmentCategory.IMAGE ||
+          s.category === ClapSegmentCategory.STORYBOARD
+        ) {
+          strategyForCategory = effectiveImageRenderingStrategy
         } else if (s.category === ClapSegmentCategory.VOICE || s.category === ClapSegmentCategory.DIALOGUE) {
-          strategyForCategory = voiceRenderingStrategy
+          strategyForCategory = effectiveVoiceRenderingStrategy
         } else if (s.category === ClapSegmentCategory.SOUND) {
-          strategyForCategory = soundRenderingStrategy
+          strategyForCategory = effectiveSoundRenderingStrategy
         } else if (s.category === ClapSegmentCategory.MUSIC) {
-          strategyForCategory = musicRenderingStrategy
+          strategyForCategory = effectiveMusicRenderingStrategy
         }
         if (strategyForCategory === RenderingStrategy.ON_DEMAND) {
+          // If user switched to on-demand mode, keep things clickable but stop
+          // counting stale in-progress states as actively running background jobs.
+          if (s.status === ClapSegmentStatus.IN_PROGRESS) {
+            Object.assign(s, { status: ClapSegmentStatus.TO_GENERATE })
+            timeline.trackSilentChangeInSegment(s.id)
+          }
           continue
         }
         Object.assign(s, { status: ClapSegmentStatus.TO_GENERATE })
@@ -209,6 +524,12 @@ export const useResolver = create<ResolverStore>((set, get) => ({
     // the dynamic generation logic in a clear way, so let's keep it for now
     for (const s of segments) {
       if (s.category === ClapSegmentCategory.VIDEO) {
+        // if a segment is COMPLETED but has no asset, reset it so it gets re-generated
+        if (s.status === ClapSegmentStatus.COMPLETED && !s.assetUrl) {
+          Object.assign(s, { status: ClapSegmentStatus.TO_GENERATE })
+          timeline.trackSilentChangeInSegment(s.id)
+        }
+
         if (s.status !== ClapSegmentStatus.TO_GENERATE) {
           // this is important: we found an in-progress task!
           // it is thus vital to deduct it from the parallelism quota,
@@ -226,20 +547,20 @@ export const useResolver = create<ResolverStore>((set, get) => ({
           continue
         }
 
-        if (videoRenderingStrategy === RenderingStrategy.ON_DEMAND) {
+        if (effectiveVideoRenderingStrategy === RenderingStrategy.ON_DEMAND) {
           continue
         }
 
         if (
           s.visibility === SegmentVisibility.HIDDEN &&
-          videoRenderingStrategy !== RenderingStrategy.ON_SCREEN_THEN_ALL &&
-          videoRenderingStrategy !==
+          effectiveVideoRenderingStrategy !== RenderingStrategy.ON_SCREEN_THEN_ALL &&
+          effectiveVideoRenderingStrategy !==
             RenderingStrategy.BUFFERED_PLAYBACK_STREAMING
         ) {
           continue
         } else if (
           s.visibility === SegmentVisibility.BUFFERED &&
-          videoRenderingStrategy !==
+          effectiveVideoRenderingStrategy !==
             RenderingStrategy.ON_SCREEN_THEN_SURROUNDING
         ) {
           continue
@@ -252,7 +573,10 @@ export const useResolver = create<ResolverStore>((set, get) => ({
           )
           segmentsToRender.push(s)
         }
-      } else if (s.category === ClapSegmentCategory.IMAGE) {
+      } else if (
+        s.category === ClapSegmentCategory.IMAGE ||
+        s.category === ClapSegmentCategory.STORYBOARD
+      ) {
         // console.log(`useResolver.runLoop(): found a storyboard segment`)
 
         // if a segment is COMPLETED but has no asset, reset it so it gets re-generated
@@ -282,20 +606,20 @@ export const useResolver = create<ResolverStore>((set, get) => ({
           continue
         }
 
-        if (imageRenderingStrategy === RenderingStrategy.ON_DEMAND) {
+        if (effectiveImageRenderingStrategy === RenderingStrategy.ON_DEMAND) {
           continue
         }
 
         if (
           s.visibility === SegmentVisibility.HIDDEN &&
-          imageRenderingStrategy !== RenderingStrategy.ON_SCREEN_THEN_ALL &&
-          imageRenderingStrategy !==
+          effectiveImageRenderingStrategy !== RenderingStrategy.ON_SCREEN_THEN_ALL &&
+          effectiveImageRenderingStrategy !==
             RenderingStrategy.BUFFERED_PLAYBACK_STREAMING
         ) {
           continue
         } else if (
           s.visibility === SegmentVisibility.BUFFERED &&
-          imageRenderingStrategy !==
+          effectiveImageRenderingStrategy !==
             RenderingStrategy.ON_SCREEN_THEN_SURROUNDING
         ) {
           continue
@@ -312,6 +636,12 @@ export const useResolver = create<ResolverStore>((set, get) => ({
           segmentsToRender.push(s)
         }
       } else if (s.category === ClapSegmentCategory.DIALOGUE) {
+        // if a segment is COMPLETED but has no asset, reset it so it gets re-generated
+        if (s.status === ClapSegmentStatus.COMPLETED && !s.assetUrl) {
+          Object.assign(s, { status: ClapSegmentStatus.TO_GENERATE })
+          timeline.trackSilentChangeInSegment(s.id)
+        }
+
         if (s.status !== ClapSegmentStatus.TO_GENERATE) {
           // this is important: we found an in-progress task!
           // it is thus vital to deduct it from the parallelism quota,
@@ -330,20 +660,20 @@ export const useResolver = create<ResolverStore>((set, get) => ({
           continue
         }
 
-        if (voiceRenderingStrategy === RenderingStrategy.ON_DEMAND) {
+        if (effectiveVoiceRenderingStrategy === RenderingStrategy.ON_DEMAND) {
           continue
         }
 
         if (
           s.visibility === SegmentVisibility.HIDDEN &&
-          voiceRenderingStrategy !== RenderingStrategy.ON_SCREEN_THEN_ALL &&
-          voiceRenderingStrategy !==
+          effectiveVoiceRenderingStrategy !== RenderingStrategy.ON_SCREEN_THEN_ALL &&
+          effectiveVoiceRenderingStrategy !==
             RenderingStrategy.BUFFERED_PLAYBACK_STREAMING
         ) {
           continue
         } else if (
           s.visibility === SegmentVisibility.BUFFERED &&
-          voiceRenderingStrategy !==
+          effectiveVoiceRenderingStrategy !==
             RenderingStrategy.ON_SCREEN_THEN_SURROUNDING
         ) {
           continue
@@ -357,6 +687,12 @@ export const useResolver = create<ResolverStore>((set, get) => ({
           segmentsToRender.push(s)
         }
       } else if (s.category === ClapSegmentCategory.SOUND) {
+        // if a segment is COMPLETED but has no asset, reset it so it gets re-generated
+        if (s.status === ClapSegmentStatus.COMPLETED && !s.assetUrl) {
+          Object.assign(s, { status: ClapSegmentStatus.TO_GENERATE })
+          timeline.trackSilentChangeInSegment(s.id)
+        }
+
         if (s.status !== ClapSegmentStatus.TO_GENERATE) {
           // this is important: we found an in-progress task!
           // it is thus vital to deduct it from the parallelism quota,
@@ -375,20 +711,20 @@ export const useResolver = create<ResolverStore>((set, get) => ({
           continue
         }
 
-        if (soundRenderingStrategy === RenderingStrategy.ON_DEMAND) {
+        if (effectiveSoundRenderingStrategy === RenderingStrategy.ON_DEMAND) {
           continue
         }
 
         if (
           s.visibility === SegmentVisibility.HIDDEN &&
-          soundRenderingStrategy !== RenderingStrategy.ON_SCREEN_THEN_ALL &&
-          soundRenderingStrategy !==
+          effectiveSoundRenderingStrategy !== RenderingStrategy.ON_SCREEN_THEN_ALL &&
+          effectiveSoundRenderingStrategy !==
             RenderingStrategy.BUFFERED_PLAYBACK_STREAMING
         ) {
           continue
         } else if (
           s.visibility === SegmentVisibility.BUFFERED &&
-          soundRenderingStrategy !==
+          effectiveSoundRenderingStrategy !==
             RenderingStrategy.ON_SCREEN_THEN_SURROUNDING
         ) {
           continue
@@ -402,6 +738,12 @@ export const useResolver = create<ResolverStore>((set, get) => ({
           segmentsToRender.push(s)
         }
       } else if (s.category === ClapSegmentCategory.MUSIC) {
+        // if a segment is COMPLETED but has no asset, reset it so it gets re-generated
+        if (s.status === ClapSegmentStatus.COMPLETED && !s.assetUrl) {
+          Object.assign(s, { status: ClapSegmentStatus.TO_GENERATE })
+          timeline.trackSilentChangeInSegment(s.id)
+        }
+
         if (s.status !== ClapSegmentStatus.TO_GENERATE) {
           // this is important: we found an in-progress task!
           // it is thus vital to deduct it from the parallelism quota,
@@ -420,20 +762,20 @@ export const useResolver = create<ResolverStore>((set, get) => ({
           continue
         }
 
-        if (musicRenderingStrategy === RenderingStrategy.ON_DEMAND) {
+        if (effectiveMusicRenderingStrategy === RenderingStrategy.ON_DEMAND) {
           continue
         }
 
         if (
           s.visibility === SegmentVisibility.HIDDEN &&
-          musicRenderingStrategy !== RenderingStrategy.ON_SCREEN_THEN_ALL &&
-          musicRenderingStrategy !==
+          effectiveMusicRenderingStrategy !== RenderingStrategy.ON_SCREEN_THEN_ALL &&
+          effectiveMusicRenderingStrategy !==
             RenderingStrategy.BUFFERED_PLAYBACK_STREAMING
         ) {
           continue
         } else if (
           s.visibility === SegmentVisibility.BUFFERED &&
-          musicRenderingStrategy !==
+          effectiveMusicRenderingStrategy !==
             RenderingStrategy.ON_SCREEN_THEN_SURROUNDING
         ) {
           continue
@@ -494,7 +836,11 @@ export const useResolver = create<ResolverStore>((set, get) => ({
 
     // console.log(`useResolver.runLoop(): firing and forgetting ${segmentsToRender.length} new resolveSegment promises`)
     // we fire and forget
-    segmentsToRender.forEach((segment) => resolveSegment(segment))
+    segmentsToRender.forEach((segment) =>
+      resolveSegment(segment).catch((err: any) =>
+        console.error(`[useResolver] resolveSegment failed for segment ${segment.id} (${segment.category}):`, err)
+      )
+    )
 
     return runLoopAgain()
   },
@@ -667,7 +1013,7 @@ wake of the euro-zone debt crisis.`
       .filter((id) => id) as string[]
 
     const mainCharacterId: string | undefined =
-      speakingCharactersIds.at(0) || generalCharactersIds.at(0) || undefined
+      speakingCharactersIds[0] || generalCharactersIds[0] || undefined
 
     const mainCharacterEntity: ClapEntity | undefined = mainCharacterId
       ? entities[mainCharacterId] || undefined
@@ -705,7 +1051,9 @@ wake of the euro-zone debt crisis.`
     }
 
     const storyboardImage = segments.find(
-      (s) => s.category === ClapSegmentCategory.IMAGE
+      (s) =>
+        s.category === ClapSegmentCategory.IMAGE ||
+        s.category === ClapSegmentCategory.STORYBOARD
     )
     // console.log('storyboardImage:', storyboardImage)
 
@@ -733,6 +1081,40 @@ wake of the euro-zone debt crisis.`
     const positiveAudioPrompt = getSoundPrompt(segments)
     const positiveMusicPrompt = getMusicPrompt(segments)
 
+    const screenplaySource =
+      useScriptEditor.getState().current || useTimeline.getState().storyPrompt || ''
+    const embeddedPromptBlocks = parseEmbeddedPromptBlocks(screenplaySource)
+
+    const scriptedImagePrompt = getMappedEmbeddedPromptForSegment({
+      targetKind: 'image',
+      segment,
+      segments,
+      blocks: embeddedPromptBlocks,
+    })
+    const scriptedVoicePrompt = getMappedEmbeddedPromptForSegment({
+      targetKind: 'voice',
+      segment,
+      segments,
+      blocks: embeddedPromptBlocks,
+    })
+    const scriptedSoundPrompt = getMappedEmbeddedPromptForSegment({
+      targetKind: 'sound',
+      segment,
+      segments,
+      blocks: embeddedPromptBlocks,
+    })
+    const scriptedMusicPrompt = getMappedEmbeddedPromptForSegment({
+      targetKind: 'music',
+      segment,
+      segments,
+      blocks: embeddedPromptBlocks,
+    })
+
+    const finalPositiveImagePrompt = scriptedImagePrompt || positiveImagePrompt
+    const finalPositiveVoicePrompt = scriptedVoicePrompt || positiveVoicePrompt
+    const finalPositiveAudioPrompt = scriptedSoundPrompt || positiveAudioPrompt
+    const finalPositiveMusicPrompt = scriptedMusicPrompt || positiveMusicPrompt
+
     // we can also create a background audio ambiance by calling
     // getBackgroundAudioPrompt()
 
@@ -743,7 +1125,7 @@ wake of the euro-zone debt crisis.`
       image: {
         // the "identification picture" of the character, if available
         identity: mainCharacterEntity?.imageId,
-        positive: positiveImagePrompt,
+        positive: finalPositiveImagePrompt,
         negative: negativeImagePrompt,
       },
       video: {
@@ -755,15 +1137,15 @@ wake of the euro-zone debt crisis.`
       },
       voice: {
         identity: mainCharacterEntity?.audioId,
-        positive: positiveVoicePrompt,
+        positive: finalPositiveVoicePrompt,
         // negative: '',
       },
       audio: {
-        positive: positiveAudioPrompt,
+        positive: finalPositiveAudioPrompt,
         // negative: '',
       },
       music: {
-        positive: positiveMusicPrompt,
+        positive: finalPositiveMusicPrompt,
         // negative: '',
       },
     })

@@ -444,11 +444,12 @@ function MainContent({ mode }: { mode: ClapperIntegrationMode }) {
 
 function fallbackRender({ error, resetErrorBoundary }: FallbackProps) {
   // Call resetErrorBoundary() to reset the error boundary and retry the render.
+  const errorMessage = error instanceof Error ? error.message : 'Unknown error'
 
   return (
     <div role="alert">
       <p>Something went wrong:</p>
-      <pre className="error-message">{error.message}</pre>
+      <pre className="error-message">{errorMessage}</pre>
     </div>
   )
 }

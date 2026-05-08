@@ -56,7 +56,7 @@ export async function resolveSegment(
       image_url: request.prompts.video.image,
     })
 
-    const video = result.video_result.at(0)
+    const video = result.video_result[0]
     if (!video) {
       throw new Error(`Failed to generate at least one video`)
     }

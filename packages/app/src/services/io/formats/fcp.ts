@@ -35,8 +35,8 @@ export async function generateFCP(): Promise<string> {
   resources.push(createAssetFormat(formatId))
 
   const exportableSegments: ExportableSegment[] = timelineSegments
-    .map((segment, index) => formatSegmentForExport(segment, index))
-    .filter(({ isExportableToFile }) => isExportableToFile)
+    .map((segment: any, index: number) => formatSegmentForExport(segment, index))
+    .filter(({ isExportableToFile }: { isExportableToFile: boolean }) => isExportableToFile)
 
   exportableSegments.forEach((exportableSegment: ExportableSegment) => {
     const { segment, filePath, category } = exportableSegment
@@ -108,11 +108,14 @@ export async function generateFCP7XML(): Promise<string> {
 
   // Separate video and stills, sorted by timeline position
   const allExportable: ExportableSegment[] = timelineSegments
-    .map((segment, index) => formatSegmentForExport(segment, index))
-    .filter(({ isExportableToFile, category }) =>
+    .map((segment: any, index: number) => formatSegmentForExport(segment, index))
+    .filter(({ isExportableToFile, category }: { isExportableToFile: boolean; category: string }) =>
       isExportableToFile && (category === 'video' || category === 'storyboard')
     )
-    .sort((a, b) => a.segment.startTimeInMs - b.segment.startTimeInMs)
+    .sort(
+      (a: ExportableSegment, b: ExportableSegment) =>
+        a.segment.startTimeInMs - b.segment.startTimeInMs
+    )
 
   const videoSegments = allExportable.filter(({ category }) => category === 'video')
   const stillSegments = allExportable.filter(({ category }) => category === 'storyboard')

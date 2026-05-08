@@ -110,7 +110,7 @@ export async function askAnyAssistant({
           )
           return new ChatGroq({
             apiKey,
-            modelName: currentModel,
+            model: currentModel,
             temperature: 0.1, // Lower temperature for more consistent formatting
             maxTokens: 2048,
             // Add retry configuration

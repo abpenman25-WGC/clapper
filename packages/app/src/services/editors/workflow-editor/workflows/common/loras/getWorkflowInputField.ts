@@ -4,5 +4,5 @@ export function getWorkflowInputField(
   workflow: ClapWorkflow,
   category: ClapInputCategory
 ): ClapInputField | undefined {
-  return workflow.inputFields.find((field) => field.category === category)
+  return workflow.inputFields.find((field: ClapInputField) => field.category === category)
 }

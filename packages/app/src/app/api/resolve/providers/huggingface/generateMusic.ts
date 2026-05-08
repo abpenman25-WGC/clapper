@@ -1,4 +1,4 @@
-import { HfInference, HfInferenceEndpoint } from '@huggingface/inference'
+import { HfInference } from '@huggingface/inference'
 
 import { ResolveRequest } from '@aitube/clapper-services'
 import {
@@ -37,7 +37,7 @@ export async function generateMusic(request: ResolveRequest): Promise<string> {
     }
   }
 
-  const hf: HfInferenceEndpoint = new HfInference(apiKey)
+  const hf = new HfInference(apiKey)
   /*
   hf.textToMusic doesn't exist yet!
 

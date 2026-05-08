@@ -12,7 +12,7 @@
     "dev": "cross-env NODE_OPTIONS=--max-old-space-size=6144 next dev",
     "dev:withchecks": "pnpm run checks && next dev",
     "build": "npx rimraf out && next build && pnpm run build:copyassets",
-    "build:copyassets": "npx cpy public .next/standalone/packages/app/ && npx cpy .next/static .next/standalone/packages/app/.next/",
+    "build:copyassets": "pnpm exec cpy public .next/standalone/packages/app/ && pnpm exec cpy .next/static/** .next/standalone/packages/app/.next/",
     "start": "next start",
     "start:prod": "node .next/standalone/packages/app/server.js",
     "checks": "pnpm run format:fix && pnpm run lint",

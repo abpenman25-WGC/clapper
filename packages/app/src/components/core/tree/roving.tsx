@@ -57,7 +57,7 @@ export function RovingTabindexRoot<T extends ElementType>({
   as,
   ...props
 }: RovingTabindexRootProps<T>) {
-  const Component = as || 'div'
+  const Component = (as || 'div') as any
   const [isShiftTabbing, setIsShiftTabbing] = useState(false)
   const [currentRovingTabindexValue, setCurrentRovingTabindexValue] = useState<
     string | null
@@ -95,7 +95,7 @@ export function RovingTabindexRoot<T extends ElementType>({
       <Component
         {...{ [ROOT_SELECTOR]: true }}
         tabIndex={isShiftTabbing ? -1 : 0}
-        onFocus={(e) => {
+        onFocus={(e: FocusEvent<HTMLElement>) => {
           if (e.target !== e.currentTarget) return
           if (isShiftTabbing) return
           const orderedItems = getOrderedItems()
@@ -124,7 +124,7 @@ export function getNextFocusableId(
   id: string
 ): RovingTabindexItem | undefined {
   const currIndex = orderedItems.findIndex((item) => item.id === id)
-  return orderedItems.at(currIndex === orderedItems.length ? 0 : currIndex + 1)
+  return orderedItems[currIndex === orderedItems.length - 1 ? 0 : currIndex + 1]
 }
 
 export function getParentFocusableId(
@@ -153,19 +153,19 @@ export function getPrevFocusableId(
   id: string
 ): RovingTabindexItem | undefined {
   const currIndex = orderedItems.findIndex((item) => item.id === id)
-  return orderedItems.at(currIndex === 0 ? -1 : currIndex - 1)
+  return orderedItems[currIndex === 0 ? orderedItems.length - 1 : currIndex - 1]
 }
 
 export function getFirstFocusableId(
   orderedItems: RovingTabindexItem[]
 ): RovingTabindexItem | undefined {
-  return orderedItems.at(0)
+  return orderedItems[0]
 }
 
 export function getLastFocusableId(
   orderedItems: RovingTabindexItem[]
 ): RovingTabindexItem | undefined {
-  return orderedItems.at(-1)
+  return orderedItems[orderedItems.length - 1]
 }
 
 function wrapArray<T>(array: T[], startIndex: number) {
@@ -186,7 +186,7 @@ export function getNextFocusableIdByTypeahead(
     index < wrappedItems.length - 1 && typeaheadMatchIndex == null;
     index++
   ) {
-    const nextItem = wrappedItems.at(index + 1)
+    const nextItem = wrappedItems[index + 1]
 
     if (
       nextItem?.element?.textContent?.charAt(0).toLowerCase() ===

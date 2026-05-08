@@ -45,7 +45,7 @@ export const FruityDesktop: React.FC<{
 // FruityWindow component
 export const FruityWindow: React.FC<{
   id: string
-  title?: string | JSX.Element
+  title?: string | React.ReactElement
   defaultWidth?: number | string
   minWidth?: number | string
   defaultHeight?: number | string
@@ -55,7 +55,7 @@ export const FruityWindow: React.FC<{
   canBeReduced?: boolean
   canBeClosed?: boolean
   canBeFullScreen?: boolean
-  toolbar?: (props: { isFocused: boolean }) => JSX.Element
+  toolbar?: (props: { isFocused: boolean }) => React.ReactElement
   children?: React.ReactNode
 }> = memo(
   ({

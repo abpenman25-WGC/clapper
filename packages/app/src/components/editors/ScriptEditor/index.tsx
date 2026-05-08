@@ -71,9 +71,9 @@ export function ScriptEditor() {
       return
     }
 
-    codeEditor.setModel(textModel)
+    codeEditor.setModel(textModel as any)
 
-    setStandaloneCodeEditor(codeEditor)
+    setStandaloneCodeEditor(codeEditor as any)
 
     codeEditor.onMouseDown((e) => {
       jumpCursorOnLineClick(codeEditor.getPosition()?.lineNumber)

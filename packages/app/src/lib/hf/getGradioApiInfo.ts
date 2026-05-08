@@ -12,8 +12,10 @@ export async function getGradioApiInfo({
 }): Promise<GradioApiInfo> {
   const { ownerAndId } = parseHuggingFaceHubId(url, 'spaces')
 
+  const token = apiKey as `hf_${string}` | undefined
+
   const app = await Client.connect(ownerAndId, {
-    hf_token: apiKey as any,
+    token,
   })
   const apiInfo: GradioApiInfo = await app.view_api()
   return apiInfo

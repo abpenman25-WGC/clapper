@@ -298,6 +298,24 @@ export const comfyuiWorkflows: ClapWorkflow[] = [
 export async function getDynamicComfyuiWorkflows(): Promise<ClapWorkflow[]> {
   const settings = useSettings.getState()
 
+  const getFallbackInputFields = (
+    inputFields: ClapWorkflow['inputFields'] | undefined,
+    fallback: ClapWorkflow['inputFields']
+  ) => {
+    return Array.isArray(inputFields) && inputFields.length > 0
+      ? inputFields
+      : fallback
+  }
+
+  const getFallbackInputValues = (
+    inputValues: ClapWorkflow['inputValues'] | undefined,
+    fallback: ClapWorkflow['inputValues']
+  ) => {
+    return inputValues && Object.keys(inputValues).length > 0
+      ? inputValues
+      : fallback
+  }
+
   const workflows: ClapWorkflow[] = [
     {
       id: 'comfyui://settings.comfyWorkflowForImage',
@@ -312,12 +330,16 @@ export async function getDynamicComfyuiWorkflows(): Promise<ClapWorkflow[]> {
       category: ClapWorkflowCategory.IMAGE_GENERATION,
       data: settings.comfyClapWorkflowForImage?.data,
       schema: '',
-      inputFields: settings.comfyClapWorkflowForImage?.inputFields || [
-        genericPrompt,
-      ],
-      inputValues: settings.comfyClapWorkflowForImage?.inputValues || {
-        [genericPrompt.id]: genericPrompt.defaultValue,
-      },
+      inputFields: getFallbackInputFields(
+        settings.comfyClapWorkflowForImage?.inputFields,
+        [genericPrompt]
+      ),
+      inputValues: getFallbackInputValues(
+        settings.comfyClapWorkflowForImage?.inputValues,
+        {
+          [genericPrompt.id]: genericPrompt.defaultValue,
+        }
+      ),
     },
     {
       id: 'comfyui://settings.comfyWorkflowForVideo',
@@ -332,12 +354,16 @@ export async function getDynamicComfyuiWorkflows(): Promise<ClapWorkflow[]> {
       category: ClapWorkflowCategory.VIDEO_GENERATION,
       data: settings.comfyClapWorkflowForVideo.data,
       schema: '',
-      inputFields: settings.comfyClapWorkflowForVideo.inputFields || [
-        genericImage,
-      ],
-      inputValues: settings.comfyClapWorkflowForVideo.inputValues || {
-        [genericImage.id]: genericImage.defaultValue,
-      },
+      inputFields: getFallbackInputFields(
+        settings.comfyClapWorkflowForVideo.inputFields,
+        [genericImage]
+      ),
+      inputValues: getFallbackInputValues(
+        settings.comfyClapWorkflowForVideo.inputValues,
+        {
+          [genericImage.id]: genericImage.defaultValue,
+        }
+      ),
     },
     {
       id: 'comfyui://settings.comfyWorkflowForVoice',

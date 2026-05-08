@@ -1,6 +1,7 @@
 'use client'
 
 import { ClapOutputType, ClapSegment } from '@aitube/clap'
+import type { ReactElement } from 'react'
 
 import { cn } from '@/lib/utils'
 
@@ -15,7 +16,7 @@ export const DynamicBuffer = ({
   segment?: ClapSegment
   isPlaying?: boolean
   isVisible?: boolean
-}): JSX.Element | null => {
+}): ReactElement | null => {
   const src = `${segment?.assetUrl || ''}`
 
   if (!src) {

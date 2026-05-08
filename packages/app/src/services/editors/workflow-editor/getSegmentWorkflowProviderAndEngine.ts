@@ -25,7 +25,8 @@ export function getSegmentWorkflowProviderAndEngine({
   lipsyncEngine?: ClapWorkflowEngine
 } {
   const generationWorkflow: ClapWorkflow | undefined =
-    segment.category === ClapSegmentCategory.IMAGE
+    segment.category === ClapSegmentCategory.IMAGE ||
+    segment.category === ClapSegmentCategory.STORYBOARD
       ? settings.imageGenerationWorkflow
       : segment.category === ClapSegmentCategory.VIDEO
         ? settings.videoGenerationWorkflow
